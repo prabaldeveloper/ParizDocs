@@ -7,8 +7,16 @@ pragma solidity ^0.8.0;
 
 contract Venue {
 
-    event VenueAdded(uint256 indexed tokenId, string name, string location, uint256 totalCapacity, string tokenIPFSPath, uint256 fees);
+    ///@param tokenId Venue tokenId
+    ///@param name Venue name
+    ///@param location Venue location
+    ///@param totalCapacity Venue totalCapacity
+    ///@param fees Venue Fees
+    ///@param tokenIPFSPath Venue tokenIPFSPath
+    event VenueAdded(uint256 indexed tokenId, string name, string location, uint256 totalCapacity, uint256 fees, string tokenIPFSPath);
 
+    ///@param tokenId Venue tokenId
+    ///@param eventOrganiser eventOrganiser address
     event VenueBooked(uint256 indexed tokenId, address eventOrganiser);
 
     

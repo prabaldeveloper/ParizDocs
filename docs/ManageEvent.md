@@ -78,7 +78,7 @@ event CancelEvent(uint256 indexed eventTokenId)
 
 | Name | Type | Description |
 |---|---|---|
-| eventTokenId `indexed` | uint256 | undefined |
+| eventTokenId `indexed` | uint256 | event Token Id |
 
 ### EventStarted
 
@@ -94,7 +94,7 @@ event EventStarted(uint256 indexed eventTokenId)
 
 | Name | Type | Description |
 |---|---|---|
-| eventTokenId `indexed` | uint256 | undefined |
+| eventTokenId `indexed` | uint256 | event Token Id |
 
 ### GuestAdded
 
@@ -110,9 +110,9 @@ event GuestAdded(uint256 indexed eventTokenId, string guestName, address guestAd
 
 | Name | Type | Description |
 |---|---|---|
-| eventTokenId `indexed` | uint256 | undefined |
-| guestName  | string | undefined |
-| guestAddress  | address | undefined |
+| eventTokenId `indexed` | uint256 | event Token Id |
+| guestName  | string | guest Name  |
+| guestAddress  | address | guest Address |
 
 
 

@@ -108,7 +108,7 @@ Check for venue availability
 ### VenueAdded
 
 ```solidity
-event VenueAdded(uint256 indexed tokenId, string name, string location, uint256 totalCapacity, string tokenIPFSPath, uint256 fees)
+event VenueAdded(uint256 indexed tokenId, string name, string location, uint256 totalCapacity, uint256 fees, string tokenIPFSPath)
 ```
 
 
@@ -119,12 +119,12 @@ event VenueAdded(uint256 indexed tokenId, string name, string location, uint256 
 
 | Name | Type | Description |
 |---|---|---|
-| tokenId `indexed` | uint256 | undefined |
-| name  | string | undefined |
-| location  | string | undefined |
-| totalCapacity  | uint256 | undefined |
-| tokenIPFSPath  | string | undefined |
-| fees  | uint256 | undefined |
+| tokenId `indexed` | uint256 | Venue tokenId |
+| name  | string | Venue name |
+| location  | string | Venue location |
+| totalCapacity  | uint256 | Venue totalCapacity |
+| fees  | uint256 | Venue Fees |
+| tokenIPFSPath  | string | Venue tokenIPFSPath |
 
 ### VenueBooked
 
@@ -140,8 +140,8 @@ event VenueBooked(uint256 indexed tokenId, address eventOrganiser)
 
 | Name | Type | Description |
 |---|---|---|
-| tokenId `indexed` | uint256 | undefined |
-| eventOrganiser  | address | undefined |
+| tokenId `indexed` | uint256 | Venue tokenId |
+| eventOrganiser  | address | eventOrganiser address |
 
 
 
