@@ -7,6 +7,12 @@ pragma solidity ^0.8.0;
 
 contract ManageEvent {
 
+    event GuestAdded(uint256 indexed eventTokenId,string guestName, address guestAddress);
+
+    event EventStarted(uint256 indexed eventTokenId);
+
+    event CancelEvent(uint256 indexed eventTokenId);
+
     ///@notice Add the event guests
     ///@param eventTokenId event Token Id
     ///@param guestName guest Name 

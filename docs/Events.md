@@ -127,4 +127,119 @@ Update event IPFSPath
 
 
 
+## Events
+
+### Bought
+
+```solidity
+event Bought(uint256 indexed tokenId, address paymentToken, uint256 ticketPrice)
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| tokenId `indexed` | uint256 | undefined |
+| paymentToken  | address | undefined |
+| ticketPrice  | uint256 | undefined |
+
+### DescriptionUpdated
+
+```solidity
+event DescriptionUpdated(uint256 indexed tokenId, string description)
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| tokenId `indexed` | uint256 | undefined |
+| description  | string | undefined |
+
+### EventAdded
+
+```solidity
+event EventAdded(uint256 indexed tokenId, string name, string _type, string description, uint256 startTime, uint256 endTime, string tokenIPFSPath, uint256 venueTokenId, uint256 venueFees, bool isPaid, address eventOrganiser)
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| tokenId `indexed` | uint256 | undefined |
+| name  | string | undefined |
+| _type  | string | undefined |
+| description  | string | undefined |
+| startTime  | uint256 | undefined |
+| endTime  | uint256 | undefined |
+| tokenIPFSPath  | string | undefined |
+| venueTokenId  | uint256 | undefined |
+| venueFees  | uint256 | undefined |
+| isPaid  | bool | undefined |
+| eventOrganiser  | address | undefined |
+
+### Joined
+
+```solidity
+event Joined(uint256 indexed tokenId, address indexed user)
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| tokenId `indexed` | uint256 | undefined |
+| user `indexed` | address | undefined |
+
+### StartTimeupdated
+
+```solidity
+event StartTimeupdated(uint256 indexed tokenId, uint256 startTime)
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| tokenId `indexed` | uint256 | undefined |
+| startTime  | uint256 | undefined |
+
+### TokenIPFSPathUpdated
+
+```solidity
+event TokenIPFSPathUpdated(uint256 indexed tokenId, string tokenIPFSPath)
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| tokenId `indexed` | uint256 | undefined |
+| tokenIPFSPath  | string | undefined |
+
+
 

@@ -6,6 +6,11 @@ pragma solidity ^0.8.0;
 ///@notice Owner can add venues and event organisers can book it
 
 contract Venue {
+
+    event VenueAdded(uint256 indexed tokenId, string name, string location, uint256 totalCapacity, string tokenIPFSPath, uint256 fees);
+
+    event VenueBooked(uint256 indexed tokenId, address eventOrganiser);
+
     
     ///@notice Adds venue
     ///@param name Venue name

@@ -103,4 +103,45 @@ Check for venue availability
 
 
 
+## Events
+
+### VenueAdded
+
+```solidity
+event VenueAdded(uint256 indexed tokenId, string name, string location, uint256 totalCapacity, string tokenIPFSPath, uint256 fees)
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| tokenId `indexed` | uint256 | undefined |
+| name  | string | undefined |
+| location  | string | undefined |
+| totalCapacity  | uint256 | undefined |
+| tokenIPFSPath  | string | undefined |
+| fees  | uint256 | undefined |
+
+### VenueBooked
+
+```solidity
+event VenueBooked(uint256 indexed tokenId, address eventOrganiser)
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| tokenId `indexed` | uint256 | undefined |
+| eventOrganiser  | address | undefined |
+
+
 

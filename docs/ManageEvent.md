@@ -62,4 +62,57 @@ Start the event
 
 
 
+## Events
+
+### CancelEvent
+
+```solidity
+event CancelEvent(uint256 indexed eventTokenId)
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| eventTokenId `indexed` | uint256 | undefined |
+
+### EventStarted
+
+```solidity
+event EventStarted(uint256 indexed eventTokenId)
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| eventTokenId `indexed` | uint256 | undefined |
+
+### GuestAdded
+
+```solidity
+event GuestAdded(uint256 indexed eventTokenId, string guestName, address guestAddress)
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| eventTokenId `indexed` | uint256 | undefined |
+| guestName  | string | undefined |
+| guestAddress  | address | undefined |
+
+
 
