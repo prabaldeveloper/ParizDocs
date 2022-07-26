@@ -30,7 +30,7 @@ contract Venue {
     ///@notice Book venue
     ///@param tokenId Venue tokenId
     ///@param venueFees Venue fees 
-    function bookVenue(uint256 tokenId, uint256 venueFees) public {
+    function bookVenue(uint256 tokenId, uint256 venueFees) public payable{
         
     }   
 

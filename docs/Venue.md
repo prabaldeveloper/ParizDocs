@@ -39,7 +39,7 @@ Adds venue
 ### bookVenue
 
 ```solidity
-function bookVenue(uint256 tokenId, uint256 venueFees) external nonpayable
+function bookVenue(uint256 tokenId, uint256 venueFees) external payable
 ```
 
 Book venue
