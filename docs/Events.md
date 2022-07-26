@@ -132,7 +132,7 @@ Update event IPFSPath
 ### Bought
 
 ```solidity
-event Bought(uint256 indexed tokenId, address paymentToken, uint256 ticketPrice)
+event Bought(uint256 indexed tokenId, address paymentToken, uint256 ticketPrice, address buyer)
 ```
 
 
@@ -143,9 +143,10 @@ event Bought(uint256 indexed tokenId, address paymentToken, uint256 ticketPrice)
 
 | Name | Type | Description |
 |---|---|---|
-| tokenId `indexed` | uint256 | undefined |
-| paymentToken  | address | undefined |
-| ticketPrice  | uint256 | undefined |
+| tokenId `indexed` | uint256 | Event tokenId |
+| paymentToken  | address | Token Address |
+| ticketPrice  | uint256 | Ticket Price |
+| buyer  | address | buyer address  |
 
 ### DescriptionUpdated
 
@@ -161,8 +162,8 @@ event DescriptionUpdated(uint256 indexed tokenId, string description)
 
 | Name | Type | Description |
 |---|---|---|
-| tokenId `indexed` | uint256 | undefined |
-| description  | string | undefined |
+| tokenId `indexed` | uint256 | Event tokenId |
+| description  | string | Event description |
 
 ### EventAdded
 
@@ -178,17 +179,17 @@ event EventAdded(uint256 indexed tokenId, string name, string _type, string desc
 
 | Name | Type | Description |
 |---|---|---|
-| tokenId `indexed` | uint256 | undefined |
-| name  | string | undefined |
-| _type  | string | undefined |
-| description  | string | undefined |
-| startTime  | uint256 | undefined |
-| endTime  | uint256 | undefined |
-| tokenIPFSPath  | string | undefined |
-| venueTokenId  | uint256 | undefined |
-| venueFees  | uint256 | undefined |
-| isPaid  | bool | undefined |
-| eventOrganiser  | address | undefined |
+| tokenId `indexed` | uint256 | Event tokenId |
+| name  | string | Event Name |
+| _type  | string | Event Type |
+| description  | string | Event description |
+| startTime  | uint256 | Event startTime |
+| endTime  | uint256 | Event endTime |
+| tokenIPFSPath  | string | Event tokenIPFSPath |
+| venueTokenId  | uint256 | venueTokenId |
+| venueFees  | uint256 | venueFees |
+| isPaid  | bool | isEventPaid |
+| eventOrganiser  | address | address of the organiser |
 
 ### Joined
 
@@ -204,8 +205,8 @@ event Joined(uint256 indexed tokenId, address indexed user)
 
 | Name | Type | Description |
 |---|---|---|
-| tokenId `indexed` | uint256 | undefined |
-| user `indexed` | address | undefined |
+| tokenId `indexed` | uint256 | Event tokenId |
+| user `indexed` | address | User address |
 
 ### StartTimeupdated
 
@@ -238,8 +239,8 @@ event TokenIPFSPathUpdated(uint256 indexed tokenId, string tokenIPFSPath)
 
 | Name | Type | Description |
 |---|---|---|
-| tokenId `indexed` | uint256 | tokenId of the event |
-| tokenIPFSPath  | string | undefined |
+| tokenId `indexed` | uint256 | Event tokenId |
+| tokenIPFSPath  | string | Event tokenIPFSPath |
 
 
 

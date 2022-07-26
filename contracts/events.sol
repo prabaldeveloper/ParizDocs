@@ -6,17 +6,39 @@ pragma solidity ^0.8.0;
 ///@notice Users can create event and join events
 
 contract Events {
+
+    ///@param tokenId Event tokenId
+    ///@param name Event Name
+    ///@param _type Event Type
+    ///@param description Event description
+    ///@param startTime Event startTime
+    ///@param endTime Event endTime
+    ///@param tokenIPFSPath Event tokenIPFSPath
+    ///@param venueTokenId venueTokenId
+    ///@param venueFees venueFees
+    ///@param isPaid isEventPaid
+    ///@param eventOrganiser address of the organiser
     event EventAdded(uint256 indexed tokenId, string name, string _type, string description, uint256 startTime, uint256 endTime,  string tokenIPFSPath,
     uint256 venueTokenId, uint256 venueFees, bool isPaid, address eventOrganiser);
 
     event StartTimeupdated(uint256 indexed tokenId, uint256 startTime);
 
+    ///@param tokenId Event tokenId
+    ///@param tokenIPFSPath Event tokenIPFSPath
     event TokenIPFSPathUpdated(uint256 indexed tokenId, string tokenIPFSPath);
 
+    ///@param tokenId Event tokenId
+    ///@param description Event description
     event DescriptionUpdated(uint256 indexed tokenId, string description);
 
-    event Bought(uint256 indexed tokenId, address paymentToken, uint256 ticketPrice);
+    ///@param tokenId Event tokenId
+    ///@param paymentToken Token Address
+    ///@param ticketPrice Ticket Price
+    ///@param buyer buyer address 
+    event Bought(uint256 indexed tokenId, address paymentToken, uint256 ticketPrice, address buyer);
 
+    ///@param tokenId Event tokenId
+    ///@param user User address
     event Joined(uint256 indexed tokenId, address indexed user);
 
     ///@notice Creates Event
