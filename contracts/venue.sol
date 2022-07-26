@@ -21,6 +21,7 @@ contract Venue {
     ///@param tokenId venue tokenId
     ///@param startTime venue startTime
     ///@param endTime venue endTime
+    ///@return _isAvailable returns true if available
     function isAvailable(uint256 tokenId, uint256 startTime, uint256 endTime) public returns(bool _isAvailable) {
 
     }
@@ -36,6 +37,7 @@ contract Venue {
     ///@param tokenId venue tokenId
     ///@param startTime venue startTime
     ///@param endTime venue endTime
+    ///@return rent returns the rent of the venue
     function calculateRent(uint256 tokenId, uint256 startTime, uint256 endTime) public returns(uint256 rent) {
 
     }

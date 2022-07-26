@@ -38,7 +38,7 @@ Creates Event
 
 | Name | Type | Description |
 |---|---|---|
-| tokenId | uint256 | undefined |
+| tokenId | uint256 | Returns tokenId of the event |
 
 ### buyTicket
 

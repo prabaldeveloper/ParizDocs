@@ -75,7 +75,7 @@ Calculate rent for the venue
 
 | Name | Type | Description |
 |---|---|---|
-| rent | uint256 | undefined |
+| rent | uint256 | returns the rent of the venue |
 
 ### isAvailable
 
@@ -99,7 +99,7 @@ Check for venue availability
 
 | Name | Type | Description |
 |---|---|---|
-| _isAvailable | bool | undefined |
+| _isAvailable | bool | returns true if available |
 
 
 

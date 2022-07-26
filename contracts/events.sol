@@ -17,6 +17,7 @@ contract Events {
     ///@param venueTokenId venueTokenId
     ///@param venueFees venueFees
     ///@param isPaid isEventPaid
+    ///@return tokenId Returns tokenId of the event
     function add(string memory name, string memory _type, string memory description, uint256 startTime, uint256 endTime, string memory tokenIPFSPath,
     uint256 venueTokenId, uint256 venueFees, bool isPaid) public returns(uint256 tokenId){
 
