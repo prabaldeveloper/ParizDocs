@@ -238,7 +238,7 @@ event TokenIPFSPathUpdated(uint256 indexed tokenId, string tokenIPFSPath)
 
 | Name | Type | Description |
 |---|---|---|
-| tokenId `indexed` | uint256 | undefined |
+| tokenId `indexed` | uint256 | tokenId of the event |
 | tokenIPFSPath  | string | undefined |
 
 
