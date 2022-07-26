@@ -34,7 +34,7 @@ Adds venue
 
 | Name | Type | Description |
 |---|---|---|
-| tokenId | uint256 | of the venue |
+| tokenId | uint256 | tokenId of the venue |
 
 ### bookVenue
 

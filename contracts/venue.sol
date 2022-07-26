@@ -13,7 +13,7 @@ contract Venue {
     ///@param totalCapacity Venue totalCapacity
     ///@param fees Venue Fees
     ///@param tokenIPFSPath Venue tokenIPFSPath
-    ///@return tokenId of the venue
+    ///@return tokenId tokenId of the venue
     function add(string memory name, string memory location, uint256 totalCapacity, uint256 fees, string memory tokenIPFSPath) public returns(uint256 tokenId){
 
     }
