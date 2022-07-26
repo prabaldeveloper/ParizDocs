@@ -13,31 +13,32 @@ contract Venue {
     ///@param totalCapacity Venue totalCapacity
     ///@param fees Venue Fees
     ///@param tokenIPFSPath Venue tokenIPFSPath
+    ///@return tokenId of the venue
     function add(string memory name, string memory location, uint256 totalCapacity, uint256 fees, string memory tokenIPFSPath) public returns(uint256 tokenId){
 
     }
 
     ///@notice Check for venue availability
-    ///@param tokenId venue tokenId
-    ///@param startTime venue startTime
-    ///@param endTime venue endTime
-    ///@return _isAvailable returns true if available
+    ///@param tokenId Venue tokenId
+    ///@param startTime Venue startTime
+    ///@param endTime Venue endTime
+    ///@return _isAvailable Returns true if available
     function isAvailable(uint256 tokenId, uint256 startTime, uint256 endTime) public returns(bool _isAvailable) {
 
     }
     
-    ///@notice Book Venue
-    ///@param tokenId venue tokenId
-    ///@param venueFees venue Fees 
+    ///@notice Book venue
+    ///@param tokenId Venue tokenId
+    ///@param venueFees Venue fees 
     function bookVenue(uint256 tokenId, uint256 venueFees) public {
         
     }   
 
     ///@notice Calculate rent for the venue
-    ///@param tokenId venue tokenId
-    ///@param startTime venue startTime
-    ///@param endTime venue endTime
-    ///@return rent returns the rent of the venue
+    ///@param tokenId Venue tokenId
+    ///@param startTime Venue startTime
+    ///@param endTime Venue endTime
+    ///@return rent Returns the rent of the venue
     function calculateRent(uint256 tokenId, uint256 startTime, uint256 endTime) public returns(uint256 rent) {
 
     }

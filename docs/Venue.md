@@ -34,7 +34,7 @@ Adds venue
 
 | Name | Type | Description |
 |---|---|---|
-| tokenId | uint256 | undefined |
+| tokenId | uint256 | of the venue |
 
 ### bookVenue
 
@@ -42,7 +42,7 @@ Adds venue
 function bookVenue(uint256 tokenId, uint256 venueFees) external nonpayable
 ```
 
-Book Venue
+Book venue
 
 
 
@@ -50,8 +50,8 @@ Book Venue
 
 | Name | Type | Description |
 |---|---|---|
-| tokenId | uint256 | venue tokenId |
-| venueFees | uint256 | venue Fees  |
+| tokenId | uint256 | Venue tokenId |
+| venueFees | uint256 | Venue fees  |
 
 ### calculateRent
 
@@ -67,15 +67,15 @@ Calculate rent for the venue
 
 | Name | Type | Description |
 |---|---|---|
-| tokenId | uint256 | venue tokenId |
-| startTime | uint256 | venue startTime |
-| endTime | uint256 | venue endTime |
+| tokenId | uint256 | Venue tokenId |
+| startTime | uint256 | Venue startTime |
+| endTime | uint256 | Venue endTime |
 
 #### Returns
 
 | Name | Type | Description |
 |---|---|---|
-| rent | uint256 | returns the rent of the venue |
+| rent | uint256 | Returns the rent of the venue |
 
 ### isAvailable
 
@@ -91,15 +91,15 @@ Check for venue availability
 
 | Name | Type | Description |
 |---|---|---|
-| tokenId | uint256 | venue tokenId |
-| startTime | uint256 | venue startTime |
-| endTime | uint256 | venue endTime |
+| tokenId | uint256 | Venue tokenId |
+| startTime | uint256 | Venue startTime |
+| endTime | uint256 | Venue endTime |
 
 #### Returns
 
 | Name | Type | Description |
 |---|---|---|
-| _isAvailable | bool | returns true if available |
+| _isAvailable | bool | Returns true if available |
 
 
 
