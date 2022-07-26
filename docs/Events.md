@@ -43,7 +43,7 @@ Creates Event
 ### buyTicket
 
 ```solidity
-function buyTicket(uint256 tokenId, address paymentToken, uint256 ticketPrice) external nonpayable
+function buyTicket(uint256 tokenId, address paymentToken, uint256 ticketPrice) external payable
 ```
 
 Users can buy tickets

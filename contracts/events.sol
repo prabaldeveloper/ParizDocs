@@ -47,7 +47,7 @@ contract Events {
     ///@param tokenId Event tokenId
     ///@param paymentToken Token Address
     ///@param ticketPrice Ticket Price
-    function buyTicket (uint256 tokenId, address paymentToken, uint256 ticketPrice) public {
+    function buyTicket (uint256 tokenId, address paymentToken, uint256 ticketPrice) public payable {
         
     }
 
