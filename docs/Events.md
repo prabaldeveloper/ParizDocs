@@ -92,6 +92,23 @@ Update event description
 | tokenId | uint256 | Event tokenId |
 | description | string | Event description |
 
+### updateErc20TokenAddress
+
+```solidity
+function updateErc20TokenAddress(address paymentToken, bool status) external nonpayable
+```
+
+Supported tokens for the payment
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| paymentToken | address | erc-20 token Address |
+| status | bool | status of the address(true or false) |
+
 ### updateStartTime
 
 ```solidity
