@@ -31,7 +31,7 @@ transactionHash
 
 timestamp
 
-
+----------------------------------------------------------------------------------
 Schema Name – venues
 
 Function Name – getVenueDetails
@@ -51,6 +51,8 @@ fees
 tokenIPFSPath
 
 eventOrganiser
+
+----------------------------------------------------------------------------------
 
 
 Schema Name – userHistory
