@@ -95,6 +95,12 @@ contract Events {
         
     }
 
+    ///@notice Supported tokens for the payment
+    ///@param paymentToken erc-20 token Address
+    ///@param status status of the address(true or false)
+    function updateErc20TokenAddress(address paymentToken, bool status) public {
+
+    }
     
     
 }       

@@ -1,74 +1,115 @@
-Graph for Pariz
+# Graph for Pariz
+#####Graph name – pariz
 
-Graph name – pariz
+*Prabal Srivastav*
+
+> Graph for getting the event, venue and userHistory details.
 
 
+
+
+
+## Methods
 Schema Name – events
 
-Function Name – getEventDetails
+### getEventDetails
 
-Values – 
+```solidity
+function getEventDetails(BigInt skip, BigInt count, String orderBy, String orderDirection)
+```
 
-tokenId
+Returns event details
 
-name
 
-type
+#### Parameters
 
-description
+| Name | Type | Description |
+|---|---|---|
+| skip | BigInt | Number of event details to be skipped|
+| count | BigInt | Number of event details to be displayed|
+| orderBy | String | Order the event details|
+| orderDirection | String | asc or desc order|
 
-startTime
 
-endTime
+#### Returns
 
-tokenIPFSPath
+| Name | Type | Description |
+|---|---|---|
+| tokenId | BigInt | TokenId of the event |
+| name | String | Name of the event |
+| type | String | type of the event |
+| description | String | Description of the event |
+| startTime | BigInt | StartTime of the event |
+| endTime | BigInt | EndTime of the event |
+| tokenIPFSPath | String | TokenIPFSPath of the event |
+| isPaid | Boolean | IsPaid of the event |
+| ticketPrice | BigInt | TicketPrice of the event |
+| transactionHash | Bytes | TransactionHash of the event |
+| timestamp | BigInt | Timestamp of the event |
+| eventOrganiser | Bytes | eventOrganiser address of the event | 
 
-isPaid
-
-ticketPrice
-
-transactionHash
-
-timestamp
-
-----------------------------------------------------------------------------------
 Schema Name – venues
+### getVenueDetails
 
-Function Name – getVenueDetails
+```solidity
+function getVenueDetails(BigInt skip, BigInt count, String orderBy, String orderDirection)
+```
 
-Values – 
+Returns venue details
 
-tokenId
 
-name
 
-location
+#### Parameters
 
-totalCapacity
+| Name | Type | Description |
+|---|---|---|
+| skip | BigInt | Number of venue details to be skipped|
+| count | BigInt | Number of venue details to be displayed|
+| orderBy | String | Order the venue details|
+| orderDirection | String | asc or desc order|
 
-fees
 
-tokenIPFSPath
+#### Returns
 
-eventOrganiser
+| Name | Type | Description |
+|---|---|---|
+| tokenId | BigInt | TokenId of the venue |
+| name | String | Name of the venue |
+| location | String | Location of the venue |
+| totalCapacity | BigInt | totalCapacity of the venue |
+| fees | BigInt | fees of the event |
+| tokenIPFSPath | String | TokenIPFSPath of the venue |
+| transactionHash | Bytes | TransactionHash of the venue |
+| timestamp | BigInt | Timestamp of the venue |
 
-----------------------------------------------------------------------------------
 
 
 Schema Name – userHistory
+### getUserHistory
 
-Function Name – getUserHistory
+```solidity
+function getUserHistory(BigInt skip, BigInt count, String orderBy, String orderDirection)
+```
 
-Values – 
 
-eventTokenId
+#### Parameters
 
-eventName
+| Name | Type | Description |
+|---|---|---|
+| skip | BigInt | Number of venue details to be skipped|
+| count | BigInt | Number of venue details to be displayed|
+| orderBy | String | Order the venue details|
+| orderDirection | String | asc or desc order|
 
-eventDescription
 
-userAddress
+#### Returns
 
-joiningTime
-
-leavingTime
+| Name | Type | Description |
+|---|---|---|
+| eventTokenId | BigInt | TokenId of the event |
+| eventName | String | Name of the event |
+| eventType | String | Type of the event |
+| eventDescription | String | Description of the event |
+| userAddress | Bytes | user address | 
+| joiningTime | BigInt | joiningTime of the event |
+| leavingTime | BigInt | leavingTime of the event |
