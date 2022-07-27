@@ -7,8 +7,11 @@ Schema Name – events
 Function Name – getEventDetails
 Values – 
 tokenId
+
 name
+
 type
+
 description
 startTime
 endTime
