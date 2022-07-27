@@ -77,7 +77,7 @@ Returns venue details
 | name | String | Name of the venue |
 | location | String | Location of the venue |
 | totalCapacity | BigInt | totalCapacity of the venue |
-| fees | BigInt | fees of the event |
+| fees | BigInt | fees of the venue |
 | tokenIPFSPath | String | TokenIPFSPath of the venue |
 | transactionHash | Bytes | TransactionHash of the venue |
 | timestamp | BigInt | Timestamp of the venue |
