@@ -13,7 +13,7 @@ Users can create event and join events
 ### add
 
 ```solidity
-function add(string name, string _type, string description, uint256 startTime, uint256 endTime, string tokenIPFSPath, uint256 venueTokenId, uint256 venueFees, bool isPaid) external nonpayable returns (uint256 tokenId)
+function add(string name, string _type, string description, uint256 startTime, uint256 endTime, string tokenIPFSPath, uint256 venueTokenId, uint256 venueFees, bool isPaid, uint256 ticketPrice) external nonpayable returns (uint256 tokenId)
 ```
 
 Creates Event
@@ -33,6 +33,7 @@ Creates Event
 | venueTokenId | uint256 | venueTokenId |
 | venueFees | uint256 | venueFees |
 | isPaid | bool | isEventPaid |
+| ticketPrice | uint256 | ticketPrice of event |
 
 #### Returns
 
@@ -168,7 +169,7 @@ event DescriptionUpdated(uint256 indexed tokenId, string description)
 ### EventAdded
 
 ```solidity
-event EventAdded(uint256 indexed tokenId, string name, string _type, string description, uint256 startTime, uint256 endTime, string tokenIPFSPath, uint256 venueTokenId, uint256 venueFees, bool isPaid, address eventOrganiser)
+event EventAdded(uint256 indexed tokenId, string name, string _type, string description, uint256 startTime, uint256 endTime, string tokenIPFSPath, uint256 venueTokenId, uint256 venueFees, bool isPaid, address eventOrganiser, uint256 ticketPrice)
 ```
 
 
@@ -190,6 +191,7 @@ event EventAdded(uint256 indexed tokenId, string name, string _type, string desc
 | venueFees  | uint256 | venueFees |
 | isPaid  | bool | isEventPaid |
 | eventOrganiser  | address | address of the organiser |
+| ticketPrice  | uint256 | ticketPrice of event |
 
 ### Joined
 

@@ -18,8 +18,9 @@ contract Events {
     ///@param venueFees venueFees
     ///@param isPaid isEventPaid
     ///@param eventOrganiser address of the organiser
+    ///@param ticketPrice ticketPrice of event
     event EventAdded(uint256 indexed tokenId, string name, string _type, string description, uint256 startTime, uint256 endTime,  string tokenIPFSPath,
-    uint256 venueTokenId, uint256 venueFees, bool isPaid, address eventOrganiser);
+    uint256 venueTokenId, uint256 venueFees, bool isPaid, address eventOrganiser, uint256 ticketPrice);
 
     event StartTimeupdated(uint256 indexed tokenId, uint256 startTime);
 
@@ -51,9 +52,11 @@ contract Events {
     ///@param venueTokenId venueTokenId
     ///@param venueFees venueFees
     ///@param isPaid isEventPaid
+    ///@param ticketPrice ticketPrice of event
     ///@return tokenId Returns tokenId of the event
+
     function add(string memory name, string memory _type, string memory description, uint256 startTime, uint256 endTime, string memory tokenIPFSPath,
-    uint256 venueTokenId, uint256 venueFees, bool isPaid) public returns(uint256 tokenId){
+    uint256 venueTokenId, uint256 venueFees, bool isPaid, uint256 ticketPrice) public returns(uint256 tokenId){
 
     }
 
