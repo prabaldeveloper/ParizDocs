@@ -45,9 +45,14 @@ contract Events {
     ///@param tokenId Event tokenId
     event Featured(uint256 indexed tokenId);
 
+    
 
     ///@notice Creates Event
     ///@dev Event organiser can call
+    ///@dev - Check whether venue is available. 
+    ///@dev - Check whether event is paid or free for users.
+    ///@dev - Check whether venue fees is paid or it is mark as pay later.
+    ///@dev - Save all the fields in the contract.
     ///@param name Event name
     ///@param _type Event type
     ///@param description Event description
@@ -60,28 +65,18 @@ contract Events {
     ///@param isEventPaid isEventPaid(true or false)
     ///@param ticketPrice ticketPrice of event
     ///@return tokenId Returns tokenId of the event
-
-    /**
-    * - Check whether venue is available.
-    * - Check whether event is paid or free for users.
-    * - Check whether venue fees is paid or it is mark as pay later.
-    * - Save all the fields in the contract.
-    */  
     function add(string memory name, string memory _type, string memory description, uint256 startTime, uint256 endTime, string memory tokenIPFSPath,
     uint256 venueTokenId, uint256 venueFees, bool payLater, bool isEventPaid, uint256 ticketPrice) public returns(uint256 tokenId){
-                
 
     }
 
     ///@notice Update event startDate
     ///@dev Only event organiser can call
+    ///@dev - Check whether event is started or not.
+    ///@dev - Update the event startTime .
     ///@param tokenId Event tokenId
     ///@param startTime Event startTime
 
-    /**
-    * - Check whether event is started or not.
-    * - Update the event startTime .
-    */
     function updateStartTime(uint256 tokenId, uint256 startTime) public {
         
 
@@ -89,13 +84,11 @@ contract Events {
     
     ///@notice Update event IPFSPath
     ///@dev Only event organiser can call
+    ///@dev - Check whether event is started or not
+    ///@dev - Update the event IPFSPath 
     ///@param tokenId Event tokenId
     ///@param tokenIPFSPath Event startTime
 
-    /**
-    * - Check whether event is started or not
-    * - Update the event IPFSPath 
-    */
     function updateTokenIPFSPath (uint256 tokenId, string memory tokenIPFSPath) public {
 
 
@@ -103,41 +96,37 @@ contract Events {
 
     ///@notice Update event description
     ///@dev Only event organiser can call
+    ///@dev - Check whether event is started or not
+    ///@dev - Update the event description
     ///@param tokenId Event tokenId
     ///@param description Event description
 
-    /**
-    * - Check whether event is started or not
-    * - Update the event description
-    */
     function updateDescription (uint256 tokenId, string memory description) public {
         
 
     }
 
     ///@notice Users can buy tickets
+    ///@dev Public function
+    ///@dev - Check whether event is paid or free
+    ///@dev - Check whether user paid the price.
+    ///@dev - Map event tokenId with user address
     ///@param tokenId Event tokenId
     ///@param paymentToken Token Address
     ///@param ticketPrice Ticket Price
 
-    /**
-    * - Check whether event is paid or free
-    * - Check whether user paid the price.
-    * - Map event tokenId with user address
-    */
     function buyTicket (uint256 tokenId, address paymentToken, uint256 ticketPrice) public payable {
         
     
     }
 
     ///@notice Users can join events
+    ///@dev Public function
+    ///@dev - Check whether event is started or not
+    ///@dev - Check whether user has ticket if the event is paid
+    ///@dev - Join the event
     ///@param tokenId Event tokenId
 
-    /**
-    * - Check whether event is started or not
-    * - Check whether user has ticket if event is paid
-    * - Join the event
-    */
     function join(uint256 tokenId) public {
 
         
@@ -146,12 +135,10 @@ contract Events {
 
     ///@notice Supported tokens for the payment
     ///@dev Only admin can call
+    ///@dev -  Update the status of paymentToken
     ///@param paymentToken erc-20 token Address
     ///@param status status of the address(true or false)
 
-     /**
-     * - Update the status of paymentToken
-     */
     function updateErc20TokenAddress(address paymentToken, bool status) public {
         
 
@@ -159,14 +146,11 @@ contract Events {
 
     ///@notice Feature the event
     ///@dev Only admin can call
+    ///@dev - Mark the event as featured
     ///@param tokenId Event tokenId
     
-    /**
-    * - Mark the event as featured
-    */
     function featured(uint256 tokenId) public {
 
     }
-    
     
 }       

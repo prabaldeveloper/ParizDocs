@@ -16,31 +16,35 @@ Users can create event and join events
 function add(string name, string _type, string description, uint256 startTime, uint256 endTime, string tokenIPFSPath, uint256 venueTokenId, uint256 venueFees, bool payLater, bool isEventPaid, uint256 ticketPrice) external nonpayable returns (uint256 tokenId)
 ```
 
-- Check whether venue is available. - Check whether event is paid or free for users. - Check whether venue fees is paid or it is mark as pay later. - Save all the fields in the contract.
+Creates Event
 
-
+*Event organiser can call
+- Check whether venue is available. 
+- Check whether event is paid or free for users.
+- Check whether venue fees is paid or it is mark as pay later.
+- Save all the fields in the contract.*
 
 #### Parameters
 
 | Name | Type | Description |
 |---|---|---|
-| name | string | undefined |
-| _type | string | undefined |
-| description | string | undefined |
-| startTime | uint256 | undefined |
-| endTime | uint256 | undefined |
-| tokenIPFSPath | string | undefined |
-| venueTokenId | uint256 | undefined |
-| venueFees | uint256 | undefined |
-| payLater | bool | undefined |
-| isEventPaid | bool | undefined |
-| ticketPrice | uint256 | undefined |
+| name | string | Event name |
+| _type | string | Event type |
+| description | string | Event description |
+| startTime | uint256 | Event startTime |
+| endTime | uint256 | Event endTime |
+| tokenIPFSPath | string | Event tokenIPFSPath |
+| venueTokenId | uint256 | venueTokenId |
+| venueFees | uint256 | venueFees |
+| payLater | bool | pay venue fees now or later(true or false) |
+| isEventPaid | bool | isEventPaid(true or false) |
+| ticketPrice | uint256 | ticketPrice of event |
 
 #### Returns
 
 | Name | Type | Description |
 |---|---|---|
-| tokenId | uint256 | undefined |
+| tokenId | uint256 | Returns tokenId of the event |
 
 ### buyTicket
 
@@ -48,17 +52,19 @@ function add(string name, string _type, string description, uint256 startTime, u
 function buyTicket(uint256 tokenId, address paymentToken, uint256 ticketPrice) external payable
 ```
 
-- Check whether event is paid or free - Check whether user paid the price. - Map event tokenId with user address
+Users can buy tickets
 
-
+*Public function
+- Check whether event is paid or free- Check whether user paid the price.
+- Map event tokenId with user address*
 
 #### Parameters
 
 | Name | Type | Description |
 |---|---|---|
-| tokenId | uint256 | undefined |
-| paymentToken | address | undefined |
-| ticketPrice | uint256 | undefined |
+| tokenId | uint256 | Event tokenId |
+| paymentToken | address | Token Address |
+| ticketPrice | uint256 | Ticket Price |
 
 ### featured
 
@@ -66,15 +72,16 @@ function buyTicket(uint256 tokenId, address paymentToken, uint256 ticketPrice) e
 function featured(uint256 tokenId) external nonpayable
 ```
 
-- Mark the event as featured
+Feature the event
 
-
+*Only admin can call
+- Mark the event as featured*
 
 #### Parameters
 
 | Name | Type | Description |
 |---|---|---|
-| tokenId | uint256 | undefined |
+| tokenId | uint256 | Event tokenId |
 
 ### join
 
@@ -82,15 +89,18 @@ function featured(uint256 tokenId) external nonpayable
 function join(uint256 tokenId) external nonpayable
 ```
 
-- Check whether event is started or not - Check whether user has ticket if event is paid - Join the event
+Users can join events
 
-
+*Public function
+- Check whether event is started or not.
+- Check whether user has ticket if the event is paid
+- Join the event*
 
 #### Parameters
 
 | Name | Type | Description |
 |---|---|---|
-| tokenId | uint256 | undefined |
+| tokenId | uint256 | Event tokenId |
 
 ### updateDescription
 
@@ -98,16 +108,18 @@ function join(uint256 tokenId) external nonpayable
 function updateDescription(uint256 tokenId, string description) external nonpayable
 ```
 
-- Check whether event is started or not - Update the event description
+Update event description
 
-
+*Only event organiser can call
+- Check whether event is started or not
+- Update the event description*
 
 #### Parameters
 
 | Name | Type | Description |
 |---|---|---|
-| tokenId | uint256 | undefined |
-| description | string | undefined |
+| tokenId | uint256 | Event tokenId |
+| description | string | Event description |
 
 ### updateErc20TokenAddress
 
@@ -115,16 +127,17 @@ function updateDescription(uint256 tokenId, string description) external nonpaya
 function updateErc20TokenAddress(address paymentToken, bool status) external nonpayable
 ```
 
-- Update the status of paymentToken
+Supported tokens for the payment
 
-
+*Only admin can call
+-  Update the status of paymentToken*
 
 #### Parameters
 
 | Name | Type | Description |
 |---|---|---|
-| paymentToken | address | undefined |
-| status | bool | undefined |
+| paymentToken | address | erc-20 token Address |
+| status | bool | status of the address(true or false) |
 
 ### updateStartTime
 
@@ -132,16 +145,18 @@ function updateErc20TokenAddress(address paymentToken, bool status) external non
 function updateStartTime(uint256 tokenId, uint256 startTime) external nonpayable
 ```
 
-- Check whether event is started or not. - Update the event startTime .
+Update event startDate
 
-
+*Only event organiser can call
+- Check whether event is started or not.
+- Update the event startTime .*
 
 #### Parameters
 
 | Name | Type | Description |
 |---|---|---|
-| tokenId | uint256 | undefined |
-| startTime | uint256 | undefined |
+| tokenId | uint256 | Event tokenId |
+| startTime | uint256 | Event startTime |
 
 ### updateTokenIPFSPath
 
@@ -149,16 +164,18 @@ function updateStartTime(uint256 tokenId, uint256 startTime) external nonpayable
 function updateTokenIPFSPath(uint256 tokenId, string tokenIPFSPath) external nonpayable
 ```
 
-- Check whether event is started or not - Update the event IPFSPath 
+Update event IPFSPath
 
-
+*Only event organiser can call
+- Check whether event is started or not
+- Update the event IPFSPath *
 
 #### Parameters
 
 | Name | Type | Description |
 |---|---|---|
-| tokenId | uint256 | undefined |
-| tokenIPFSPath | string | undefined |
+| tokenId | uint256 | Event tokenId |
+| tokenIPFSPath | string | Event startTime |
 
 
 
