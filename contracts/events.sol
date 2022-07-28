@@ -42,6 +42,10 @@ contract Events {
     ///@param user User address
     event Joined(uint256 indexed tokenId, address indexed user);
 
+    ///@param tokenId Event tokenId
+    event Featured(uint256 indexed tokenId);
+
+
     ///@notice Creates Event
     ///@dev Event organiser can call
     ///@param name Event name

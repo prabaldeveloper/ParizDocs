@@ -227,6 +227,22 @@ event EventAdded(uint256 indexed tokenId, string name, string _type, string desc
 | eventOrganiser  | address | address of the organiser |
 | ticketPrice  | uint256 | ticketPrice of event |
 
+### Featured
+
+```solidity
+event Featured(uint256 indexed tokenId)
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| tokenId `indexed` | uint256 | Event tokenId |
+
 ### Joined
 
 ```solidity
