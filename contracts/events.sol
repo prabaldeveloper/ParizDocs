@@ -142,6 +142,10 @@ contract Events {
     ///@dev Only admin can call
     ///@param paymentToken erc-20 token Address
     ///@param status status of the address(true or false)
+
+     /**
+     - Update the status of paymentToken
+     */
     function updateErc20TokenAddress(address paymentToken, bool status) public {
         
         /**
