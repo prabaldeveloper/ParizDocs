@@ -61,15 +61,15 @@ contract Events {
     ///@param ticketPrice ticketPrice of event
     ///@return tokenId Returns tokenId of the event
 
+    /**
+    * - Check whether venue is available.
+    * - Check whether event is paid or free for users.
+    * - Check whether venue fees is paid or it is mark as pay later.
+    * - Save all the fields in the contract.
+    */  
     function add(string memory name, string memory _type, string memory description, uint256 startTime, uint256 endTime, string memory tokenIPFSPath,
     uint256 venueTokenId, uint256 venueFees, bool payLater, bool isEventPaid, uint256 ticketPrice) public returns(uint256 tokenId){
-        
-        /**
-        - Check whether venue is available.
-        - Check whether event is paid or free for users.
-        - Check whether venue fees is paid or it is mark as pay later.
-        - Save all the fields in the contract.
-        */          
+                
 
     }
 
@@ -77,12 +77,13 @@ contract Events {
     ///@dev Only event organiser can call
     ///@param tokenId Event tokenId
     ///@param startTime Event startTime
+
+    /**
+    * - Check whether event is started or not.
+    * - Update the event startTime .
+    */
     function updateStartTime(uint256 tokenId, uint256 startTime) public {
         
-        /**
-        - Check whether event is started or not.
-        - Update the event startTime .
-        */
 
     }
     
@@ -90,12 +91,13 @@ contract Events {
     ///@dev Only event organiser can call
     ///@param tokenId Event tokenId
     ///@param tokenIPFSPath Event startTime
+
+    /**
+    * - Check whether event is started or not
+    * - Update the event IPFSPath 
+    */
     function updateTokenIPFSPath (uint256 tokenId, string memory tokenIPFSPath) public {
 
-        /**
-        - Check whether event is started or not
-        - Update the event IPFSPath 
-        */
 
     }
 
@@ -103,12 +105,13 @@ contract Events {
     ///@dev Only event organiser can call
     ///@param tokenId Event tokenId
     ///@param description Event description
+
+    /**
+    * - Check whether event is started or not
+    * - Update the event description
+    */
     function updateDescription (uint256 tokenId, string memory description) public {
         
-        /**
-        - Check whether event is started or not
-        - Update the event description
-        */
 
     }
 
@@ -116,24 +119,27 @@ contract Events {
     ///@param tokenId Event tokenId
     ///@param paymentToken Token Address
     ///@param ticketPrice Ticket Price
+
+    /**
+    * - Check whether event is paid or free
+    * - Check whether user paid the price.
+    * - Map event tokenId with user address
+    */
     function buyTicket (uint256 tokenId, address paymentToken, uint256 ticketPrice) public payable {
         
-        /**
-        - Check whether event is paid or free
-        - Check whether user paid the price.
-        - Map event tokenId with user address
-        */
+    
     }
 
     ///@notice Users can join events
     ///@param tokenId Event tokenId
+
+    /**
+    * - Check whether event is started or not
+    * - Check whether user has ticket if event is paid
+    * - Join the event
+    */
     function join(uint256 tokenId) public {
 
-        /**
-        - Check whether event is started or not
-        - Check whether user has ticket if event is paid
-        - Join the event
-        */
         
         
     }
@@ -144,24 +150,21 @@ contract Events {
     ///@param status status of the address(true or false)
 
      /**
-     - Update the status of paymentToken
+     * - Update the status of paymentToken
      */
     function updateErc20TokenAddress(address paymentToken, bool status) public {
         
-        /**
-        - Update the status of paymentToken
-        */
 
     }
 
     ///@notice Feature the event
     ///@dev Only admin can call
     ///@param tokenId Event tokenId
+    
+    /**
+    * - Mark the event as featured
+    */
     function featured(uint256 tokenId) public {
-
-        /**
-        - Mark the event as featured
-        */
 
     }
     
