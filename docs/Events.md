@@ -13,26 +13,27 @@ Users can create event and join events
 ### add
 
 ```solidity
-function add(string name, string _type, string description, uint256 startTime, uint256 endTime, string tokenIPFSPath, uint256 venueTokenId, uint256 venueFees, bool isPaid, uint256 ticketPrice) external nonpayable returns (uint256 tokenId)
+function add(string name, string _type, string description, uint256 startTime, uint256 endTime, string tokenIPFSPath, uint256 venueTokenId, uint256 venueFees, bool payLater, bool isEventPaid, uint256 ticketPrice) external nonpayable returns (uint256 tokenId)
 ```
 
 Creates Event
 
-
+*Event organiser can call*
 
 #### Parameters
 
 | Name | Type | Description |
 |---|---|---|
-| name | string | Event Name |
-| _type | string | Event Type |
+| name | string | Event name |
+| _type | string | Event type |
 | description | string | Event description |
 | startTime | uint256 | Event startTime |
 | endTime | uint256 | Event endTime |
 | tokenIPFSPath | string | Event tokenIPFSPath |
 | venueTokenId | uint256 | venueTokenId |
 | venueFees | uint256 | venueFees |
-| isPaid | bool | isEventPaid |
+| payLater | bool | pay venue fees now or later(true or false) |
+| isEventPaid | bool | isEventPaid(true or false) |
 | ticketPrice | uint256 | ticketPrice of event |
 
 #### Returns
@@ -59,6 +60,22 @@ Users can buy tickets
 | paymentToken | address | Token Address |
 | ticketPrice | uint256 | Ticket Price |
 
+### featured
+
+```solidity
+function featured(uint256 tokenId) external nonpayable
+```
+
+Feature the event
+
+*Only admin can call*
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| tokenId | uint256 | Event tokenId |
+
 ### join
 
 ```solidity
@@ -83,7 +100,7 @@ function updateDescription(uint256 tokenId, string description) external nonpaya
 
 Update event description
 
-
+*Only event organiser can call*
 
 #### Parameters
 
@@ -100,7 +117,7 @@ function updateErc20TokenAddress(address paymentToken, bool status) external non
 
 Supported tokens for the payment
 
-
+*Only admin can call*
 
 #### Parameters
 
@@ -117,7 +134,7 @@ function updateStartTime(uint256 tokenId, uint256 startTime) external nonpayable
 
 Update event startDate
 
-
+*Only event organiser can call*
 
 #### Parameters
 
@@ -134,7 +151,7 @@ function updateTokenIPFSPath(uint256 tokenId, string tokenIPFSPath) external non
 
 Update event IPFSPath
 
-
+*Only event organiser can call*
 
 #### Parameters
 

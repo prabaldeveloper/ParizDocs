@@ -24,6 +24,8 @@
     "hardhat": "^2.9.9"
   },
   "dependencies": {
+    "@openzeppelin/contracts": "^4.7.1",
+    "@openzeppelin/contracts-upgradeable": "^4.7.1",
     "@openzeppelin/hardhat-upgrades": "^1.16.1",
     "@primitivefi/hardhat-dodoc": "^0.2.3",
     "dotenv": "^16.0.0"

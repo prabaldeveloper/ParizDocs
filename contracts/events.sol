@@ -43,42 +43,69 @@ contract Events {
     event Joined(uint256 indexed tokenId, address indexed user);
 
     ///@notice Creates Event
-    ///@param name Event Name
-    ///@param _type Event Type
+    ///@dev Event organiser can call
+    ///@param name Event name
+    ///@param _type Event type
     ///@param description Event description
     ///@param startTime Event startTime
     ///@param endTime Event endTime
     ///@param tokenIPFSPath Event tokenIPFSPath
     ///@param venueTokenId venueTokenId
     ///@param venueFees venueFees
-    ///@param isPaid isEventPaid
+    ///@param payLater pay venue fees now or later(true or false)
+    ///@param isEventPaid isEventPaid(true or false)
     ///@param ticketPrice ticketPrice of event
     ///@return tokenId Returns tokenId of the event
 
     function add(string memory name, string memory _type, string memory description, uint256 startTime, uint256 endTime, string memory tokenIPFSPath,
-    uint256 venueTokenId, uint256 venueFees, bool isPaid, uint256 ticketPrice) public returns(uint256 tokenId){
+    uint256 venueTokenId, uint256 venueFees, bool payLater, bool isEventPaid, uint256 ticketPrice) public returns(uint256 tokenId){
+        
+        /**
+        - Check whether venue is available.
+        - Check whether event is paid or free for users.
+        - Check whether venue fees is paid or it is mark as pay later.
+        - Save all the fields in the contract.
+        */          
 
     }
 
     ///@notice Update event startDate
+    ///@dev Only event organiser can call
     ///@param tokenId Event tokenId
     ///@param startTime Event startTime
     function updateStartTime(uint256 tokenId, uint256 startTime) public {
+        
+        /**
+        - Check whether event is started or not.
+        - Update the event startTime .
+        */
 
     }
     
     ///@notice Update event IPFSPath
+    ///@dev Only event organiser can call
     ///@param tokenId Event tokenId
     ///@param tokenIPFSPath Event startTime
     function updateTokenIPFSPath (uint256 tokenId, string memory tokenIPFSPath) public {
-        
+
+        /**
+        - Check whether event is started or not
+        - Update the event IPFSPath 
+        */
+
     }
 
     ///@notice Update event description
+    ///@dev Only event organiser can call
     ///@param tokenId Event tokenId
     ///@param description Event description
     function updateDescription (uint256 tokenId, string memory description) public {
         
+        /**
+        - Check whether event is started or not
+        - Update the event description
+        */
+
     }
 
     ///@notice Users can buy tickets
@@ -87,18 +114,46 @@ contract Events {
     ///@param ticketPrice Ticket Price
     function buyTicket (uint256 tokenId, address paymentToken, uint256 ticketPrice) public payable {
         
+        /**
+        - Check whether event is paid or free
+        - Check whether user paid the price.
+        - Map event tokenId with user address
+        */
     }
 
     ///@notice Users can join events
     ///@param tokenId Event tokenId
     function join(uint256 tokenId) public {
+
+        /**
+        - Check whether event is started or not
+        - Check whether user has ticket if event is paid
+        - Join the event
+        */
+        
         
     }
 
     ///@notice Supported tokens for the payment
+    ///@dev Only admin can call
     ///@param paymentToken erc-20 token Address
     ///@param status status of the address(true or false)
     function updateErc20TokenAddress(address paymentToken, bool status) public {
+        
+        /**
+        - Update the status of paymentToken
+        */
+
+    }
+
+    ///@notice Feature the event
+    ///@dev Only admin can call
+    ///@param tokenId Event tokenId
+    function featured(uint256 tokenId) public {
+
+        /**
+        - Mark the event as featured
+        */
 
     }
     
