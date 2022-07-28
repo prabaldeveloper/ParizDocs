@@ -55,7 +55,8 @@ function buyTicket(uint256 tokenId, address paymentToken, uint256 ticketPrice) e
 Users can buy tickets
 
 *Public function
-- Check whether event is paid or free- Check whether user paid the price.
+- Check whether event is paid or free
+- Check whether user paid the price.
 - Map event tokenId with user address*
 
 #### Parameters
