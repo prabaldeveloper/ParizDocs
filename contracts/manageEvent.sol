@@ -20,11 +20,16 @@ contract ManageEvent {
 
     ///@notice Add the event guests
     ///@param eventTokenId event Token Id
-    ///@param guestName guest Name 
-    ///@param guestAddress guest Address
-    function addGuests(uint256 eventTokenId, string memory guestName, address guestAddress) public{
+    ///@param startTime Agenda startTime
+    ///@param endTime Agenda endTime
+    ///@param agenda agenda of the event
+    ///@param guestName[] guest Name 
+    ///@param guestAddress[] guest Address
+    
+    function addAgenda(uint256 eventTokenId, uint256 startTime, uint256 endTime,string memory agenda, string[] memory guestName, address[] memory guestAddress) public{
         
     }
+
 
     ///@notice Start the event
     ///@param eventTokenId event Token Id

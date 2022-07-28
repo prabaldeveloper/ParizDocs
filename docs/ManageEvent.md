@@ -10,10 +10,10 @@ Event owner can start event or can cancel event
 
 ## Methods
 
-### addGuests
+### addAgenda
 
 ```solidity
-function addGuests(uint256 eventTokenId, string guestName, address guestAddress) external nonpayable
+function addAgenda(uint256 eventTokenId, uint256 startTime, uint256 endTime, string agenda, string[] guestName, address[] guestAddress) external nonpayable
 ```
 
 Add the event guests
@@ -25,8 +25,11 @@ Add the event guests
 | Name | Type | Description |
 |---|---|---|
 | eventTokenId | uint256 | event Token Id |
-| guestName | string | guest Name  |
-| guestAddress | address | guest Address |
+| startTime | uint256 | Agenda startTime |
+| endTime | uint256 | Agenda endTime |
+| agenda | string | agenda of the event |
+| guestName | string[] | [] guest Name  |
+| guestAddress | address[] | [] guest Address |
 
 ### cancelEvent
 
