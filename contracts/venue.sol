@@ -19,14 +19,17 @@ contract Venue is VenueMetadata {
         uint256 totalCapacity;
         uint256 rentalAmount;
         string tokenCID;
-
     }
 
     
-
     mapping (uint256 => VenueDetails) public getVenueInfo;
 
-    mapping (uint256 => uint256[]) public venueBookTime;
+    mapping(address => mapping(uint256 => bool)) public rent;
+
+    mapping(uint256 => uint256) public venueStart;
+
+    mapping(uint256 => uint256) public venueEnd;
+
 
     ///@param tokenId Venue tokenId
     ///@param name Venue name
@@ -41,14 +44,19 @@ contract Venue is VenueMetadata {
     event VenueBooked(uint256 indexed tokenId, address eventOrganiser);
 
     
+    function initialize() public initializer {
+        _initializeNFT721Mint();
+        _updateBaseURI("https://ipfs.io/ipfs/");
+        
+    }
+
     ///@notice Adds venue
     ///@param _name Venue name
     ///@param _location Venue location
     ///@param _totalCapacity Venue totalCapacity
     ///@param _rentalAmount Venue rent
     ///@param _tokenCID Venue tokenIPFSPath
-    ///@return tokenId tokenId of the venue
-    function add(string memory _name, string memory _location, uint256 _totalCapacity, uint256 _rentalAmount, string memory _tokenCID) public returns(uint256 tokenId){
+    function add(string memory _name, string memory _location, uint256 _totalCapacity, uint256 _rentalAmount, string memory _tokenCID) public  onlyOwner {
 
         require(_totalCapacity !=0 && _rentalAmount !=0, "Venue: Wrong inputs provided");
         uint256 _tokenId =_mintInternal(_tokenCID);
@@ -71,19 +79,62 @@ contract Venue is VenueMetadata {
     ///@param startTime Venue startTime
     ///@param endTime Venue endTime
     ///@return _isAvailable Returns true if available
-    function isAvailable(uint256 tokenId, uint256 startTime, uint256 endTime) public returns(bool _isAvailable) {
+
+    function isAvailable(uint256 tokenId, uint256 startTime, uint256 endTime) internal returns(bool _isAvailable) {
+        //Under Discussion
+        
+        if(venueStart[tokenId] == 0 && venueEnd[tokenId] == 0) {
+            venueStart[tokenId] = startTime;
+            venueEnd[tokenId] = endTime;
+            return true;
+        }
+
+        else if(startTime > venueStart[tokenId] && startTime < venueEnd[tokenId]) {
+            return false;
+        }
+
+        else if(endTime > venueStart[tokenId] && endTime < venueEnd[tokenId])
+            return false;
+        
+        else {
+            venueStart[tokenId] = startTime;
+            venueEnd[tokenId] = endTime;
+            return true;
+        }
+     
+    }
+
+    ///@notice Saves the status whether rent is paid or not
+    ///@param eventOrganiser Event organiser address
+    ///@param tokenId Venue tokenId
+    ///@param _isRentPaid true or false
+    function rentPaid(address eventOrganiser, uint256 tokenId, bool _isRentPaid) internal {
+        rent[eventOrganiser][tokenId] = _isRentPaid;
 
     }
+
+    function isRentPaid(address eventOrganiser, uint256 tokenId) external view returns(bool){
+        return rent[eventOrganiser][tokenId];
+    }
+
+    function getRentalFees(uint256 tokenId) public view returns(uint256 _rentalFees){
+        require(_exists(tokenId), "Venue: TokenId does not exist");
+        return getVenueInfo[tokenId].rentalAmount;
+    }
     
+    function getTotalCapacity(uint256 tokenId) public view returns(uint256 _totalCapacity)  {
+        require(_exists(tokenId), "Venue: TokenId does not exist");
+        return getVenueInfo[tokenId].totalCapacity;
+    }
+
     ///@notice Book venue
     ///@param tokenId Venue tokenId
-    ///@param startTime Venue startTime 
-    ///@param endTime Venue endTime 
-    function bookVenue(uint256 tokenId, uint256 startTime, uint256 endTime) internal {
+    function bookVenue(uint256 tokenId) internal {
+        require(_exists(tokenId),"Venue: TokenId does not exist");
+        
         require(msg.value == getVenueInfo[tokenId].rentalAmount, "Venue: Rental Amount is less");
         transferFrom(msg.sender, address(this), msg.value);
-        venueBookTime[tokenId].push(startTime);
-        venueBookTime[tokenId].push(endTime);
+        rentPaid(msg.sender,tokenId, true);        
 
         emit VenueBooked(tokenId,msg.sender);
         
