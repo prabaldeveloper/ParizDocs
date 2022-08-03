@@ -36,6 +36,7 @@ Returns event details
 | Name | Type | Description |
 |---|---|---|
 | tokenId | BigInt | TokenId of the event |
+| venueTokenId | BigInt | Venue tokenId of the venue |
 | name | String | Name of the event |
 | type | String | type of the event |
 | description | String | Description of the event |
