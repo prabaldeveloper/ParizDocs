@@ -2,14 +2,17 @@
 
 pragma solidity ^0.8.0;
 
-import "../contracts/utils/EventMetadata.sol";
-import "../contracts/interface/Ivenue.sol";
+import "./interface/IVenue.sol";
+import "./utils/EventMetadata.sol";
+
+import "../contracts/interface/IConversion.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 ///@title Create and join events
 ///@author Prabal Srivastav
 ///@notice Users can create event and join events
 
-contract Events  is EventMetadata{
+contract Events  is EventMetadata {
 
     address private venueContract;
 
@@ -37,7 +40,22 @@ contract Events  is EventMetadata{
     mapping(uint256 => uint256) public ticketSold;
 
     //mapping for storing user's address who bought the ticket of an event
-    mapping(address => mapping(uint256 => bool)) public ticketBoughtAddress;
+    mapping(uint256 => mapping(address => bool)) public ticketBoughtAddress;
+
+    mapping(uint256 => bool) public featuredEvents;
+
+     mapping(address => mapping(uint256 => bool)) public favouriteEvents;
+
+     mapping(address => bool) public whiteListedAddress;
+
+    //map venue ID to eventId list which are booked in that venue
+    //when new event are created, add that event id to this array
+    mapping(uint256 => uint256[]) public eventsInVenue;
+
+    // Deviation Percentage
+    uint256 public deviationPercentage;
+
+    address conversionContract;
 
     ///@param tokenId Event tokenId
     ///@param name Event Name
@@ -76,12 +94,41 @@ contract Events  is EventMetadata{
     event Joined(uint256 indexed tokenId, address indexed user);
 
     ///@param tokenId Event tokenId
-    event Featured(uint256 indexed tokenId);
+    event Featured(uint256 indexed tokenId, bool isFeatured);
+
+    event Favourite(address user, uint256 indexed tokenId, bool isFavourite);
 
     event ERC20TokenUpdated(address indexed tokenAddress, bool status);
 
-    
+    event DeviationPercentage(uint256 percentage);
 
+    event WhiteList(address whiteListedAddress, bool _status);
+
+    modifier onlyWhitelistedUsers() {
+        require(
+            whiteListedAddress[msg.sender] == true,
+            "Events : User address not whitelisted"
+        );
+        _;
+    }
+
+    modifier isValidTime(uint256 startTime, uint256 endTime) {
+        require(
+            startTime < endTime && startTime >= block.timestamp,
+            "invalid time input"
+        );
+        _;
+    }
+
+    function initialize() public initializer {
+        Ownable.ownable_init();
+        _initializeNFT721Mint();
+        _updateBaseURI("https://ipfs.io/ipfs/");
+    
+    }
+
+
+    
     ///@notice Creates Event
     ///@dev Event organiser can call
     ///@dev - Check whether venue is available. 
@@ -100,13 +147,13 @@ contract Events  is EventMetadata{
     ///@param ticketPrice ticketPrice of event
     
     function add(string memory name, string memory _type, string memory description, uint256 startTime, uint256 endTime, string memory tokenIPFSPath,
-    uint256 venueTokenId, bool payNow, bool isEventPaid, uint256 ticketPrice) public payable {
-        require(IVenue(getVenueContract()).isAvailable(venueTokenId,startTime, endTime), "Venue: Venue is not available");
+    uint256 venueTokenId, bool payNow, address tokenAddress, uint256 venueFeeAmount, bool isEventPaid, uint256 ticketPrice) onlyWhitelistedUsers public payable {
+        uint256 _tokenId = _mintInternal(tokenIPFSPath);
+        require(isVenueAvailable(_tokenId, venueTokenId,startTime, endTime), "Events: Venue is not available");
         if(payNow == true) {
-            IVenue(getVenueContract()).bookVenue(venueTokenId, startTime, endTime);
+            IVenue(getVenueContract()).bookVenue(venueTokenId,tokenAddress,venueFeeAmount);
         }
         
-        uint256 _tokenId = _mintInternal(tokenIPFSPath);
         if(isEventPaid == false) {
             ticketPrice = 0;
         }
@@ -138,6 +185,49 @@ contract Events  is EventMetadata{
         return venueContract;
     }
 
+    function updateConversionContract(address _conversionContract) public onlyOwner {
+        conversionContract = _conversionContract;
+
+    }
+
+    function getConversionContract() public view returns(address) {
+        return conversionContract;
+    }
+
+    ///@notice Check for venue availability
+    ///@param eventTokenId eventTokenId
+    ///@param venueTokenId Venue tokenId
+    ///@param startTime Venue startTime
+    ///@param endTime Venue endTime
+    ///@return _isAvailable Returns true if available
+
+    function isVenueAvailable(uint256 eventTokenId, uint256 venueTokenId, uint256 startTime, uint256 endTime) internal isValidTime(startTime, endTime) returns(bool _isAvailable) {
+        uint256[] memory bookedEvents = eventsInVenue[venueTokenId];
+        uint256 currentTime = block.timestamp;
+        for(uint256 i = 0; i < bookedEvents.length; i++) {
+            uint256 bookedStartTime = getEventDetails[bookedEvents[i]].startTime;
+            uint256 bookedEndTime = getEventDetails[bookedEvents[i]].endTime;
+            // skip for passed event
+            if (currentTime >= bookedEndTime)
+                continue;
+            if (currentTime >= bookedStartTime && currentTime <= bookedEndTime) {  //check for ongoing event
+                if (startTime >= bookedEndTime) {
+                continue;
+                } else {
+                return false;
+                }
+            } else {  //check for future event
+                if (endTime <= bookedStartTime || startTime >= bookedEndTime ) {
+                continue;
+                } else {
+                return false;
+                }
+            }
+        }
+        eventsInVenue[venueTokenId].push(eventTokenId);
+        return true;
+    }
+
     ///@notice Update event startTime
     ///@dev Only event organiser can call
     ///@dev - Check whether event is started or not.
@@ -162,7 +252,7 @@ contract Events  is EventMetadata{
     ///@param tokenId Event tokenId
     ///@param tokenIPFSPath Event startTime
 
-    function updateTokenIPFSPath (uint256 tokenId, string memory tokenIPFSPath) public {
+    function updateTokenIPFSPath(uint256 tokenId, string memory tokenIPFSPath) public {
         require(_exists(tokenId), "Events: TokenId does not exist");
         require(msg.sender == getEventDetails[tokenId].eventOrganiser, "Events: Address is not the event organiser address");
         require(getEventDetails[tokenId].startTime > block.timestamp,"Events: Event is started");
@@ -189,33 +279,61 @@ contract Events  is EventMetadata{
         
     }
 
+    /**
+    * @notice To check amount is within deviation percentage.
+    */
+
+    function checkDeviation(uint256 feeAmount, uint256 price) public view {
+        require(
+            feeAmount >= price - ((price*(deviationPercentage))/(100)) &&
+                feeAmount <=
+                price + ((price*(deviationPercentage))/(100)),
+            "Events: Amount not within deviation percentage"
+        );
+    }
+
+    
+    function checkFees(uint256 tokenId, address tokenAddress, uint256 feeAmount) internal {
+        address eventOrganiser = getEventDetails[tokenId].eventOrganiser;
+        uint256 price = IConversion(conversionContract).convertFee(tokenAddress, getEventDetails[tokenId].ticketPrice);
+
+        if(tokenAddress!= address(0)) {
+            checkDeviation(feeAmount, price);
+            IERC20(tokenAddress).transferFrom(msg.sender, eventOrganiser, feeAmount);
+        }
+
+        else {
+            checkDeviation(msg.value, price);
+            transferFrom(msg.sender, eventOrganiser, msg.value);
+        }
+    }
+
     ///@notice Users can buy tickets
     ///@dev Public function
     ///@dev - Check whether event is paid or free
     ///@dev - Check whether user paid the price.
     ///@dev - Map event tokenId with user address
     ///@param tokenId Event tokenId
-    ///@param paymentToken Token Address
+    ///@param tokenAddress Token Address
+    ///@param ticketPrice ticket Price
 
-    function buyTicket(uint256 tokenId, address paymentToken) public payable {
-        //Only matic is supported as of now
+    //Q.  How to accomodate the guests in the venue
+    function buyTicket(uint256 tokenId, address tokenAddress, uint256 ticketPrice) public payable {
     
         require(_exists(tokenId), "Events: TokenId does not exist");
-        uint256 ticketPrice = getEventDetails[tokenId].ticketPrice;
-        require(ticketPrice!=0, "Events: Event is free");
+        uint256 price = getEventDetails[tokenId].ticketPrice;
+        require(price!=0, "Events: Event is free");
+        require(erc20TokenAddress[tokenAddress] == true, "Events: PaymentToken Not Supported");
         uint256 eventTokenId = getEventDetails[tokenId].venueTokenId;
         uint256 totalCapacity = IVenue(getVenueContract()).getTotalCapacity(eventTokenId);
-        
-        address eventOrganiser = getEventDetails[tokenId].eventOrganiser;
         require(ticketSold[tokenId] < totalCapacity, "Event: All tickets are sold");
-        require(msg.value == ticketPrice, "Event: Ticket amount is less");
-        transferFrom(msg.sender, eventOrganiser , msg.value);
-        ticketBoughtAddress[msg.sender][tokenId] = true;
+        checkFees(tokenId, tokenAddress, ticketPrice);
+        ticketBoughtAddress[tokenId][msg.sender] = true;
         ticketSold[tokenId]++;
 
-        emit Bought(tokenId, paymentToken, msg.sender);
+        emit Bought(tokenId, tokenAddress, msg.sender);
 
-    
+
     }
 
     ///@notice Users can join events
@@ -226,8 +344,10 @@ contract Events  is EventMetadata{
     ///@param tokenId Event tokenId
 
     function join(uint256 tokenId) public {
+         require(ticketBoughtAddress[tokenId][msg.sender] == true, "Events: No ticket");
+         require(getEventDetails[tokenId].startTime >= block.timestamp,"Events: Event is started");
 
-        
+         emit Joined(tokenId, msg.sender); 
         
     }
 
@@ -248,9 +368,41 @@ contract Events  is EventMetadata{
     ///@dev Only admin can call
     ///@dev - Mark the event as featured
     ///@param tokenId Event tokenId
+    ///@param isFeatured Event featured
     
-    function featured(uint256 tokenId) public {
+    function featured(uint256 tokenId, bool isFeatured) public onlyOwner {
+        require(_exists(tokenId), "Events: TokenId does not exist");
+        featuredEvents[tokenId] = isFeatured;
+
+        emit Featured(tokenId, isFeatured);
+
+    }   
+
+    function favourite(uint256 tokenId, bool isFavourite) public {
+        require(_exists(tokenId), "Events: TokenId does not exist");
+        favouriteEvents[msg.sender][tokenId] = isFavourite;
+        emit Favourite(msg.sender , tokenId, isFavourite);
 
     }
+
+    /**
+     * @notice Allows Admin to update deviation percentage
+     */
+    function adminUpdateDeviation(uint256 _deviationPercentage)
+        public
+        onlyOwner
+    {
+        deviationPercentage = _deviationPercentage;
+        emit DeviationPercentage(_deviationPercentage);
+    }
     
+    function updateWhitelist(
+        address[] memory _whitelistAddresses,
+        bool[] memory _status
+    ) public onlyOwner {
+        for (uint256 i = 0; i < _whitelistAddresses.length; i++) {
+            whiteListedAddress[_whitelistAddresses[i]] = _status[i];
+            emit WhiteList(_whitelistAddresses[i], _status[i]);
+        }
+    }
 }       

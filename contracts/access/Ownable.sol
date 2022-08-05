@@ -29,10 +29,10 @@ abstract contract Ownable is ContextUpgradeable {
     /**
      * @dev Initializes the contract setting the deployer as the initial owner.
      */
-    constructor() {
+     function ownable_init() internal initializer {
         _transferOwnership(_msgSender());
     }
-
+    
     /**
      * @dev Throws if called by any account other than the owner.
      */

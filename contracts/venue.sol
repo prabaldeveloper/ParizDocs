@@ -4,6 +4,8 @@ pragma solidity ^0.8.0;
 
 
 import "../contracts/utils/VenueMetadata.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "../contracts/interface/IConversion.sol";
 
 ///@title Add and book venue 
 ///@author Prabal Srivastav
@@ -20,15 +22,22 @@ contract Venue is VenueMetadata {
         uint256 rentalAmount;
         string tokenCID;
     }
-
     
     mapping (uint256 => VenueDetails) public getVenueInfo;
 
     mapping(address => mapping(uint256 => bool)) public rent;
 
-    mapping(uint256 => uint256) public venueStart;
+    // mapping(uint256 => uint256) public venueStart;
 
-    mapping(uint256 => uint256) public venueEnd;
+    // mapping(uint256 => uint256) public venueEnd;
+
+    //mapping for getting supported erc20TokenAddress
+    mapping(address => bool) public erc20TokenAddress;
+
+    // Deviation Percentage
+    uint256 public deviationPercentage;
+
+    address conversionContract;
 
 
     ///@param tokenId Venue tokenId
@@ -41,10 +50,15 @@ contract Venue is VenueMetadata {
 
     ///@param tokenId Venue tokenId
     ///@param eventOrganiser eventOrganiser address
-    event VenueBooked(uint256 indexed tokenId, address eventOrganiser);
+    event VenueBooked(uint256 indexed tokenId, address eventOrganiser, address tokenAddress);
+
+    event ERC20TokenUpdatedVenue(address indexed tokenAddress, bool status);
+
+    event DeviationPercentage(uint256 percentage);
 
     
     function initialize() public initializer {
+        Ownable.ownable_init();
         _initializeNFT721Mint();
         _updateBaseURI("https://ipfs.io/ipfs/");
         
@@ -74,34 +88,13 @@ contract Venue is VenueMetadata {
 
     }
 
-    ///@notice Check for venue availability
-    ///@param tokenId Venue tokenId
-    ///@param startTime Venue startTime
-    ///@param endTime Venue endTime
-    ///@return _isAvailable Returns true if available
+    function updateConversionContract(address _conversionContract) public onlyOwner {
+        conversionContract = _conversionContract;
 
-    function isAvailable(uint256 tokenId, uint256 startTime, uint256 endTime) internal returns(bool _isAvailable) {
-        //Under Discussion
-        
-        if(venueStart[tokenId] == 0 && venueEnd[tokenId] == 0) {
-            venueStart[tokenId] = startTime;
-            venueEnd[tokenId] = endTime;
-            return true;
-        }
+    }
 
-        else if(startTime > venueStart[tokenId] && startTime < venueEnd[tokenId]) {
-            return false;
-        }
-
-        else if(endTime > venueStart[tokenId] && endTime < venueEnd[tokenId])
-            return false;
-        
-        else {
-            venueStart[tokenId] = startTime;
-            venueEnd[tokenId] = endTime;
-            return true;
-        }
-     
+    function getConversionContract() public view returns(address) {
+        return conversionContract;
     }
 
     ///@notice Saves the status whether rent is paid or not
@@ -127,18 +120,69 @@ contract Venue is VenueMetadata {
         return getVenueInfo[tokenId].totalCapacity;
     }
 
+    /**
+    * @notice To check amount is within deviation percentage.
+    */
+
+    function checkDeviation(uint256 feeAmount, uint256 price) public view {
+        require(
+            feeAmount >= price - ((price*(deviationPercentage))/(100)) &&
+                feeAmount <=
+                price + ((price*(deviationPercentage))/(100)),
+            "Venue: Amount not within deviation percentage"
+        );
+    }
+
+    function checkFees(uint256 tokenId, address tokenAddress, uint256 feeAmount) internal {
+        require(_exists(tokenId),"Venue: TokenId does not exist");
+        require(erc20TokenAddress[tokenAddress] == true, "Venue: PaymentToken Not Supported");
+        uint256 price = IConversion(conversionContract).convertFee(tokenAddress, getRentalFees(tokenId));
+
+        if(tokenAddress!= address(0)) {
+            checkDeviation(feeAmount, price);
+            IERC20(tokenAddress).transferFrom(msg.sender, address(this), feeAmount);
+        }
+
+        else {
+            checkDeviation(msg.value, price);
+            transferFrom(msg.sender, address(this), msg.value);
+        }
+    }
+
     ///@notice Book venue
     ///@param tokenId Venue tokenId
-    function bookVenue(uint256 tokenId) internal {
-        require(_exists(tokenId),"Venue: TokenId does not exist");
-        
-        require(msg.value == getVenueInfo[tokenId].rentalAmount, "Venue: Rental Amount is less");
-        transferFrom(msg.sender, address(this), msg.value);
+    ///@param tokenAddress erc20 tokenAddress
+
+    function bookVenue(uint256 tokenId, address tokenAddress, uint256 feeAmount) internal {
+        checkFees(tokenId,tokenAddress, feeAmount);
         rentPaid(msg.sender,tokenId, true);        
 
-        emit VenueBooked(tokenId,msg.sender);
-        
-
+        emit VenueBooked(tokenId, msg.sender, tokenAddress);
     }   
+
+    ///@notice Supported tokens for the payment
+    ///@dev Only admin can call
+    ///@dev -  Update the status of paymentToken
+    ///@param tokenAddress erc-20 token Address
+    ///@param status status of the address(true or false)
+
+    function updateErc20TokenAddress(address tokenAddress, bool status) public onlyOwner {
+        erc20TokenAddress[tokenAddress] = status;
+
+        emit ERC20TokenUpdatedVenue(tokenAddress, status);
+        
+    }
+
+    /**
+     * @notice Allows Admin to update deviation percentage
+     */
+    function adminUpdateDeviation(uint256 _deviationPercentage)
+        public
+        onlyOwner
+    {
+        deviationPercentage = _deviationPercentage;
+        emit DeviationPercentage(_deviationPercentage);
+    }
     
 }       
+
