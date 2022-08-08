@@ -2,9 +2,8 @@
 
 pragma solidity ^0.8.0;
 
-
-import "../contracts/utils/VenueMetadata.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "../contracts/utils/VenueMetadata.sol";
 import "../contracts/interface/IConversion.sol";
 
 ///@title Add and book venue 
@@ -13,32 +12,31 @@ import "../contracts/interface/IConversion.sol";
 
 contract Venue is VenueMetadata {
 
-    struct VenueDetails{
+    ///Details of the venue
+    struct Details{
         string name;
         string location;        
         uint256 tokenId;
-        address venueOwner;
+        address owner;
         uint256 totalCapacity;
         uint256 rentalAmount;
         string tokenCID;
     }
     
-    mapping (uint256 => VenueDetails) public getVenueInfo;
+    //mapping for getting venue details
+    mapping (uint256 => Details) public getInfo;
 
-    mapping(address => mapping(uint256 => bool)) public rent;
-
-    // mapping(uint256 => uint256) public venueStart;
-
-    // mapping(uint256 => uint256) public venueEnd;
+    //mapping for getting rent status
+    mapping(address => mapping(uint256 => bool)) public rentStatus;
 
     //mapping for getting supported erc20TokenAddress
-    mapping(address => bool) public erc20TokenAddress;
+    mapping(address => bool) public erc20TokenStatus;
 
     // Deviation Percentage
-    uint256 public deviationPercentage;
+    uint256 private deviationPercentage;
 
-    address conversionContract;
-
+    //conversion contract
+    address private conversionContract;
 
     ///@param tokenId Venue tokenId
     ///@param name Venue name
@@ -50,18 +48,41 @@ contract Venue is VenueMetadata {
 
     ///@param tokenId Venue tokenId
     ///@param eventOrganiser eventOrganiser address
-    event VenueBooked(uint256 indexed tokenId, address eventOrganiser, address tokenAddress);
+    event VenueBooked(uint256 indexed tokenId, address eventOrganiser);
 
-    event ERC20TokenUpdatedVenue(address indexed tokenAddress, bool status);
+    ///@param tokenAddress tokenAddress of the token
+    ///@param status status of the token
+    event ERC20TokenUpdated(address indexed tokenAddress, bool status);
 
-    event DeviationPercentage(uint256 percentage);
+    ///@param percentage percentage
+    event DeviationPercentageUpdated(uint256 percentage);
 
+    ///@param conversionContract conversionContract address
+    event ConversionContractUpdated(address conversionContract);
     
-    function initialize() public initializer {
-        Ownable.ownable_init();
-        _initializeNFT721Mint();
-        _updateBaseURI("https://ipfs.io/ipfs/");
+
+    ///@notice Allows Admin to update deviation percentage
+    function updateDeviation(uint256 _deviationPercentage) external onlyOwner {
+        deviationPercentage = _deviationPercentage;
+        emit DeviationPercentageUpdated(_deviationPercentage);
+    }
+    
+    ///@notice Supported tokens for the payment
+    ///@dev Only admin can call
+    ///@dev -  Update the status of paymentToken
+    ///@param tokenAddress erc-20 token Address
+    ///@param status status of the address(true or false)
+    function updateErc20TokenAddress(address tokenAddress, bool status) external onlyOwner {
+        erc20TokenStatus[tokenAddress] = status;
+        emit ERC20TokenUpdated(tokenAddress, status);
         
+    }
+
+    ///@notice updates conversionContract address
+    ///@param _conversionContract conversionContract address
+    function updateConversionContract(address _conversionContract) external onlyOwner {
+        conversionContract = _conversionContract;
+        emit ConversionContractUpdated(_conversionContract);
     }
 
     ///@notice Adds venue
@@ -70,11 +91,11 @@ contract Venue is VenueMetadata {
     ///@param _totalCapacity Venue totalCapacity
     ///@param _rentalAmount Venue rent
     ///@param _tokenCID Venue tokenIPFSPath
-    function add(string memory _name, string memory _location, uint256 _totalCapacity, uint256 _rentalAmount, string memory _tokenCID) public  onlyOwner {
+    function add(string memory _name, string memory _location, uint256 _totalCapacity, uint256 _rentalAmount, string memory _tokenCID) external onlyOwner {
 
-        require(_totalCapacity !=0 && _rentalAmount !=0, "Venue: Wrong inputs provided");
+        require(_totalCapacity !=0 && _rentalAmount !=0, "Venue: Invalid inputs");
         uint256 _tokenId =_mintInternal(_tokenCID);
-        getVenueInfo[_tokenId] = VenueDetails(
+        getInfo[_tokenId] = Details(
             _name,
             _location,
             _tokenId,
@@ -88,42 +109,47 @@ contract Venue is VenueMetadata {
 
     }
 
-    function updateConversionContract(address _conversionContract) public onlyOwner {
-        conversionContract = _conversionContract;
-
+    function initialize() public initializer {
+        Ownable.ownable_init();
+        _initializeNFT721Mint();
+        _updateBaseURI("https://ipfs.io/ipfs/");
+        
     }
 
+    ///@notice Returns conversionContract address
     function getConversionContract() public view returns(address) {
         return conversionContract;
     }
 
-    ///@notice Saves the status whether rent is paid or not
-    ///@param eventOrganiser Event organiser address
+    ///@notice Returns deviationPercentage
+    function getDeviationPercentage() public view returns(uint256) {
+        return deviationPercentage;
+    }
+
+    ///@notice Returns rental fees of the venue
     ///@param tokenId Venue tokenId
-    ///@param _isRentPaid true or false
-    function rentPaid(address eventOrganiser, uint256 tokenId, bool _isRentPaid) internal {
-        rent[eventOrganiser][tokenId] = _isRentPaid;
-
-    }
-
-    function isRentPaid(address eventOrganiser, uint256 tokenId) external view returns(bool){
-        return rent[eventOrganiser][tokenId];
-    }
-
     function getRentalFees(uint256 tokenId) public view returns(uint256 _rentalFees){
         require(_exists(tokenId), "Venue: TokenId does not exist");
-        return getVenueInfo[tokenId].rentalAmount;
+        return getInfo[tokenId].rentalAmount;
     }
-    
+
+    ///@notice Returns true if rent paid
+    ///@param eventOrganiser eventOrganiser address
+    ///@param tokenId Venue tokenId
+    function isRentPaid(address eventOrganiser, uint256 tokenId) public view returns(bool){
+        return rentStatus[eventOrganiser][tokenId];
+    }
+
+    ///@notice Returns rental fees of the venue
+    ///@param tokenId Venue tokenId
     function getTotalCapacity(uint256 tokenId) public view returns(uint256 _totalCapacity)  {
         require(_exists(tokenId), "Venue: TokenId does not exist");
-        return getVenueInfo[tokenId].totalCapacity;
+        return getInfo[tokenId].totalCapacity;
     }
 
-    /**
-    * @notice To check amount is within deviation percentage.
-    */
-
+    ///@notice To check amount is within deviation percentage
+    ///@param feeAmount fee of the venue
+    ///@param price price from the conversion contract
     function checkDeviation(uint256 feeAmount, uint256 price) public view {
         require(
             feeAmount >= price - ((price*(deviationPercentage))/(100)) &&
@@ -132,10 +158,23 @@ contract Venue is VenueMetadata {
             "Venue: Amount not within deviation percentage"
         );
     }
+    
+    ///@notice Saves the status whether rent is paid or not
+    ///@param eventOrganiser Event organiser address
+    ///@param tokenId Venue tokenId
+    ///@param _isRentPaid true or false
+    function rentPaid(address eventOrganiser, uint256 tokenId, bool _isRentPaid) internal {
+        rentStatus[eventOrganiser][tokenId] = _isRentPaid;
 
+    }
+    
+    ///@notice To check whether token is matic or any other token
+    ///@param tokenId Venue tokenId
+    ///@param tokenAddress erc20 tokenAddress
+    ///@param feeAmount fee of the venue
     function checkFees(uint256 tokenId, address tokenAddress, uint256 feeAmount) internal {
         require(_exists(tokenId),"Venue: TokenId does not exist");
-        require(erc20TokenAddress[tokenAddress] == true, "Venue: PaymentToken Not Supported");
+        require(erc20TokenStatus[tokenAddress] == true, "Venue: PaymentToken Not Supported");
         uint256 price = IConversion(conversionContract).convertFee(tokenAddress, getRentalFees(tokenId));
 
         if(tokenAddress!= address(0)) {
@@ -152,37 +191,13 @@ contract Venue is VenueMetadata {
     ///@notice Book venue
     ///@param tokenId Venue tokenId
     ///@param tokenAddress erc20 tokenAddress
-
+    ///@param feeAmount fee of the venue
     function bookVenue(uint256 tokenId, address tokenAddress, uint256 feeAmount) internal {
         checkFees(tokenId,tokenAddress, feeAmount);
         rentPaid(msg.sender,tokenId, true);        
 
-        emit VenueBooked(tokenId, msg.sender, tokenAddress);
-    }   
-
-    ///@notice Supported tokens for the payment
-    ///@dev Only admin can call
-    ///@dev -  Update the status of paymentToken
-    ///@param tokenAddress erc-20 token Address
-    ///@param status status of the address(true or false)
-
-    function updateErc20TokenAddress(address tokenAddress, bool status) public onlyOwner {
-        erc20TokenAddress[tokenAddress] = status;
-
-        emit ERC20TokenUpdatedVenue(tokenAddress, status);
-        
-    }
-
-    /**
-     * @notice Allows Admin to update deviation percentage
-     */
-    function adminUpdateDeviation(uint256 _deviationPercentage)
-        public
-        onlyOwner
-    {
-        deviationPercentage = _deviationPercentage;
-        emit DeviationPercentage(_deviationPercentage);
-    }
-    
+        emit VenueBooked(tokenId, msg.sender);
+    }      
+     
 }       
 
