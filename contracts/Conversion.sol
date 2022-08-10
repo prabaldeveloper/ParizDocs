@@ -58,7 +58,7 @@ contract Conversion is Initializable, Ownable {
     /**
      * @notice To convert usd to equivalent amount of token.
      */
-    function convertFee(address paymentToken, uint256 mintFee)
+    function convertFee(address paymentToken, uint256 fee)
         public
         view
         returns (uint256)
@@ -68,10 +68,10 @@ contract Conversion is Initializable, Ownable {
             decimal = IERC20Metadata(paymentToken).decimals();
         }
         if (paymentToken == USX) {
-            return mintFee*(10**decimal)/(PRICE_PRECISION);
+            return fee*(10**decimal)/(PRICE_PRECISION);
         }
         if (paymentToken == Trace) {
-            return getTraceAmount(mintFee);
+            return getTraceAmount(fee);
         }
 
         IAggregatorV3Interface fetchPrice = IAggregatorV3Interface(
@@ -79,14 +79,14 @@ contract Conversion is Initializable, Ownable {
         );
         uint256 price = getChainlinkPrice(fetchPrice);
 
-        price = mintFee*(1E18)*(10**decimal)/(price)/(
+        price = fee*(1E18)*(10**decimal)/(price)/(
             PRICE_PRECISION
         );
         return price;
     }
 
-    function getTraceAmount(uint256 mintFee) public view returns (uint256) {
-        return mintFee*(getSwapPrice(USD, Trace))*(100);
+    function getTraceAmount(uint256 fee) public view returns (uint256) {
+        return fee*(getSwapPrice(USD, Trace))*(100);
     }
 
     function getSwapPrice(address tokenA, address tokenB)

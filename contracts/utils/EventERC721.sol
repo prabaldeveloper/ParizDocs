@@ -58,7 +58,7 @@ import "../access/Ownable.sol";
      */
     function __ERC721_init() internal onlyInitializing {
         _name = "Event NFT";
-        _symbol = "EVENtNFT";
+        _symbol = "EventNFT";
     }
 
     /**

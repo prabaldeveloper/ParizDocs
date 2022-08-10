@@ -27,12 +27,6 @@ abstract contract EventMetadata is EventERC721 {
         private creatorToIPFSHashToMinted;
 
     event BaseURIUpdated(string baseURI);
-    // These events were used in an older version of the contract
-    event TokenIPFSPathUpdated(
-        uint256 indexed tokenId,
-        string indexed indexedTokenIPFSPath,
-        string tokenIPFSPath
-    );
     event NFTMetadataUpdated(string name, string symbol, string baseURI);
     event TokenCreatorUpdated(
         address indexed fromCreator,
