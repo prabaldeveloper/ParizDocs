@@ -189,7 +189,17 @@ contract Events  is EventMetadata {
         uint256 _tokenId = _mintInternal(tokenCID);
         require(isVenueAvailable(_tokenId, venueTokenId,startTime, endTime), "Events: Venue is not available");
         if(payNow == true) {
-            IVenue(getVenueContract()).bookVenue(msg.sender, venueTokenId, tokenAddress,venueFeeAmount);
+            if(tokenAddress!= address(0)) 
+                IVenue(getVenueContract()).bookVenue(msg.sender, venueTokenId, tokenAddress,venueFeeAmount);
+            
+            else {
+            //     (bool success, ) = payable(getVenueContract()).call{
+            //     value: msg.value,
+            //     gas: 200000
+            // }(abi.encodeWithSignature("bookVenue(address,uint256,address,uint256)",msg.sender, venueTokenId, tokenAddress, venueFeeAmount));
+             //_callee.setXandSendEther{value: msg.value}(_x);
+             IVenue(getVenueContract()).bookVenue{value: msg.value}(msg.sender, venueTokenId, tokenAddress, venueFeeAmount);
+            }
         }
         
         if(isEventPaid == false) {

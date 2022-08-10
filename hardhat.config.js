@@ -43,7 +43,7 @@ module.exports = {
     mainnet: {
       url: MAINNET_RPC_URL,
       accounts: [MAINNET_PRIVATE_KEY],
-      gasPrice: 100000000000,
+      gasPrice: 50000000000,
       // accounts: {
       //   mnemonic: MNEMONIC,
       // },

@@ -63,6 +63,8 @@ contract Venue is VenueMetadata {
     ///@param conversionContract conversionContract address
     event ConversionContractUpdated(address conversionContract);
     
+    receive() external payable    
+    {  }
 
     ///@notice Allows Admin to update deviation percentage
     ///@param _deviationPercentage deviationPercentage

@@ -15,60 +15,80 @@ async function main() {
     const factory = "0x5757371414417b8c6caad45baef941abc7d3ab32";
     
 
-    const venueContract = await ethers.getContractFactory("Venue");
-    const venueTreasury = await upgrades.deployProxy(venueContract, { initializer: 'initialize' })
-    await new Promise(res => setTimeout(res, 5000));
+    // const venueContract = await ethers.getContractFactory("Venue");
+    // const venueTreasury = await upgrades.deployProxy(venueContract, { initializer: 'initialize' })
+    // await venueTreasury.deployed();
+    // await new Promise(res => setTimeout(res, 1000));
 
-    console.log("Venue proxy", venueTreasury.address);
-    await new Promise(res => setTimeout(res, 5000));
+    // console.log("Venue proxy", venueTreasury.address);
 
-    await venueTreasury.add("VenueOne", "Test Location", 50, 10000000000, "QmUtVYmeTh2kALCGJhbHPeu5ezLXSbSpV9rVcZRdFsTGNG");
-    await new Promise(res => setTimeout(res, 5000));
+    const venueProxy = await hre.ethers.getContractFactory("Venue");
+    const venueTreasury = await venueProxy.attach("0xaB72661D28E39a5BEf3176e86c1e255dAF76A448");
+    
+    // await new Promise(res => setTimeout(res, 1000));
+    // await venueTreasury.updateErc20TokenAddress(MATIC, true);
+    
+    // await new Promise(res => setTimeout(res, 1000));
+    // await venueTreasury.updateErc20TokenAddress(USDC, true);
+    
+    // await new Promise(res => setTimeout(res, 1000));
+    // await venueTreasury.updateErc20TokenAddress(Trace, true);
+   
 
-    await venueTreasury.add("VenueTwo", "Test Location Two", 20, 200000000, "QmZnwDAg98s3Qq8aYd1Xoz1hJu3dYa8J76JeUHs6M5fnqM");
-    await new Promise(res => setTimeout(res, 5000));
+    //////// ************ DEPLOY CONVERSION **************/////
 
-    await venueTreasury.adminUpdateDeviation(5);
-    await new Promise(res => setTimeout(res, 5000));
+    // const Conversion = await ethers.getContractFactory("Conversion");
+    // const conversion = await upgrades.deployProxy(Conversion, { initializer: 'initialize' })
+    // await conversion.deployed();
 
-    await venueTreasury.updateErc20TokenAddress(MATIC, true);
-    await new Promise(res => setTimeout(res, 5000));
+    // await new Promise(res => setTimeout(res, 1000));
 
-    await venueTreasury.updateErc20TokenAddress(USDC, true);
-    await new Promise(res => setTimeout(res, 5000));
+    // console.log("conversion proxy", conversion.address);
 
-    await venueTreasury.updateErc20TokenAddress(Trace, true);
-    await new Promise(res => setTimeout(res, 5000));
+    // const Conversion = await hre.ethers.getContractFactory("Conversion");
+    // const conversion = await Conversion.attach("0x02e90531aac91fD8e6B8a5F323cE171DD3c29AdF");
 
-    /// ************ DEPLOY CONVERSION **************/////
+    ////// ************ ADD PRICE FEED ADDRESS **************/////
 
-    const Conversion = await ethers.getContractFactory("Conversion");
-    const conversion = await upgrades.deployProxy(Conversion, { initializer: 'initialize' })
-    await new Promise(res => setTimeout(res, 100));
+    // await conversion.addToken(MATIC, PRICE_MATIC_USD);
+    // await new Promise(res => setTimeout(res, 1000));
 
-    console.log("conversion proxy", conversion.address);
+    // await conversion.addToken(USDC, PRICE_USDC_USD);
+    // await new Promise(res => setTimeout(res, 1000));
 
-    //// ************ ADD PRICE FEED ADDRESS **************/////
+    // await conversion.addToken(USX, router);
+    // await new Promise(res => setTimeout(res, 3000));
 
-    await new Promise(res => setTimeout(res, 100));
-    await conversion.addToken(MATIC, PRICE_MATIC_USD);
+    // await conversion.addToken(Trace, router);
+    // await new Promise(res => setTimeout(res, 3000));
 
-    //await new Promise(res => setTimeout(res, 100));
-    await conversion.addToken(USDC, PRICE_USDC_USD);
-
-    await conversion.addToken(USX, router);
-
-    await new Promise(res => setTimeout(res, 100));
-    await conversion.addToken(Trace, router);
-
-    await new Promise(res => setTimeout(res, 100));
-    await conversion.adminUpdate(USX, Trace, router, factory);
+    // await conversion.adminUpdate(USX, Trace, router, factory);
+    // await new Promise(res => setTimeout(res, 3000));
 
 
-    await venueTreasury.updateConversionContract(conversion.address);
-    await new Promise(res => setTimeout(res, 10000));
-    console.log(await venueTreasury.getConversionContract());
+    //  const venueProxy = await hre.ethers.getContractFactory("Venue");
+    //  const venueTreasury = await venueProxy.attach("0x654A044757433B2a5d4556C8aDb7B03e90f2bAD7");
+    //  console.log(await venueTreasury.getConversionContract());
 
+    // await venueTreasury.updateConversionContract("0x02e90531aac91fD8e6B8a5F323cE171DD3c29AdF");
+    // await new Promise(res => setTimeout(res, 1000));
+
+    // await venueTreasury.updateDeviation(5);
+    // await new Promise(res => setTimeout(res, 1000));
+
+    //console.log("Address",await venueTreasury.getConversionContract());
+
+    // await venueTreasury.add("Pariz Convention Center", "12,092", "Concert", 50, 100000000, "QmUtVYmeTh2kALCGJhbHPeu5ezLXSbSpV9rVcZRdFsTGNG");
+    // await new Promise(res => setTimeout(res, 1000));
+
+    // await venueTreasury.add("Pariz Fashion Gallery", "12,093", "Fashion Show", 20, 200000001, "QmZnwDAg98s3Qq8aYd1Xoz1hJu3dYa8J76JeUHs6M5fnqM");
+    // await new Promise(res => setTimeout(res, 1000));
+
+    // await venueTreasury.add("Pariz Conference Room", "12,094", "Conference", 100, 400000002, "QmPc29mi28h31zDh9dydGDdxukpUSqti2eVXz4oRC99KB1");
+    // await new Promise(res => setTimeout(res, 1000));
+
+    await venueTreasury.add("Pariz Executive Room", "12,095", "Meetup", 30, 1000000002, "QmcbVTKvi6HrhHMEZnZrujkqdkTHbaj5EcDnUBKu2PTtx5");
+    await new Promise(res => setTimeout(res, 1000));
 
 }
 
@@ -80,5 +100,5 @@ main()
 })
 
 
-// Venue proxy 0xCa386c62bb2963AC766a52bDF58551135690E416
-// conversion proxy 0x5C106D1c4eA4e81a69B32716897934594c4636A8
+// Venue proxy 0xaB72661D28E39a5BEf3176e86c1e255dAF76A448
+// conversion proxy 0x02e90531aac91fD8e6B8a5F323cE171DD3c29AdF
