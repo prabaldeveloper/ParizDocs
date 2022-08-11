@@ -36,6 +36,9 @@ module.exports = {
   defaultNetwork: "hardhat",
   networks: {
     hardhat: {
+      forking: {
+        url: `https://polygon-mumbai.g.alchemy.com/v2/nnwB44ZrYOrWD_d1DApJk68k20i6Rakh`,
+      }
     },
     local: {
       url: 'http://127.0.0.1:8545/'

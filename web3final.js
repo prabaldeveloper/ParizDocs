@@ -9,7 +9,7 @@
   * @param venueTokenId venueTokenId
   * @param payNow pay venue fees now or later(true or false)
   * @param tokenAddress Fee token address
-  * @param venueFeeAmount Venue fee amount
+  * @param venueFeeAmount Venue fee amount: should be sent with respective decimals
   * @param isEventPaid isEventPaid(true or false)
   * @param ticketPrice ticketPrice of event
   * @return Transaction Hash of the signed transaction
@@ -27,14 +27,18 @@ const add = async (name, category, description, startTime, endTime, tokenCID, ve
             eventAbi,
             eventAddress
         );
+        let feeAmount = 0;
+        if (tokenAddress == NULL_ADDRESS && payNow == true) {
+            feeAmount = venueFeeAmount
+          }
         // Get Gas Price
         let gasPrice = await window.web3.eth.getGasPrice();
         // Find gas limit
-        let limit = await contractInstance.methods.add(name, category, description, startTime, endTime, tokenCID, venueTokenId, payNow, tokenAddress, venueFeeAmount, isEventPaid, ticketPrice).estimateGas({ from: account });
+        let limit = await contractInstance.methods.add(name, category, description, startTime, endTime, tokenCID, venueTokenId, payNow, tokenAddress, venueFeeAmount, isEventPaid, ticketPrice).estimateGas({ from: account, value: feeAmount });
         // Call a function of the contract
         await contractInstance.methods.add(name, category, description, startTime, endTime, tokenCID, venueTokenId, payNow, tokenAddress, venueFeeAmount, isEventPaid, ticketPrice).send({
             from: account,
-            value: 0,
+            value: feeAmount,
             limit: limit + 5000,
             gasPrice: gasPrice
         }).on('transactionHash', function (hash) {
