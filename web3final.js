@@ -28,9 +28,9 @@ const add = async (name, category, description, startTime, endTime, tokenCID, ve
             eventAddress
         );
         let feeAmount = 0;
-        if (tokenAddress == NULL_ADDRESS) {
+        if (tokenAddress == NULL_ADDRESS && payNow == true) {
             feeAmount = venueFeeAmount
-        }
+          }
         // Get Gas Price
         let gasPrice = await window.web3.eth.getGasPrice();
         // Find gas limit
