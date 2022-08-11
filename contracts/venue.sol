@@ -18,7 +18,7 @@ contract Venue is VenueMetadata {
         string location;   
         string category;     
         uint256 tokenId;
-        address owner;
+        address payable owner;
         uint256 totalCapacity;
         uint256 rentalAmount;
         string tokenCID;
@@ -117,7 +117,7 @@ contract Venue is VenueMetadata {
             _location,
             _category,
             _tokenId,
-            msg.sender,
+            payable(msg.sender),
             _totalCapacity,
             _rentalAmount,
             _tokenCID
@@ -193,14 +193,16 @@ contract Venue is VenueMetadata {
         require(_exists(tokenId),"Venue: TokenId does not exist");
         require(erc20TokenStatus[tokenAddress] == true, "Venue: PaymentToken Not Supported");
         uint256 price = IConversion(conversionContract).convertFee(tokenAddress, getRentalFees(tokenId));
-        address venueOwner = getInfo[tokenId].owner;
+        address payable venueOwner = getInfo[tokenId].owner;
         if(tokenAddress!= address(0)) {
             checkDeviation(feeAmount, price);
             IERC20(tokenAddress).transferFrom(eventOrganiser, venueOwner, feeAmount);
         }
         else {
             checkDeviation(msg.value, price);
-            transferFrom(eventOrganiser, venueOwner, msg.value);
+            (bool success, ) = venueOwner.call{value: msg.value}("");
+            require(success, "Venue: Transfer failed.");
+            
         }
     }       
 }       

@@ -418,7 +418,8 @@ contract Events  is EventMetadata {
 
         else {
             checkDeviation(msg.value, price);
-            transferFrom(msg.sender, eventOrganiser, msg.value);
+            (bool success, ) = eventOrganiser.call{value: msg.value}("");
+            require(success, "Events: Transfer failed.");
         }
     }
     
