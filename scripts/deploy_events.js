@@ -18,12 +18,12 @@ async function main() {
     // const eventContract = await ethers.getContractFactory("Events");
     // const eventProxy = await upgrades.deployProxy(eventContract, { initializer: 'initialize' })
     // await eventProxy.deployed();
-    // //await new Promise(res => setTimeout(res, 1000));
+    // await new Promise(res => setTimeout(res, 1000));
 
     //  console.log("Event proxy", eventProxy.address);
 
     const eventTreasury = await hre.ethers.getContractFactory("Events");
-    const eventProxy = await eventTreasury.attach("0x8B7E506070F6d88E8554FdF128cDF161Eb38283b");
+    const eventProxy = await eventTreasury.attach("0x26705B80a694bD5F9451E29aB3000FDCb19c3b51");
     
     // await new Promise(res => setTimeout(res, 1000));
     // await eventProxy.updateWhitelist([accounts[0]],[true]);
@@ -68,14 +68,7 @@ async function main() {
     //-----------------------------------------------------------------
 
 
-    // const eventTreasury = await hre.ethers.getContractFactory("Events");
-    // const eventProxy = await eventTreasury.attach("0x41969F6Fe520029C10Dd06F452fA7e8eF740e570");
-
-    
-    // await eventProxy.updateDeviation(5);
-    // await new Promise(res => setTimeout(res, 1000));
-
-    // await eventProxy.updateVenueContract("0xaB72661D28E39a5BEf3176e86c1e255dAF76A448");
+    // await eventProxy.updateVenueContract("0x85c7eE172B92F0f1393f98926adF320c434E3262");
     // await new Promise(res => setTimeout(res, 1000));
     //  console.log(await eventProxy.getVenueContract());
 
@@ -84,7 +77,7 @@ async function main() {
     // console.log(await eventProxy.getConversionContract());
 
     const venueProxy = await hre.ethers.getContractFactory("Venue");
-    const venueContract = await venueProxy.attach("0xaB72661D28E39a5BEf3176e86c1e255dAF76A448");
+    const venueContract = await venueProxy.attach("0x85c7eE172B92F0f1393f98926adF320c434E3262");
     console.log(await eventProxy.getVenueContract());
 
      const venueFees = await venueContract.getRentalFees(2);
@@ -100,12 +93,12 @@ async function main() {
 
     //console.log(await eventProxy.getConversionContract());
 
-    // await eventProxy.add("EventOne", "Test Category One", "Test Event One", 1660139701, 1660146901,"QmUtVYmeTh2kALCGJhbHPeu5ezLXSbSpV9rVcZRdFsTGNG",2,
-    // false,MATIC,0,true,1000000);
+    await eventProxy.add("EventOne", "Test Category One", "Test Event One", 1660155773, 1660206173,"QmUtVYmeTh2kALCGJhbHPeu5ezLXSbSpV9rVcZRdFsTGNG",2,
+    false,MATIC,0,true,1000000);
 
-   // console.log(await eventProxy.getInfo(1));
+   console.log(await eventProxy.getInfo(1));
 
-   // await new Promise(res => setTimeout(res, 1000));
+   await new Promise(res => setTimeout(res, 1000));
 
     //const etherValue = ethers.utils.parseEther("2275268862832004386");
      //console.log(etherValue);
@@ -128,4 +121,4 @@ main()
 })
 
 
-//event contract 0x41969F6Fe520029C10Dd06F452fA7e8eF740e570
+//event contract 0x26705B80a694bD5F9451E29aB3000FDCb19c3b51

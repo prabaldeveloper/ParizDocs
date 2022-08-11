@@ -23,7 +23,7 @@ async function main() {
     // console.log("Venue proxy", venueTreasury.address);
 
     const venueProxy = await hre.ethers.getContractFactory("Venue");
-    const venueTreasury = await venueProxy.attach("0xaB72661D28E39a5BEf3176e86c1e255dAF76A448");
+    const venueTreasury = await venueProxy.attach("0x85c7eE172B92F0f1393f98926adF320c434E3262");
     
     // await new Promise(res => setTimeout(res, 1000));
     // await venueTreasury.updateErc20TokenAddress(MATIC, true);
@@ -66,17 +66,13 @@ async function main() {
     // await new Promise(res => setTimeout(res, 3000));
 
 
-    //  const venueProxy = await hre.ethers.getContractFactory("Venue");
-    //  const venueTreasury = await venueProxy.attach("0x654A044757433B2a5d4556C8aDb7B03e90f2bAD7");
-    //  console.log(await venueTreasury.getConversionContract());
-
     // await venueTreasury.updateConversionContract("0x02e90531aac91fD8e6B8a5F323cE171DD3c29AdF");
     // await new Promise(res => setTimeout(res, 1000));
 
     // await venueTreasury.updateDeviation(5);
     // await new Promise(res => setTimeout(res, 1000));
 
-    //console.log("Address",await venueTreasury.getConversionContract());
+    // console.log("Address",await venueTreasury.getConversionContract());
 
     // await venueTreasury.add("Pariz Convention Center", "12,092", "Concert", 50, 100000000, "QmUtVYmeTh2kALCGJhbHPeu5ezLXSbSpV9rVcZRdFsTGNG");
     // await new Promise(res => setTimeout(res, 1000));
@@ -84,11 +80,10 @@ async function main() {
     // await venueTreasury.add("Pariz Fashion Gallery", "12,093", "Fashion Show", 20, 200000001, "QmZnwDAg98s3Qq8aYd1Xoz1hJu3dYa8J76JeUHs6M5fnqM");
     // await new Promise(res => setTimeout(res, 1000));
 
-    // await venueTreasury.add("Pariz Conference Room", "12,094", "Conference", 100, 400000002, "QmPc29mi28h31zDh9dydGDdxukpUSqti2eVXz4oRC99KB1");
-    // await new Promise(res => setTimeout(res, 1000));
+    await venueTreasury.add("Pariz Conference Room", "12,094", "Conference", 100, 400000002, "QmPc29mi28h31zDh9dydGDdxukpUSqti2eVXz4oRC99KB1");
+    //await new Promise(res => setTimeout(res, 1000));
 
-    await venueTreasury.add("Pariz Executive Room", "12,095", "Meetup", 30, 1000000002, "QmcbVTKvi6HrhHMEZnZrujkqdkTHbaj5EcDnUBKu2PTtx5");
-    await new Promise(res => setTimeout(res, 1000));
+    // await venueTreasury.add("Pariz Executive Room", "12,095", "Meetup", 30, 1000000002, "QmcbVTKvi6HrhHMEZnZrujkqdkTHbaj5EcDnUBKu2PTtx5");
 
 }
 
@@ -100,5 +95,5 @@ main()
 })
 
 
-// Venue proxy 0xaB72661D28E39a5BEf3176e86c1e255dAF76A448
+// Venue proxy 0x85c7eE172B92F0f1393f98926adF320c434E3262
 // conversion proxy 0x02e90531aac91fD8e6B8a5F323cE171DD3c29AdF

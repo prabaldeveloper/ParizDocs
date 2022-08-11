@@ -1,22 +1,22 @@
 {
-  "name": "Buddy",
+  "name": "pariz",
   "version": "1.0.0",
-  "description": "Mint Buddy",
+  "description": "Mint pariz",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tracenetworklabs/buddy-contracts.git"
+    "url": "git+https://github.com/tracenetworklabs/pariz-contracts.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tracenetworklabs/buddy-contracts/issues"
+    "url": "https://github.com/tracenetworklabs/pariz-contracts/issues"
   },
-  "homepage": "https://github.com/tracenetworklabs/buddy-contracts#readme",
+  "homepage": "https://github.com/tracenetworklabs/pariz-contracts#readme",
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.5",
     "@nomiclabs/hardhat-waffle": "^2.0.0",

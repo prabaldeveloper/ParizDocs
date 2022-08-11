@@ -1,35 +1,14 @@
-# Venue
+# EventMetadata
 
-*Prabal Srivastav*
 
-> Add and book venue 
 
-Owner can add venues and event organisers can book it
+
+
+A mixin to extend the OpenZeppelin metadata implementation.
 
 
 
 ## Methods
-
-### add
-
-```solidity
-function add(string _name, string _location, string _category, uint256 _totalCapacity, uint256 _rentalAmount, string _tokenCID) external nonpayable
-```
-
-Adds venue
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _name | string | Venue name |
-| _location | string | Venue location |
-| _category | string | Venue category |
-| _totalCapacity | uint256 | Venue totalCapacity |
-| _rentalAmount | uint256 | Venue rent |
-| _tokenCID | string | Venue tokenCID |
 
 ### approve
 
@@ -87,64 +66,6 @@ function baseURI() external view returns (string)
 |---|---|---|
 | _0 | string | undefined |
 
-### bookVenue
-
-```solidity
-function bookVenue(address eventOrganiser, uint256 tokenId, address tokenAddress, uint256 feeAmount) external payable
-```
-
-Book venue
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| eventOrganiser | address | undefined |
-| tokenId | uint256 | Venue tokenId |
-| tokenAddress | address | erc20 tokenAddress |
-| feeAmount | uint256 | fee of the venue |
-
-### checkDeviation
-
-```solidity
-function checkDeviation(uint256 feeAmount, uint256 price) external view
-```
-
-To check amount is within deviation percentage
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| feeAmount | uint256 | fee of the venue |
-| price | uint256 | price from the conversion contract |
-
-### erc20TokenStatus
-
-```solidity
-function erc20TokenStatus(address) external view returns (bool)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | address | undefined |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bool | undefined |
-
 ### getApproved
 
 ```solidity
@@ -166,40 +87,6 @@ function getApproved(uint256 tokenId) external view returns (address)
 | Name | Type | Description |
 |---|---|---|
 | _0 | address | undefined |
-
-### getConversionContract
-
-```solidity
-function getConversionContract() external view returns (address)
-```
-
-Returns conversionContract address
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | address | undefined |
-
-### getDeviationPercentage
-
-```solidity
-function getDeviationPercentage() external view returns (uint256)
-```
-
-Returns deviationPercentage
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | undefined |
 
 ### getHasCreatorMintedIPFSHash
 
@@ -224,35 +111,6 @@ Checks if the creator has already minted a given NFT.
 |---|---|---|
 | _0 | bool | undefined |
 
-### getInfo
-
-```solidity
-function getInfo(uint256) external view returns (string name, string location, string category, uint256 tokenId, address payable owner, uint256 totalCapacity, uint256 rentalAmount, string tokenCID)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | undefined |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| name | string | undefined |
-| location | string | undefined |
-| category | string | undefined |
-| tokenId | uint256 | undefined |
-| owner | address payable | undefined |
-| totalCapacity | uint256 | undefined |
-| rentalAmount | uint256 | undefined |
-| tokenCID | string | undefined |
-
 ### getNextTokenId
 
 ```solidity
@@ -269,28 +127,6 @@ Gets the tokenId of the next NFT minted.
 | Name | Type | Description |
 |---|---|---|
 | _0 | uint256 | undefined |
-
-### getRentalFees
-
-```solidity
-function getRentalFees(uint256 tokenId) external view returns (uint256 _rentalFees)
-```
-
-Returns rental fees of the venue
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| tokenId | uint256 | Venue tokenId |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _rentalFees | uint256 | undefined |
 
 ### getTokenCID
 
@@ -314,39 +150,6 @@ Returns the IPFSPath to the metadata JSON file for a given NFT.
 |---|---|---|
 | _0 | string | undefined |
 
-### getTotalCapacity
-
-```solidity
-function getTotalCapacity(uint256 tokenId) external view returns (uint256 _totalCapacity)
-```
-
-Returns rental fees of the venue
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| tokenId | uint256 | Venue tokenId |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _totalCapacity | uint256 | undefined |
-
-### initialize
-
-```solidity
-function initialize() external nonpayable
-```
-
-
-
-
-
-
 ### isApprovedForAll
 
 ```solidity
@@ -363,29 +166,6 @@ function isApprovedForAll(address owner, address operator) external view returns
 |---|---|---|
 | owner | address | undefined |
 | operator | address | undefined |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bool | undefined |
-
-### isRentPaid
-
-```solidity
-function isRentPaid(address eventOrganiser, uint256 tokenId) external view returns (bool)
-```
-
-Returns true if rent paid
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| eventOrganiser | address | eventOrganiser address |
-| tokenId | uint256 | Venue tokenId |
 
 #### Returns
 
@@ -448,29 +228,6 @@ function ownerOf(uint256 tokenId) external view returns (address)
 | Name | Type | Description |
 |---|---|---|
 | _0 | address | undefined |
-
-### rentStatus
-
-```solidity
-function rentStatus(address, uint256) external view returns (bool)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | address | undefined |
-| _1 | uint256 | undefined |
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bool | undefined |
 
 ### safeTransferFrom
 
@@ -643,55 +400,6 @@ function transferOwnership(address newOwner) external nonpayable
 |---|---|---|
 | newOwner | address | undefined |
 
-### updateConversionContract
-
-```solidity
-function updateConversionContract(address _conversionContract) external nonpayable
-```
-
-updates conversionContract address
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _conversionContract | address | conversionContract address |
-
-### updateDeviation
-
-```solidity
-function updateDeviation(uint256 _deviationPercentage) external nonpayable
-```
-
-Allows Admin to update deviation percentage
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _deviationPercentage | uint256 | deviationPercentage |
-
-### updateErc20TokenAddress
-
-```solidity
-function updateErc20TokenAddress(address tokenAddress, bool status) external nonpayable
-```
-
-Supported tokens for the payment
-
-*Only admin can call-  Update the status of paymentToken*
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| tokenAddress | address | erc-20 token Address |
-| status | bool | status of the address(true or false) |
-
 
 
 ## Events
@@ -747,55 +455,6 @@ event BaseURIUpdated(string baseURI)
 | Name | Type | Description |
 |---|---|---|
 | baseURI  | string | undefined |
-
-### ConversionContractUpdated
-
-```solidity
-event ConversionContractUpdated(address conversionContract)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| conversionContract  | address | conversionContract address |
-
-### DeviationPercentageUpdated
-
-```solidity
-event DeviationPercentageUpdated(uint256 percentage)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| percentage  | uint256 | percentage |
-
-### ERC20TokenUpdated
-
-```solidity
-event ERC20TokenUpdated(address indexed tokenAddress, bool status)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| tokenAddress `indexed` | address | tokenAddress of the token |
-| status  | bool | status of the token |
 
 ### Initialized
 
@@ -902,46 +561,6 @@ event Transfer(address indexed from, address indexed to, uint256 indexed tokenId
 | from `indexed` | address | undefined |
 | to `indexed` | address | undefined |
 | tokenId `indexed` | uint256 | undefined |
-
-### VenueAdded
-
-```solidity
-event VenueAdded(uint256 indexed tokenId, string name, string location, string category, uint256 totalCapacity, uint256 rentalAmount, string tokenCID, address owner)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| tokenId `indexed` | uint256 | Venue tokenId |
-| name  | string | Venue name |
-| location  | string | Venue location |
-| category  | string | Venue category |
-| totalCapacity  | uint256 | Venue totalCapacity |
-| rentalAmount  | uint256 | Venue Fees |
-| tokenCID  | string | Venue tokenCID |
-| owner  | address | venue onwer address |
-
-### VenueBooked
-
-```solidity
-event VenueBooked(uint256 indexed tokenId, address eventOrganiser)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| tokenId `indexed` | uint256 | Venue tokenId |
-| eventOrganiser  | address | EventOrganiser address |
 
 
 
