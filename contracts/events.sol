@@ -423,4 +423,7 @@ contract Events  is EventMetadata {
         }
     }
     
+    function getEventDetails(uint256 tokenId) public view returns(uint256 startTime, uint256 endTime, address eventOrganiser) {
+        return (getInfo[tokenId].startTime, getInfo[tokenId].endTime,getInfo[tokenId].eventOrganiser);
+    }
 }       
