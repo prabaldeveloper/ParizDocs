@@ -93,11 +93,12 @@ contract Venue is VenueMetadata {
 
     ///@notice Book venue
     ///@param tokenId Venue tokenId
+    ///@param eventTokenId eventTokenId
     ///@param tokenAddress erc20 tokenAddress
     ///@param feeAmount fee of the venue
-    function bookVenue(address eventOrganiser, uint256 tokenId, address tokenAddress, uint256 feeAmount) external payable {
+    function bookVenue(address eventOrganiser, uint256 eventTokenId, uint256 tokenId, address tokenAddress, uint256 feeAmount) external payable {
         checkPaymentToken(eventOrganiser,tokenId,tokenAddress, feeAmount);
-        rentPaid(eventOrganiser,tokenId, true);        
+        rentPaid(eventOrganiser,eventTokenId, true);        
         emit VenueBooked(tokenId, eventOrganiser);
     } 
 
@@ -152,11 +153,11 @@ contract Venue is VenueMetadata {
 
     ///@notice Returns true if rent paid
     ///@param eventOrganiser eventOrganiser address
-    ///@param tokenId Venue tokenId
-    function isRentPaid(address eventOrganiser, uint256 tokenId) public view returns(bool){
-        return rentStatus[eventOrganiser][tokenId];
+    ///@param eventTokenId Event tokenId
+    function isRentPaid(address eventOrganiser, uint256 eventTokenId) public view returns(bool){
+        return rentStatus[eventOrganiser][eventTokenId];
     }
-
+    
     ///@notice Returns rental fees of the venue
     ///@param tokenId Venue tokenId
     function getTotalCapacity(uint256 tokenId) public view returns(uint256 _totalCapacity)  {
@@ -178,10 +179,10 @@ contract Venue is VenueMetadata {
     
     ///@notice Saves the status whether rent is paid or not
     ///@param eventOrganiser Event organiser address
-    ///@param tokenId Venue tokenId
+    ///@param eventTokenId Event tokenId
     ///@param _isRentPaid true or false
-    function rentPaid(address eventOrganiser, uint256 tokenId, bool _isRentPaid) internal {
-        rentStatus[eventOrganiser][tokenId] = _isRentPaid;
+    function rentPaid(address eventOrganiser, uint256 eventTokenId, bool _isRentPaid) internal {
+        rentStatus[eventOrganiser][eventTokenId] = _isRentPaid;
 
     }
     

@@ -13,7 +13,7 @@ import "../contracts/interface/IConversion.sol";
 ///@author Prabal Srivastav
 ///@notice Users can create event and join events
 
-contract Events  is EventMetadata {
+contract Events is EventMetadata {
 
     //Details of the event
     struct Details{
@@ -25,6 +25,7 @@ contract Events  is EventMetadata {
         uint256 endTime;
         string tokenCID;
         uint256 venueTokenId;
+        bool payNow;
         address payable eventOrganiser;
         bool isEventPaid;
         uint256 ticketPrice;
@@ -78,7 +79,6 @@ contract Events  is EventMetadata {
     event EventAdded(uint256 indexed tokenId, string name, string category, string description, uint256 startTime, uint256 endTime,  string tokenCID,
     uint256 venueTokenId, bool isVenueFeesPaid, bool isEventPaid, address eventOrganiser, uint256 ticketPrice);
 
-    
     ///@param tokenId Event tokenId
     ///@param startTime Event startTime
     event StartTimeupdated(uint256 indexed tokenId, uint256 startTime);
@@ -182,6 +182,8 @@ contract Events  is EventMetadata {
     ///@param tokenCID Event tokenCID
     ///@param venueTokenId venueTokenId
     ///@param payNow pay venue fees now or later(true or false)
+    ///@param tokenAddress erc20 tokenAddress
+    ///@param venueFeeAmount fee of the venue
     ///@param isEventPaid isEventPaid(true or false)
     ///@param ticketPrice ticketPrice of event
     function add(string memory name, string memory category, string memory description, uint256 startTime, uint256 endTime, string memory tokenCID,
@@ -190,7 +192,7 @@ contract Events  is EventMetadata {
         require(isVenueAvailable(_tokenId, venueTokenId,startTime, endTime), "Events: Venue is not available");
         if(payNow == true) {
             if(tokenAddress!= address(0)) 
-                IVenue(getVenueContract()).bookVenue(msg.sender, venueTokenId, tokenAddress,venueFeeAmount);
+                IVenue(getVenueContract()).bookVenue(msg.sender, _tokenId, venueTokenId, tokenAddress,venueFeeAmount);
             
             else {
             //     (bool success, ) = payable(getVenueContract()).call{
@@ -198,7 +200,7 @@ contract Events  is EventMetadata {
             //     gas: 200000
             // }(abi.encodeWithSignature("bookVenue(address,uint256,address,uint256)",msg.sender, venueTokenId, tokenAddress, venueFeeAmount));
              //_callee.setXandSendEther{value: msg.value}(_x);
-             IVenue(getVenueContract()).bookVenue{value: msg.value}(msg.sender, venueTokenId, tokenAddress, venueFeeAmount);
+             IVenue(getVenueContract()).bookVenue{value: msg.value}(msg.sender, _tokenId, venueTokenId, tokenAddress, venueFeeAmount);
             }
         }
         
@@ -214,6 +216,7 @@ contract Events  is EventMetadata {
             endTime,
             tokenCID,
             venueTokenId,
+            payNow,
             payable(msg.sender),
             isEventPaid,
             ticketPrice
@@ -402,7 +405,6 @@ contract Events  is EventMetadata {
         return true;
     }
 
-
     ///@notice To check whether token is matic or any other token
     ///@param tokenId event tokenId
     ///@param tokenAddress erc20 tokenAddress
@@ -423,7 +425,7 @@ contract Events  is EventMetadata {
         }
     }
     
-    function getEventDetails(uint256 tokenId) public view returns(uint256 startTime, uint256 endTime, address eventOrganiser) {
-        return (getInfo[tokenId].startTime, getInfo[tokenId].endTime,getInfo[tokenId].eventOrganiser);
+    function getEventDetails(uint256 tokenId) public view returns(uint256 startTime, uint256 endTime, address eventOrganiser, bool payNow, uint256 venueTokenId) {
+        return (getInfo[tokenId].startTime, getInfo[tokenId].endTime,getInfo[tokenId].eventOrganiser, getInfo[tokenId].payNow, getInfo[tokenId].venueTokenId);
     }
 }       

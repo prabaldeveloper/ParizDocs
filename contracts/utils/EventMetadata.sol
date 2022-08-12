@@ -90,11 +90,11 @@ abstract contract EventMetadata is EventERC721 {
         // 46 is the minimum length for an IPFS content hash, it may be longer if paths are used
         require(
             bytes(_tokenIPFSPath).length >= 46,
-            "NFT721Metadata: Invalid IPFS path"
+            "EventMetadata: Invalid IPFS path"
         );
         require(
             !creatorToIPFSHashToMinted[msg.sender][_tokenIPFSPath],
-            "NFT721Metadata: NFT was already minted"
+            "EventMetadata: NFT was already minted"
         );
 
         creatorToIPFSHashToMinted[msg.sender][_tokenIPFSPath] = true;
@@ -131,5 +131,15 @@ abstract contract EventMetadata is EventERC721 {
         emit Minted(msg.sender, tokenId, _tokenIPFSPath, _tokenIPFSPath);
     }
 
+    /**
+     * @notice Allows the creator to burn if they currently own the NFT.
+     */
+    function burn(uint256 tokenId) public {
+        address owner = EventERC721.ownerOf(tokenId);
+        require(msg.sender == owner, "EventMetadata: Invalid owner");
+        _burn(tokenId);
+    }
+
     uint256[999] private ______gap;
+
 }
