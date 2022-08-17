@@ -84,7 +84,8 @@ contract Events is EventMetadata {
 
     ///@param tokenId Event tokenId
     ///@param startTime Event startTime
-    event StartTimeupdated(uint256 indexed tokenId, uint256 startTime);
+    ///@param endTime Event endTime
+    event Timeupdated(uint256 indexed tokenId, uint256 startTime, uint256 endTime);
 
     ///@param tokenId Event tokenId
     ///@param tokenCID Event tokenCID
@@ -144,7 +145,7 @@ contract Events is EventMetadata {
     modifier isValidTime(uint256 startTime, uint256 endTime) {
         require(
             startTime < endTime && startTime >= block.timestamp,
-            "invalid time input"
+            "Invalid time input"
         );
         _;
     }
@@ -210,7 +211,7 @@ contract Events is EventMetadata {
     function add(string memory name, string memory category, string memory description, uint256 startTime, uint256 endTime, string memory tokenCID,
     uint256 venueTokenId, bool payNow, address tokenAddress, uint256 venueFeeAmount, bool isEventPaid, uint256 ticketPrice) onlyWhitelistedUsers external payable {
         uint256 _tokenId = _mintInternal(tokenCID);
-        require(isVenueAvailable(_tokenId, venueTokenId,startTime, endTime), "Events: Venue is not available");
+        require(isVenueAvailable(_tokenId, venueTokenId, startTime, endTime), "Events: Venue is not available");
         if(payNow == true) {
             if(tokenAddress!= address(0)) 
                 IVenue(getVenueContract()).bookVenue(msg.sender, _tokenId, venueTokenId, tokenAddress,venueFeeAmount);
@@ -249,12 +250,16 @@ contract Events is EventMetadata {
     ///@dev - Update the event startTime .
     ///@param tokenId Event tokenId
     ///@param startTime Event startTime
-    function updateStartTime(uint256 tokenId, uint256 startTime) external {
+    ///@param endTime Event endTime
+    function updateTime(uint256 tokenId, uint256 startTime, uint256 endTime) external {
         require(_exists(tokenId), "Events: TokenId does not exist");
         require(msg.sender == getInfo[tokenId].eventOrganiser, "Events: Address is not the event organiser address");
         require(getInfo[tokenId].startTime > block.timestamp,"Events: Event is started");
+        uint256 venueTokenId = getInfo[tokenId].venueTokenId;
+        require(isVenueAvailable(tokenId, venueTokenId, startTime, endTime) ,"Events: Venue is not available");
         getInfo[tokenId].startTime = startTime;
-        emit StartTimeupdated(tokenId, startTime);    
+        getInfo[tokenId].endTime = endTime;
+        emit Timeupdated(tokenId, startTime, endTime);    
     }
     
     ///@notice Update event IPFSPath
@@ -298,7 +303,9 @@ contract Events is EventMetadata {
         require(_exists(tokenId), "Events: TokenId does not exist");
         uint256 price = getInfo[tokenId].ticketPrice;
         require(price!=0, "Events: Event is free");
-        require(erc20TokenStatus[tokenAddress] == true, "Events: PaymentToken Not Supported");
+        require(block.timestamp <= getInfo[tokenId].startTime,"Events: Event already started");   
+        require(ticketBoughtAddress[tokenId][msg.sender] == false, "Events: User already has ticket");
+        require(erc20TokenStatus[tokenAddress] == true, "Events: TokenAddress not supported");
         uint256 venueTokenId = getInfo[tokenId].venueTokenId;
         uint256 totalCapacity = IVenue(getVenueContract()).getTotalCapacity(venueTokenId);
         require(ticketSold[tokenId] < totalCapacity, "Event: All tickets are sold");
@@ -316,7 +323,7 @@ contract Events is EventMetadata {
     ///@dev - Join the event
     ///@param tokenId Event tokenId
     function join(uint256 tokenId) external {
-         require(ticketBoughtAddress[tokenId][msg.sender] == true, "Events: No ticket");
+         require(ticketBoughtAddress[tokenId][msg.sender] == true, "Events: User has no ticket");
          require(getInfo[tokenId].startTime >= block.timestamp,"Events: Event is started");
 
          emit Joined(tokenId, msg.sender);  
@@ -428,7 +435,6 @@ contract Events is EventMetadata {
     function checkPaymentToken(uint256 tokenId, address tokenAddress, uint256 feeAmount) internal {
         address payable eventOrganiser = getInfo[tokenId].eventOrganiser;
         uint256 price = IConversion(conversionContract).convertFee(tokenAddress, getInfo[tokenId].ticketPrice);
-
         if(tokenAddress!= address(0)) {
             checkDeviation(feeAmount, price);
             IERC20(tokenAddress).transferFrom(msg.sender, eventOrganiser, feeAmount);
