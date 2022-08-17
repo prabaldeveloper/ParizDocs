@@ -65,6 +65,9 @@ contract Events is EventMetadata {
     //convesion contract address
     address private conversionContract;
 
+    //isPublic true or false
+    bool private isPublic;
+
     ///@param tokenId Event tokenId
     ///@param name Event name
     ///@param category Event category
@@ -103,13 +106,21 @@ contract Events is EventMetadata {
     ///@param tokenId Event tokenId
     event Featured(uint256 indexed tokenId, bool isFeatured);
 
+    ///@param user User address
+    ///@param tokenId Event tokenId
+    ///@param isFavourite is event favourite(true or false)
     event Favourite(address user, uint256 indexed tokenId, bool isFavourite);
 
+    ///@param tokenAddress erc-20 token Address
+    ///@param status status of the address(true or false)
     event ERC20TokenUpdated(address indexed tokenAddress, bool status);
 
-    event DeviationPercentage(uint256 percentage);
+    ///@param percentage deviationPercentage
+    event DeviationPercentageUpdated(uint256 percentage);
 
-    event WhiteList(address whiteListedAddress, bool _status);
+    ///@param whitelistedAddress users address
+    ///@param status status of the address
+    event WhiteList(address whitelistedAddress, bool status);
 
     ///@param venueContract conversionContract address
     event VenueContractUpdated(address venueContract);
@@ -117,10 +128,13 @@ contract Events is EventMetadata {
     ///@param conversionContract conversionContract address
     event ConversionContractUpdated(address conversionContract);
 
+    ///@param isPublic isPublic true or false
+    event EventStatusUpdated(bool isPublic);
+
     //modifier for checking whitelistedUsers
     modifier onlyWhitelistedUsers() {
         require(
-            whiteListedAddress[msg.sender] == true,
+            whiteListedAddress[msg.sender] == true || isPublic == true,
             "Events : User address not whitelisted"
         );
         _;
@@ -139,7 +153,7 @@ contract Events is EventMetadata {
     ///@param _deviationPercentage deviationPercentage
     function updateDeviation(uint256 _deviationPercentage) external onlyOwner {
         deviationPercentage = _deviationPercentage;
-        emit DeviationPercentage(_deviationPercentage);
+        emit DeviationPercentageUpdated(_deviationPercentage);
     }
 
     ///@notice Supported tokens for the payment
@@ -149,8 +163,7 @@ contract Events is EventMetadata {
     ///@param status status of the address(true or false)
     function updateErc20TokenAddress(address tokenAddress, bool status) external onlyOwner {
         erc20TokenStatus[tokenAddress] = status;
-        emit ERC20TokenUpdated(tokenAddress, status);
-        
+        emit ERC20TokenUpdated(tokenAddress, status);      
     }
 
     ///@notice updates conversionContract address
@@ -165,6 +178,14 @@ contract Events is EventMetadata {
     function updateVenueContract(address _venueContract) external onlyOwner {
         venueContract = _venueContract;
         emit VenueContractUpdated(_venueContract);
+
+    }
+
+    ///@notice To update the event status(public or private events)
+    ///@param _isPublic true or false
+    function updateEventStatus(bool _isPublic) external onlyOwner {
+        isPublic = _isPublic;
+        emit EventStatusUpdated(_isPublic);
 
     }
     
@@ -195,11 +216,6 @@ contract Events is EventMetadata {
                 IVenue(getVenueContract()).bookVenue(msg.sender, _tokenId, venueTokenId, tokenAddress,venueFeeAmount);
             
             else {
-            //     (bool success, ) = payable(getVenueContract()).call{
-            //     value: msg.value,
-            //     gas: 200000
-            // }(abi.encodeWithSignature("bookVenue(address,uint256,address,uint256)",msg.sender, venueTokenId, tokenAddress, venueFeeAmount));
-             //_callee.setXandSendEther{value: msg.value}(_x);
              IVenue(getVenueContract()).bookVenue{value: msg.value}(msg.sender, _tokenId, venueTokenId, tokenAddress, venueFeeAmount);
             }
         }

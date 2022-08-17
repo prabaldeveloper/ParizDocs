@@ -15,24 +15,24 @@ async function main() {
     const factory = "0x5757371414417b8c6caad45baef941abc7d3ab32";
     
 
-    // const venueContract = await ethers.getContractFactory("Venue");
-    // const venueTreasury = await upgrades.deployProxy(venueContract, { initializer: 'initialize' })
-    // await venueTreasury.deployed();
+    // const venue = await ethers.getContractFactory("Venue");
+    // const venueContract = await upgrades.deployProxy(venue, { initializer: 'initialize' })
+    // await venueContract.deployed();
     // await new Promise(res => setTimeout(res, 1000));
 
-    // console.log("Venue proxy", venueTreasury.address);
+    // console.log("Venue proxy", venueContract.address);
 
-    const venueProxy = await hre.ethers.getContractFactory("Venue");
-    const venueTreasury = await venueProxy.attach("0x85c7eE172B92F0f1393f98926adF320c434E3262");
+    const venue = await hre.ethers.getContractFactory("Venue");
+    const venueContract = await venue.attach("0x85c7eE172B92F0f1393f98926adF320c434E3262");
     
     // await new Promise(res => setTimeout(res, 1000));
-    // await venueTreasury.updateErc20TokenAddress(MATIC, true);
+    // await venueContract.updateErc20TokenAddress(MATIC, true);
     
     // await new Promise(res => setTimeout(res, 1000));
-    // await venueTreasury.updateErc20TokenAddress(USDC, true);
+    // await venueContract.updateErc20TokenAddress(USDC, true);
     
     // await new Promise(res => setTimeout(res, 1000));
-    // await venueTreasury.updateErc20TokenAddress(Trace, true);
+    // await venueContract.updateErc20TokenAddress(Trace, true);
    
 
     //////// ************ DEPLOY CONVERSION **************/////
@@ -66,24 +66,24 @@ async function main() {
     // await new Promise(res => setTimeout(res, 3000));
 
 
-    // await venueTreasury.updateConversionContract("0x02e90531aac91fD8e6B8a5F323cE171DD3c29AdF");
+    // await venueContract.updateConversionContract("0x02e90531aac91fD8e6B8a5F323cE171DD3c29AdF");
     // await new Promise(res => setTimeout(res, 1000));
 
-    // await venueTreasury.updateDeviation(5);
+    // await venueContract.updateDeviation(5);
     // await new Promise(res => setTimeout(res, 1000));
 
-    // console.log("Address",await venueTreasury.getConversionContract());
+    // console.log("Address",await venueContract.getConversionContract());
 
-    // await venueTreasury.add("Pariz Convention Center", "12,092", "Concert", 50, 100000000, "QmUtVYmeTh2kALCGJhbHPeu5ezLXSbSpV9rVcZRdFsTGNG");
+    // await venueContract.add("Pariz Convention Center", "12,092", "Concert", 50, 100000000, "QmUtVYmeTh2kALCGJhbHPeu5ezLXSbSpV9rVcZRdFsTGNG");
     // await new Promise(res => setTimeout(res, 1000));
 
-    // await venueTreasury.add("Pariz Fashion Gallery", "12,093", "Fashion Show", 20, 200000001, "QmZnwDAg98s3Qq8aYd1Xoz1hJu3dYa8J76JeUHs6M5fnqM");
+    // await venueContract.add("Pariz Fashion Gallery", "12,093", "Fashion Show", 20, 200000001, "QmZnwDAg98s3Qq8aYd1Xoz1hJu3dYa8J76JeUHs6M5fnqM");
     // await new Promise(res => setTimeout(res, 1000));
 
-    await venueTreasury.add("Pariz Conference Room", "12,094", "Conference", 100, 400000002, "QmPc29mi28h31zDh9dydGDdxukpUSqti2eVXz4oRC99KB1");
+    await venueContract.add("Pariz Conference Room", "12,094", "Conference", 100, 400000002, "QmPc29mi28h31zDh9dydGDdxukpUSqti2eVXz4oRC99KB1");
     //await new Promise(res => setTimeout(res, 1000));
 
-    // await venueTreasury.add("Pariz Executive Room", "12,095", "Meetup", 30, 1000000002, "QmcbVTKvi6HrhHMEZnZrujkqdkTHbaj5EcDnUBKu2PTtx5");
+    // await venueContract.add("Pariz Executive Room", "12,095", "Meetup", 30, 1000000002, "QmcbVTKvi6HrhHMEZnZrujkqdkTHbaj5EcDnUBKu2PTtx5");
 
 }
 

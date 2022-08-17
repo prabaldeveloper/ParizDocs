@@ -13,7 +13,6 @@ contract ManageEvent is Ownable {
 
     //Details of the agenda
     struct agendaDetails {
-        uint256 eventTokenId;
         uint256 agendaId;
         uint256 agendaStartTime;
         uint256 agendaEndTime;
@@ -75,6 +74,16 @@ contract ManageEvent is Ownable {
         _;
     }
 
+    //modifier for checking event organiser address
+    modifier isEventOrganiser(uint256 eventTokenId) {
+        (, ,
+        address eventOrganiser,
+        ,
+        ) = IEvents(getEventContract()).getEventDetails(eventTokenId);
+        require(msg.sender == eventOrganiser ,"ManageEvent: Invalid Address");
+        _;
+    }
+
      function initialize() public initializer {
         Ownable.ownable_init();
     }
@@ -95,24 +104,21 @@ contract ManageEvent is Ownable {
 
     ///@notice Add the event guests
     ///@param eventTokenId event Token Id
-    ///@param agendaStartTime Agenda startTime
-    ///@param agendaEndTime Agenda endTime
+    ///@param agendaStartTime agendaStartTime
+    ///@param agendaEndTime agendaEndTime
     ///@param agenda agenda of the event
     ///@param guestName[] guest Name 
     ///@param guestAddress[] guest Address
     ///@param initiateStatus Auto(1) or Manual(2)
-    function addAgenda(uint256 eventTokenId, uint256 agendaStartTime, uint256 agendaEndTime, string memory agenda, string[] memory guestName, address[] memory guestAddress, uint8 initiateStatus) isValidTime(agendaStartTime, agendaEndTime) external {
+    function addAgenda(uint256 eventTokenId, uint256 agendaStartTime, uint256 agendaEndTime, string memory agenda, string[] memory guestName, address[] memory guestAddress, uint8 initiateStatus) isValidTime(agendaStartTime, agendaEndTime) isEventOrganiser(eventTokenId) external {
         require((IEvents(getEventContract())._exists(eventTokenId)), "ManageEvent: TokenId does not exist");
         (uint256 eventStartTime,
         uint256 eventEndTime,
-        address eventOrganiser, ,) = IEvents(getEventContract()).getEventDetails(eventTokenId);
-        require(msg.sender == eventOrganiser ,"ManageEvent: Invalid Address");
-        require(block.timestamp >= eventStartTime && eventEndTime > block.timestamp, "ManageEvent: Event not live");
-        require(agendaStartTime >= eventStartTime && agendaStartTime < eventEndTime, "ManageEvent: Invalid agenda time" );
-        require(agendaEndTime < eventEndTime, "ManageEvent: Invalid agenda time" );
+        , ,) = IEvents(getEventContract()).getEventDetails(eventTokenId);
+        require(agendaStartTime >= eventStartTime && agendaEndTime < eventEndTime, "ManageEvent: Invalid agenda time" );
         noOfAgendas[eventTokenId]++;
-        getAgendaInfo[eventTokenId].push(agendaDetails(eventTokenId,
-            noOfAgendas[eventTokenId],
+        uint256 agendaId = noOfAgendas[eventTokenId];
+        getAgendaInfo[eventTokenId].push(agendaDetails(agendaId,
             agendaStartTime,
             agendaEndTime,
             agenda,
@@ -120,21 +126,20 @@ contract ManageEvent is Ownable {
             guestAddress,
             initiateStatus
         ));
-        emit GuestAdded(eventTokenId, noOfAgendas[eventTokenId], agendaStartTime, agendaEndTime, agenda, guestName, guestAddress, initiateStatus);
+        emit GuestAdded(eventTokenId, agendaId, agendaStartTime, agendaEndTime, agenda, guestName, guestAddress, initiateStatus);
     }
 
     ///@notice Start the event
     ///@param eventTokenId event Token Id
     ///@param tokenAddress erc20 tokenAddress
     ///@param venueFeeAmount fee of the venue
-    function startEvent(uint256 eventTokenId, address tokenAddress, uint256 venueFeeAmount) external payable{
+    function startEvent(uint256 eventTokenId, address tokenAddress, uint256 venueFeeAmount) isEventOrganiser(eventTokenId) external payable{
         require((IEvents(getEventContract())._exists(eventTokenId)), "ManageEvent: TokenId does not exist");
         (uint256 startTime,
         uint256 endTime,
-        address eventOrganiser,
+        ,
         bool payNow,
         uint256 venueTokenId) = IEvents(getEventContract()).getEventDetails(eventTokenId);
-        require(msg.sender == eventOrganiser ,"ManageEvent: Invalid Address");
         require(block.timestamp >= startTime && endTime > block.timestamp, "ManageEvent: Event not live");
         require(isEventStarted[eventTokenId] == false, "ManageEvent: Event already started");
         if(payNow == false) {
@@ -152,14 +157,14 @@ contract ManageEvent is Ownable {
 
     ///@notice Cancel the event
     ///@param eventTokenId event Token Id
-    function cancelEvent(uint256 eventTokenId) external {
+    function cancelEvent(uint256 eventTokenId) isEventOrganiser(eventTokenId) external {
         require((IEvents(getEventContract())._exists(eventTokenId)), "ManageEvent: TokenId does not exist");
         (uint256 startTime,
         ,
-        address eventOrganiser, ,) = IEvents(getEventContract()).getEventDetails(eventTokenId);
-        require(msg.sender == eventOrganiser ,"ManageEvent: Invalid address");
+        , ,) = IEvents(getEventContract()).getEventDetails(eventTokenId);
         require(startTime > block.timestamp, "ManageEvent: Event started");
         require(isEventCanceled[eventTokenId] == false, "ManageEvent: Event already canceled");
+        //Return amount 
         IEvents(getEventContract()).burn(eventTokenId);
         isEventCanceled[eventTokenId] = true;
         emit EventCanceled(eventTokenId);
@@ -169,7 +174,7 @@ contract ManageEvent is Ownable {
     ///@notice To initiate a session
     ///@param eventTokenId event Token Id
     ///@param agendaId agendaId
-    function initiateSession(uint256 eventTokenId, uint256 agendaId) external {
+    function initiateSession(uint256 eventTokenId, uint256 agendaId) isEventOrganiser(eventTokenId) external {
         require((IEvents(getEventContract())._exists(eventTokenId)), "ManageEvent: TokenId does not exist");
         require(getAgendaInfo[eventTokenId][agendaId - 1].initiateStatus == 2, "ManageEvent: Auto Session");
         require(block.timestamp >= getAgendaInfo[eventTokenId][agendaId - 1].agendaStartTime, "ManageEvent: Invalid Time");
@@ -187,6 +192,4 @@ contract ManageEvent is Ownable {
     }
 
 }
-
-
 
