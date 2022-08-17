@@ -28,8 +28,10 @@ contract ManageEvent is Ownable {
     //mapping for getting number of agendas
     mapping(uint256 => uint256) public noOfAgendas;
 
+    //mapping for event start status
     mapping(uint256 => bool) public isEventStarted;
 
+    //mapping for event cancel status
     mapping(uint256 => bool) public isEventCanceled;
 
     //Event contract address
