@@ -3,7 +3,7 @@ require('@openzeppelin/hardhat-upgrades')
 
 require("dotenv").config()
 
-require('@primitivefi/hardhat-dodoc');
+// require('@primitivefi/hardhat-dodoc');
 
 
 // This is a sample Hardhat task. To learn how to create your own go to
