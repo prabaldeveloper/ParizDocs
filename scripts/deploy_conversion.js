@@ -16,13 +16,6 @@ async function main() {
     const Trace = "0xD028C2a5156069c7eFaeA40acCA7d9Da6f219A5f"
     const router = "0x8954AfA98594b838bda56FE4C12a09D7739D179b"
     const factory = "0x5757371414417b8c6caad45baef941abc7d3ab32"
-    const StableToken = USDC
-
-    const NFTToken = "0x2fAd792b99Ca771CF9eBAB6564eD70Da5EF017e4";
-
-    // const Trace = "0x4287F07CBE6954f9F0DecD91d0705C926d8d03A4"
-    // const router = "0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff"
-    // const USDC = "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
 
     //// ************ DEPLOY CONVERSION **************/////
 
@@ -46,23 +39,27 @@ async function main() {
     await conversion.addToken(Trace, router);
 
     //await new Promise(res => setTimeout(res, 5000));
-    await conversion.adminUpdate(Trace, Trace, router, factory);
+    await conversion.adminUpdate(Trace, router, factory);
 
     console.log("For USDT ------------------------------");
 
-    console.log(await conversion.getSwapPrice(USDC,Trace));
+    console.log("swap Trace price", await conversion.getSwapPrice(USDC, Trace));
 
-    console.log("Base token Price" ,await conversion.getBaseTokenInUSD());
-    
-    console.log("Target Token price", await conversion.getTargetTokenInUSD(Trace));
+    console.log("Base token Price", await conversion.getBaseTokenInUSD());
 
-    console.log("USDT Price ",await conversion.convertFee(USDT, "1000000000000000000"));
-    
-    console.log("USDC Price ",await conversion.convertFee(USDC, "1000000000000000000"));
+    console.log("Target Token price USDT", await conversion.getTargetTokenInUSD(USDT));
 
-    console.log("matic price ",await conversion.convertFee(MATIC, "1000000000000000000"));
+    console.log("USDT Price ", await conversion.convertFee(USDT, "1000000000000000000"));
 
-    console.log("Trace price ",await conversion.convertFee(Trace, "1000000000000000000"));
+    console.log("Target Token price USDC", await conversion.getTargetTokenInUSD(USDC));
+
+    console.log("USDC Price ", await conversion.convertFee(USDC, "1000000000000000000"));
+
+    console.log("Target Token price- Matic", await conversion.getTargetTokenInUSD(MATIC));
+
+    console.log("matic price ", await conversion.convertFee(MATIC, "1000000000000000000"));
+
+    console.log("Trace price ", await conversion.convertFee(Trace, "1000000000000000000"));
 
 
 }

@@ -11,31 +11,24 @@ import "../contracts/interface/IQuickswapRouter.sol";
 import "../contracts/interface/IAggregatorV3Interface.sol";
 
 contract ConversionV1 is Initializable, Ownable {
-    address internal USX;
     address internal Trace;
     address constant USD = 0xb0040280A0C97F20C92c09513b8C6e6Ff9Aa86DC;
 
     IQuickswapRouter router;
     IQuickswapFactory factory;
 
-    uint256 PRICE_PRECISION;
-    uint256 USD_DECIMALS;
     mapping(address => mapping(address => address)) public priceFeed;
     event TokenAdded(address indexed tokenAddress);
 
     function initialize() public initializer {
         Ownable.ownable_init();
-        PRICE_PRECISION = 1E8;
-        USD_DECIMALS = 8;
     }
 
     function adminUpdate(
-        address _USX,
         address _Trace,
         IQuickswapRouter _router,
         IQuickswapFactory _factory
     ) public onlyOwner {
-        USX = _USX;
         Trace = _Trace;
         router = _router;
         factory = _factory;
@@ -90,13 +83,13 @@ contract ConversionV1 is Initializable, Ownable {
         }
         uint256 totalFee;
         if (decimal == 18) {
-            uint256 baseTokenIn1USD = (targetTokenPrice * 10**decimal) /
-                baseTokenPrice;
+            uint256 baseTokenIn1USD = (baseTokenPrice * 10**decimal) /
+                targetTokenPrice;
             totalFee = (fee * baseTokenIn1USD) / 10**decimal;
         }
         if (decimal == 6) {
-            uint256 baseTokenIn1USD = (targetTokenPrice * 10**decimal) /
-                baseTokenPrice;
+            uint256 baseTokenIn1USD = (baseTokenPrice * 10**decimal) /
+                targetTokenPrice;
             totalFee = (fee * baseTokenIn1USD) / 10**18;
         }
         return totalFee;
@@ -105,18 +98,16 @@ contract ConversionV1 is Initializable, Ownable {
     function getSwapPrice(address tokenA, address tokenB)
         public
         view
-        returns (uint)
+        returns (uint256)
     {
         (uint256 reserves0, uint256 reserves1, ) = IQuickswapPair(
             factory.getPair(tokenA, tokenB)
-        ).getReserves();
-        uint256 price = 2318000; 
-        // uint price = reserves1;
+        ).getReserves(); // pair => 0xead0a2ec9fea76a3644531469c0674e0400d862a
+        // uint256 price = 2318000;
+        // reserves0 = 462832518;
+        // reserves1 = 15468000000000000000000;
+        uint256 price = (reserves0 * 10**20) / reserves1;
         return price;
-    }
-
-    function getUSXPrice() public pure returns (uint256) {
-        return 100000000;
     }
 
     function addToken(address token0, address _priceFeed) public onlyOwner {
