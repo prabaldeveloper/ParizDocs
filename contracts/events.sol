@@ -352,7 +352,8 @@ contract Events is EventMetadata {
                 tokenAddress,
                 tokenType,
                 venueFeeAmount
-            );        }
+            );        
+        }
         if (isEventPaid == false) {
             ticketPrice = 0;
         }
