@@ -11,6 +11,8 @@ import "./interface/IVenue.sol";
 
 contract ManageEvent is Ownable {
 
+    using AddressUpgradeable for address;
+
     //Details of the agenda
     struct agendaDetails {
         uint256 agendaId;
@@ -93,6 +95,7 @@ contract ManageEvent is Ownable {
     ///@notice updates venueContract address
     ///@param _venueContract venueContract address
     function updateVenueContract(address _venueContract) external onlyOwner {
+        require(_venueContract.isContract(), "ManageEvent: Address is not a contract");
         venueContract = _venueContract;
         emit VenueContractUpdated(_venueContract);
     }
@@ -100,6 +103,7 @@ contract ManageEvent is Ownable {
     ///@notice updates eventContract address
     ///@param _eventContract eventContract address
     function updateEventContract(address _eventContract) external onlyOwner {
+        require(_eventContract.isContract(),"ManageEvent: Address is not a contract");
         eventContract = _eventContract;
         emit EventContractUpdated(_eventContract);
     }
@@ -145,12 +149,12 @@ contract ManageEvent is Ownable {
         require(block.timestamp >= startTime && endTime > block.timestamp, "ManageEvent: Event not live");
         require(isEventStarted[eventTokenId] == false, "ManageEvent: Event already started");
         if(payNow == false) {
-            if(tokenAddress!= address(0)) 
+            /*if(tokenAddress!= address(0)) 
                 IVenue(getVenueContract()).bookVenue(msg.sender, eventTokenId, venueTokenId, tokenAddress, venueFeeAmount);
             
             else {
              IVenue(getVenueContract()).bookVenue{value: msg.value}(msg.sender, eventTokenId, venueTokenId, tokenAddress, venueFeeAmount);
-            }
+            }*/
             payNow = true;
         }
         isEventStarted[eventTokenId] = true;
