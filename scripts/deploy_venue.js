@@ -3,15 +3,15 @@ async function main() {
     const accounts = await ethers.provider.listAccounts();
     console.log("Accounts", accounts[0]);    
 
-    // const venue = await ethers.getContractFactory("Venue");
-    // const venueContract = await upgrades.deployProxy(venue, { initializer: 'initialize' })
-    // await venueContract.deployed();
-    // await new Promise(res => setTimeout(res, 1000));
+    const venue = await ethers.getContractFactory("Venue");
+    const venueContract = await upgrades.deployProxy(venue, { initializer: 'initialize' })
+    await venueContract.deployed();
+    await new Promise(res => setTimeout(res, 1000));
 
-    // console.log("Venue proxy", venueContract.address);
+    console.log("Venue proxy", venueContract.address);
 
-    const venue = await hre.ethers.getContractFactory("Venue");
-    const venueContract = await venue.attach("0xa349553a541597b44a2347d088d3facaeb3e5f6a");
+    // const venue = await hre.ethers.getContractFactory("Venue");
+    // const venueContract = await venue.attach("0xa349553a541597b44a2347d088d3facaeb3e5f6a");
 
     await venueContract.updateVenueRentalCommission(5);
     await new Promise(res => setTimeout(res, 1000));
@@ -39,3 +39,6 @@ main()
 
 // Venue proxy 0x85c7eE172B92F0f1393f98926adF320c434E3262
 // conversion proxy 0x02e90531aac91fD8e6B8a5F323cE171DD3c29AdF
+
+//New
+//Venue Proxy 0xD959B719922b7b70b2AC4b10D466aAbE3745d86c
