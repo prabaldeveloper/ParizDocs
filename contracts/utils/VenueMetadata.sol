@@ -7,7 +7,7 @@ import "../utils/VenueERC721.sol";
 /**
  * @notice A mixin to extend the OpenZeppelin metadata implementation.
  */
-abstract contract VenueMetadata is VenueERC721 {
+contract VenueMetadata is VenueERC721 {
 
     uint256 private nextTokenId;
 

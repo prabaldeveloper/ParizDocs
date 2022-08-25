@@ -34,7 +34,7 @@ contract Events is EventMetadata {
     mapping(uint256 => Details) public getInfo;
 
     //mapping for getting supported erc20TokenAddress
-    mapping(address => bool) public erc20TokenStatus;
+    mapping(address => bool) public tokenStatus;
 
     //mapping for getting supported erc721TokenAddress
     // mapping(address => bool) public erc721tokenAddress;
@@ -52,6 +52,9 @@ contract Events is EventMetadata {
     mapping(address=> mapping(uint256 => bool)) public ticketBoughtAddress;
 
     mapping(uint256 => address) public ticketTokenAddress;
+
+    // mapping for ticket NFT contract
+    mapping(uint256 => address) public ticketNFTAddress;
 
     //mapping for featured events
     mapping(uint256 => bool) public featuredEvents;
@@ -117,7 +120,8 @@ contract Events is EventMetadata {
         address eventOrganiser,
         uint256 ticketPrice,
         address ticketTought,
-        address tokenAddress
+        address tokenAddress,
+        address ticketNFTAddress
     );
 
     ///@param tokenId Event tokenId
@@ -230,7 +234,7 @@ contract Events is EventMetadata {
         external
         onlyOwner
     {
-        erc20TokenStatus[tokenAddress] = status;
+        tokenStatus[tokenAddress] = status;
         emit ERC20TokenUpdated(tokenAddress, status);
     }
 
@@ -315,23 +319,23 @@ contract Events is EventMetadata {
     ///@param time[2] => time[0] = Event startTime, time[1] = Event endTime
     ///@param tokenCID Event tokenCID
     ///@param venueTokenId venueTokenId
-    ///@param payNow pay venue fees now or later(true or false)
-    ///@param tokenAddress erc20 or erc721 tokenAddress
     ///@param venueFeeAmount fee of the venue
-    ///@param isEventPaid isEventPaid(true or false)
-    ///@param ticketToken address of the ticket token
     ///@param ticketPrice ticketPrice of event
+    ///@param feeToken erc20 tokenAddress
+    ///@param ticketToken address of the ticket token
+    ///@param isEventPaid isEventPaid(true or false)
+    ///@param payNow pay venue fees now or later(true or false)
     function add(
         string[3] memory details,
         uint256[2] memory time,
         string memory tokenCID,
         uint256 venueTokenId,
-        bool payNow,
-        address tokenAddress,
         uint256 venueFeeAmount,
-        bool isEventPaid,
+        uint256 ticketPrice,
+        address feeToken,
         address ticketToken,
-        uint256 ticketPrice
+        bool isEventPaid,
+        bool payNow
     ) external payable onlyWhitelistedUsers {
         uint256 _tokenId = _mintInternal(tokenCID);
         require(IVenue(getVenueContract())._exists(venueTokenId), "Events: Venue tokenId does not exists");
@@ -339,7 +343,8 @@ contract Events is EventMetadata {
             isVenueAvailable(_tokenId, venueTokenId, time[0], time[1]),
             "Events: Venue is not available"
          );
-        require(erc20TokenStatus[ticketToken] == true,  "Events: Payment token not supported");
+        // Might get removed after setting ticket token to Trace
+        require(tokenStatus[ticketToken] == true,  "Events: Payment token not supported");
         if (payNow == true) {
             checkVenueFees(
                 venueTokenId,
@@ -347,13 +352,14 @@ contract Events is EventMetadata {
                 time[1],
                 msg.sender,
                 _tokenId,
-                tokenAddress,
+                feeToken,
                 venueFeeAmount
             );        
         }
         if (isEventPaid == false) {
             ticketPrice = 0;
         }
+        // Might get removed after setting ticket token to Trace
         ticketTokenAddress[_tokenId] = ticketToken;
         getInfo[_tokenId] = Details(
             _tokenId,
@@ -367,6 +373,14 @@ contract Events is EventMetadata {
             payable(msg.sender),
             ticketPrice
         );
+        // create ticket NFT contract
+        bytes memory bytecode = type(EventMetadata).creationCode;
+        bytes32 salt = keccak256(abi.encodePacked(msg.sender, _tokenId));
+        address ticketNFTContract;
+        assembly {
+            ticketNFTContract := create2(0, add(bytecode, 32), mload(bytecode), salt)
+        }
+        ticketNFTAddress[_tokenId] = ticketNFTContract;
         emit EventAdded(
             _tokenId,
             tokenCID,
@@ -376,7 +390,8 @@ contract Events is EventMetadata {
             msg.sender,
             ticketPrice,
             ticketToken,
-            tokenAddress
+            feeToken,
+            ticketNFTContract
         );
     }
 
@@ -467,39 +482,39 @@ contract Events is EventMetadata {
     ///@dev - Check whether event is paid or free
     ///@dev - Check whether user paid the price.
     ///@dev - Map event tokenId with user address
-    ///@param tokenId Event tokenId
+    ///@param eventId Event tokenId
     ///@param tokenAddress Token Address
     ///@param ticketPrice ticket Price
     function buyTicket(
-        uint256 tokenId,
+        uint256 eventId,
         address tokenAddress,
         uint256 ticketPrice
     ) external payable {
-        require(_exists(tokenId), "Events: TokenId does not exist");
-        uint256 price = getInfo[tokenId].ticketPrice;
+        require(_exists(eventId), "Events: TokenId does not exist");
+        uint256 price = getInfo[eventId].ticketPrice;
         require(price != 0, "Events: Event is free");
         require(
-            block.timestamp <= getInfo[tokenId].endTime,
+            block.timestamp <= getInfo[eventId].endTime,
             "Events: Event ended"
         );
-        require(ticketTokenAddress[tokenId] == tokenAddress, "Events: Payment token not supported");
+        require(ticketTokenAddress[eventId] == tokenAddress, "Events: Payment token not supported");
         require(
-            ticketBoughtAddress[msg.sender][tokenId] == false,
+            ticketBoughtAddress[msg.sender][eventId] == false,
             "Events: User already has bought ticket"
         );
-        uint256 venueTokenId = getInfo[tokenId].venueTokenId;
+        uint256 venueTokenId = getInfo[eventId].venueTokenId;
         uint256 totalCapacity = IVenue(getVenueContract()).getTotalCapacity(
             venueTokenId
         );
         require(
-            ticketSold[tokenId] < totalCapacity,
+            ticketSold[eventId] < totalCapacity,
             "Event: All tickets are sold"
         );
-        checkTicketFees(tokenId, tokenAddress, ticketPrice);
-        ticketBoughtAddress[msg.sender][tokenId] = true;
-        ticketSold[tokenId]++;
+        checkTicketFees(eventId, tokenAddress, ticketPrice);
+        ticketBoughtAddress[msg.sender][eventId] = true;
+        ticketSold[eventId]++;
 
-        emit Bought(tokenId, tokenAddress, msg.sender);
+        emit Bought(eventId, tokenAddress, msg.sender);
     }
 
     ///@notice Users can join events
@@ -560,7 +575,7 @@ contract Events is EventMetadata {
         uint256 venueTokenId = getInfo[eventTokenId].venueTokenId;
         address tokenAddress = eventTokenAddress[eventTokenId];
         address payable venueOwner = IVenue(getVenueContract()).getVenueOwner(venueTokenId);
-        if(erc20TokenStatus[tokenAddress] == true) {
+        if(tokenStatus[tokenAddress] == true) {
             (, , uint _venueRentalCommissionFees) = calculateRent(
                 venueTokenId,
                 getInfo[eventTokenId].startTime,
@@ -683,7 +698,7 @@ contract Events is EventMetadata {
     ) internal {
         address payable eventOrganiser = getInfo[tokenId].eventOrganiser;
             require(
-                erc20TokenStatus[tokenAddress] == true,
+                tokenStatus[tokenAddress] == true,
                 "Events: TokenAddress not supported"
             );
             uint256 price = getInfo[tokenId].ticketPrice;
@@ -743,7 +758,7 @@ contract Events is EventMetadata {
         uint256 feeAmount
     ) internal {
             require(
-                erc20TokenStatus[tokenAddress] == true,
+                tokenStatus[tokenAddress] == true,
                 "Events: PaymentToken Not Supported"
             );
             (uint256 estimatedCost, uint256 _platformFees, ) = calculateRent(

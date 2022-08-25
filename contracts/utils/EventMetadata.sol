@@ -7,7 +7,7 @@ import "../utils/EventERC721.sol";
 /**
  * @notice A mixin to extend the OpenZeppelin metadata implementation.
  */
-abstract contract EventMetadata is EventERC721 {
+contract EventMetadata is EventERC721 {
 
     uint256 private nextTokenId;
 
