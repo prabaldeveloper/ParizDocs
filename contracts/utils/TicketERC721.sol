@@ -33,6 +33,9 @@ import "../access/Ownable.sol";
     // Token symbol
     string private _symbol;
 
+    // Total Supply
+    uint256 private _totalSupply;
+
     // Mapping from token ID to owner address
     mapping(uint256 => address) private _owners;
 
@@ -54,9 +57,11 @@ import "../access/Ownable.sol";
     /**
      * @dev Initializes the contract by setting a `name` and a `symbol` to the token collection.
      */
-    function __ERC721_init(string memory name_, string memory symbol_) internal onlyInitializing {
+    function __ERC721_init(string memory name_, string memory symbol_, uint256 totalSupply_) internal onlyInitializing {
         _name = name_;
         _symbol = symbol_;
+        _totalSupply = totalSupply_;
+
     }
 
     /**
@@ -122,6 +127,12 @@ import "../access/Ownable.sol";
     }
 
     //Add totalSupply check
+    /**
+     * @dev Return totalSupply
+     */
+    function totalSupply() public view returns(uint256) {
+        return _totalSupply;
+    }
 
      /**
      * @dev See {IERC721Metadata-tokenURI}.
@@ -391,7 +402,6 @@ import "../access/Ownable.sol";
      */
     function _mint(address to, uint256 tokenId) internal virtual {
 
-        //Total Supply check in mint
         require(to != address(0), "ERC721: mint to the zero address");
         require(!_exists(tokenId), "ERC721: token already minted");
 

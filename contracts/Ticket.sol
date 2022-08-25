@@ -8,8 +8,11 @@ contract Ticket is TicketMetadata {
         Ownable.ownable_init();
         _initializeNFT721Mint();
         _updateBaseURI("https://ipfs.io/ipfs/");
-        __ERC721_init(name, symbol);
+        __ERC721_init(name, symbol, totalSupply);
 
+    }
 
+    function mint(string memory _tokenIPFSPath) public {
+        _mintInternal(_tokenIPFSPath);
     }
 }

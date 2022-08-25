@@ -126,6 +126,7 @@ contract TicketMetadata is TicketERC721 {
         returns (uint256 tokenId)
     {
         tokenId = nextTokenId++;
+        require(tokenId <= totalSupply(), "NFT721Metadata: Supply is reached");
         _mint(msg.sender, tokenId);
         _updateTokenCreator(tokenId, payable(msg.sender));
         _setTokenIPFSPath(tokenId, _tokenIPFSPath);
