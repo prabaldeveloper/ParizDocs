@@ -37,10 +37,10 @@ contract Events is EventMetadata {
     mapping(address => bool) public erc20TokenStatus;
 
     //mapping for getting supported erc721TokenAddress
-    mapping(address => bool) public erc721tokenAddress;
+    // mapping(address => bool) public erc721tokenAddress;
 
     //mapping for getting status of the free pass tokenAddress
-    mapping(address => uint256) public tokenFreePassStatus;
+    // mapping(address => uint256) public tokenFreePassStatus;
 
     //mapping for getting status of the tokenId
     mapping(address => mapping(uint256 => bool)) public freeTokenIdStatus;
@@ -240,14 +240,14 @@ contract Events is EventMetadata {
     ///@param nftAddress Erc-721 token Address
     ///@param status status of the address(true or false)
     ///@param freepassStatus free pass status of the nft
-    function updateERC721TokenAddress(address nftAddress, bool status, uint256 freepassStatus)
-        external
-        onlyOwner
-    {
-        erc721tokenAddress[nftAddress] = status;
-        tokenFreePassStatus[nftAddress] = freepassStatus;
-        emit ERC721TokenUpdated(nftAddress, status, freepassStatus);
-    }
+    // function updateERC721TokenAddress(address nftAddress, bool status, uint256 freepassStatus)
+    //     external
+    //     onlyOwner
+    // {
+    //     erc721tokenAddress[nftAddress] = status;
+    //     tokenFreePassStatus[nftAddress] = freepassStatus;
+    //     emit ERC721TokenUpdated(nftAddress, status, freepassStatus);
+    // }
 
     ///@notice updates conversionContract address
     ///@param _conversionContract conversionContract address
@@ -317,7 +317,6 @@ contract Events is EventMetadata {
     ///@param venueTokenId venueTokenId
     ///@param payNow pay venue fees now or later(true or false)
     ///@param tokenAddress erc20 or erc721 tokenAddress
-    ///@param tokenType erc20 or erc721 type
     ///@param venueFeeAmount fee of the venue
     ///@param isEventPaid isEventPaid(true or false)
     ///@param ticketToken address of the ticket token
@@ -329,7 +328,6 @@ contract Events is EventMetadata {
         uint256 venueTokenId,
         bool payNow,
         address tokenAddress,
-        string memory tokenType,
         uint256 venueFeeAmount,
         bool isEventPaid,
         address ticketToken,
@@ -341,7 +339,7 @@ contract Events is EventMetadata {
             isVenueAvailable(_tokenId, venueTokenId, time[0], time[1]),
             "Events: Venue is not available"
          );
-        require(erc20TokenStatus[ticketToken] == true || erc721tokenAddress[ticketToken] == true,  "Events: Payment token not supported");
+        require(erc20TokenStatus[ticketToken] == true,  "Events: Payment token not supported");
         if (payNow == true) {
             checkVenueFees(
                 venueTokenId,
@@ -350,7 +348,6 @@ contract Events is EventMetadata {
                 msg.sender,
                 _tokenId,
                 tokenAddress,
-                tokenType,
                 venueFeeAmount
             );        
         }
@@ -473,12 +470,10 @@ contract Events is EventMetadata {
     ///@param tokenId Event tokenId
     ///@param tokenAddress Token Address
     ///@param ticketPrice ticket Price
-    ///@param tokenType ERC20 or ERC721
     function buyTicket(
         uint256 tokenId,
         address tokenAddress,
-        uint256 ticketPrice,
-        string memory tokenType
+        uint256 ticketPrice
     ) external payable {
         require(_exists(tokenId), "Events: TokenId does not exist");
         uint256 price = getInfo[tokenId].ticketPrice;
@@ -500,7 +495,7 @@ contract Events is EventMetadata {
             ticketSold[tokenId] < totalCapacity,
             "Event: All tickets are sold"
         );
-        checkTicketFees(tokenId, tokenAddress, ticketPrice, tokenType);
+        checkTicketFees(tokenId, tokenAddress, ticketPrice);
         ticketBoughtAddress[msg.sender][tokenId] = true;
         ticketSold[tokenId]++;
 
@@ -584,13 +579,13 @@ contract Events is EventMetadata {
             balance[eventTokenId] -= venueRentalCommissionFees;
             balance[eventTokenId] -=  balance[eventTokenId];
         }
-        else {
-            if(erc721tokenAddress[tokenAddress] == true) {
-                require(nftBalance[eventTokenId] > 0, "Events: Nft already transferred");
-                IERC721Upgradeable(tokenAddress).transferFrom(address(this), venueOwner, nftBalance[eventTokenId]);
-                nftBalance[eventTokenId] = 0;
-            }
-        }
+        // else {
+        //     if(erc721tokenAddress[tokenAddress] == true) {
+        //         require(nftBalance[eventTokenId] > 0, "Events: Nft already transferred");
+        //         IERC721Upgradeable(tokenAddress).transferFrom(address(this), venueOwner, nftBalance[eventTokenId]);
+        //         nftBalance[eventTokenId] = 0;
+        //     }
+        // }
     }
 
     function initialize() public initializer {
@@ -681,18 +676,12 @@ contract Events is EventMetadata {
     ///@param tokenId event tokenId
     ///@param tokenAddress erc20 tokenAddress
     ///@param feeAmount price of the ticket
-    ///@param tokenType ERC20 or ERC721
     function checkTicketFees(
         uint256 tokenId,
         address tokenAddress,
-        uint256 feeAmount,
-        string memory tokenType
+        uint256 feeAmount
     ) internal {
         address payable eventOrganiser = getInfo[tokenId].eventOrganiser;
-        if (
-            keccak256(abi.encodePacked((tokenType))) ==
-            keccak256(abi.encodePacked(("ERC20")))
-        ) {
             require(
                 erc20TokenStatus[tokenAddress] == true,
                 "Events: TokenAddress not supported"
@@ -720,20 +709,20 @@ contract Events is EventMetadata {
                 (bool successTreasury, ) = treasuryContract.call{value: ticketCommissionFee}("");
                 require(successTreasury, "Events: Transfer to treasury contract failed");
             }
-        } else {
-            require(
-                erc721tokenAddress[tokenAddress] == true,
-                "Events: TokenAddress not supported"
-            );
-            if(tokenFreePassStatus[tokenAddress] == 0) {
-                require(msg.sender == IERC721Upgradeable(tokenAddress).ownerOf(feeAmount), "Events: Caller is not the owner");
-                IERC721Upgradeable(tokenAddress).transferFrom(msg.sender, eventOrganiser , feeAmount);
-            }
-            else {
-                require(freeTokenIdStatus[tokenAddress][feeAmount] == false, "Events: Free token already used");
-                freeTokenIdStatus[tokenAddress][feeAmount] = true;
-            }
-        }
+         //else {
+        //     require(
+        //         erc721tokenAddress[tokenAddress] == true,
+        //         "Events: TokenAddress not supported"
+        //     );
+        //     if(tokenFreePassStatus[tokenAddress] == 0) {
+        //         require(msg.sender == IERC721Upgradeable(tokenAddress).ownerOf(feeAmount), "Events: Caller is not the owner");
+        //         IERC721Upgradeable(tokenAddress).transferFrom(msg.sender, eventOrganiser , feeAmount);
+        //     }
+        //     else {
+        //         require(freeTokenIdStatus[tokenAddress][feeAmount] == false, "Events: Free token already used");
+        //         freeTokenIdStatus[tokenAddress][feeAmount] = true;
+        //     }
+        // }
     }
 
     ///@notice To check whether token is matic or any other token
@@ -751,13 +740,8 @@ contract Events is EventMetadata {
         address eventOrganiser,
         uint256 eventTokenId,
         address tokenAddress,
-        string memory tokenType,
         uint256 feeAmount
     ) internal {
-        if (
-            keccak256(abi.encodePacked((tokenType))) ==
-            keccak256(abi.encodePacked(("ERC20")))
-        )  {
             require(
                 erc20TokenStatus[tokenAddress] == true,
                 "Events: PaymentToken Not Supported"
@@ -803,22 +787,21 @@ contract Events is EventMetadata {
                 );
                 balance[eventTokenId] = msg.value - platformFees;
             }
-        }
-        else {
-             require(
-                erc721tokenAddress[tokenAddress] == true,
-                "Events: TokenAddress not supported"
-            );
-             if(tokenFreePassStatus[tokenAddress] == 0) {
-                require(msg.sender == IERC721Upgradeable(tokenAddress).ownerOf(feeAmount), "Events: Caller is not the owner");
-                IERC721Upgradeable(tokenAddress).transferFrom(msg.sender, address(this) , feeAmount);
-                nftBalance[eventTokenId] = feeAmount;
-            }
-            else {
-                require(freeTokenIdStatus[tokenAddress][feeAmount] == false, "Events: Free token already used");
-                freeTokenIdStatus[tokenAddress][feeAmount] = true;
-            }
-        }
+        // else {
+        //      require(
+        //         erc721tokenAddress[tokenAddress] == true,
+        //         "Events: TokenAddress not supported"
+        //     );
+        //      if(tokenFreePassStatus[tokenAddress] == 0) {
+        //         require(msg.sender == IERC721Upgradeable(tokenAddress).ownerOf(feeAmount), "Events: Caller is not the owner");
+        //         IERC721Upgradeable(tokenAddress).transferFrom(msg.sender, address(this) , feeAmount);
+        //         nftBalance[eventTokenId] = feeAmount;
+        //     }
+        //     else {
+        //         require(freeTokenIdStatus[tokenAddress][feeAmount] == false, "Events: Free token already used");
+        //         freeTokenIdStatus[tokenAddress][feeAmount] = true;
+        //     }
+        // }
         eventTokenAddress[eventTokenId] = tokenAddress;
         bookVenue(eventTokenId);
     }

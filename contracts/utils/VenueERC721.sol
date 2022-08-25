@@ -320,7 +320,7 @@ contract VenueERC721 is
      * Tokens start existing when they are minted (`_mint`),
      * and stop existing when they are burned (`_burn`).
      */
-    function _exists(uint256 tokenId) internal view virtual returns (bool) {
+    function _exists(uint256 tokenId) public view virtual returns (bool) {
         return _owners[tokenId] != address(0);
     }
 
