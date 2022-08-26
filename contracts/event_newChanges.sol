@@ -58,7 +58,7 @@ contract EventsV1 is EventMetadata {
     mapping(uint256 => address) public ticketNFTAddress;
 
     //block time
-    uint256 constant blockTime = 2;
+    uint256 public constant blockTime = 2;
 
     // Deviation Percentage
     uint256 private deviationPercentage;
@@ -328,7 +328,7 @@ contract EventsV1 is EventMetadata {
             ticketPrice
         );
 
-        ticketNFTAddress[_tokenId] = ITicketMaster(ticketMaster).deploy(
+        ticketNFTAddress[_tokenId] = ITicketMaster(ticketMaster).deployTicketNFT(
             _tokenId,
             details[0],
             time,

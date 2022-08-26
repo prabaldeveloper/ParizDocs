@@ -113,4 +113,8 @@ contract ConversionV1 is Initializable, Ownable {
     function addToken(address token0, address _priceFeed) public onlyOwner {
         priceFeed[token0][address(0)] = _priceFeed;
     }
+    
+    function getBaseToken() public view returns(address) {
+        return Trace;
+    }
 }

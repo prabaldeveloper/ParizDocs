@@ -9,7 +9,7 @@ contract TicketMaster {
     // mapping for ticket NFT contract
     mapping(uint256 => address) public ticketNFTAddress;
 
-    function deploy(uint eventId, string memory name, uint256[2] memory time, uint totalSupply) external returns(address ticketNFTContract) {
+    function deployTicketNFT(uint eventId, string memory name, uint256[2] memory time, uint totalSupply) external returns(address ticketNFTContract) {
         // create ticket NFT contract
         bytes memory bytecode = type(Ticket).creationCode;
         bytes32 salt = keccak256(abi.encodePacked(msg.sender, eventId));
@@ -22,10 +22,10 @@ contract TicketMaster {
             )
         }
         ticketNFTAddress[eventId] = ticketNFTContract;
-        Ticket(ticketNFTContract).initialize(
-            name,
-            "EventTicket",
-            totalSupply
-        );
+        // Ticket(ticketNFTContract).initialize(
+        //     name,
+        //     "EventTicket",
+        //     totalSupply
+        // );
     }
 }

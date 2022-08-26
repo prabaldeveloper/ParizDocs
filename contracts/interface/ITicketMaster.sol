@@ -6,5 +6,5 @@ pragma solidity ^0.8.0;
  */
 
 interface ITicketMaster {
-    function deploy(uint eventId, string memory name, uint256[2] memory time, uint totalSupply) external returns(address);
+    function deployTicketNFT(uint eventId, string memory name, uint256[2] memory time, uint totalSupply) external returns(address);
 }
