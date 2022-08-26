@@ -72,7 +72,7 @@ contract Venue is VenueMetadata {
     }
 
     function initialize() public initializer {
-        Ownable.ownable_init();
+        // Ownable.ownable_init();
         _initializeNFT721Mint();
         _updateBaseURI("https://ipfs.io/ipfs/");  
     }

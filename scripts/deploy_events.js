@@ -22,6 +22,8 @@ async function main() {
 
      console.log("Event proxy", eventProxy.address);
 
+     
+
     // const eventContract = await hre.ethers.getContractFactory("Events");
     // const eventProxy = await eventContract.attach("0x58bBFE5a9559f1df29655E70Ba0DCbC02d3A2Cb5");
     
