@@ -442,6 +442,11 @@ contract EventsV1 is EventMetadata {
         return treasuryContract;
     }
 
+    ///@notice Returns ticketMaster address
+    function getTicketMasterContract() public view returns (address) {
+        return ticketMaster;
+    }
+
     ///@notice Returns deviationPercentage
     function getDeviationPercentage() public view returns (uint256) {
         return deviationPercentage;
