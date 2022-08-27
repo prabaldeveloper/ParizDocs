@@ -9,7 +9,7 @@ import "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/StringsUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol"; 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "../access/Ownable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 /**
  * @dev Implementation of https://eips.ethereum.org/EIPS/eip-721[ERC721] Non-Fungible Token Standard, including
@@ -19,10 +19,10 @@ import "../access/Ownable.sol";
 
  contract TicketERC721 is
     Initializable,
-    Ownable,
     ERC165Upgradeable,
     IERC721Upgradeable,
-    IERC721MetadataUpgradeable
+    IERC721MetadataUpgradeable,
+    Ownable
 {
     using AddressUpgradeable for address;
     using StringsUpgradeable for uint256;

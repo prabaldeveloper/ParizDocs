@@ -16,16 +16,16 @@ async function main() {
     await venueContract.updateVenueRentalCommission(5);
     await new Promise(res => setTimeout(res, 1000));
 
-    await venueContract.add("Pariz Convention Center", "12,092", "Fashion Show", 50, 100000000, "QmUtVYmeTh2kALCGJhbHPeu5ezLXSbSpV9rVcZRdFsTGNG");
+    await venueContract.add("Pariz Convention Center", "12,092", "Fashion Show", 50, "1000000000000000000", "QmUtVYmeTh2kALCGJhbHPeu5ezLXSbSpV9rVcZRdFsTGNG");
     await new Promise(res => setTimeout(res, 1000));
 
-    await venueContract.add("Pariz Fashion Gallery", "12,093", "Concert", 20, 200000001, "QmZnwDAg98s3Qq8aYd1Xoz1hJu3dYa8J76JeUHs6M5fnqM");
+    await venueContract.add("Pariz Fashion Gallery", "12,093", "Concert", 20, "1000000000000000000", "QmZnwDAg98s3Qq8aYd1Xoz1hJu3dYa8J76JeUHs6M5fnqM");
     await new Promise(res => setTimeout(res, 1000));
 
-    await venueContract.add("Pariz Conference Room", "12,094", "Conference", 100, 400000002, "QmPc29mi28h31zDh9dydGDdxukpUSqti2eVXz4oRC99KB1");
+    await venueContract.add("Pariz Conference Room", "12,094", "Conference", 100, "1000000000000000000", "QmPc29mi28h31zDh9dydGDdxukpUSqti2eVXz4oRC99KB1");
     await new Promise(res => setTimeout(res, 1000));
 
-    await venueContract.add("Pariz Executive Room", "12,095", "Meetup", 30, 1000000002, "QmcbVTKvi6HrhHMEZnZrujkqdkTHbaj5EcDnUBKu2PTtx5");
+    await venueContract.add("Pariz Executive Room", "12,095", "Meetup", 30, "1000000000000000000", "QmcbVTKvi6HrhHMEZnZrujkqdkTHbaj5EcDnUBKu2PTtx5");
 
 }
 

@@ -20,6 +20,9 @@ contract EventsV1 is EventMetadata {
 
     //Details of the event
     struct Details {
+        string name;
+        string category;
+        string description;
         uint256 tokenId;
         uint256 startTime;
         uint256 endTime;
@@ -91,7 +94,6 @@ contract EventsV1 is EventMetadata {
     ///@param eventOrganiser address of the organiser
     ///@param ticketPrice ticketPrice of event
     event EventAdded(
-        string[3] details,
         uint256 indexed tokenId,
         string tokenCID,
         uint256 venueTokenId,
@@ -319,6 +321,9 @@ contract EventsV1 is EventMetadata {
             ticketPrice = 0;
         }
         getInfo[_tokenId] = Details(
+            details[0],
+            details[1],
+            details[2],
             _tokenId,
             time[0],
             time[1],
@@ -336,7 +341,6 @@ contract EventsV1 is EventMetadata {
         );
 
         emit EventAdded(
-            details,
             _tokenId,
             tokenCID,
             venueTokenId,
@@ -563,11 +567,11 @@ contract EventsV1 is EventMetadata {
             );
             balance[eventTokenId] = feeAmount - platformFees;
         } else {
-            checkDeviation(msg.value, price);
-            (bool successOwner, ) = address(this).call{
-                value: msg.value - platformFees
-            }("");
-            require(successOwner, "Events: Transfer to venue owner failed");
+            // checkDeviation(msg.value, price);
+            // (bool successOwner, ) = address(this).call{
+            //     value: msg.value - platformFees
+            // }("");
+            // require(successOwner, "Events: Transfer to venue owner failed");
             (bool successTreasury, ) = treasuryContract.call{
                 value: platformFees
             }("");

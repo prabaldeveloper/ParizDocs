@@ -20,9 +20,9 @@ contract Events is EventMetadata {
     //Details of the event
     struct Details {
         uint256 tokenId;
-        // string name;
-        // string category;
-        // string description;
+            // string name;
+            // string category;
+            // string description;
         uint256 startTime;
         uint256 endTime;
         uint256 venueTokenId;

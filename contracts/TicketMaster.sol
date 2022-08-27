@@ -22,10 +22,10 @@ contract TicketMaster {
             )
         }
         ticketNFTAddress[eventId] = ticketNFTContract;
-        // Ticket(ticketNFTContract).initialize(
-        //     name,
-        //     "EventTicket",
-        //     totalSupply
-        // );
+        Ticket(ticketNFTContract).initialize(
+            name,
+            "EventTicket",
+            totalSupply
+        );
     }
 }
