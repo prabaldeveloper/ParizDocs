@@ -76,7 +76,7 @@ contract EventsV1 is EventMetadata {
     address private ticketMaster;
 
     //treasury contract
-    address payable treasuryContract;
+    address payable private treasuryContract;
 
     //isPublic true or false
     bool private isPublic;
@@ -129,7 +129,7 @@ contract EventsV1 is EventMetadata {
     ///@param status status of the address
     event WhiteList(address whitelistedAddress, bool status);
 
-    ///@param venueContract conversionContract address
+    ///@param venueContract venueContract address
     event VenueContractUpdated(address venueContract);
 
     // ///@param treasuryContract treasuryContract address
@@ -333,12 +333,13 @@ contract EventsV1 is EventMetadata {
             ticketPrice
         );
 
-        ticketNFTAddress[_tokenId] = ITicketMaster(ticketMaster).deployTicketNFT(
-            _tokenId,
-            details[0],
-            time,
-            IVenue(getVenueContract()).getTotalCapacity(venueTokenId)
-        );
+        ticketNFTAddress[_tokenId] = ITicketMaster(ticketMaster)
+            .deployTicketNFT(
+                _tokenId,
+                details[0],
+                time,
+                IVenue(getVenueContract()).getTotalCapacity(venueTokenId)
+            );
 
         emit EventAdded(
             _tokenId,
@@ -434,6 +435,11 @@ contract EventsV1 is EventMetadata {
     ///@notice Returns conversionContract address
     function getConversionContract() public view returns (address) {
         return conversionContract;
+    }
+
+    ///@notice Returns treasuryContract address
+    function getTreasuryContract() public view returns (address) {
+        return treasuryContract;
     }
 
     ///@notice Returns deviationPercentage
@@ -567,11 +573,11 @@ contract EventsV1 is EventMetadata {
             );
             balance[eventTokenId] = feeAmount - platformFees;
         } else {
-            // checkDeviation(msg.value, price);
-            // (bool successOwner, ) = address(this).call{
-            //     value: msg.value - platformFees
-            // }("");
-            // require(successOwner, "Events: Transfer to venue owner failed");
+            checkDeviation(msg.value, price);
+            (bool successOwner, ) = address(this).call{
+                value: msg.value - platformFees
+            }("");
+            require(successOwner, "Events: Transfer to venue fee failed");
             (bool successTreasury, ) = treasuryContract.call{
                 value: platformFees
             }("");
@@ -605,7 +611,8 @@ contract EventsV1 is EventMetadata {
             uint256 endTime,
             address eventOrganiser,
             bool payNow,
-            uint256 venueTokenId
+            uint256 venueTokenId,
+            uint256 ticketPrice
         )
     {
         return (
@@ -613,7 +620,8 @@ contract EventsV1 is EventMetadata {
             getInfo[tokenId].endTime,
             getInfo[tokenId].eventOrganiser,
             getInfo[tokenId].payNow,
-            getInfo[tokenId].venueTokenId
+            getInfo[tokenId].venueTokenId,
+            getInfo[tokenId].ticketPrice
         );
     }
 }

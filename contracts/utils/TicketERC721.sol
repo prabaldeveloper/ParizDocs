@@ -45,12 +45,6 @@ import "@openzeppelin/contracts/access/Ownable.sol";
     // Mapping from token ID to approved address
     mapping(uint256 => address) private _tokenApprovals;
 
-    // Optional mapping for token URIs
-    mapping(uint256 => string) internal _tokenURIs;
-
-    // Base URI
-    string private _baseURI;
-
     // Mapping from owner to operator approvals
     mapping(address => mapping(address => bool)) private _operatorApprovals;
 
@@ -143,50 +137,6 @@ import "@openzeppelin/contracts/access/Ownable.sol";
         override
         returns (string memory)
     {
-        require(
-            _exists(tokenId),
-            "ERC721Metadata: URI query for nonexistent token"
-        );
-
-        string memory _tokenURI = _tokenURIs[tokenId];
-
-        // If there is no base URI, return the token URI.
-        if (bytes(_baseURI).length == 0) {
-            return _tokenURI;
-        }
-        // If both are set, concatenate the baseURI and tokenURI (via abi.encodePacked).
-        if (bytes(_tokenURI).length > 0) {
-            return string(abi.encodePacked(_baseURI, _tokenURI));
-        }
-        // If there is a baseURI but no tokenURI, concatenate the tokenID to the baseURI.
-        return string(abi.encodePacked(_baseURI, tokenId.toString()));
-    }
-
-    /**
-     * @dev Sets `_tokenURI` as the tokenURI of `tokenId`.
-     *
-     * Requirements:
-     *
-     * - `tokenId` must exist.
-     */
-    function _setTokenURI(uint256 tokenId, string memory _tokenURI)
-        internal
-        virtual
-    {
-        require(
-            _exists(tokenId),
-            "ERC721Metadata: URI set of nonexistent token"
-        );
-        _tokenURIs[tokenId] = _tokenURI;
-    }
-
-    /**
-     * @dev Internal function to set the base URI for all token IDs. It is
-     * automatically added as a prefix to the value returned in {tokenURI},
-     * or to the token ID if {tokenURI} is empty.
-     */
-    function _setBaseURI(string memory baseURI_) internal virtual {
-        _baseURI = baseURI_;
     }
 
     /**
@@ -195,7 +145,6 @@ import "@openzeppelin/contracts/access/Ownable.sol";
      * to the token ID if no specific URI is set for that token ID.
      */
     function baseURI() public view returns (string memory) {
-        return _baseURI;
     }
 
     /**

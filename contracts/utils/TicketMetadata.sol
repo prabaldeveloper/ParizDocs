@@ -15,46 +15,14 @@ contract TicketMetadata is TicketERC721 {
 
     event Minted(
         address indexed creator,
-        uint256 indexed tokenId,
-        string indexed indexedTokenIPFSPath,
-        string tokenIPFSPath
+        uint256 indexed tokenId
     );
 
-        /**
-     * @dev Stores hashes minted by a creator to prevent duplicates.
-     */
-    mapping(address => mapping(string => bool))
-        private creatorToIPFSHashToMinted;
-
-    event BaseURIUpdated(string baseURI);
-
-    event NFTMetadataUpdated(string name, string symbol, string baseURI);
     event TokenCreatorUpdated(
         address indexed fromCreator,
         address indexed toCreator,
         uint256 indexed tokenId
     );
-
-    /**
-     * @notice Returns the IPFSPath to the metadata JSON file for a given NFT.
-     */
-    function getTokenCID(uint256 tokenId)
-        public
-        view
-        returns (string memory)
-    {
-        return _tokenURIs[tokenId];
-    }
-
-    /**
-     * @notice Checks if the creator has already minted a given NFT.
-     */
-    function getHasCreatorMintedIPFSHash(
-        address creator,
-        string memory tokenIPFSPath
-    ) public view returns (bool) {
-        return creatorToIPFSHashToMinted[creator][tokenIPFSPath];
-    }
 
     function _updateTokenCreator(uint256 tokenId, address payable creator)
         internal
@@ -75,32 +43,6 @@ contract TicketMetadata is TicketERC721 {
         return tokenIdToCreator[tokenId];
     }
 
-    function _updateBaseURI(string memory _baseURI) internal {
-        _setBaseURI(_baseURI);
-
-        emit BaseURIUpdated(_baseURI);
-    }
-
-    /**
-     * @dev The IPFS path should be the CID + file.extension, e.g.
-     * `QmfPsfGwLhiJrU8t9HpG4wuyjgPo9bk8go4aQqSu9Qg4h7/metadata.json`
-     */
-    function _setTokenIPFSPath(uint256 tokenId, string memory _tokenIPFSPath)
-        internal
-    {
-        // 46 is the minimum length for an IPFS content hash, it may be longer if paths are used
-        require(
-            bytes(_tokenIPFSPath).length >= 46,
-            "NFT721Metadata: Invalid IPFS path"
-        );
-        require(
-            !creatorToIPFSHashToMinted[msg.sender][_tokenIPFSPath],
-            "NFT721Metadata: NFT was already minted"
-        );
-
-        creatorToIPFSHashToMinted[msg.sender][_tokenIPFSPath] = true;
-        _setTokenURI(tokenId, _tokenIPFSPath);
-    }
 
     /**
      * @notice Gets the tokenId of the next NFT minted.
@@ -121,7 +63,7 @@ contract TicketMetadata is TicketERC721 {
     /**
      * @notice Allows a creator to mint an NFT.
      */
-    function _mintInternal(string memory _tokenIPFSPath)
+    function _mintInternal()
         internal
         returns (uint256 tokenId)
     {
@@ -129,8 +71,7 @@ contract TicketMetadata is TicketERC721 {
         require(tokenId <= totalSupply(), "NFT721Metadata: Supply is reached");
         _mint(msg.sender, tokenId);
         _updateTokenCreator(tokenId, payable(msg.sender));
-        _setTokenIPFSPath(tokenId, _tokenIPFSPath);
-        emit Minted(msg.sender, tokenId, _tokenIPFSPath, _tokenIPFSPath);
+        emit Minted(msg.sender, tokenId);
     }
 
     uint256[999] private ______gap;

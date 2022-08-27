@@ -499,40 +499,40 @@ contract Events is EventMetadata {
     ///@param eventId Event tokenId
     ///@param tokenAddress Token Address
     ///@param ticketPrice ticket Price
-    // function buyTicket(
-    //     uint256 eventId,
-    //     address tokenAddress,
-    //     uint256 ticketPrice
-    // ) external payable {
-    //     require(_exists(eventId), "Events: TokenId does not exist");
-    //     uint256 price = getInfo[eventId].ticketPrice;
-    //     require(price != 0, "Events: Event is free");
-    //     require(
-    //         block.timestamp <= getInfo[eventId].endTime,
-    //         "Events: Event ended"
-    //     );
-    //     require(
-    //         ticketTokenAddress[eventId] == tokenAddress,
-    //         "Events: Payment token not supported"
-    //     );
-    //     require(
-    //         ticketBoughtAddress[msg.sender][eventId] == false,
-    //         "Events: User already has bought ticket"
-    //     );
-    //     uint256 venueTokenId = getInfo[eventId].venueTokenId;
-    //     uint256 totalCapacity = IVenue(getVenueContract()).getTotalCapacity(
-    //         venueTokenId
-    //     );
-    //     require(
-    //         ticketSold[eventId] < totalCapacity,
-    //         "Event: All tickets are sold"
-    //     );
-    //     checkTicketFees(eventId, tokenAddress, ticketPrice);
-    //     ticketBoughtAddress[msg.sender][eventId] = true;
-    //     ticketSold[eventId]++;
+    function buyTicket(
+        uint256 eventId,
+        address tokenAddress,
+        uint256 ticketPrice
+    ) external payable {
+        require(_exists(eventId), "Events: TokenId does not exist");
+        uint256 price = getInfo[eventId].ticketPrice;
+        require(price != 0, "Events: Event is free");
+        require(
+            block.timestamp <= getInfo[eventId].endTime,
+            "Events: Event ended"
+        );
+        require(
+            ticketTokenAddress[eventId] == tokenAddress,
+            "Events: Payment token not supported"
+        );
+        require(
+            ticketBoughtAddress[msg.sender][eventId] == false,
+            "Events: User already has bought ticket"
+        );
+        uint256 venueTokenId = getInfo[eventId].venueTokenId;
+        uint256 totalCapacity = IVenue(getVenueContract()).getTotalCapacity(
+            venueTokenId
+        );
+        require(
+            ticketSold[eventId] < totalCapacity,
+            "Event: All tickets are sold"
+        );
+        // checkTicketFees(eventId, tokenAddress, ticketPrice);
+        ticketBoughtAddress[msg.sender][eventId] = true;
+        ticketSold[eventId]++;
 
-    //     emit Bought(eventId, tokenAddress, msg.sender);
-    // }
+        emit Bought(eventId, tokenAddress, msg.sender);
+    }
 
     ///@notice Users can join events
     ///@dev Public function
@@ -882,7 +882,8 @@ contract Events is EventMetadata {
             uint256 endTime,
             address eventOrganiser,
             bool payNow,
-            uint256 venueTokenId
+            uint256 venueTokenId,
+            uint256 ticketPrice
         )
     {
         return (
@@ -890,7 +891,8 @@ contract Events is EventMetadata {
             getInfo[tokenId].endTime,
             getInfo[tokenId].eventOrganiser,
             getInfo[tokenId].payNow,
-            getInfo[tokenId].venueTokenId
+            getInfo[tokenId].venueTokenId,
+            getInfo[tokenId].ticketPrice
         );
     }
 
