@@ -29,18 +29,27 @@ async function main() {
     // await new Promise(res => setTimeout(res, 5000));
     await conversion.addToken(MATIC, PRICE_MATIC_USD);
 
-    // await new Promise(res => setTimeout(res, 5000));
+    await new Promise(res => setTimeout(res, 5000));
     await conversion.addToken(USDC, PRICE_USDC_USD);
 
-    // await new Promise(res => setTimeout(res, 5000));
+    await new Promise(res => setTimeout(res, 5000));
     await conversion.addToken(USDT, PRICE_USDT_USD);
 
-    // await new Promise(res => setTimeout(res, 5000));
+    await new Promise(res => setTimeout(res, 5000));
     await conversion.addToken(Trace, router);
 
-    // await new Promise(res => setTimeout(res, 5000));
+    await new Promise(res => setTimeout(res, 5000));
     await conversion.adminUpdate(Trace, router, factory);
-    // await new Promise(res => setTimeout(res, 5000));
+    await new Promise(res => setTimeout(res, 5000));
+
+    await conversion.getERC20Details(MATIC);
+    await new Promise(res => setTimeout(res, 5000));
+
+    await conversion.getERC20Details(Trace);
+    await new Promise(res => setTimeout(res, 5000));
+
+    await conversion.getERC20Details(USDC);
+    await new Promise(res => setTimeout(res, 5000));
 
     console.log("For USDT ------------------------------");
 

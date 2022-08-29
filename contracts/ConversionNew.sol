@@ -19,6 +19,9 @@ contract ConversionV1 is Initializable, Ownable {
 
     mapping(address => mapping(address => address)) public priceFeed;
     event TokenAdded(address indexed tokenAddress);
+    event Erc20Details(address indexed tokenAddress, string name, string symbol,uint256 decimal);
+
+    //event Erc721Details(address indexed tokenAddress, string name, string symbol);
 
     function initialize() public initializer {
         Ownable.ownable_init();
@@ -117,4 +120,22 @@ contract ConversionV1 is Initializable, Ownable {
     function getBaseToken() public view returns(address) {
         return Trace;
     }
+
+      function getERC20Details(address _tokenAddress) public {
+        if(_tokenAddress!= address(0)) {
+            string memory _name = IERC20Metadata(_tokenAddress).name();
+            string memory _symbol = IERC20Metadata(_tokenAddress).symbol();
+            uint256 _decimal = IERC20Metadata(_tokenAddress).decimals();
+            emit Erc20Details(_tokenAddress, _name, _symbol, _decimal);
+        }
+        else {
+            emit Erc20Details(_tokenAddress, "Matic", "Matic", 18 );
+        }
+    }
+
+    // function getERC721Details(address _tokenAddress) public {
+    //     string memory _name =  IERC721MetadataUpgradeable(_tokenAddress).name();
+    //     string memory _symbol = IERC721MetadataUpgradeable(_tokenAddress).symbol();
+    //     emit Erc721Details(_tokenAddress, _name, _symbol);
+    // }
 }
