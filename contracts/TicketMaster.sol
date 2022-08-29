@@ -7,6 +7,7 @@ import "./Ticket.sol";
 import "./interface/IConversion.sol";
 import "./interface/IEvents.sol";
 import "./interface/IVenue.sol";
+import "./interface/IManageEvents.sol";
 
 contract TicketMaster is Ticket {
     using AddressUpgradeable for address;
@@ -27,14 +28,20 @@ contract TicketMaster is Ticket {
     //mapping for storing owner address status
     mapping(address => bool) public adminAddress;
 
-    //convesion contract address
+    //event contract address
     address private eventContract;
+
+    //manageEvent contract address
+    address private manageEventContract;
 
     //ticketCommission
     uint256 private ticketCommissionPercent;
 
     ///@param eventContract eventContract address
     event EventContractUpdated(address eventContract);
+
+    ///@param manageEventContract manageEvent address
+    event ManageEventContractUpdated(address manageEventContract);
 
     ///@param tokenId Event tokenId
     ///@param buyer buyer address
@@ -57,10 +64,21 @@ contract TicketMaster is Ticket {
     function updateEventContract(address _eventContract) external onlyOwner {
         require(
             _eventContract.isContract(),
-            "Events: Address is not a contract"
+            "TicketMaster: Address is not a contract"
         );
         eventContract = _eventContract;
         emit EventContractUpdated(_eventContract);
+    }
+    
+    ///@notice updates _manageEventContract address
+    ///@param _manageEventContract _manageEventContract address
+    function updateManageEventContract(address _manageEventContract) external onlyOwner {
+        require(
+            _manageEventContract.isContract(),
+            "TicketMaster: Address is not a contract"
+        );
+        manageEventContract = _manageEventContract;
+        emit ManageEventContractUpdated(_manageEventContract);
     }
 
     ///@notice updates ticketCommissionPercent
@@ -123,18 +141,19 @@ contract TicketMaster is Ticket {
     ///@param eventId Event tokenId
     ///@param tokenAmount ticket Price
     function buyTicket(uint256 eventId, address tokenAddress, uint256 tokenAmount) external payable {
-        require(IEvents(eventContract)._exists(eventId), "Events: TokenId does not exist");
+        require(IEvents(eventContract)._exists(eventId), "TicketMaster: TokenId does not exist");
+        require(IManageEvents(manageEventContract).isEventCanceled(eventId) == false, "TicketMaster: Event is canceled");
         (, uint256 endTime,address eventOrganiser, , , uint256 actualPrice) = IEvents(
             eventContract
         ).getEventDetails(eventId);
-        require(actualPrice != 0, "Events: Event is free");
-        require(block.timestamp <= endTime, "Events: Event ended");
+        require(actualPrice != 0, "TicketMaster: Event is free");
+        require(block.timestamp <= endTime, "TicketMaster: Event ended");
         address conversionAddress = IEvents(eventContract).getConversionContract();
         uint256 totalCapacity =  Ticket(ticketNFTAddress[eventId]).totalSupply();
         uint256 mintedToken = Ticket(ticketNFTAddress[eventId]).mint(msg.sender);
         require(
             ticketSold[eventId] <= totalCapacity,
-            "Event: All tickets are sold"
+            "TicketMaster: All tickets are sold"
         );
         checkTicketFees(tokenAmount, actualPrice, eventOrganiser, tokenAddress, conversionAddress);
         ////////////not needed this two mappings
@@ -204,10 +223,14 @@ contract TicketMaster is Ticket {
     ///@dev - Join the event
     ///@param eventId Event tokenId
     function join(uint256 eventId, uint256 ticketId) external {
+        require(IManageEvents(manageEventContract).isEventCanceled(eventId) == false, "TicketMaster: Event is canceled");
         require(IEvents(eventContract)._exists(eventId), "Events: TokenId does not exist");
-        (uint256 startTime, uint256 endTime, , , ,) = IEvents(
+        (uint256 startTime, uint256 endTime, , bool payNow , ,) = IEvents(
             eventContract
         ).getEventDetails(eventId);
+        if(payNow == false) {
+            require(IManageEvents(manageEventContract).isEventStarted(eventId) == true,"TicketMaster: Event not started");
+        }
         require(
             block.timestamp >= startTime && endTime > block.timestamp,
             "Events: Event is not live"
@@ -217,7 +240,7 @@ contract TicketMaster is Ticket {
         //     "Events: User has no ticket"
         // );
         //
-        require(msg.sender == Ticket(ticketNFTAddress[eventId]).ownerOf(ticketId), "Events: Caller is not the owner");
+        require(msg.sender == Ticket(ticketNFTAddress[eventId]).ownerOf(ticketId), "TicketMaster: Caller is not the owner");
         joinEventStatus[ticketNFTAddress[eventId]][ticketId] = true;
         emit Joined(eventId, msg.sender, block.timestamp, ticketId);
     }

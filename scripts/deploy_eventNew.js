@@ -11,8 +11,9 @@ async function main() {
     // const ticketMasterAddress = "0x10405BCD4F83286619808a579B8b460a3A95fE16"
 
     // local
-    const venueAddress = "0x78B3CeB87C561e746d0Cec5195BDE870E11Ca81d"
-    const conversionAddress = "0x0D902E14Ec1f1AeB5eEFbB79e19eD512b174EDfc"
+    const venueAddress = "0x0D902E14Ec1f1AeB5eEFbB79e19eD512b174EDfc"
+    const conversionAddress = "0x75d0d572807960B6d5f5D802c7d099977e7a9a48"
+    const manageContract = "0x72684f56046bD40ff1400762E11A410b501d91A0";
     const ticketMasterAddress = "0x651652BDa40fC753724533C1715cF6979dbb8f1F"
 
     const dropsTreasury = await ethers.getContractFactory("Treasury");
@@ -71,7 +72,7 @@ async function main() {
     await eventProxy.updateticketMasterContract(ticketMaster.address)
 
     const blockNumBefore = await ethers.provider.getBlockNumber();
-     const blockBefore = await ethers.provider.getBlock(blockNumBefore);
+    const blockBefore = await ethers.provider.getBlock(blockNumBefore);
     const thirtyDays = 1 * 24 * 60 * 60; // 1 days
     const startTime = blockBefore.timestamp+60;
     const endTime = startTime + 600;
@@ -94,7 +95,7 @@ async function main() {
 
     await new Promise(res => setTimeout(res, 1000));
     await eventProxy.add(["EventOne", "Test Category One", "Test Event One"], [startTime, endTime],
-        "QmQh36CsceXZoqS7v9YQLUyxXdRmWd8YWTBUz7WCXsiVty", 2, 1000000, 1000000, MATIC, Trace, true, false, {
+        "QmQh36CsceXZoqS7v9YQLUyxXdRmWd8YWTBUz7WCXsiVty", 1, 1000000, 1000000, MATIC, Trace, true, true, {
         value: rentalFee
     });
 
@@ -104,6 +105,8 @@ async function main() {
     console.log(ticketPrice);
     // await new Promise(res => setTimeout(res, 10000));
     await ticketMaster.updateEventContract(eventProxy.address);
+
+    await ticketMaster.updateManageEventContract(manageContract);
     // await new Promise(res => setTimeout(res, 10000));
     await ticketMaster.buyTicket(1, MATIC, ticketPrice, {
         value: ticketPrice

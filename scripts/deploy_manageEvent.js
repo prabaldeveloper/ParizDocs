@@ -6,27 +6,37 @@ async function main() {
     const USDC = "0xb0040280A0C97F20C92c09513b8C6e6Ff9Aa86DC";
     const MATIC = "0x0000000000000000000000000000000000000000";
     const Trace = "0xb0A2D971803e74843f158B22c4DAEc154f038515";
+
+    // local
+    const venueAddress = "0x78B3CeB87C561e746d0Cec5195BDE870E11Ca81d"
+    const eventAddress = "0x66c08bf6aC884BAc0e2883a0CA588426aA5F0fa9";
+    const conversionAddress = "0x0D902E14Ec1f1AeB5eEFbB79e19eD512b174EDfc"
+    const ticketMasterAddress = "0x651652BDa40fC753724533C1715cF6979dbb8f1F" 
     
-    // const manageEvent = await ethers.getContractFactory("ManageEvent");
-    // const manageEventContract = await upgrades.deployProxy(manageEvent,{initializer: 'initialize'});
-    // await manageEventContract.deployed();
-    // // await new Promise(res => setTimeout(res, 1000));
-    // console.log("Manage Event proxy", manageEventContract.address);
-
-    const manageEvent = await hre.ethers.getContractFactory("ManageEvent");
-    const manageEventContract = await manageEvent.attach("0x53f3F8A1399C70cCc808F4200B619eFDC1f1231a");
-
-    await manageEventContract.updateVenueContract("0x85c7eE172B92F0f1393f98926adF320c434E3262");
+    const manageEvent = await ethers.getContractFactory("ManageEvent");
+    const manageEventContract = await upgrades.deployProxy(manageEvent,{initializer: 'initialize'});
+    await manageEventContract.deployed();
     // await new Promise(res => setTimeout(res, 1000));
-    console.log(await manageEventContract.getVenueContract());
+    console.log("Manage Event proxy", manageEventContract.address);
 
-    await manageEventContract.updateEventContract("0x26705B80a694bD5F9451E29aB3000FDCb19c3b51");
+    // const manageEvent = await hre.ethers.getContractFactory("ManageEvent");
+    // const manageEventContract = await manageEvent.attach("0x72684f56046bD40ff1400762E11A410b501d91A0");
+
+    await manageEventContract.updateEventContract(eventAddress);
     // await new Promise(res => setTimeout(res, 1000));
     console.log(await manageEventContract.getEventContract());
+
+    // const eventContract = await ethers.getContractFactory("EventsV1");
+    // const eventProxy = await eventContract.attach(eventAddress);
 
     // const venueProxy = await hre.ethers.getContractFactory("Venue");
     // const venueContract = await venueProxy.attach("0x85c7eE172B92F0f1393f98926adF320c434E3262");
 
+    // const startTime = await eventProxy.getInfo[1].startTime;
+    // const endTime = await eventProxy.getInfo[1].endTime;
+
+    // console.log(startTime, endTime);
+    
     // const venueFees = await venueContract.getRentalFees(2);
     // console.log("venueFees",venueFees);
    
@@ -34,12 +44,12 @@ async function main() {
     // const conversionProxy = await hre.ethers.getContractFactory("Conversion");
     // const conversionContract = await conversionProxy.attach("0x02e90531aac91fD8e6B8a5F323cE171DD3c29AdF");
    
-    // let feeAmount = await conversionContract.convertFee(MATIC,venueFees);
+    // let rentalFee = await conversionContract.convertFee(MATIC,venueFees);
     // console.log(feeAmount);
     // feeAmount = feeAmount.toString();
     // await new Promise(res => setTimeout(res, 1000));
     
-    // //Start Event
+    //Start Event
     // await manageEventContract.startEvent(1, MATIC, feeAmount, {
     //     value: feeAmount
     // });
@@ -49,8 +59,8 @@ async function main() {
     // await manageEventContract.cancelEvent(2);
     // await new Promise(res => setTimeout(res, 1000));
 
-    // //AddAgenda
-    // await manageEventContract.addAgena(1, 1660623397, 1660709797, "Meeting", ["Prabal"], [accounts[0]], 2);
+    //AddAgenda
+    await manageEventContract.addAgenda(1, 1661772453, 1661772853, "Meeting", ["Prabal"], [accounts[0]], 2);
     // await new Promise(res => setTimeout(res, 1000));
 
     // //InitiateSession

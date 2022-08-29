@@ -168,6 +168,8 @@ contract EventsV1 is EventMetadata {
         _;
     }
 
+    receive() external payable {}
+
     ///@notice Allows Admin to update deviation percentage
     ///@param _deviationPercentage deviationPercentage
     function updateDeviation(uint256 _deviationPercentage) external onlyOwner {
