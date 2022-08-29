@@ -63,15 +63,15 @@ contract TicketMetadata is TicketERC721 {
     /**
      * @notice Allows a creator to mint an NFT.
      */
-    function _mintInternal()
+    function _mintInternal(address userAddress)
         internal
         returns (uint256 tokenId)
     {
         tokenId = nextTokenId++;
         require(tokenId <= totalSupply(), "NFT721Metadata: Supply is reached");
-        _mint(msg.sender, tokenId);
-        _updateTokenCreator(tokenId, payable(msg.sender));
-        emit Minted(msg.sender, tokenId);
+        _mint(userAddress, tokenId);
+        _updateTokenCreator(tokenId, payable(userAddress));
+        emit Minted(userAddress, tokenId);
     }
 
     uint256[999] private ______gap;

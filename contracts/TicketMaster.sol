@@ -19,8 +19,13 @@ contract TicketMaster is Ticket {
     //mapping for getting number of ticket sold against an event
     mapping(uint256 => uint256) public ticketSold;
 
-    // mapping for getting ticket id of user
-    mapping(address => uint256) public ticketIdOfUser;
+    //mapping for getting ticket id of user
+    mapping(address => mapping(uint256 => uint256)) public ticketIdOfUser;
+
+    mapping(address => mapping(uint256 => bool)) public joinEventStatus;
+
+    //mapping for storing owner address status
+    mapping(address => bool) public adminAddress;
 
     //convesion contract address
     address private eventContract;
@@ -33,10 +38,19 @@ contract TicketMaster is Ticket {
 
     ///@param tokenId Event tokenId
     ///@param buyer buyer address
-    event Bought(uint256 indexed tokenId, address buyer);
+    event Bought(uint256 indexed tokenId, address indexed buyer, uint256 ticketId);
 
     ///@param ticketCommissionPercent ticketCommissionPercent
     event TicketCommissionUpdated(uint256 ticketCommissionPercent);
+
+    ///@param tokenId Event tokenId
+    ///@param user User address
+    event Joined(uint256 indexed tokenId, address indexed user, uint256 joiningTime, uint256 ticketId);
+
+    modifier onlyAdmin() {
+        require(adminAddress[msg.sender] == true, "TicketMaster: Caller is not the admin");
+        _;
+    }
 
     ///@notice updates eventContract address
     ///@param _eventContract eventContract address
@@ -59,6 +73,13 @@ contract TicketMaster is Ticket {
         emit TicketCommissionUpdated(ticketCommissionPercent);
     }
 
+    ///@notice updates ownerStatus
+    ///@param _owner owner address
+    ///@param status status(true or false)
+    function whitelistAdmin(address _owner, bool status) external onlyOwner {
+        adminAddress[_owner] = status;
+    }
+
 
     ///@notice To check amount is within deviation percentage
     ///@param feeAmount price of the ticket
@@ -77,7 +98,7 @@ contract TicketMaster is Ticket {
         string memory name,
         uint256[2] memory time,
         uint256 totalSupply
-    ) external returns (address ticketNFTContract) {
+    ) external onlyAdmin returns (address ticketNFTContract) {
         // create ticket NFT contract
         bytes memory bytecode = type(Ticket).creationCode;
         bytes32 salt = keccak256(abi.encodePacked(msg.sender, eventId));
@@ -90,7 +111,8 @@ contract TicketMaster is Ticket {
             )
         }
         ticketNFTAddress[eventId] = ticketNFTContract;
-        Ticket(ticketNFTContract).initialize(name, "EventTicket", totalSupply);
+        Ticket(ticketNFTContract).initialize(name, "EventTicket", totalSupply, eventId, time);
+        return ticketNFTContract;
     }
 
     ///@notice Users can buy tickets
@@ -104,22 +126,23 @@ contract TicketMaster is Ticket {
         require(IEvents(eventContract)._exists(eventId), "Events: TokenId does not exist");
         (, uint256 endTime,address eventOrganiser, , , uint256 actualPrice) = IEvents(
             eventContract
-        ).getEventDetails(eventId); //getInfo[eventId].ticketPrice;
+        ).getEventDetails(eventId);
         require(actualPrice != 0, "Events: Event is free");
         require(block.timestamp <= endTime, "Events: Event ended");
         address conversionAddress = IEvents(eventContract).getConversionContract();
         uint256 totalCapacity =  Ticket(ticketNFTAddress[eventId]).totalSupply();
-        uint256 mintedToken = Ticket(ticketNFTAddress[eventId]).mint();
+        uint256 mintedToken = Ticket(ticketNFTAddress[eventId]).mint(msg.sender);
         require(
             ticketSold[eventId] <= totalCapacity,
             "Event: All tickets are sold"
         );
         checkTicketFees(tokenAmount, actualPrice, eventOrganiser, tokenAddress, conversionAddress);
+        ////////////not needed this two mappings
         ticketBoughtAddress[msg.sender][eventId] = true;
-        ticketIdOfUser[msg.sender] = mintedToken;
+        ticketIdOfUser[msg.sender][eventId] = mintedToken;
+        ////////////////
         ticketSold[eventId]++;
-
-        emit Bought(eventId, msg.sender);
+        emit Bought(eventId, msg.sender, mintedToken);
     }
 
     ///@notice To check whether token is matic or any other token
@@ -172,5 +195,34 @@ contract TicketMaster is Ticket {
                 "Events: Transfer to treasury contract failed"
             );
         }
+    }
+
+        ///@notice Users can join events
+    ///@dev Public function
+    ///@dev - Check whether event is started or not
+    ///@dev - Check whether user has ticket if the event is paid
+    ///@dev - Join the event
+    ///@param eventId Event tokenId
+    function join(uint256 eventId, uint256 ticketId) external {
+        require(IEvents(eventContract)._exists(eventId), "Events: TokenId does not exist");
+        (uint256 startTime, uint256 endTime, , , ,) = IEvents(
+            eventContract
+        ).getEventDetails(eventId);
+        require(
+            block.timestamp >= startTime && endTime > block.timestamp,
+            "Events: Event is not live"
+        );
+        // require(
+        //     ticketBoughtAddress[msg.sender][eventId] == true,
+        //     "Events: User has no ticket"
+        // );
+        //
+        require(msg.sender == Ticket(ticketNFTAddress[eventId]).ownerOf(ticketId), "Events: Caller is not the owner");
+        joinEventStatus[ticketNFTAddress[eventId]][ticketId] = true;
+        emit Joined(eventId, msg.sender, block.timestamp, ticketId);
+    }
+
+    function getJoinEventStatus(address _ticketNftAddress, uint256 _ticketId) public view returns(bool) {
+        return joinEventStatus[_ticketNftAddress][_ticketId];
     }
 }

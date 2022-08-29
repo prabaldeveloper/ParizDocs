@@ -11,6 +11,10 @@ import "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeabl
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
+interface ITicketMaster {
+    function getJoinEventStatus(address ticketNft, uint256 eventId) external view returns(bool);
+}
+
 /**
  * @dev Implementation of https://eips.ethereum.org/EIPS/eip-721[ERC721] Non-Fungible Token Standard, including
  * the Metadata extension, but not including the Enumerable extension, which is available separately as
@@ -36,6 +40,10 @@ import "@openzeppelin/contracts/access/Ownable.sol";
     // Total Supply
     uint256 private _totalSupply;
 
+    address internal masterContract;
+
+    uint256 internal eventId;
+
     // Mapping from token ID to owner address
     mapping(uint256 => address) private _owners;
 
@@ -44,6 +52,8 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
     // Mapping from token ID to approved address
     mapping(uint256 => address) private _tokenApprovals;
+
+    uint256[2] public time;
 
     // Mapping from owner to operator approvals
     mapping(address => mapping(address => bool)) private _operatorApprovals;
@@ -284,7 +294,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
      * Tokens start existing when they are minted (`_mint`),
      * and stop existing when they are burned (`_burn`).
      */
-    function _exists(uint256 tokenId) internal view virtual returns (bool) {
+    function _exists(uint256 tokenId) public view virtual returns (bool) {
         return _owners[tokenId] != address(0);
     }
 
@@ -411,11 +421,15 @@ import "@openzeppelin/contracts/access/Ownable.sol";
             "ERC721: transfer from incorrect owner"
         );
         require(to != address(0), "ERC721: transfer to the zero address");
+        if(block.timestamp >= time[0] && time[1] > block.timestamp) 
+            require(ITicketMaster(masterContract).getJoinEventStatus(address(this),tokenId) == false, "TicketERC721: Cannot transfer the token");
 
+        
         _beforeTokenTransfer(from, to, tokenId);
 
         // Clear approvals from the previous owner
         _approve(address(0), tokenId);
+
 
         _balances[from] -= 1;
         _balances[to] += 1;

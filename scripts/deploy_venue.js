@@ -42,3 +42,5 @@ main()
 
 //New
 //Venue Proxy 0xD959B719922b7b70b2AC4b10D466aAbE3745d86c
+
+//Local venue = "0x78B3CeB87C561e746d0Cec5195BDE870E11Ca81d"
