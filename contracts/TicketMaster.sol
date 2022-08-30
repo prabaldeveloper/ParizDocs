@@ -28,9 +28,6 @@ contract TicketMaster is Ticket {
     //mapping for storing owner address status
     mapping(address => bool) public adminAddress;
 
-    //mapping for record who joined the event
-    mapping(address => mapping(uint256 => mapping(uint256 => bool))) whoJoined;
-
     //event contract address
     address private eventContract;
 
@@ -275,50 +272,36 @@ contract TicketMaster is Ticket {
                 false,
             "TicketMaster: Event is canceled"
         );
-        // Check ticket used and check same user is entering again
-        if (
-            joinEventStatus[ticketNFTAddress[eventId]][ticketId] == false ||
-            whoJoined[msg.sender][eventId][ticketId] == true
-        ) {
+
+        require(
+            IEvents(eventContract)._exists(eventId),
+            "Events: TokenId does not exist"
+        );
+        (uint256 startTime, uint256 endTime, , bool payNow, , ) = IEvents(
+            eventContract
+        ).getEventDetails(eventId);
+        if (payNow == false) {
             require(
-                joinEventStatus[ticketNFTAddress[eventId]][ticketId] == false,
-                "Ticket Already used"
+                IManageEvents(manageEventContract).isEventStarted(eventId) ==
+                    true,
+                "TicketMaster: Event not started"
             );
-            require(
-                IEvents(eventContract)._exists(eventId),
-                "Events: TokenId does not exist"
-            );
-            (uint256 startTime, uint256 endTime, , bool payNow, , ) = IEvents(
-                eventContract
-            ).getEventDetails(eventId);
-            if (payNow == false) {
-                require(
-                    IManageEvents(manageEventContract).isEventStarted(
-                        eventId
-                    ) == true,
-                    "TicketMaster: Event not started"
-                );
-            }
-            require(
-                block.timestamp >= startTime && endTime > block.timestamp,
-                "Events: Event is not live"
-            );
-            // require(
-            //     ticketBoughtAddress[msg.sender][eventId] == true,
-            //     "Events: User has no ticket"
-            // );
-            //
-            require(
-                msg.sender ==
-                    Ticket(ticketNFTAddress[eventId]).ownerOf(ticketId),
-                "TicketMaster: Caller is not the owner"
-            );
-            joinEventStatus[ticketNFTAddress[eventId]][ticketId] = true;
-            whoJoined[msg.sender][eventId][ticketId] = true;
         }
-        else {
-            revert("Invaid call - Reuse of ticket");
-        }
+        require(
+            block.timestamp >= startTime && endTime > block.timestamp,
+            "Events: Event is not live"
+        );
+        // require(
+        //     ticketBoughtAddress[msg.sender][eventId] == true,
+        //     "Events: User has no ticket"
+        // );
+        //
+        require(
+            msg.sender == Ticket(ticketNFTAddress[eventId]).ownerOf(ticketId),
+            "TicketMaster: Caller is not the owner"
+        );
+        joinEventStatus[ticketNFTAddress[eventId]][ticketId] = true;
+
         emit Joined(eventId, msg.sender, block.timestamp, ticketId);
     }
 
