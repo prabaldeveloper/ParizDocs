@@ -404,12 +404,11 @@ contract EventsV1 is EventMetadata {
     ///@notice Users can mark their favourite events
     ///@param tokenId Event tokenId
     ///@param isFavourite Event featured(true/false)
-    function favourite(uint256 tokenId, bool isFavourite) external {
+    function updateFavourite(uint256 tokenId, bool isFavourite) external {
         require(_exists(tokenId), "Events: TokenId does not exist");
         favouriteEvents[msg.sender][tokenId] = isFavourite;
         emit Favourite(msg.sender, tokenId, isFavourite);
     }
-
     ///@notice Admin can whiteList users
     ///@param _whitelistAddresses users address
     ///@param _status status of the address

@@ -120,7 +120,10 @@ contract ManageEvent is Ownable {
         ));
         emit AgendaAdded(eventTokenId, agendaId, agendaStartTime, agendaEndTime, agenda, guestName, guestAddress, initiateStatus);
     }
-
+    // 10 - 11
+    // agenda1 - 10 : 10:15
+    // agenda2 - 10 : 10:15 
+    
     ///@notice Start the event
     ///@param eventTokenId event Token Id
     ///@param feeToken erc20 tokenAddress
@@ -164,12 +167,13 @@ contract ManageEvent is Ownable {
 
     }
 
-    ///@notice To initiate a session
+    ///@notice To initiate a session(1 - autoInitiate, 2 - Manual Initiate)
     ///@param eventTokenId event Token Id
     ///@param agendaId agendaId
     function initiateSession(uint256 eventTokenId, uint256 agendaId) isEventOrganiser(eventTokenId) external {
         require((IEvents(getEventContract())._exists(eventTokenId)), "ManageEvent: TokenId does not exist");
         require(getAgendaInfo[eventTokenId][agendaId - 1].initiateStatus == 2, "ManageEvent: Auto Session");
+        //Add endTime condition check
         require(block.timestamp >= getAgendaInfo[eventTokenId][agendaId - 1].agendaStartTime, "ManageEvent: Invalid Time");
         emit AgendaStarted(eventTokenId, agendaId);
     }
@@ -190,8 +194,16 @@ contract ManageEvent is Ownable {
 }
 //Event organiser first has to start the event then user can join
 
-// manageContract => addGuest,addAgenda,
-// Graph for addGuest, addAgenda
-// Web3 for addGuest, addAge
+// manageContract => addAgenda,
+// Graph for addAgenda(Done)
+
+// Web3 for addAgenda
+
 // Graph for event Contract buy, join and //favourite
+
 // Web3 for buy, join and favourite
+
+//Query for addAgenda
+
+//Check whether payNow is changing it's value in graph after fees is paid
+//To test startEvent function
