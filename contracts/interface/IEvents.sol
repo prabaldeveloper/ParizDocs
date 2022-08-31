@@ -10,6 +10,6 @@ interface IEvents {
     function getDeviationPercentage() external view returns (uint256);
     function getTreasuryContract() external view returns (address);
     function checKVenueFees(uint256 venueTokenId, uint256 startTime, uint256 endTime, address eventOrganiser, uint256 eventTokenId,
-    address tokenAddress, uint256 feeAmount) external;
+    address tokenAddress, uint256 feeAmount) external payable;
     
 }

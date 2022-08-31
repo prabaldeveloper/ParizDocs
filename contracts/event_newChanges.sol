@@ -60,6 +60,9 @@ contract EventsV1 is EventMetadata {
     // mapping for ticket NFT contract
     mapping(uint256 => address) public ticketNFTAddress;
 
+    //mapping for storing tokenAddress against eventTokenId
+    mapping(uint256 => address) public eventTokenAddress;
+
     //block time
     uint256 public constant blockTime = 2;
 
@@ -86,6 +89,7 @@ contract EventsV1 is EventMetadata {
 
     //ticketCommission
     uint256 private ticketCommissionPercent;
+
 
     ///@param tokenId Event tokenId
     ///@param tokenCID Event tokenCID
@@ -409,6 +413,59 @@ contract EventsV1 is EventMetadata {
         favouriteEvents[msg.sender][tokenId] = isFavourite;
         emit Favourite(msg.sender, tokenId, isFavourite);
     }
+
+    ///@notice Called by admin to transfer the rent to venue owner
+    ///@param eventTokenId event token id
+    function complete(uint256 eventTokenId) external onlyOwner {
+        require(_exists(eventTokenId), "Events: TokenId does not exist");
+        require(
+             block.timestamp >= getInfo[eventTokenId].endTime,
+            "Events: Event not ended"
+        );
+        uint256 venueTokenId = getInfo[eventTokenId].venueTokenId;
+        address tokenAddress = eventTokenAddress[eventTokenId];
+        address payable venueOwner = IVenue(getVenueContract()).getVenueOwner(
+            venueTokenId
+        );
+        if (tokenStatus[tokenAddress] == true) {
+            (, , uint256 _venueRentalCommissionFees) = calculateRent(
+                venueTokenId,
+                getInfo[eventTokenId].startTime,
+                getInfo[eventTokenId].endTime
+            );
+            uint256 venueRentalCommissionFees = IConversion(conversionContract)
+                .convertFee(tokenAddress, _venueRentalCommissionFees);
+            require(
+                balance[eventTokenId] - venueRentalCommissionFees > 0,
+                "Events: Funds already transferred"
+            );
+            if (tokenAddress == address(0)) {
+                treasuryContract.transfer(venueRentalCommissionFees);
+                venueOwner.transfer(
+                    balance[eventTokenId] - venueRentalCommissionFees
+                );
+            } else {
+                IERC20(tokenAddress).transfer(
+                    treasuryContract,
+                    venueRentalCommissionFees
+                );
+                IERC20(tokenAddress).transfer(
+                    venueOwner,
+                    balance[eventTokenId] - venueRentalCommissionFees
+                );
+            }
+            balance[eventTokenId] -= venueRentalCommissionFees;
+            balance[eventTokenId] -= balance[eventTokenId];
+        }
+        // else {
+        //     if(erc721tokenAddress[tokenAddress] == true) {
+        //         require(nftBalance[eventTokenId] > 0, "Events: Nft already transferred");
+        //         IERC721Upgradeable(tokenAddress).transferFrom(address(this), venueOwner, nftBalance[eventTokenId]);
+        //         nftBalance[eventTokenId] = 0;
+        //     }
+        // }
+    }
+
     ///@notice Admin can whiteList users
     ///@param _whitelistAddresses users address
     ///@param _status status of the address
@@ -547,7 +604,7 @@ contract EventsV1 is EventMetadata {
         uint256 eventTokenId,
         address tokenAddress,
         uint256 feeAmount
-    ) internal {
+    ) public payable {
         require(
             tokenStatus[tokenAddress] == true,
             "Events: PaymentToken Not Supported"
@@ -593,7 +650,7 @@ contract EventsV1 is EventMetadata {
             );
             balance[eventTokenId] = msg.value - platformFees;
         }
-        // eventTokenAddress[eventTokenId] = tokenAddress;
+        eventTokenAddress[eventTokenId] = tokenAddress;
         bookVenue(eventTokenId);
     }
 

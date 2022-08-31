@@ -18,9 +18,9 @@ contract ManageEvent is Ownable {
         uint256 agendaId;
         uint256 agendaStartTime;
         uint256 agendaEndTime;
-        string agenda;
+        string agendaType;
         string[] guestName;
-        address[] guestAddress;
+        string[] guestAddress;
         uint8 initiateStatus;
     }
 
@@ -36,6 +36,8 @@ contract ManageEvent is Ownable {
     //mapping for event cancel status
     mapping(uint256 => bool) public eventCanceledStatus;
 
+    mapping(uint256 => uint256[]) public agendaInEvents;
+
     //Event contract address
     address private eventContract;
 
@@ -47,7 +49,7 @@ contract ManageEvent is Ownable {
     ///@param guestName[] guest Name 
     ///@param guestAddress[] guest Address
     ///@param initiateStatus Auto(1) or Manual(2)
-    event AgendaAdded(uint256 indexed eventTokenId,uint256 agendaId, uint256 agendaStartTime, uint256 agendaEndTime, string agenda, string[] guestName, address[] guestAddress, uint8 initiateStatus);
+    event AgendaAdded(uint256 indexed eventTokenId,uint256 agendaId, uint256 agendaStartTime, uint256 agendaEndTime, string agenda, string[] guestName, string[] guestAddress, uint8 initiateStatus);
 
     ///@param eventTokenId event Token Id
     ///@param payNow pay venue fees now if(didn't pay earlier)
@@ -82,6 +84,8 @@ contract ManageEvent is Ownable {
         _;
     }
 
+    receive() external payable {}
+
      function initialize() public initializer {
         Ownable.ownable_init();
     }
@@ -98,32 +102,31 @@ contract ManageEvent is Ownable {
     ///@param eventTokenId event Token Id
     ///@param agendaStartTime agendaStartTime
     ///@param agendaEndTime agendaEndTime
-    ///@param agenda agenda of the event
+    ///@param agendaType agendaType of the event
     ///@param guestName[] guest Name 
     ///@param guestAddress[] guest Address
     ///@param initiateStatus Auto(1) or Manual(2)
-    function addAgenda(uint256 eventTokenId, uint256 agendaStartTime, uint256 agendaEndTime, string memory agenda, string[] memory guestName, address[] memory guestAddress, uint8 initiateStatus) isValidTime(agendaStartTime, agendaEndTime) isEventOrganiser(eventTokenId) external {
+    function addAgenda(uint256 eventTokenId, uint256 agendaStartTime, uint256 agendaEndTime, string memory agendaType, string[] memory guestName, string[] memory guestAddress, uint8 initiateStatus) isValidTime(agendaStartTime, agendaEndTime) isEventOrganiser(eventTokenId) external {
         require((IEvents(getEventContract())._exists(eventTokenId)), "ManageEvent: TokenId does not exist");
         (uint256 eventStartTime,
         uint256 eventEndTime,
         , , ,) = IEvents(getEventContract()).getEventDetails(eventTokenId);
         require(agendaStartTime >= eventStartTime && agendaEndTime <= eventEndTime, "ManageEvent: Invalid agenda time" );
-        noOfAgendas[eventTokenId]++;
+        require(guestName.length == guestAddress.length, "ManageEvent: Invalid input");
         uint256 agendaId = noOfAgendas[eventTokenId];
+        noOfAgendas[eventTokenId]++;
+        require(isAgendaTimeAvailable(eventTokenId, agendaId, agendaStartTime, agendaEndTime),"ManageEvent: Agenda Time not available");
         getAgendaInfo[eventTokenId].push(agendaDetails(agendaId,
             agendaStartTime,
             agendaEndTime,
-            agenda,
+            agendaType,
             guestName,
             guestAddress,
             initiateStatus
         ));
-        emit AgendaAdded(eventTokenId, agendaId, agendaStartTime, agendaEndTime, agenda, guestName, guestAddress, initiateStatus);
+        emit AgendaAdded(eventTokenId, agendaId, agendaStartTime, agendaEndTime, agendaType, guestName, guestAddress, initiateStatus);
     }
-    // 10 - 11
-    // agenda1 - 10 : 10:15
-    // agenda2 - 10 : 10:15 
-    
+
     ///@notice Start the event
     ///@param eventTokenId event Token Id
     ///@param feeToken erc20 tokenAddress
@@ -138,13 +141,24 @@ contract ManageEvent is Ownable {
         require(block.timestamp >= startTime && endTime > block.timestamp, "ManageEvent: Event not live");
         require(eventStartedStatus[eventTokenId] == false, "ManageEvent: Event already started");
         if(payNow == false) {
-            IEvents(getEventContract()).checKVenueFees(venueTokenId,
-                startTime,
-                endTime,
-                msg.sender,
-                eventTokenId,
-                feeToken,
-                venueFeeAmount);
+            if(feeToken == address(0)) {
+                IEvents(getEventContract()).checKVenueFees{value: msg.value}(venueTokenId,
+                    startTime,
+                    endTime,
+                    msg.sender,
+                    eventTokenId,
+                    feeToken,
+                    venueFeeAmount);
+            }
+            else {
+                IEvents(getEventContract()).checKVenueFees(venueTokenId,
+                    startTime,
+                    endTime,
+                    msg.sender,
+                    eventTokenId,
+                    feeToken,
+                    venueFeeAmount);
+            }
             payNow = true;
         }
         eventStartedStatus[eventTokenId] = true;
@@ -158,10 +172,11 @@ contract ManageEvent is Ownable {
         (uint256 startTime,
         ,
         , , ,) = IEvents(getEventContract()).getEventDetails(eventTokenId);
-        require(block.timestamp > startTime, "ManageEvent: Event started");
+        require(startTime > block.timestamp, "ManageEvent: Event started");
         require(eventCanceledStatus[eventTokenId] == false, "ManageEvent: Event already canceled");
-        //Return amount 
-        IEvents(getEventContract()).burn(eventTokenId);
+        //call the complete event
+        //Return amount for venue fees if event ticket is cancelled 
+        //IEvents(getEventContract()).burn(eventTokenId);
         eventCanceledStatus[eventTokenId] = true;
         emit EventCanceled(eventTokenId);
 
@@ -172,9 +187,10 @@ contract ManageEvent is Ownable {
     ///@param agendaId agendaId
     function initiateSession(uint256 eventTokenId, uint256 agendaId) isEventOrganiser(eventTokenId) external {
         require((IEvents(getEventContract())._exists(eventTokenId)), "ManageEvent: TokenId does not exist");
-        require(getAgendaInfo[eventTokenId][agendaId - 1].initiateStatus == 2, "ManageEvent: Auto Session");
+        require(getAgendaInfo[eventTokenId][agendaId].initiateStatus == 2, "ManageEvent: Auto Session");
         //Add endTime condition check
-        require(block.timestamp >= getAgendaInfo[eventTokenId][agendaId - 1].agendaStartTime, "ManageEvent: Invalid Time");
+        require(block.timestamp >= getAgendaInfo[eventTokenId][agendaId].agendaStartTime, "ManageEvent: Session not started");
+        require(block.timestamp < getAgendaInfo[eventTokenId][agendaId].agendaEndTime, "ManageEvent: Session ended");
         emit AgendaStarted(eventTokenId, agendaId);
     }
 
@@ -191,6 +207,32 @@ contract ManageEvent is Ownable {
         return eventStartedStatus[eventId];
     }
 
+    function isAgendaTimeAvailable(uint256 eventTokenId, uint256 agendaId, uint256 agendaStartTime, uint256 agendaEndTime) internal returns(bool _isAvailable) {
+        uint256[] memory bookedAgendas = agendaInEvents[eventTokenId]; 
+        uint256 currentTime = block.timestamp;
+        for(uint256 i=0; i<bookedAgendas.length; i++) { 
+            uint256 bookedStartTime = getAgendaInfo[eventTokenId][bookedAgendas[i]].agendaStartTime;
+            uint256 bookedEndTime = getAgendaInfo[eventTokenId][bookedAgendas[i]].agendaEndTime;
+            if(currentTime >= bookedEndTime) continue;
+            if(currentTime >= bookedStartTime && currentTime <= bookedEndTime) {
+                if(agendaStartTime >=bookedEndTime) {
+                    continue;
+                } else {
+                    return false;
+                }
+            }
+            else {
+                //check for future event
+                if (agendaEndTime <= bookedStartTime || agendaStartTime >= bookedEndTime) {
+                    continue;
+                } else {
+                    return false;
+                }
+            }
+        }
+        agendaInEvents[eventTokenId].push(agendaId);
+        return true;
+    } 
 }
 //Event organiser first has to start the event then user can join
 
