@@ -443,7 +443,7 @@ contract EventsV1 is EventMetadata {
             uint256 venueRentalCommissionFees = IConversion(conversionContract)
                 .convertFee(tokenAddress, _venueRentalCommissionFees);
             require(
-                balance[eventTokenId] - venueRentalCommissionFees > 0,
+                balance[eventTokenId] > 0,
                 "Events: Funds already transferred"
             );
             if (tokenAddress == address(0)) {
@@ -461,8 +461,7 @@ contract EventsV1 is EventMetadata {
                     balance[eventTokenId] - venueRentalCommissionFees
                 );
             }
-            balance[eventTokenId] -= venueRentalCommissionFees;
-            balance[eventTokenId] -= balance[eventTokenId];
+            balance[eventTokenId] = 0;
         }
         // else {
         //     if(erc721tokenAddress[tokenAddress] == true) {
