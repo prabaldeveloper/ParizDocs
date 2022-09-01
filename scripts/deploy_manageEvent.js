@@ -8,7 +8,7 @@ async function main() {
     // local
     const venueAddress = "0xBC05Cf0e8248C1eD6102479294440f0f7cd96742";
     const conversionAddress = "0xEF60E3fbfd02392Ad12ee68EbA44dac96Ae5781f";
-    const eventAddress = "0xD0B2A68CC47798C6B910ea300504Aa571bfD6048";
+    const eventAddress = "0x30507B848D2328FCcBf514CEDE6B1Af9cD61c8a1";
     const ticketMasterAddress = "0x36F5EB061D32a53a6F5Ef53Af81E348803d6E3E5";
     
     const manageEvent = await ethers.getContractFactory("ManageEvent");
@@ -18,40 +18,17 @@ async function main() {
     console.log("Manage Event proxy", manageEventContract.address);
 
     // const manageEvent = await hre.ethers.getContractFactory("ManageEvent");
-    // const manageEventContract = await manageEvent.attach("0x506988c329024867b3EDBdAb3864bE54E4287130");
-
-    const conversionContract = await hre.ethers.getContractFactory("Conversion");
-    const conversionProxy = await conversionContract.attach(conversionAddress);
+    // const manageEventContract = await manageEvent.attach("0x8d4E05C512D11426B8c16BfE573ff9946e480C7C");
 
     await manageEventContract.updateEventContract(eventAddress);
     // await new Promise(res => setTimeout(res, 1000));
-    // console.log(await manageEventContract.getEventContract());
+    console.log(await manageEventContract.getEventContract());
 
     const eventContract = await ethers.getContractFactory("EventsV1");
     const eventProxy = await eventContract.attach(eventAddress);
 
-    // const venueProxy = await hre.ethers.getContractFactory("Venue");
-    // const venueContract = await venueProxy.attach(venueAddress);
-    // console.log(await eventProxy._exists(4));
-    // const startTime = await eventProxy.getInfo(4).startTime;
-    // const endTime = await eventProxy.getInfo(4).endTime;
-    const startTime = 1661948241;
-    const endTime = 1661969555;
-    // console.log(startTime, endTime);
-
-    let fee = await eventProxy.calculateRent(2, startTime, endTime);
-    console.log("fee",parseInt(fee[0]));
-    
-    let rentalFee = await conversionProxy.convertFee(MATIC, fee[0]);
-    rentalFee  = rentalFee.toString();
-    console.log("rentalFee",rentalFee);
-
-    let platformFee = await conversionProxy.convertFee(MATIC, fee[1]);
-    platformFee  = platformFee.toString();
-    console.log(platformFee);
-
     // AddAgenda
-    // await manageEventContract.addAgenda(4, 1661946035, 1661946335, "Meeting", ["Prabal"], [accounts[0]], 2);
+    await manageEventContract.addAgenda(1, 1661946035, 1661946335, "Meeting", ["Prabal"], [accounts[0]], 2);
     // await new Promise(res => setTimeout(res, 1000));
     // await manageEventContract.addAgenda(3, 1661962535, 1661962635, "Meeting", ["Prabal"], [accounts[0]], 2);
     // console.log("1");
@@ -59,25 +36,18 @@ async function main() {
     // console.log("2");
     // await manageEventContract.addAgenda(4, 1661946335, 1661946815, "Meeting", ["Prabal"], [accounts[0]], 2);
     // console.log("4");
-    await manageEventContract.addAgenda(2, 1661948541, 1661958541, "Meeting", ["Prabal"], ["0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"], 2);
-    console.log("3");
-
-    // Start Event
-    // await new Promise(res => setTimeout(res, 1000));
-    await manageEventContract.startEvent(2, MATIC, rentalFee, {
-        value: rentalFee
-    });
-    console.log("event Started");
-
-    
+    // await manageEventContract.addAgenda(2, 1662014957, 1662015957, "Meeting", ["Prabal"], [accounts[0]], 2);
+    // console.log("3");
+    // await new Promise(res => setTimeout(res, 20000));
 
     // //Cancel Event
-    // await manageEventContract.cancelEvent(3);
+    await manageEventContract.cancelEvent(2);
     // await new Promise(res => setTimeout(res, 1000));
     // console.log(await  manageEventContract.isEventCanceled(3));
     
     // //InitiateSession
-    // await manageEventContract.initiateSession(4,0);
+    await manageEventContract.initiateSession(1,0);
+    console.log("done");
 
 }
 

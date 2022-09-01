@@ -30,8 +30,8 @@ contract ManageEvent is Ownable {
     //mapping for getting number of agendas
     mapping(uint256 => uint256) public noOfAgendas;
 
-    //mapping for event start status
-    mapping(uint256 => bool) public eventStartedStatus;
+    // //mapping for event start status
+    // mapping(uint256 => bool) public eventStartedStatus;
 
     //mapping for event cancel status
     mapping(uint256 => bool) public eventCanceledStatus;
@@ -51,9 +51,9 @@ contract ManageEvent is Ownable {
     ///@param initiateStatus Auto(1) or Manual(2)
     event AgendaAdded(uint256 indexed eventTokenId,uint256 agendaId, uint256 agendaStartTime, uint256 agendaEndTime, string agenda, string[] guestName, string[] guestAddress, uint8 initiateStatus);
 
-    ///@param eventTokenId event Token Id
-    ///@param payNow pay venue fees now if(didn't pay earlier)
-    event EventStarted(uint256 indexed eventTokenId, bool payNow);
+    // ///@param eventTokenId event Token Id
+    // ///@param payNow pay venue fees now if(didn't pay earlier)
+    // event EventStarted(uint256 indexed eventTokenId, bool payNow);
 
     ///@param eventTokenId event Token Id
     event EventCanceled(uint256 indexed eventTokenId);
@@ -83,8 +83,6 @@ contract ManageEvent is Ownable {
         require(msg.sender == eventOrganiser ,"ManageEvent: Invalid Address");
         _;
     }
-
-    receive() external payable {}
 
      function initialize() public initializer {
         Ownable.ownable_init();
@@ -127,43 +125,43 @@ contract ManageEvent is Ownable {
         emit AgendaAdded(eventTokenId, agendaId, agendaStartTime, agendaEndTime, agendaType, guestName, guestAddress, initiateStatus);
     }
 
-    ///@notice Start the event
-    ///@param eventTokenId event Token Id
-    ///@param feeToken erc20 tokenAddress
-    ///@param venueFeeAmount fee of the venue
-    function startEvent(uint256 eventTokenId, address feeToken, uint256 venueFeeAmount) isEventOrganiser(eventTokenId) external payable{
-        require((IEvents(getEventContract())._exists(eventTokenId)), "ManageEvent: TokenId does not exist");
-        (uint256 startTime,
-        uint256 endTime,
-        ,
-        bool payNow,
-        uint256 venueTokenId,) = IEvents(getEventContract()).getEventDetails(eventTokenId);
-        require(block.timestamp >= startTime && endTime > block.timestamp, "ManageEvent: Event not live");
-        require(eventStartedStatus[eventTokenId] == false, "ManageEvent: Event already started");
-        if(payNow == false) {
-            if(feeToken == address(0)) {
-                IEvents(getEventContract()).checKVenueFees{value: msg.value}(venueTokenId,
-                    startTime,
-                    endTime,
-                    msg.sender,
-                    eventTokenId,
-                    feeToken,
-                    venueFeeAmount);
-            }
-            else {
-                IEvents(getEventContract()).checKVenueFees(venueTokenId,
-                    startTime,
-                    endTime,
-                    msg.sender,
-                    eventTokenId,
-                    feeToken,
-                    venueFeeAmount);
-            }
-            payNow = true;
-        }
-        eventStartedStatus[eventTokenId] = true;
-        emit EventStarted(eventTokenId, payNow);
-    }
+    // ///@notice Start the event
+    // ///@param eventTokenId event Token Id
+    // ///@param feeToken erc20 tokenAddress
+    // ///@param venueFeeAmount fee of the venue
+    // function startEvent(uint256 eventTokenId, address feeToken, uint256 venueFeeAmount) isEventOrganiser(eventTokenId) external payable{
+    //     require((IEvents(getEventContract())._exists(eventTokenId)), "ManageEvent: TokenId does not exist");
+    //     (uint256 startTime,
+    //     uint256 endTime,
+    //     ,
+    //     bool payNow,
+    //     uint256 venueTokenId,) = IEvents(getEventContract()).getEventDetails(eventTokenId);
+    //     require(block.timestamp >= startTime && endTime > block.timestamp, "ManageEvent: Event not live");
+    //     require(eventStartedStatus[eventTokenId] == false, "ManageEvent: Event already started");
+    //     if(payNow == false) {
+    //         if(feeToken == address(0)) {
+    //             IEvents(getEventContract()).checKVenueFees{value: msg.value}(venueTokenId,
+    //                 startTime,
+    //                 endTime,
+    //                 msg.sender,
+    //                 eventTokenId,
+    //                 feeToken,
+    //                 venueFeeAmount);
+    //         }
+    //         else {
+    //             IEvents(getEventContract()).checKVenueFees(venueTokenId,
+    //                 startTime,
+    //                 endTime,
+    //                 msg.sender,
+    //                 eventTokenId,
+    //                 feeToken,
+    //                 venueFeeAmount);
+    //         }
+    //         payNow = true;
+    //     }
+    //     eventStartedStatus[eventTokenId] = true;
+    //     emit EventStarted(eventTokenId, payNow);
+    // }
 
     ///@notice Cancel the event
     ///@param eventTokenId event Token Id
@@ -203,9 +201,9 @@ contract ManageEvent is Ownable {
         return eventCanceledStatus[eventId];
     }
 
-    function isEventStarted(uint256 eventId) public view returns(bool) {
-        return eventStartedStatus[eventId];
-    }
+    // function isEventStarted(uint256 eventId) public view returns(bool) {
+    //     return eventStartedStatus[eventId];
+    // }
 
     function isAgendaTimeAvailable(uint256 eventTokenId, uint256 agendaId, uint256 agendaStartTime, uint256 agendaEndTime) internal returns(bool _isAvailable) {
         uint256[] memory bookedAgendas = agendaInEvents[eventTokenId]; 

@@ -63,6 +63,9 @@ contract EventsV1 is EventMetadata {
     //mapping for storing tokenAddress against eventTokenId
     mapping(uint256 => address) public eventTokenAddress;
 
+    //mapping for event start status
+    mapping(uint256 => bool) public eventStartedStatus;
+
     //block time
     uint256 public constant blockTime = 2;
 
@@ -153,6 +156,10 @@ contract EventsV1 is EventMetadata {
 
     ///@param ticketCommissionPercent ticketCommissionPercent
     event TicketCommissionUpdated(uint256 ticketCommissionPercent);
+
+    ///@param eventTokenId event Token Id
+    ///@param payNow pay venue fees now if(didn't pay earlier)
+    event EventStarted(uint256 indexed eventTokenId, bool payNow);
 
     //modifier for checking whitelistedUsers
     modifier onlyWhitelistedUsers() {
@@ -604,7 +611,7 @@ contract EventsV1 is EventMetadata {
         uint256 eventTokenId,
         address tokenAddress,
         uint256 feeAmount
-    ) public payable {
+    ) internal {
         require(
             tokenStatus[tokenAddress] == true,
             "Events: PaymentToken Not Supported"
@@ -653,6 +660,34 @@ contract EventsV1 is EventMetadata {
         eventTokenAddress[eventTokenId] = tokenAddress;
         bookVenue(eventTokenId);
     }
+    ///@notice Start the event
+    ///@param eventTokenId event Token Id
+    ///@param feeToken erc20 tokenAddress
+    ///@param venueFeeAmount fee of the venue
+    function startEvent(uint256 eventTokenId, address feeToken, uint256 venueFeeAmount) external payable{
+        require((_exists(eventTokenId)), "Events: TokenId does not exist");
+        (uint256 startTime,
+        uint256 endTime,
+        address eventOrganiser,
+        bool payNow,
+        uint256 venueTokenId,) = getEventDetails(eventTokenId);
+        require(block.timestamp >= startTime && endTime > block.timestamp, "Events: Event not live");
+        require(msg.sender == eventOrganiser ,"Events: Invalid Address");
+
+        require(eventStartedStatus[eventTokenId] == false, "Events: Event already started");
+        if(payNow == false) {
+              checkVenueFees(venueTokenId,
+                    startTime,
+                    endTime,
+                    msg.sender,
+                    eventTokenId,
+                    feeToken,
+                    venueFeeAmount);
+            }
+            payNow = true;
+        eventStartedStatus[eventTokenId] = true;
+        emit EventStarted(eventTokenId, payNow);
+    }
 
     ///@notice Saves the status whether rent is paid or not
     ///@param eventOrganiser Event organiser address
@@ -664,6 +699,10 @@ contract EventsV1 is EventMetadata {
         bool _isRentPaid
     ) internal {
         rentStatus[eventOrganiser][eventTokenId] = _isRentPaid;
+    }
+
+    function isEventStarted(uint256 eventId) public view returns(bool) {
+        return eventStartedStatus[eventId];
     }
 
     function getEventDetails(uint256 tokenId)

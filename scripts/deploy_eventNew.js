@@ -12,10 +12,10 @@ async function main() {
     // const manageContract = "0xe1654927B2AD2bd49CDCB8337fEe44f0099bB0fD";
 
     // local
-    const venueAddress = "0xBC05Cf0e8248C1eD6102479294440f0f7cd96742"
-    const conversionAddress = "0xEF60E3fbfd02392Ad12ee68EbA44dac96Ae5781f"
-    const manageContract = "0x506988c329024867b3EDBdAb3864bE54E4287130";
-    //const ticketMasterAddress = "0x36F5EB061D32a53a6F5Ef53Af81E348803d6E3E5"
+    const venueAddress = "0x0447385e1B3A5B9151AA5D3DD2996C0084Ba504e"
+    const conversionAddress = "0xf0b43c664283BDa4E57B8077f8d1D5e645E83DDE"
+    const manageContract = "0x8d4E05C512D11426B8c16BfE573ff9946e480C7C";
+    const ticketMasterAddress = "0xaA1b814590259c67Dbced57dEfeA5746Bf41A2E8"
 
     const dropsTreasury = await ethers.getContractFactory("Treasury");
     const treasuryProxy = await upgrades.deployProxy(dropsTreasury, [accounts[0]], { initializer: 'initialize' })
@@ -25,52 +25,52 @@ async function main() {
     console.log("Is admin", await treasuryProxy.isAdmin(accounts[0]));
     // await new Promise(res => setTimeout(res, 1000));
 
-    const TicketMaster = await hre.ethers.getContractFactory("TicketMaster");
-    const ticketMaster = await TicketMaster.deploy();
-    // await new Promise(res => setTimeout(res, 1000));
-    await ticketMaster.deployed();
-    console.log("ticketMaster contract", ticketMaster.address);
+    // const TicketMaster = await hre.ethers.getContractFactory("TicketMaster");
+    // const ticketMaster = await TicketMaster.deploy();
+    // // await new Promise(res => setTimeout(res, 1000));
+    // await ticketMaster.deployed();
+    // console.log("ticketMaster contract", ticketMaster.address);
 
-    // const TicketMaster = await ethers.getContractFactory("TicketMaster");
-    // const ticketMaster = await TicketMaster.attach(ticketMasterAddress);
+    const TicketMaster = await ethers.getContractFactory("TicketMaster");
+    const ticketMaster = await TicketMaster.attach(ticketMasterAddress);
 
 
     const eventContract = await ethers.getContractFactory("EventsV1");
     const eventProxy = await upgrades.deployProxy(eventContract, { initializer: 'initialize' })
     await eventProxy.deployed();
     // await new Promise(res => setTimeout(res, 1000));
-    // const eventProxy = await eventContract.attach("0x4aE4C2b936fCa432842f038c005BbAC3376Bb8Cf");
+    // const eventProxy = await eventContract.attach("0x30507B848D2328FCcBf514CEDE6B1Af9cD61c8a1");
     console.log("Event contract", eventProxy.address);
 
-    await new Promise(res => setTimeout(res, 1000));
+    // await new Promise(res => setTimeout(res, 1000));
     await ticketMaster.whitelistAdmin(eventProxy.address, true);
 
-    // await new Promise(res => setTimeout(res, 1000));
+    // // await new Promise(res => setTimeout(res, 1000));
     await eventProxy.updateWhitelist([accounts[0]], [true]);
 
-    // await new Promise(res => setTimeout(res, 1000));
+    // // await new Promise(res => setTimeout(res, 1000));
     await eventProxy.updateDeviation(5);
 
-    // await new Promise(res => setTimeout(res, 1000));
+    // // await new Promise(res => setTimeout(res, 1000));
     await eventProxy.whitelistTokenAddress(MATIC, true);
 
-    // await new Promise(res => setTimeout(res, 1000));
+    // // await new Promise(res => setTimeout(res, 1000));
     await eventProxy.whitelistTokenAddress(Trace, true);
 
-    // await new Promise(res => setTimeout(res, 1000));
+    // // await new Promise(res => setTimeout(res, 1000));
     await eventProxy.whitelistTokenAddress(USDC, true);
 
-    // await new Promise(res => setTimeout(res, 1000));
-    await eventProxy.updateVenueContract(venueAddress)
+    // // await new Promise(res => setTimeout(res, 1000));
+    await eventProxy.updateVenueContract(venueAddress);
 
-    // await new Promise(res => setTimeout(res, 1000));
-    await eventProxy.updateConversionContract(conversionAddress)
+    // // await new Promise(res => setTimeout(res, 1000));
+    await eventProxy.updateConversionContract(conversionAddress);
 
-    // await new Promise(res => setTimeout(res, 1000));
-    await eventProxy.updateTreasuryContract(treasuryProxy.address)
+    // // await new Promise(res => setTimeout(res, 1000));
+    await eventProxy.updateTreasuryContract(treasuryProxy.address);
 
-    // await new Promise(res => setTimeout(res, 1000));
-    await eventProxy.updateticketMasterContract(ticketMaster.address)
+    // // await new Promise(res => setTimeout(res, 1000));
+    await eventProxy.updateticketMasterContract(ticketMasterAddress);
 
     const blockNumBefore = await ethers.provider.getBlockNumber();
     const blockBefore = await ethers.provider.getBlock(blockNumBefore);
@@ -94,56 +94,57 @@ async function main() {
     platformFee  = platformFee.toString();
     console.log("platformFee",platformFee);
 
-    // await new Promise(res => setTimeout(res, 1000));
+    // // await new Promise(res => setTimeout(res, 1000));
     await eventProxy.add(["EventTwo", "Test Category Two", "Test Event Two"], [startTime, endTime],
         "QmQh36CsceXZoqS7v9YQLUyxXdRmWd8YWTBUz7WCXsiVty", 1, 1000000, 1000000, MATIC, Trace, true, true, {
         value: rentalFee
     });//tokenId = 1
-    // console.log("done 1");
-    // await eventProxy.add(["EventTwo", "Test Category Two", "Test Event Two"], ["1661941775", "1661969735"],
-    //     "QmcgGDw183xiyUS2R4jftuLfqEXr8L13BDGoo6iA4f8WqC", 1, 1000000, 1000000, MATIC, Trace, true, false
-    // );//tokenId = 2 startEvent and addAgenda
-    // console.log("done 2");
-    // await eventProxy.add(["EventThree", "Test Category Three", "Test Event Three"], ["1661962535", "1661969735"],
-    //     "QmWRQPUCr48tCo7eoE5hAJBb4wCoBY6iXmrDZayLZadb86", 2, 1000000, 1000000, MATIC, Trace, true, false
-    // );//tokenId = 3 cancel event
-    // console.log("done 3");
+    console.log("done 1");
+    
+    await eventProxy.add(["EventTwo", "Test Category Two", "Test Event Two"], [startTime+20, endTime+1000],
+        "QmcgGDw183xiyUS2R4jftuLfqEXr8L13BDGoo6iA4f8WqC", 1, 1000000, 1000000, MATIC, Trace, true, false
+    );//tokenId = 2
+    console.log("done 2");
 
-    await eventProxy.add(["EventFour", "Test Category Four", "Test Event Four"], ["1661948241", "1661969555"],
-        "QmQdAYdCyCedSLpTSGdNDzLQXv5QsLBCQX5EAfxW7usKNy", 2, 1000000, 1000000, MATIC, Trace, true, false
-    );//tokenId = 4 
-    console.log("done 4");
 
-    // console.log("TicketToken",await eventProxy.ticketNFTAddress(1));
+    console.log("TicketToken",await eventProxy.ticketNFTAddress(1));
 
-    // let ticketPrice = await conversionProxy.convertFee(MATIC, 1000000);
-    // console.log("ticketPrice",ticketPrice);
-    // // await new Promise(res => setTimeout(res, 10000));
-    // await ticketMaster.updateEventContract(eventProxy.address);
-    // // await new Promise(res => setTimeout(res, 1000));
-    // await ticketMaster.updateTicketCommission(5);
+    let ticketPrice = await conversionProxy.convertFee(MATIC, 1000000);
+    console.log("ticketPrice",ticketPrice);
+    // await new Promise(res => setTimeout(res, 10000));
+    await ticketMaster.updateEventContract(eventProxy.address);
+    // await new Promise(res => setTimeout(res, 1000));
+    await ticketMaster.updateTicketCommission(5);
 
     await ticketMaster.updateManageEventContract(manageContract);
-    // await new Promise(res => setTimeout(res, 10000));
-    // await ticketMaster.buyTicket(1, MATIC, ticketPrice, {
-    //     value: ticketPrice
-    // });
+    await new Promise(res => setTimeout(res, 5000));
+    await ticketMaster.buyTicket(1, MATIC, ticketPrice, {
+        value: ticketPrice
+    });
     // // await new Promise(res => setTimeout(res, 50000));
-    // let ticketId = await ticketMaster.ticketIdOfUser(accounts[0],1);
-    // console.log("ticketId",ticketId);
-    // let ticketContract = await eventProxy.ticketNFTAddress(1);
-    // console.log("ticketContract",ticketContract);
+    let ticketId = await ticketMaster.ticketIdOfUser(accounts[0],1);
+    console.log("ticketId",ticketId);
+    let ticketContract = await eventProxy.ticketNFTAddress(1);
+    console.log("ticketContract",ticketContract);
     
-    // const ticketContractAddress = await ethers.getContractFactory("Ticket");
-    // const TicketContractAddress = await ticketContractAddress.attach(ticketContract);
+    const ticketContractAddress = await ethers.getContractFactory("Ticket");
+    const TicketContractAddress = await ticketContractAddress.attach(ticketContract);
 
-    // let balance = await TicketContractAddress.balanceOf(accounts[0]);
-    // console.log("balance",balance);
-    // await new Promise(res => setTimeout(res, 10000));
-    // await ticketMaster.join(1, ticketId);
-    // console.log("join");
-    // await new Promise(res => setTimeout(res, 51000));
-    // await eventProxy.complete(1);
+    let balance = await TicketContractAddress.balanceOf(accounts[0]);
+    console.log("balance",balance);
+    await new Promise(res => setTimeout(res, 10000));
+    await ticketMaster.join(1, ticketId);
+    console.log("join");
+    await new Promise(res => setTimeout(res, 51000));
+    
+    // Start Event
+    await new Promise(res => setTimeout(res, 1000));
+    await eventProxy.startEvent(2, MATIC, rentalFee, {
+        value: rentalFee
+    });
+    console.log("event Started");
+    
+    await eventProxy.complete(1);
 }
 
 main()
