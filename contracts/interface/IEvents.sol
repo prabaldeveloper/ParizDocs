@@ -9,5 +9,7 @@ interface IEvents {
     function getVenueContract() external view returns (address);
     function getDeviationPercentage() external view returns (uint256);
     function getTreasuryContract() external view returns (address);
+    function isEventCanceled(uint256 eventId) external view returns(bool);
+    function isEventStarted(uint256 eventId) external view returns(bool);
     
 }

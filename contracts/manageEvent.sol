@@ -33,8 +33,8 @@ contract ManageEvent is Ownable {
     // //mapping for event start status
     // mapping(uint256 => bool) public eventStartedStatus;
 
-    //mapping for event cancel status
-    mapping(uint256 => bool) public eventCanceledStatus;
+    // //mapping for event cancel status
+    // mapping(uint256 => bool) public eventCanceledStatus;
 
     mapping(uint256 => uint256[]) public agendaInEvents;
 
@@ -55,8 +55,8 @@ contract ManageEvent is Ownable {
     // ///@param payNow pay venue fees now if(didn't pay earlier)
     // event EventStarted(uint256 indexed eventTokenId, bool payNow);
 
-    ///@param eventTokenId event Token Id
-    event EventCanceled(uint256 indexed eventTokenId);
+    // ///@param eventTokenId event Token Id
+    // event EventCanceled(uint256 indexed eventTokenId);
 
     ///@param eventTokenId event Token Id
     ///@param agendaId agendaId
@@ -163,22 +163,6 @@ contract ManageEvent is Ownable {
     //     emit EventStarted(eventTokenId, payNow);
     // }
 
-    ///@notice Cancel the event
-    ///@param eventTokenId event Token Id
-    function cancelEvent(uint256 eventTokenId) isEventOrganiser(eventTokenId) external {
-        require((IEvents(getEventContract())._exists(eventTokenId)), "ManageEvent: TokenId does not exist");
-        (uint256 startTime,
-        ,
-        , , ,) = IEvents(getEventContract()).getEventDetails(eventTokenId);
-        require(startTime > block.timestamp, "ManageEvent: Event started");
-        require(eventCanceledStatus[eventTokenId] == false, "ManageEvent: Event already canceled");
-        //call the complete event
-        //Return amount for venue fees if event ticket is cancelled 
-        //IEvents(getEventContract()).burn(eventTokenId);
-        eventCanceledStatus[eventTokenId] = true;
-        emit EventCanceled(eventTokenId);
-
-    }
 
     ///@notice To initiate a session(1 - autoInitiate, 2 - Manual Initiate)
     ///@param eventTokenId event Token Id
@@ -197,9 +181,9 @@ contract ManageEvent is Ownable {
         return eventContract;
     }
 
-    function isEventCanceled(uint256 eventId) public view returns(bool) {
-        return eventCanceledStatus[eventId];
-    }
+    // function isEventCanceled(uint256 eventId) public view returns(bool) {
+    //     return eventCanceledStatus[eventId];
+    // }
 
     // function isEventStarted(uint256 eventId) public view returns(bool) {
     //     return eventStartedStatus[eventId];

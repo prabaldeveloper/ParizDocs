@@ -66,6 +66,9 @@ contract EventsV1 is EventMetadata {
     //mapping for event start status
     mapping(uint256 => bool) public eventStartedStatus;
 
+    //mapping for event cancel status
+    mapping(uint256 => bool) public eventCanceledStatus;
+
     //block time
     uint256 public constant blockTime = 2;
 
@@ -112,6 +115,11 @@ contract EventsV1 is EventMetadata {
         address tokenAddress,
         address ticketNFTAddress
     );
+
+    
+    ///@param tokenId Event tokenId
+    ///@param description Event description
+    event DescriptionUpdated(uint256 indexed tokenId, string description);
 
     ///@param tokenId Event tokenId
     event Featured(uint256 indexed tokenId, bool isFeatured);
@@ -160,6 +168,9 @@ contract EventsV1 is EventMetadata {
     ///@param eventTokenId event Token Id
     ///@param payNow pay venue fees now if(didn't pay earlier)
     event EventStarted(uint256 indexed eventTokenId, bool payNow);
+
+    ///@param eventTokenId event Token Id
+    event EventCanceled(uint256 indexed eventTokenId);
 
     //modifier for checking whitelistedUsers
     modifier onlyWhitelistedUsers() {
@@ -276,6 +287,20 @@ contract EventsV1 is EventMetadata {
     {
         ticketCommissionPercent = _ticketCommissionPercent;
         emit TicketCommissionUpdated(ticketCommissionPercent);
+    }
+
+    ///@notice Update event description
+    ///@dev Only event organiser can call
+    ///@dev - Check whether event is started or not
+    ///@dev - Update the event description
+    ///@param tokenId Event tokenId
+    ///@param description Event description
+    function updateDescription(uint256 tokenId, string memory description) external {
+        require(_exists(tokenId), "Events: TokenId does not exist");
+        require(msg.sender == getInfo[tokenId].eventOrganiser, "Events: Address is not the event organiser address");
+        require(getInfo[tokenId].startTime > block.timestamp,"Events: Event is started");
+        getInfo[tokenId].description = description;
+        emit DescriptionUpdated(tokenId, description);
     }
 
     ///@notice Creates Event
@@ -664,7 +689,7 @@ contract EventsV1 is EventMetadata {
     ///@param feeToken erc20 tokenAddress
     ///@param venueFeeAmount fee of the venue
     function startEvent(uint256 eventTokenId, address feeToken, uint256 venueFeeAmount) external payable{
-        require((_exists(eventTokenId)), "Events: TokenId does not exist");
+        require(_exists(eventTokenId), "Events: TokenId does not exist");
         (uint256 startTime,
         uint256 endTime,
         address eventOrganiser,
@@ -688,6 +713,32 @@ contract EventsV1 is EventMetadata {
         emit EventStarted(eventTokenId, payNow);
     }
 
+    ///@notice Cancel the event
+    ///@param eventTokenId event Token Id
+    function cancelEvent(uint256 eventTokenId) external {
+        require(_exists(eventTokenId), "ManageEvent: TokenId does not exist");
+        (uint256 startTime,
+        uint256 endTime,
+        address eventOrganiser,
+        bool payNow,
+        uint256 venueTokenId,) = getEventDetails(eventTokenId);
+        require(startTime > block.timestamp, "ManageEvent: Event started");
+        require(msg.sender == eventOrganiser ,"Events: Invalid Address");
+        require(eventCanceledStatus[eventTokenId] == false, "ManageEvent: Event already canceled");
+        //call the complete event
+        // if(payNow == true) {
+        //     (  uint256 _estimatedCost,
+        //     uint256 _platformFees,
+        //     uint256 _venueRentalCommissionFees) = calculateRent(venueTokenId, startTime, endTime);
+  
+        // }
+        //Return amount for venue fees if event ticket is cancelled 
+        //IEvents(getEventContract()).burn(eventTokenId);
+        eventCanceledStatus[eventTokenId] = true;
+        emit EventCanceled(eventTokenId);
+
+    }
+
     ///@notice Saves the status whether rent is paid or not
     ///@param eventOrganiser Event organiser address
     ///@param eventTokenId Event tokenId
@@ -702,6 +753,10 @@ contract EventsV1 is EventMetadata {
 
     function isEventStarted(uint256 eventId) public view returns(bool) {
         return eventStartedStatus[eventId];
+    }
+
+    function isEventCanceled(uint256 eventId) public view returns(bool) {
+        return eventCanceledStatus[eventId];
     }
 
     function getEventDetails(uint256 tokenId)

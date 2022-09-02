@@ -7,7 +7,6 @@ import "./Ticket.sol";
 import "./interface/IConversion.sol";
 import "./interface/IEvents.sol";
 import "./interface/IVenue.sol";
-import "./interface/IManageEvents.sol";
 
 contract TicketMaster is Ticket {
     using AddressUpgradeable for address;
@@ -171,7 +170,7 @@ contract TicketMaster is Ticket {
             "TicketMaster: TokenId does not exist"
         );
         require(
-            IManageEvents(manageEventContract).isEventCanceled(eventId) ==
+            IEvents(eventContract).isEventCanceled(eventId) ==
                 false,
             "TicketMaster: Event is canceled"
         );
@@ -268,7 +267,7 @@ contract TicketMaster is Ticket {
     ///@param eventId Event tokenId
     function join(uint256 eventId, uint256 ticketId) external {
         require(
-            IManageEvents(manageEventContract).isEventCanceled(eventId) ==
+            IEvents(eventContract).isEventCanceled(eventId) ==
                 false,
             "TicketMaster: Event is canceled"
         );
@@ -282,7 +281,7 @@ contract TicketMaster is Ticket {
         ).getEventDetails(eventId);
         if (payNow == false) {
             require(
-                IManageEvents(manageEventContract).isEventStarted(eventId) ==
+                IEvents(eventContract).isEventStarted(eventId) ==
                     true,
                 "TicketMaster: Event not started"
             );
