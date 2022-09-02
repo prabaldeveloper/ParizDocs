@@ -58,7 +58,6 @@ async function main() {
 
     // const venueProxy = await hre.ethers.getContractFactory("Venue");
     // const venueContract = await venueProxy.attach("0xA349553a541597b44a2347D088D3FacaeB3E5f6A");
-    // console.log(await eventProxy.getVenueContract());
 
     //  const venueFees = await venueContract.getRentalFeesPerBlock(1);
     //  console.log("venueFees",venueFees);

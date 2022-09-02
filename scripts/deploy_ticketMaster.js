@@ -4,9 +4,10 @@ async function main() {
     console.log("Accounts", accounts[0]);
 
     const TicketMaster = await hre.ethers.getContractFactory("TicketMaster");
-    const ticketMaster = await TicketMaster.deploy();
-
+    const ticketMaster = await upgrades.deployProxy(TicketMaster, { initializer: 'initialize'})
+    //convert into proxy contract
     await ticketMaster.deployed();
+
     console.log("ticketMaster contract", ticketMaster.address);
 }
 

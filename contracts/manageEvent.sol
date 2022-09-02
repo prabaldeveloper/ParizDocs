@@ -3,7 +3,6 @@
 pragma solidity ^0.8.0;
 import "./access/Ownable.sol";
 import "./interface/IEvents.sol";
-import "./interface/IVenue.sol";
 
 ///@title Manage the events
 ///@author Prabal Srivastav

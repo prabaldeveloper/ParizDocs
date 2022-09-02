@@ -454,12 +454,13 @@ contract EventsV1 is EventMetadata {
              block.timestamp >= getInfo[eventTokenId].endTime,
             "Events: Event not ended"
         );
+        require(isEventCanceled(eventTokenId) == false, "Events: Event is canceled");
         uint256 venueTokenId = getInfo[eventTokenId].venueTokenId;
         address tokenAddress = eventTokenAddress[eventTokenId];
         address payable venueOwner = IVenue(getVenueContract()).getVenueOwner(
             venueTokenId
         );
-        if (tokenStatus[tokenAddress] == true) {
+        // if (tokenStatus[tokenAddress] == true) {
             (, , uint256 _venueRentalCommissionFees) = calculateRent(
                 venueTokenId,
                 getInfo[eventTokenId].startTime,
@@ -487,7 +488,7 @@ contract EventsV1 is EventMetadata {
                 );
             }
             balance[eventTokenId] = 0;
-        }
+       // }
         // else {
         //     if(erc721tokenAddress[tokenAddress] == true) {
         //         require(nftBalance[eventTokenId] > 0, "Events: Nft already transferred");
@@ -719,19 +720,41 @@ contract EventsV1 is EventMetadata {
         require(_exists(eventTokenId), "ManageEvent: TokenId does not exist");
         (uint256 startTime,
         uint256 endTime,
-        address eventOrganiser,
+        address payable eventOrganiser,
         bool payNow,
         uint256 venueTokenId,) = getEventDetails(eventTokenId);
         require(startTime > block.timestamp, "ManageEvent: Event started");
         require(msg.sender == eventOrganiser ,"Events: Invalid Address");
         require(eventCanceledStatus[eventTokenId] == false, "ManageEvent: Event already canceled");
+        address tokenAddress = eventTokenAddress[eventTokenId];
         //call the complete event
-        // if(payNow == true) {
-        //     (  uint256 _estimatedCost,
-        //     uint256 _platformFees,
-        //     uint256 _venueRentalCommissionFees) = calculateRent(venueTokenId, startTime, endTime);
-  
-        // }
+        if(payNow == true) {
+            (  uint256 _estimatedCost,
+            uint256 _platformFees,
+            uint256 _venueRentalCommissionFees) = calculateRent(venueTokenId, startTime, endTime);
+
+             uint256 venueRentalCommissionFees = IConversion(conversionContract)
+                .convertFee(tokenAddress, _venueRentalCommissionFees);
+            uint256 platformFees = IConversion(conversionContract).convertFee(
+                tokenAddress, _platformFees);
+            uint256 estimatedCost = IConversion(conversionContract).convertFee(
+                tokenAddress, _estimatedCost);
+            if(tokenAddress == address(0)) {
+                treasuryContract.transfer(venueRentalCommissionFees + platformFees);
+                eventOrganiser.transfer(estimatedCost - venueRentalCommissionFees - platformFees);
+            }
+            else {
+                IERC20(tokenAddress).transfer(
+                    treasuryContract,
+                    venueRentalCommissionFees + platformFees
+                );
+                IERC20(tokenAddress).transfer(
+                    eventOrganiser,
+                    estimatedCost - venueRentalCommissionFees - platformFees
+                );
+            }
+            balance[eventTokenId] = 0;
+        }
         //Return amount for venue fees if event ticket is cancelled 
         //IEvents(getEventContract()).burn(eventTokenId);
         eventCanceledStatus[eventTokenId] = true;
@@ -765,7 +788,7 @@ contract EventsV1 is EventMetadata {
         returns (
             uint256 startTime,
             uint256 endTime,
-            address eventOrganiser,
+            address payable eventOrganiser,
             bool payNow,
             uint256 venueTokenId,
             uint256 ticketPrice
