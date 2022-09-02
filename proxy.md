@@ -11,3 +11,7 @@ https://docs.openzeppelin.com/upgrades-plugins/1.x/proxies
 https://eips.ethereum.org/EIPS/eip-1967  -- Important   
 
 https://eips.ethereum.org/EIPS/eip-1822
+
+https://forum.openzeppelin.com/t/beware-of-the-proxy-learn-how-to-exploit-function-clashing/1070
+
+https://medium.com/nomic-foundation-blog/malicious-backdoors-in-ethereum-proxies-62629adf3357
