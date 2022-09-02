@@ -6,7 +6,6 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./Ticket.sol";
 import "./interface/IConversion.sol";
 import "./interface/IEvents.sol";
-import "./interface/IVenue.sol";
 
 contract TicketMaster is Ticket {
     using AddressUpgradeable for address;
@@ -24,6 +23,13 @@ contract TicketMaster is Ticket {
 
     mapping(address => mapping(uint256 => bool)) public joinEventStatus;
 
+    //mapping for getting the tokenAddress using which ticket can be bought
+    mapping(uint256 => mapping(uint256 => address)) public buyTicketTokenAddress;
+
+    mapping(uint256 => uint256) public ticketFeesBalance;
+
+    mapping(uint256 => mapping(uint256 => bool)) public refundTicketFeesStatus;
+
     //mapping for storing owner address status
     mapping(address => bool) public adminAddress;
 
@@ -35,6 +41,8 @@ contract TicketMaster is Ticket {
 
     //ticketCommission
     uint256 private ticketCommissionPercent;
+
+
 
     ///@param eventContract eventContract address
     event EventContractUpdated(address eventContract);
@@ -61,6 +69,8 @@ contract TicketMaster is Ticket {
         uint256 joiningTime,
         uint256 ticketId
     );
+
+    event RefundClaimed(uint256 indexed eventTokenId, uint256 ticketId);
 
     modifier onlyAdmin() {
         require(
@@ -159,6 +169,7 @@ contract TicketMaster is Ticket {
     ///@dev - Check whether user paid the price.
     ///@dev - Map event tokenId with user address
     ///@param eventId Event tokenId
+    ///@param tokenAddress tokenAddress
     ///@param tokenAmount ticket Price
     function buyTicket(
         uint256 eventId,
@@ -184,6 +195,7 @@ contract TicketMaster is Ticket {
         ) = IEvents(eventContract).getEventDetails(eventId);
         require(actualPrice != 0, "TicketMaster: Event is free");
         require(block.timestamp <= endTime, "TicketMaster: Event ended");
+
         address conversionAddress = IEvents(eventContract)
             .getConversionContract();
         uint256 totalCapacity = Ticket(ticketNFTAddress[eventId]).totalSupply();
@@ -201,6 +213,7 @@ contract TicketMaster is Ticket {
             tokenAddress,
             conversionAddress
         );
+        buyTicketTokenAddress[eventId][mintedToken] = tokenAddress;
         ////////////not needed this two mappings
         ticketBoughtAddress[msg.sender][eventId] = true;
         ticketIdOfUser[msg.sender][eventId] = mintedToken;
@@ -217,15 +230,15 @@ contract TicketMaster is Ticket {
         uint256 actualPrice,
         address eventOrganiser,
         address tokenAddress,
-        address conversionAddresss
+        address conversionAddress
     ) internal {
         // convert base token to fee token
-        uint256 convertedFeeAmount = IConversion(conversionAddresss).convertFee(
+        uint256 convertedFeeAmount = IConversion(conversionAddress).convertFee(
             tokenAddress,
             feeAmount
         );
         // convert base token to fee token
-        uint256 convertedActualPrice = IConversion(conversionAddresss)
+        uint256 convertedActualPrice = IConversion(conversionAddress)
             .convertFee(tokenAddress, actualPrice);
         if (tokenAddress != address(0)) {
             checkDeviation(convertedFeeAmount, convertedActualPrice);
@@ -233,7 +246,7 @@ contract TicketMaster is Ticket {
                 ticketCommissionPercent) / 100;
             IERC20(tokenAddress).transferFrom(
                 msg.sender,
-                eventOrganiser,
+                address(this),
                 convertedFeeAmount - ticketCommissionFee
             );
             IERC20(tokenAddress).transferFrom(
@@ -241,14 +254,15 @@ contract TicketMaster is Ticket {
                 IEvents(eventContract).getTreasuryContract(),
                 ticketCommissionFee
             );
+            ticketFeesBalance[eventId] += (convertedFeeAmount - ticketCommissionFee);
         } else {
             checkDeviation(msg.value, convertedActualPrice);
             uint256 ticketCommissionFee = (msg.value *
                 ticketCommissionPercent) / 100;
-            (bool successOwner, ) = eventOrganiser.call{
+            (bool successOwner, ) = address(this).call{
                 value: msg.value - ticketCommissionFee
             }("");
-            require(successOwner, "Events: Transfer to venue owner failed");
+            require(successOwner, "Events: Transfer to ticket master contract failed");
             (bool successTreasury, ) = IEvents(eventContract)
                 .getTreasuryContract()
                 .call{value: ticketCommissionFee}("");
@@ -256,8 +270,38 @@ contract TicketMaster is Ticket {
                 successTreasury,
                 "Events: Transfer to treasury contract failed"
             );
-        }
+            ticketFeesBalance[eventId] += (msg.value - ticketCommissionFee);
+        } 
     }
+
+    // function claimTicketFees(uint256 eventTokenId) external {
+    //     require(
+    //         IEvents(eventContract)._exists(eventId),
+    //         "TicketMaster: TokenId does not exist"
+    //     );
+    //     require(
+    //         IEvents(eventContract).isEventCanceled(eventId) ==
+    //             false,
+    //         "TicketMaster: Event is canceled"
+    //     );
+    //     (
+    //         ,
+    //         ,
+    //         address payable eventOrganiser,
+    //         ,
+    //         ,
+    //     ) = IEvents(eventContract).getEventDetails(eventId);
+    //     require(msg.sender == eventOrganiser ,"TicketMaster: Invalid Address");
+    //     //address tokenAddress = buyTicketTokenAddress[eventId][mintedToken];
+    //     require(ticketFeesBalance[eventTokenId] > 0, "TicketMaster:  Funds already transferred");
+    //     if(tokenAddress == address(0)) {
+    //         eventOrganiser.transfer(ticketFeesBalance[eventId]);
+    //     }
+    //     else {
+    //         IERC20(tokenAddress).transfer(eventOrganiser, ticketFeesBalance[eventId]);
+    //     }
+    //     ticketFeesBalance[eventId] = 0;
+    // }
 
     ///@notice Users can join events
     ///@dev Public function
@@ -302,6 +346,46 @@ contract TicketMaster is Ticket {
         joinEventStatus[ticketNFTAddress[eventId]][ticketId] = true;
 
         emit Joined(eventId, msg.sender, block.timestamp, ticketId);
+    }
+
+    function claimRefund(uint256 eventTokenId, uint256 ticketId) external {
+        require(
+            IEvents(eventContract)._exists(eventId),
+            "TicketMaster: TokenId does not exist"
+        );
+        require(
+            IEvents(eventContract).isEventCanceled(eventId) ==
+                true,
+            "TicketMaster: Event is not canceled"
+        );
+        require(refundTicketFeesStatus[eventTokenId][ticketId] == false, "TicketMaster: Funds already transferred");
+        require(msg.sender == Ticket(ticketNFTAddress[eventId]).ownerOf(ticketId), "TicketMaster: Caller is not the owner");
+        (
+            ,
+            ,
+            ,
+            ,
+            ,
+            uint256 actualPrice
+        ) = IEvents(eventContract).getEventDetails(eventId);
+        require(actualPrice != 0, "TicketMaster: Event is free");
+        address tokenAddress = buyTicketTokenAddress[eventId][ticketId];
+          address conversionAddress = IEvents(eventContract)
+            .getConversionContract();
+        uint256 convertedActualPrice = IConversion(conversionAddress)
+            .convertFee(tokenAddress, actualPrice);
+        uint256 ticketCommissionFee = (convertedActualPrice *
+                ticketCommissionPercent) / 100;
+        
+        if(tokenAddress == address(0)) {
+            payable(msg.sender).transfer(convertedActualPrice - ticketCommissionFee);
+        }
+        else {
+            IERC20(tokenAddress).transfer(msg.sender, convertedActualPrice - ticketCommissionFee);
+        }
+        refundTicketFeesStatus[eventTokenId][ticketId] == true;
+
+        emit RefundClaimed(eventTokenId, ticketId);
     }
 
     function getJoinEventStatus(address _ticketNftAddress, uint256 _ticketId)
