@@ -75,7 +75,7 @@ contract ManageEvent is Ownable {
 
     ///@param eventTokenId event Token Id
     ///@param agendaId agendaId
-    event AgendaDeleted(uint256 indexed eventTokenId, uint256 indexed agendaId);
+    event AgendaDeleted(uint256 indexed eventTokenId, uint256 indexed agendaId, bool deletedStatus);
 
     //modifier for checking valid time
     modifier isValidTime(uint256 startTime, uint256 endTime) {
@@ -194,7 +194,7 @@ contract ManageEvent is Ownable {
             "ManageEvent: Agenda already started"
         );
         getAgendaInfo[eventTokenId][agendaId].isAgendaDeleted = true;
-        emit AgendaDeleted(eventTokenId, agendaId);
+        emit AgendaDeleted(eventTokenId, agendaId, true);
     }
 
     ///@notice To initiate a session(1 - autoInitiate, 2 - Manual Initiate)
