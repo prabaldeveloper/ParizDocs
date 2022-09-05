@@ -64,6 +64,10 @@ contract ManageEvent is Ownable {
     ///@param eventContract eventContractAddress
     event EventContractUpdated(address eventContract);
 
+    ///@param eventTokenId event Token Id
+    ///@param agendaId agendaId
+    event AgendaDeleted(uint256 indexed eventTokenId, uint256 indexed agendaId);
+
     //modifier for checking valid time
     modifier isValidTime(uint256 startTime, uint256 endTime) {
         require(
@@ -103,7 +107,9 @@ contract ManageEvent is Ownable {
     ///@param guestName[] guest Name 
     ///@param guestAddress[] guest Address
     ///@param initiateStatus Auto(1) or Manual(2)
-    function addAgenda(uint256 eventTokenId, uint256 agendaStartTime, uint256 agendaEndTime, string memory agendaType, string[] memory guestName, string[] memory guestAddress, uint8 initiateStatus) isValidTime(agendaStartTime, agendaEndTime) isEventOrganiser(eventTokenId) external {
+    function addAgenda(uint256 eventTokenId, uint256 agendaStartTime, uint256 agendaEndTime, string memory agendaType, string[] memory guestName, string[] memory guestAddress, uint8 initiateStatus) 
+    isValidTime(agendaStartTime, agendaEndTime) 
+    isEventOrganiser(eventTokenId) external {
         require((IEvents(getEventContract())._exists(eventTokenId)), "ManageEvent: TokenId does not exist");
         (uint256 eventStartTime,
         uint256 eventEndTime,
@@ -124,43 +130,12 @@ contract ManageEvent is Ownable {
         emit AgendaAdded(eventTokenId, agendaId, agendaStartTime, agendaEndTime, agendaType, guestName, guestAddress, initiateStatus);
     }
 
-    // ///@notice Start the event
-    // ///@param eventTokenId event Token Id
-    // ///@param feeToken erc20 tokenAddress
-    // ///@param venueFeeAmount fee of the venue
-    // function startEvent(uint256 eventTokenId, address feeToken, uint256 venueFeeAmount) isEventOrganiser(eventTokenId) external payable{
-    //     require((IEvents(getEventContract())._exists(eventTokenId)), "ManageEvent: TokenId does not exist");
-    //     (uint256 startTime,
-    //     uint256 endTime,
-    //     ,
-    //     bool payNow,
-    //     uint256 venueTokenId,) = IEvents(getEventContract()).getEventDetails(eventTokenId);
-    //     require(block.timestamp >= startTime && endTime > block.timestamp, "ManageEvent: Event not live");
-    //     require(eventStartedStatus[eventTokenId] == false, "ManageEvent: Event already started");
-    //     if(payNow == false) {
-    //         if(feeToken == address(0)) {
-    //             IEvents(getEventContract()).checKVenueFees{value: msg.value}(venueTokenId,
-    //                 startTime,
-    //                 endTime,
-    //                 msg.sender,
-    //                 eventTokenId,
-    //                 feeToken,
-    //                 venueFeeAmount);
-    //         }
-    //         else {
-    //             IEvents(getEventContract()).checKVenueFees(venueTokenId,
-    //                 startTime,
-    //                 endTime,
-    //                 msg.sender,
-    //                 eventTokenId,
-    //                 feeToken,
-    //                 venueFeeAmount);
-    //         }
-    //         payNow = true;
-    //     }
-    //     eventStartedStatus[eventTokenId] = true;
-    //     emit EventStarted(eventTokenId, payNow);
-    // }
+    function deleteAgenda(uint256 eventTokenId, uint256 agendaId) isEventOrganiser(eventTokenId) external  {
+        require((IEvents(getEventContract())._exists(eventTokenId)), "ManageEvent: TokenId does not exist");
+        require(block.timestamp < getAgendaInfo[eventTokenId][agendaId].agendaStartTime, "ManageEvent: Agenda already started");
+        delete getAgendaInfo[eventTokenId][agendaId];
+        emit AgendaDeleted(eventTokenId, agendaId);
+    }
 
 
     ///@notice To initiate a session(1 - autoInitiate, 2 - Manual Initiate)
