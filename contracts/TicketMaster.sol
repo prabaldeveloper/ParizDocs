@@ -42,8 +42,6 @@ contract TicketMaster is Ticket {
     //ticketCommission
     uint256 private ticketCommissionPercent;
 
-
-
     ///@param eventContract eventContract address
     event EventContractUpdated(address eventContract);
 
