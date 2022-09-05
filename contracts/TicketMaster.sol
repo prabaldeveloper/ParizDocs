@@ -26,7 +26,7 @@ contract TicketMaster is Ticket {
     //mapping for getting the tokenAddress using which ticket can be bought
     mapping(uint256 => mapping(uint256 => address)) public buyTicketTokenAddress;
 
-    mapping(uint256 => uint256) public ticketFeesBalance;
+    mapping(uint256 => mapping(address => uint256)) public ticketFeesBalance;
 
     mapping(uint256 => mapping(uint256 => bool)) public refundTicketFeesStatus;
 
@@ -252,7 +252,7 @@ contract TicketMaster is Ticket {
                 IEvents(eventContract).getTreasuryContract(),
                 ticketCommissionFee
             );
-            ticketFeesBalance[eventId] += (convertedFeeAmount - ticketCommissionFee);
+            ticketFeesBalance[eventId][tokenAddress] += (convertedFeeAmount - ticketCommissionFee);
         } else {
             checkDeviation(msg.value, convertedActualPrice);
             uint256 ticketCommissionFee = (msg.value *
@@ -268,38 +268,38 @@ contract TicketMaster is Ticket {
                 successTreasury,
                 "Events: Transfer to treasury contract failed"
             );
-            ticketFeesBalance[eventId] += (msg.value - ticketCommissionFee);
+            ticketFeesBalance[eventId][tokenAddress] += (msg.value - ticketCommissionFee);
         } 
     }
 
-    // function claimTicketFees(uint256 eventTokenId) external {
-    //     require(
-    //         IEvents(eventContract)._exists(eventId),
-    //         "TicketMaster: TokenId does not exist"
-    //     );
-    //     require(
-    //         IEvents(eventContract).isEventCanceled(eventId) ==
-    //             false,
-    //         "TicketMaster: Event is canceled"
-    //     );
-    //     (
-    //         ,
-    //         ,
-    //         address payable eventOrganiser,
-    //         ,
-    //         ,
-    //     ) = IEvents(eventContract).getEventDetails(eventId);
-    //     require(msg.sender == eventOrganiser ,"TicketMaster: Invalid Address");
-    //     //address tokenAddress = buyTicketTokenAddress[eventId][mintedToken];
-    //     require(ticketFeesBalance[eventTokenId] > 0, "TicketMaster:  Funds already transferred");
-    //     if(tokenAddress == address(0)) {
-    //         eventOrganiser.transfer(ticketFeesBalance[eventId]);
-    //     }
-    //     else {
-    //         IERC20(tokenAddress).transfer(eventOrganiser, ticketFeesBalance[eventId]);
-    //     }
-    //     ticketFeesBalance[eventId] = 0;
-    // }
+    function claimTicketFees(uint256 eventTokenId) external {
+        require(
+            IEvents(eventContract)._exists(eventId),
+            "TicketMaster: TokenId does not exist"
+        );
+        require(
+            IEvents(eventContract).isEventCanceled(eventId) ==
+                false,
+            "TicketMaster: Event is canceled"
+        );
+        (
+            ,
+            ,
+            address payable eventOrganiser,
+            ,
+            ,
+        ) = IEvents(eventContract).getEventDetails(eventId);
+        require(msg.sender == eventOrganiser ,"TicketMaster: Invalid Address");
+        //address tokenAddress = buyTicketTokenAddress[eventId][mintedToken];
+        require(ticketFeesBalance[eventTokenId] > 0, "TicketMaster:  Funds already transferred");
+        if(tokenAddress == address(0)) {
+            eventOrganiser.transfer(ticketFeesBalance[eventId]);
+        }
+        else {
+            IERC20(tokenAddress).transfer(eventOrganiser, ticketFeesBalance[eventId]);
+        }
+        ticketFeesBalance[eventId] = 0;
+    }
 
     ///@notice Users can join events
     ///@dev Public function
