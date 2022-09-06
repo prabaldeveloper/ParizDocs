@@ -24,3 +24,19 @@ Conversion Contract = "0x7E37935D71853f6094aff6aD691Eab5CBbD8cf6C"
 TicketMaster Contract =  "0xf3626dFfdccD519FF882c31261114Be2c53E8DF1"
 ManageEvent Contract = "0x9A3Fc33F11340369a77a3338f0FC15408871755B"
 Treasury Contract = "0x63DD48e1F95432bCc7e6c2e0568940a2f2c16c4A"
+
+06/09/2022 FOR UI
+Venue Contract = "0xb63E63e8FbA2Ab8cde4AC85bE137565A584c9BC9"
+Event Contract = "0x1835704Db3d8F9c403eaF1460560e1D15274434f"
+Conversion Contract = "0x7E37935D71853f6094aff6aD691Eab5CBbD8cf6C"
+TicketMaster Contract =  "0xe9c34D34b91c3fBBDCbB3AcB1f1169D4Ab049EB8"
+ManageEventContract = "0x3D890215980FB7f3016E23dE9e58880A05Df59f4"
+Treasury Contract = "0x63DD48e1F95432bCc7e6c2e0568940a2f2c16c4A"
+
+06/09/2022 FOR BACKEND
+Venue Contract = "0xb63E63e8FbA2Ab8cde4AC85bE137565A584c9BC9"
+Event Contract = ""
+Conversion Contract = "0x7E37935D71853f6094aff6aD691Eab5CBbD8cf6C"
+TicketMaster Contract =  ""
+ManageEventContract = ""
+Treasury Contract = "0x63DD48e1F95432bCc7e6c2e0568940a2f2c16c4A"

@@ -4,7 +4,7 @@ async function main() {
     console.log("Accounts", accounts[0]);
     const MATIC = "0x0000000000000000000000000000000000000000";
     //mumbai
-    const eventAddress = "0xE8AA6436266029f3dF74bdcF6C13Ef921a997345";
+    const eventAddress = "0x1835704Db3d8F9c403eaF1460560e1D15274434f";
 
     // local
     // const venueAddress = "0xBC05Cf0e8248C1eD6102479294440f0f7cd96742";
@@ -25,7 +25,7 @@ async function main() {
     await new Promise(res => setTimeout(res, 1000));
     console.log(await manageEventContract.getEventContract());
 
-    await manageEventContract.deleteAgenda(1,1)
+    // await manageEventContract.deleteAgenda(1,1)
 
     // const eventContract = await ethers.getContractFactory("EventsV1");
     // const eventProxy = await eventContract.attach(eventAddress);

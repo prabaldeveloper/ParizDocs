@@ -329,6 +329,7 @@ contract EventsV1 is EventMetadata {
             isVenueAvailable(tokenId, venueTokenId, time[0], time[1], 1),
             "Events: Venue is not available"
         );
+        if(time[0] == getInfo[tokenId].startTime && time[1] == getInfo[tokenId].endTime)
         if(getInfo[tokenId].payNow == true) {
             uint256 feesPaid = balance[tokenId];
             (uint256 estimatedCost, uint256 _platformFees, ) = calculateRent(
