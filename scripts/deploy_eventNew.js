@@ -25,7 +25,7 @@ async function main() {
     await new Promise(res => setTimeout(res, 1000));
 
     const TicketMaster = await hre.ethers.getContractFactory("TicketMaster");
-    const ticketMaster = await TicketMaster.deploy();
+    const ticketMaster = await upgrades.deployProxy(TicketMaster, { initializer: 'initialize'})
     await new Promise(res => setTimeout(res, 1000));
     await ticketMaster.deployed();
     console.log("ticketMaster contract", ticketMaster.address);
@@ -75,14 +75,14 @@ async function main() {
     await new Promise(res => setTimeout(res, 1000));
     await ticketMaster.updateEventContract(eventProxy.address);
 
-    // const Token = await ethers.getContractFactory("Token");
-    // const TokenProxy = await Token.attach(Trace);
+    const Token = await ethers.getContractFactory("Token");
+    const TokenProxy = await Token.attach(Trace);
 
     const blockNumBefore = await ethers.provider.getBlockNumber();
     const blockBefore = await ethers.provider.getBlock(blockNumBefore);
     const thirtyDays = 1 * 24 * 60 * 60; // 1 days
     const startTime = blockBefore.timestamp + 120;
-    const endTime = startTime + 120;
+    const endTime = startTime + thirtyDays;
 
     console.log("time", startTime, endTime);
 
@@ -92,12 +92,12 @@ async function main() {
     // fee = fee.toString();
     console.log("fee test", fee[0], fee[1]);
 
-    // await TokenProxy.approve(eventProxy.address, fee[0])
+    await TokenProxy.approve(eventProxy.address, fee[0])
 
-    // await new Promise(res => setTimeout(res, 1000));
-    // await eventProxy.add(["Event", "Test Category", "Test Event"], [startTime, endTime],
-    //     "QmQh36CsceXZoqS7v9YQLUyxXdRmWd8YWTBUz7WCXsiVty", 1, fee[0], 1000000, true, false);//tokenId = 1
-    // console.log("done 1");
+    await new Promise(res => setTimeout(res, 1000));
+    await eventProxy.add(["Event", "Test Category", "Test Event"], [startTime, endTime],
+        "QmQh36CsceXZoqS7v9YQLUyxXdRmWd8YWTBUz7WCXsiVty", 1, fee[0], 1000000, true, false);//tokenId = 1
+    console.log("done 1");
 
     // await eventProxy.updateTime(1, [startTime, endTime-100],
        

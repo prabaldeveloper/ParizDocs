@@ -89,6 +89,21 @@
       "address": "0x183AAd505922E810F95b042a99D897eCF991357d",
       "txHash": "0x0d573da2a0143e8b719657946ddd73be1b22a0e8948128c28e682a950b2d0bed",
       "kind": "transparent"
+    },
+    {
+      "address": "0x98afFca2d7344c7ef69110D509104a336507464A",
+      "txHash": "0x3454bd14e3ed55226bf3282a4c9da9703b0a755fb74f08d5e1939076d2819e4f",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x17D943A580210bDC1fed0Cf6ABD36901B35e4Af1",
+      "txHash": "0xf64e008e5c3c243ffa2ce614f24d097cb2f6d02bcfdefe5122ef6349b79a893b",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x44d5F0F0D7b1144Abee2C32c8E3aff0F63fDDfC3",
+      "txHash": "0x049e55185cbcbf99878af856d3daa40584d35ca427b3160ae3065b2ba7c0df1c",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -2647,6 +2662,183 @@
                 "label": "initiateStatus",
                 "type": "t_uint8",
                 "offset": 0,
+                "slot": "6"
+              }
+            ],
+            "numberOfBytes": "224"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "6ba2abcae499224d6db1f56cc55e53bdfb380dae1e6eb8f6795cb82d711a6eff": {
+      "address": "0xb7f91f217748e7c9451d20a10e7F6563B31d9363",
+      "txHash": "0x30dd5fffd868079a5b0cd07c3beeca18703d99502b2fdb1cc7b67710c09e3fab",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "Ownable",
+            "src": "contracts\\access\\Ownable.sol:22"
+          },
+          {
+            "label": "getAgendaInfo",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_mapping(t_uint256,t_array(t_struct(agendaDetails)6622_storage)dyn_storage)",
+            "contract": "ManageEvent",
+            "src": "contracts\\manageEvent.sol:27"
+          },
+          {
+            "label": "noOfAgendas",
+            "offset": 0,
+            "slot": "53",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "ManageEvent",
+            "src": "contracts\\manageEvent.sol:30"
+          },
+          {
+            "label": "agendaInEvents",
+            "offset": 0,
+            "slot": "54",
+            "type": "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)",
+            "contract": "ManageEvent",
+            "src": "contracts\\manageEvent.sol:38"
+          },
+          {
+            "label": "eventContract",
+            "offset": 0,
+            "slot": "55",
+            "type": "t_address",
+            "contract": "ManageEvent",
+            "src": "contracts\\manageEvent.sol:41"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_string_storage)dyn_storage": {
+            "label": "string[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_struct(agendaDetails)6622_storage)dyn_storage": {
+            "label": "struct ManageEvent.agendaDetails[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_uint256,t_array(t_struct(agendaDetails)6622_storage)dyn_storage)": {
+            "label": "mapping(uint256 => struct ManageEvent.agendaDetails[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(uint256 => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(agendaDetails)6622_storage": {
+            "label": "struct ManageEvent.agendaDetails",
+            "members": [
+              {
+                "label": "agendaId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "agendaStartTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "agendaEndTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "agendaType",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "guestName",
+                "type": "t_array(t_string_storage)dyn_storage",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "guestAddress",
+                "type": "t_array(t_string_storage)dyn_storage",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "initiateStatus",
+                "type": "t_uint8",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "isAgendaDeleted",
+                "type": "t_bool",
+                "offset": 1,
                 "slot": "6"
               }
             ],

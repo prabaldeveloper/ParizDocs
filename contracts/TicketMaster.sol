@@ -70,6 +70,9 @@ contract TicketMaster is Ticket {
 
     event RefundClaimed(uint256 indexed eventTokenId, uint256 ticketId);
 
+    function initialize() public initializer {
+    }
+
     modifier onlyAdmin() {
         require(
             adminAddress[msg.sender] == true,
@@ -151,7 +154,7 @@ contract TicketMaster is Ticket {
             )
         }
         ticketNFTAddress[eventId] = ticketNFTContract;
-        Ticket(ticketNFTContract).initialize(
+        Ticket(ticketNFTContract).deployTicketNFTInternal(
             name,
             "EventTicket",
             totalSupply,
