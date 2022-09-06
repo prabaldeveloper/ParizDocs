@@ -1024,6 +1024,106 @@
       "address": "0x50D7D8cdf8C51eA1316D6754279d89fce6416A87",
       "txHash": "0xcb1b081bc82cc35692252682a2dbf305531a61cb2606a78ab176df84fadfd351",
       "kind": "transparent"
+    },
+    {
+      "address": "0x75fD31E50ae73dFA97F4c39BACCc2CCac48D8c7F",
+      "txHash": "0x8622855d9932bb3673c6fa29024040fc200612f155e6f0857d482c101cae7ccd",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xb3599C60D449ceE9a0F64B0FFa1B36A53a6346E6",
+      "txHash": "0xbcd7478f3db6a747832b28eea00e5d4a6104c90a53c94a3f8b44ecfee30ecc68",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x2E88565fA4A126Fcd5a219fBE9Fdb6366898862E",
+      "txHash": "0xac7129e863d2dba5d94457600a1702c5cccdf28fdb3a7891f139df044c81c6a5",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x055fEf5962d59755612F8984dab11ff6dbD136E1",
+      "txHash": "0xd7d3bd58b4d32e672e07127c89791ba2cde89d85272da6ce311b32f65cf72c4b",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x1C70fe2C162B1060f369d8a9a3C120F48d35880a",
+      "txHash": "0x97b5c09a3fbced171bf5ff6bd6a8b9a60c216d2dd880f5d260aa2d69f0259162",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x3FC5D264a17078005a85388A18DfFD909D934F7b",
+      "txHash": "0x0e3a140171b37f3773cb25e5f2f0a316772bfdc5d2804192416f3c910ec81868",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x50322E70596572F384C8F3D9d4Ed8C1E568298EB",
+      "txHash": "0xcf84afe5ab29219add415fa259fafccadf7a57108ca8b3384e3aaeea271a776c",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x8508B74dB7F917fFf2Cb7F26241d6f858d0Aa314",
+      "txHash": "0x2e784dc6f8dde43fae57e78c04dc528c00d8a4c35469c82d5d24fb2713ab883b",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x7BcCb4b790847347dEAC2FDc2E294fBaDeC190bD",
+      "txHash": "0xd0dd104dc5951c2d5738192f1bfb8dd53b72878bcfcc6876cd0d58d507e224e8",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xa8aAE1cDc978A7eE53293FE620cf0E9528451281",
+      "txHash": "0xa05838d475343c5bcfaff11de8e85784ebd49ab34c60b186fd6168da2d40b7fc",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x3dBbd37c0B36a7dDb049CDE79e726003995B35D1",
+      "txHash": "0x8bef188cedb91cbbf89806bf206bb5efab96b6a9eb132e68fdceea94f51d767a",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x074D28f71699984D9124522c03d54F64f48bcf96",
+      "txHash": "0x9373f6d3c9f1f3c37d6db25fd0f9c861fb7b96b227f56921dd16e102fbe9b4ae",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xf1f3BBa0676032b8C3d502B653acA9D7d74fB4c8",
+      "txHash": "0x934863196bc54f5a30f6b24aa4e1b0a8e684e08540041756e06b78614bc3d6ee",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xF2eC097D0dB2EEcc2Df22240c131E669918A23F3",
+      "txHash": "0x226eeeacdf9bd6a2f2adc712ad98142e81680df42353705438a85dbc6332b8e6",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xc52fF996765DfcdB759485693674dd90de42c708",
+      "txHash": "0x767c075e6b2213dbdef1aa8ad1b84caf69ece8a9138020283ee58f56c378a4aa",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xDF4387F52DCb8814466DAf2aaf3ABdb6898d7eD3",
+      "txHash": "0x9128e49ab6020b1d38be9a0b0143e6eb3f4e1eb7ea752a46452a8f17aafb5be9",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x8956ee3fC4B43381C9885e6c5078fbDF37614ceC",
+      "txHash": "0xbbaadefde5a2e090cb73dd3e845a6cdf811aecb7a8f896ba81e516e2e500b3d3",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xa3Ffc503FD5927C02f1cC1F5C1701F7453CAeDb0",
+      "txHash": "0xeae41e2704596cb2ac6ab593b95ef558304831b6ce1d208e99571e5a26f0aacf",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x51d07095D0acA5F1724D16e50b47e179ca296E15",
+      "txHash": "0xfadb72b79680e883f1ab4eb05ce08cb92104fa0702555c33a64f282758e36380",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x8d348b43CE19D8afa33026cA86a38928db043C40",
+      "txHash": "0x2b3acf3a0d43b9f02216d8c6a51974be97e4cc1f8885a85f98b6ec3a3b6c9fec",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -13708,6 +13808,183 @@
           "t_string_storage": {
             "label": "string",
             "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "7a7ec93f16c18cbfede5c444805685c9db92810bab4d92c91da8613cf042b28f": {
+      "address": "0xb82292D8630185eb3dD3aE0541CF653d8D8499FD",
+      "txHash": "0xa688d4c854701afd0b686e3db6aa4eea47f499c971246cefd7beb498786f053e",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "Ownable",
+            "src": "contracts\\access\\Ownable.sol:22"
+          },
+          {
+            "label": "getAgendaInfo",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_mapping(t_uint256,t_array(t_struct(agendaDetails)6644_storage)dyn_storage)",
+            "contract": "ManageEvent",
+            "src": "contracts\\manageEvent.sol:27"
+          },
+          {
+            "label": "noOfAgendas",
+            "offset": 0,
+            "slot": "53",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "ManageEvent",
+            "src": "contracts\\manageEvent.sol:30"
+          },
+          {
+            "label": "agendaInEvents",
+            "offset": 0,
+            "slot": "54",
+            "type": "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)",
+            "contract": "ManageEvent",
+            "src": "contracts\\manageEvent.sol:38"
+          },
+          {
+            "label": "eventContract",
+            "offset": 0,
+            "slot": "55",
+            "type": "t_address",
+            "contract": "ManageEvent",
+            "src": "contracts\\manageEvent.sol:41"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_string_storage)dyn_storage": {
+            "label": "string[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_struct(agendaDetails)6644_storage)dyn_storage": {
+            "label": "struct ManageEvent.agendaDetails[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_uint256,t_array(t_struct(agendaDetails)6644_storage)dyn_storage)": {
+            "label": "mapping(uint256 => struct ManageEvent.agendaDetails[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(uint256 => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(agendaDetails)6644_storage": {
+            "label": "struct ManageEvent.agendaDetails",
+            "members": [
+              {
+                "label": "agendaId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "agendaStartTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "agendaEndTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "agendaType",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "guestName",
+                "type": "t_array(t_string_storage)dyn_storage",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "guestAddress",
+                "type": "t_array(t_string_storage)dyn_storage",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "initiateStatus",
+                "type": "t_uint8",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "isAgendaDeleted",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "6"
+              }
+            ],
+            "numberOfBytes": "224"
           },
           "t_uint256": {
             "label": "uint256",
