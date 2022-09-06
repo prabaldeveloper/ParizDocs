@@ -231,28 +231,28 @@ contract TicketMaster is Ticket {
         address conversionAddress
     ) internal {
         // convert base token to fee token
-        uint256 convertedFeeAmount = IConversion(conversionAddress).convertFee(
-            tokenAddress,
-            feeAmount
-        );
+        // uint256 convertedFeeAmount = IConversion(conversionAddress).convertFee(
+        //     tokenAddress,
+        //     feeAmount
+        // );
         // convert base token to fee token
         uint256 convertedActualPrice = IConversion(conversionAddress)
             .convertFee(tokenAddress, actualPrice);
         if (tokenAddress != address(0)) {
-            checkDeviation(convertedFeeAmount, convertedActualPrice);
-            uint256 ticketCommissionFee = (convertedFeeAmount *
+            checkDeviation(feeAmount, convertedActualPrice);
+            uint256 ticketCommissionFee = (feeAmount *
                 ticketCommissionPercent) / 100;
             IERC20(tokenAddress).transferFrom(
                 msg.sender,
                 address(this),
-                convertedFeeAmount - ticketCommissionFee
+                feeAmount - ticketCommissionFee
             );
             IERC20(tokenAddress).transferFrom(
                 msg.sender,
                 IEvents(eventContract).getTreasuryContract(),
                 ticketCommissionFee
             );
-            ticketFeesBalance[eventId][tokenAddress] += (convertedFeeAmount - ticketCommissionFee);
+            ticketFeesBalance[eventId][tokenAddress] += (feeAmount - ticketCommissionFee);
         } else {
             checkDeviation(msg.value, convertedActualPrice);
             uint256 ticketCommissionFee = (msg.value *
@@ -272,34 +272,34 @@ contract TicketMaster is Ticket {
         } 
     }
 
-    function claimTicketFees(uint256 eventTokenId) external {
-        require(
-            IEvents(eventContract)._exists(eventId),
-            "TicketMaster: TokenId does not exist"
-        );
-        require(
-            IEvents(eventContract).isEventCanceled(eventId) ==
-                false,
-            "TicketMaster: Event is canceled"
-        );
-        (
-            ,
-            ,
-            address payable eventOrganiser,
-            ,
-            ,
-        ) = IEvents(eventContract).getEventDetails(eventId);
-        require(msg.sender == eventOrganiser ,"TicketMaster: Invalid Address");
-        //address tokenAddress = buyTicketTokenAddress[eventId][mintedToken];
-        require(ticketFeesBalance[eventTokenId] > 0, "TicketMaster:  Funds already transferred");
-        if(tokenAddress == address(0)) {
-            eventOrganiser.transfer(ticketFeesBalance[eventId]);
-        }
-        else {
-            IERC20(tokenAddress).transfer(eventOrganiser, ticketFeesBalance[eventId]);
-        }
-        ticketFeesBalance[eventId] = 0;
-    }
+    // function claimTicketFees(uint256 eventTokenId) external {
+    //     require(
+    //         IEvents(eventContract)._exists(eventId),
+    //         "TicketMaster: TokenId does not exist"
+    //     );
+    //     require(
+    //         IEvents(eventContract).isEventCanceled(eventId) ==
+    //             false,
+    //         "TicketMaster: Event is canceled"
+    //     );
+    //     (
+    //         ,
+    //         ,
+    //         address payable eventOrganiser,
+    //         ,
+    //         ,
+    //     ) = IEvents(eventContract).getEventDetails(eventId);
+    //     require(msg.sender == eventOrganiser ,"TicketMaster: Invalid Address");
+    //     //address tokenAddress = buyTicketTokenAddress[eventId][mintedToken];
+    //     require(ticketFeesBalance[eventTokenId] > 0, "TicketMaster:  Funds already transferred");
+    //     if(tokenAddress == address(0)) {
+    //         eventOrganiser.transfer(ticketFeesBalance[eventId]);
+    //     }
+    //     else {
+    //         IERC20(tokenAddress).transfer(eventOrganiser, ticketFeesBalance[eventId]);
+    //     }
+    //     ticketFeesBalance[eventId] = 0;
+    // }
 
     ///@notice Users can join events
     ///@dev Public function

@@ -2,8 +2,6 @@
 
 pragma solidity ^0.8.0;
 
-//import IERC721 file
-
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./interface/IVenue.sol";
 import "./utils/EventMetadata.sol";
@@ -316,7 +314,7 @@ contract EventsV1 is EventMetadata {
         emit DescriptionUpdated(tokenId, description);
     }
 
-    function updateTime(uint256 tokenId, uint256[2] memory time) external payable{
+    function updateTime(uint256 tokenId, uint256[2] memory time) external {
         require(_exists(tokenId), "Events: TokenId does not exist");
         require(
             msg.sender == getInfo[tokenId].eventOrganiser,
@@ -382,7 +380,7 @@ contract EventsV1 is EventMetadata {
         uint256 ticketPrice,
         bool isEventPaid,
         bool payNow
-    ) external payable onlyWhitelistedUsers {
+    ) external onlyWhitelistedUsers {
         uint256 _tokenId = _mintInternal(tokenCID);
         require(
             IVenue(getVenueContract())._exists(venueTokenId),
@@ -720,7 +718,7 @@ contract EventsV1 is EventMetadata {
     ///@notice Start the event
     ///@param eventTokenId event Token Id
     ///@param venueFeeAmount fee of the venue
-    function startEvent(uint256 eventTokenId, uint256 venueFeeAmount)
+    function payEvent(uint256 eventTokenId, uint256 venueFeeAmount)
         external
         payable
     {
@@ -779,6 +777,26 @@ contract EventsV1 is EventMetadata {
     
         eventStartedStatus[eventTokenId] = true;
         emit EventStarted(eventTokenId, payNow);
+    }
+
+    function startEvent(uint256 eventTokenId) external {
+        require(_exists(eventTokenId), "Events: TokenId does not exist");
+        (
+            uint256 startTime,
+            uint256 endTime,
+            address eventOrganiser,
+            bool payNow,
+            ,
+
+        ) = getEventDetails(eventTokenId);
+        require(
+            block.timestamp >= startTime && endTime > block.timestamp,
+            "Events: Event not live"
+        );
+        require(msg.sender == eventOrganiser, "Events: Invalid Address");
+        require(payNow == true, "Events: Fees not paid");
+        emit EventStarted(eventTokenId, payNow);
+
     }
 
     ///@notice Cancel the event
