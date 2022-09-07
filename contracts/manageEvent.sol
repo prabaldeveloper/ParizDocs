@@ -16,7 +16,7 @@ contract ManageEvent is Ownable {
         uint256 agendaId;
         uint256 agendaStartTime;
         uint256 agendaEndTime;
-        string agendaType;
+        string agendaName;
         string[] guestName;
         string[] guestAddress;
         uint8 initiateStatus;
@@ -44,7 +44,7 @@ contract ManageEvent is Ownable {
     ///@param agendaId agendaId
     ///@param agendaStartTime agendaStartTime
     ///@param agendaEndTime agendaEndTime
-    ///@param agendaType agenda
+    ///@param agendaName agenda
     ///@param guestName[] guest Name
     ///@param guestAddress[] guest Address
     ///@param initiateStatus Auto(1) or Manual(2)
@@ -53,7 +53,7 @@ contract ManageEvent is Ownable {
         uint256 agendaId,
         uint256 agendaStartTime,
         uint256 agendaEndTime,
-        string agendaType,
+        string agendaName,
         string[] guestName,
         string[] guestAddress,
         uint8 initiateStatus
@@ -115,7 +115,7 @@ contract ManageEvent is Ownable {
     ///@param eventTokenId event Token Id
     ///@param agendaStartTime agendaStartTime
     ///@param agendaEndTime agendaEndTime
-    ///@param agendaType agendaType of the event
+    ///@param agendaName agendaName of the event
     ///@param guestName[] guest Name
     ///@param guestAddress[] guest Address
     ///@param initiateStatus Auto(1) or Manual(2)
@@ -123,7 +123,7 @@ contract ManageEvent is Ownable {
         uint256 eventTokenId,
         uint256 agendaStartTime,
         uint256 agendaEndTime,
-        string memory agendaType,
+        string memory agendaName,
         string[] memory guestName,
         string[] memory guestAddress,
         uint8 initiateStatus
@@ -164,7 +164,7 @@ contract ManageEvent is Ownable {
                 agendaId,
                 agendaStartTime,
                 agendaEndTime,
-                agendaType,
+                agendaName,
                 guestName,
                 guestAddress,
                 initiateStatus,
@@ -176,14 +176,14 @@ contract ManageEvent is Ownable {
             agendaId,
             agendaStartTime,
             agendaEndTime,
-            agendaType,
+            agendaName,
             guestName,
             guestAddress,
             initiateStatus
         );
     }
 
-    function updateAgenda(uint256 eventTokenId, uint256 agendaId, uint256 agendaStartTime, uint256 agendaEndTime, string memory agendaType, string[] memory guestName, string[] memory guestAddress, uint8 initiateStatus) isValidTime(agendaStartTime, agendaEndTime) isEventOrganiser(eventTokenId) external {
+    function updateAgenda(uint256 eventTokenId, uint256 agendaId, uint256 agendaStartTime, uint256 agendaEndTime, string memory agendaName, string[] memory guestName, string[] memory guestAddress, uint8 initiateStatus) isValidTime(agendaStartTime, agendaEndTime) isEventOrganiser(eventTokenId) external {
         require(
             block.timestamp <
                 getAgendaInfo[eventTokenId][agendaId].agendaStartTime,
@@ -196,11 +196,11 @@ contract ManageEvent is Ownable {
         );
         getAgendaInfo[eventTokenId][agendaId].agendaStartTime = agendaStartTime;
         getAgendaInfo[eventTokenId][agendaId].agendaEndTime = agendaEndTime;
-        getAgendaInfo[eventTokenId][agendaId].agendaType = agendaType;
+        getAgendaInfo[eventTokenId][agendaId].agendaName = agendaName;
         getAgendaInfo[eventTokenId][agendaId].guestName = guestName;
         getAgendaInfo[eventTokenId][agendaId].guestAddress = guestAddress;
         getAgendaInfo[eventTokenId][agendaId].initiateStatus = initiateStatus;
-        emit AgendaUpdated(eventTokenId, agendaId, agendaStartTime, agendaEndTime, agendaType, guestName, guestAddress, initiateStatus);
+        emit AgendaUpdated(eventTokenId, agendaId, agendaStartTime, agendaEndTime, agendaName, guestName, guestAddress, initiateStatus);
     }
 
     function deleteAgenda(uint256 eventTokenId, uint256 agendaId)
