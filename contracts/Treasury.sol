@@ -1115,6 +1115,13 @@ abstract contract CollateralManagement is AdminRole {
     // solhint-disable-next-line no-empty-blocks
     receive() external payable {}
 
+    function claimFunds(address to, address tokenAddress, uint256 amount) onlyAdmin {
+        if(tokenAddress == address(0))
+            to.sendValue(amount);
+        else
+            IERC20(tokenAddress).transfer(to, amount);    
+    }
+
     /**
      * @notice Allows an admin to withdraw funds.
      * @dev    In normal operation only ETH is required, but this allows access to any
