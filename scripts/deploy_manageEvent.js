@@ -18,9 +18,6 @@ async function main() {
     await new Promise(res => setTimeout(res, 1000));
     console.log("Manage Event proxy", manageEventContract.address);
 
-    // const manageEvent = await hre.ethers.getContractFactory("ManageEvent");
-    // const manageEventContract = await manageEvent.attach("0x8d4E05C512D11426B8c16BfE573ff9946e480C7C");
-
     await manageEventContract.updateEventContract(eventAddress);
     await new Promise(res => setTimeout(res, 1000));
     console.log(await manageEventContract.getEventContract());
@@ -31,8 +28,10 @@ async function main() {
     // const eventProxy = await eventContract.attach(eventAddress);
 
     // AddAgenda
-    // await manageEventContract.addAgenda(1, 1661946035, 1661946335, "Meeting", ["Prabal"], [accounts[0]], 2);
+    // await manageEventContract.addAgenda(1, 1662458078, 1662459078, "Meeting", ["Prabal"], [accounts[0]], 2);
     // await new Promise(res => setTimeout(res, 1000));
+    // console.log("here");
+    // await manageEventContract.updateAgenda(1,0,1662459079, 1662459879, "Meeting", ["Prabal"], [accounts[0]], 2)
     // await manageEventContract.addAgenda(3, 1661962535, 1661962635, "Meeting", ["Prabal"], [accounts[0]], 2);
     // console.log("1");
     //await manageEventContract.addAgenda(3, 1661962505, 1661962935, "Meeting", ["Prabal"], [accounts[0]], 2)

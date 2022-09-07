@@ -9,7 +9,6 @@ contract Ticket is TicketMetadata {
         __ERC721_init(_name, _symbol, _totalSupply);
         time = _time;
         eventId = _eventId;
-
     }
 
     function mint(address userAddress) public returns(uint256 tokenId) {

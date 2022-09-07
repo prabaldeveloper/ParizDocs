@@ -111,15 +111,16 @@ contract EventsV1 is EventMetadata {
         address ticketNFTAddress
     );
 
-    ///@param tokenId Event tokenId
-    ///@param description Event description
-    event DescriptionUpdated(uint256 indexed tokenId, string description);
+    // ///@param tokenId Event tokenId
+    // ///@param description Event description
+    // event DescriptionUpdated(uint256 indexed tokenId, string description);
 
     ///@param tokenId Event tokenId
     ///@param startTime Event startTime
     ///@param endTime Event endTime
-    event Timeupdated(
+    event EventUpdated(
         uint256 indexed tokenId,
+        string description,
         uint256 startTime,
         uint256 endTime
     );
@@ -192,8 +193,6 @@ contract EventsV1 is EventMetadata {
         );
         _;
     }
-
-    receive() external payable {}
 
     ///@notice Allows Admin to update deviation percentage
     ///@param _deviationPercentage deviationPercentage
@@ -292,29 +291,29 @@ contract EventsV1 is EventMetadata {
         emit TicketCommissionUpdated(ticketCommissionPercent);
     }
 
-    ///@notice Update event description
-    ///@dev Only event organiser can call
-    ///@dev - Check whether event is started or not
-    ///@dev - Update the event description
-    ///@param tokenId Event tokenId
-    ///@param description Event description
-    function updateDescription(uint256 tokenId, string memory description)
-        external
-    {
-        require(_exists(tokenId), "Events: TokenId does not exist");
-        require(
-            msg.sender == getInfo[tokenId].eventOrganiser,
-            "Events: Address is not the event organiser address"
-        );
-        require(
-            getInfo[tokenId].startTime > block.timestamp,
-            "Events: Event is started"
-        );
-        getInfo[tokenId].description = description;
-        emit DescriptionUpdated(tokenId, description);
-    }
+    // ///@notice Update event description
+    // ///@dev Only event organiser can call
+    // ///@dev - Check whether event is started or not
+    // ///@dev - Update the event description
+    // ///@param tokenId Event tokenId
+    // ///@param description Event description
+    // function updateDescription(uint256 tokenId, string memory description)
+    //     external
+    // {
+    //     require(_exists(tokenId), "Events: TokenId does not exist");
+    //     require(
+    //         msg.sender == getInfo[tokenId].eventOrganiser,
+    //         "Events: Address is not the event organiser address"
+    //     );
+    //     require(
+    //         getInfo[tokenId].startTime > block.timestamp,
+    //         "Events: Event is started"
+    //     );
+    //     getInfo[tokenId].description = description;
+    //     emit DescriptionUpdated(tokenId, description);
+    // }
 
-    function updateTime(uint256 tokenId, uint256[2] memory time) external {
+    function updateEvent(uint256 tokenId, string memory description, uint256[2] memory time) external {
         require(_exists(tokenId), "Events: TokenId does not exist");
         require(
             msg.sender == getInfo[tokenId].eventOrganiser,
@@ -329,32 +328,34 @@ contract EventsV1 is EventMetadata {
             isVenueAvailable(tokenId, venueTokenId, time[0], time[1], 1),
             "Events: Venue is not available"
         );
-        if(getInfo[tokenId].payNow == true) {
-            uint256 feesPaid = balance[tokenId];
-            (uint256 estimatedCost, uint256 _platformFees, ) = calculateRent(
-            venueTokenId,
-            time[0],
-            time[1]
-            );
-            address tokenAddress = IConversion(conversionContract).getBaseToken();
-            if(feesPaid > estimatedCost - _platformFees) {
-                IERC20(tokenAddress).transfer(getInfo[tokenId].eventOrganiser, feesPaid - estimatedCost - _platformFees);
-                balance[tokenId] -=  (feesPaid - estimatedCost - _platformFees);
-
-            }
-            else {
-                IERC20(tokenAddress).transferFrom(
-                getInfo[tokenId].eventOrganiser,
-                address(this),
-                estimatedCost - _platformFees - feesPaid
+        if(time[0] != getInfo[tokenId].startTime && time[1] != getInfo[tokenId].endTime) {
+            if(getInfo[tokenId].payNow == true) {
+                uint256 feesPaid = balance[tokenId];
+                (uint256 estimatedCost, uint256 _platformFees, ) = calculateRent(
+                venueTokenId,
+                time[0],
+                time[1]
                 );
-                balance[tokenId] += estimatedCost - _platformFees - feesPaid;
+                address tokenAddress = IConversion(conversionContract).getBaseToken();
+                if(feesPaid > estimatedCost - _platformFees) {
+                    IERC20(tokenAddress).transfer(getInfo[tokenId].eventOrganiser, feesPaid - estimatedCost - _platformFees);
+                    balance[tokenId] -=  (feesPaid - estimatedCost - _platformFees);
+
+                }
+                else {
+                    IERC20(tokenAddress).transferFrom(
+                    getInfo[tokenId].eventOrganiser,
+                    address(this),
+                    estimatedCost - _platformFees - feesPaid
+                    );
+                    balance[tokenId] += estimatedCost - _platformFees - feesPaid;
+                }
             }
+            getInfo[tokenId].startTime = time[0];
+            getInfo[tokenId].endTime = time[1];
         }
-        
-        getInfo[tokenId].startTime = time[0];
-        getInfo[tokenId].endTime = time[1];
-        emit Timeupdated(tokenId, time[0], time[1]);
+        getInfo[tokenId].description = description;
+        emit EventUpdated(tokenId, description, time[0], time[1]);
     }
 
     ///@notice Creates Event
@@ -720,7 +721,6 @@ contract EventsV1 is EventMetadata {
     ///@param venueFeeAmount fee of the venue
     function payEvent(uint256 eventTokenId, uint256 venueFeeAmount)
         external
-        payable
     {
         require(_exists(eventTokenId), "Events: TokenId does not exist");
         (
