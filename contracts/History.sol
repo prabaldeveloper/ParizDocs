@@ -9,6 +9,7 @@ contract History {
         string data
     );
     mapping(uint256 => string) public tokenIdToData;
+    mapping(address => string) public userData;
 
     function addData(
         address userAddress,
@@ -16,6 +17,7 @@ contract History {
         string memory data
     ) public {
         tokenIdToData[eventTokenId] = data;
+        userData[userAddress] = data;
         emit DataAdded(userAddress, eventTokenId, data);
     }
 }

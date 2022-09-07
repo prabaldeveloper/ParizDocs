@@ -54,9 +54,8 @@ async function main() {
 
     await new Promise(res => setTimeout(res, 1000));
     await eventProxy.whitelistTokenAddress(USDC, true);
-    // console.log("Sdfg");
 
-    // await new Promise(res => setTimeout(res, 1000));
+    await new Promise(res => setTimeout(res, 1000));
     await eventProxy.updateVenueContract(venueAddress);
 
     await new Promise(res => setTimeout(res, 1000));
