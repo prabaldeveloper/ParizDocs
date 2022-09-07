@@ -6,11 +6,11 @@ async function main() {
     const Trace = "0xD028C2a5156069c7eFaeA40acCA7d9Da6f219A5f"
 
     const eventContract = await hre.ethers.getContractFactory("EventsV1");
-    const eventProxy = await eventContract.attach("0xCb357dafcFaa13512cCD2F00f94797372f565172");
+    const eventProxy = await eventContract.attach("0xCA985C3b8518Dbcd1D0821F140650bf8E1eD6A47");
 
     // await eventProxy.payEvent(1, "129600000000000000")
 
-    await ticketMaster.buyTicket(1, MATIC, "6686059233345499")
+    console.log(await eventProxy.getPlatformFeePercent());
 
     // await eventProxy.updateWhitelist(["0xE80CBA78510db3D9890aE826c95C79ac9306b741","0x6A2Dc29D33A433478A5aB8E9E16285C2ba46EdC4","0x1e1f81176A625e5a4a097704e9D5C3747Ef48D18"],[true,true,true])
 

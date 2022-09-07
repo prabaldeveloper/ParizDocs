@@ -1115,11 +1115,18 @@ abstract contract CollateralManagement is AdminRole {
     // solhint-disable-next-line no-empty-blocks
     receive() external payable {}
 
-    function claimFunds(address to, address tokenAddress, uint256 amount) onlyAdmin {
-        if(tokenAddress == address(0))
-            to.sendValue(amount);
-        else
-            IERC20(tokenAddress).transfer(to, amount);    
+    /**
+     * @param tokenAddress ERC-20 token contract address
+     * @param to        Address to receive the withdrawn funds
+     * @param amount    Amount to withdrawal or 0 to withdraw all available funds
+     */
+    function claimFunds(
+        address to,
+        address tokenAddress,
+        uint256 amount
+    ) onlyAdmin {
+        if (tokenAddress == address(0)) payable(to).sendValue(amount);
+        else IERC20(tokenAddress).transfer(to, amount);
     }
 
     /**
@@ -1158,18 +1165,6 @@ abstract contract CollateralManagement is AdminRole {
             amount = IERC20(tokenAddress).balanceOf(address(this));
         }
         IERC20(tokenAddress).transfer(to, amount);
-    }
-
-    function claimFunds(address to, address tokenAddress, uint256 amount) public onlyAdmin {
-
-        if(tokenAddress == address(0))
-
-            to.sendValue(amount);
-
-        else
-
-            IERC20(tokenAddress).transfer(to, amount);    
-
     }
 
     /**

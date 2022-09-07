@@ -71,6 +71,11 @@ async function main() {
     await eventProxy.updateticketMasterContract(ticketMaster.address);
 
     await new Promise(res => setTimeout(res, 1000));
+    await eventProxy.updatePlatformFee(5);
+
+    await new Promise(res => setTimeout(res, 1000));
+
+    await new Promise(res => setTimeout(res, 1000));
     await ticketMaster.updateEventContract(eventProxy.address);
 
     const manageEvent = await ethers.getContractFactory("ManageEvent");
