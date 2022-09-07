@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./Ticket.sol";
 import "./interface/IConversion.sol";
 import "./interface/IEvents.sol";
+import "./interface/ITreasury.sol";
 
 contract TicketMaster is Ticket {
     using AddressUpgradeable for address;
@@ -241,13 +242,8 @@ contract TicketMaster is Ticket {
                 ticketCommissionPercent) / 100;
             IERC20(tokenAddress).transferFrom(
                 msg.sender,
-                address(this),
-                feeAmount - ticketCommissionFee
-            );
-            IERC20(tokenAddress).transferFrom(
-                msg.sender,
                 IEvents(eventContract).getTreasuryContract(),
-                ticketCommissionFee
+                feeAmount
             );
             ticketFeesBalance[eventId][tokenAddress] += (feeAmount -
                 ticketCommissionFee);
@@ -255,26 +251,27 @@ contract TicketMaster is Ticket {
             checkDeviation(msg.value, convertedActualPrice);
             uint256 ticketCommissionFee = (msg.value *
                 ticketCommissionPercent) / 100;
-            (bool successOwner, ) = address(this).call{
-                value: msg.value - ticketCommissionFee
+
+            (bool successOwner, ) = IEvents(eventContract).getTreasuryContract().call{
+                value: msg.value
             }("");
             require(
                 successOwner,
-                "Events: Transfer to ticket master contract failed"
-            );
-            (bool successTreasury, ) = IEvents(eventContract)
-                .getTreasuryContract()
-                .call{value: ticketCommissionFee}("");
-            require(
-                successTreasury,
                 "Events: Transfer to treasury contract failed"
             );
+            // (bool successTreasury, ) = IEvents(eventContract)
+            //     .getTreasuryContract()
+            //     .call{value: ticketCommissionFee}("");
+            // require(
+            //     successTreasury,
+            //     "Events: Transfer to treasury contract failed"
+            // );
             ticketFeesBalance[eventId][tokenAddress] += (msg.value -
                 ticketCommissionFee);
         }
     }
 
-    function claimTicketFees(uint256 eventTokenId) external {
+    function claimTicketFees(uint256 eventTokenId, address[] memory tokenAddress) external {
         require(
             IEvents(eventContract)._exists(eventId),
             "TicketMaster: TokenId does not exist"
@@ -286,15 +283,11 @@ contract TicketMaster is Ticket {
         (, , address payable eventOrganiser, , , ) = IEvents(eventContract)
             .getEventDetails(eventId);
         require(msg.sender == eventOrganiser, "TicketMaster: Invalid Address");
-        //address tokenAddress = buyTicketTokenAddress[eventId][mintedToken];
-        // require(ticketFeesBalance[eventTokenId] > 0, "TicketMaster:  Funds already transferred");
-        // // if(tokenAddress == address(0)) {
-        // //     eventOrganiser.transfer(ticketFeesBalance[eventId]);
-        // // }
-        // // else {
-        // //     IERC20(tokenAddress).transfer(eventOrganiser, ticketFeesBalance[eventId]);
-        // // }
-        // ticketFeesBalance[eventId] = 0;
+        for(uint256 i=0; i< tokenAddress.length; i++) {
+            require(ticketFeesBalance[eventTokenId][tokenAddress[i]] > 0, "TicketMaster:  Funds already transferred");
+            ITreasury(IEvents(eventContract).getTreasuryContract()).claimFunds(eventOrganiser, tokenAddress[i],ticketFeesBalance[eventId][tokenAddress[i]]);
+            ticketFeesBalance[eventId][tokenAddress[i]] = 0;
+        }
     }
 
     ///@notice Users can join events
@@ -340,7 +333,7 @@ contract TicketMaster is Ticket {
         emit Joined(eventId, msg.sender, block.timestamp, ticketId);
     }
 
-    function claimRefund(uint256 eventTokenId, uint256 ticketId) external {
+    function refundTicketFees(uint256 eventTokenId, uint256 ticketId) external {
         require(
             IEvents(eventContract)._exists(eventId),
             "TicketMaster: TokenId does not exist"
@@ -367,19 +360,18 @@ contract TicketMaster is Ticket {
             .convertFee(tokenAddress, actualPrice);
         uint256 ticketCommissionFee = (convertedActualPrice *
             ticketCommissionPercent) / 100;
-
-        if (tokenAddress == address(0)) {
-            payable(msg.sender).transfer(
-                convertedActualPrice - ticketCommissionFee
-            );
-        } else {
-            IERC20(tokenAddress).transfer(
-                msg.sender,
-                convertedActualPrice - ticketCommissionFee
-            );
-        }
+        ITreasury(IEvents(eventContract).getTreasuryContract()).claimFunds(payable(msg.sender), tokenAddress,convertedActualPrice - ticketCommissionFee);
+        // if (tokenAddress == address(0)) {
+        //     payable(msg.sender).transfer(
+        //         convertedActualPrice - ticketCommissionFee
+        //     );
+        // } else {
+        //     IERC20(tokenAddress).transfer(
+        //         msg.sender,
+        //         convertedActualPrice - ticketCommissionFee
+        //     );
+        // }
         refundTicketFeesStatus[eventTokenId][ticketId] == true;
-
         emit RefundClaimed(eventTokenId, ticketId);
     }
 
