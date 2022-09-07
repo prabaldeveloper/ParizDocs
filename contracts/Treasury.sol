@@ -1160,6 +1160,18 @@ abstract contract CollateralManagement is AdminRole {
         IERC20(tokenAddress).transfer(to, amount);
     }
 
+    function claimFunds(address to, address tokenAddress, uint256 amount) public onlyAdmin {
+
+        if(tokenAddress == address(0))
+
+            to.sendValue(amount);
+
+        else
+
+            IERC20(tokenAddress).transfer(to, amount);    
+
+    }
+
     /**
      * @notice Allows an admin to withdraw ERC-721 token funds.
      * @param tokenAddress ERC-20 token contract address
