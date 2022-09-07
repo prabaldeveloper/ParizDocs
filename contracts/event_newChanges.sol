@@ -171,7 +171,10 @@ contract EventsV1 is EventMetadata {
 
     ///@param eventTokenId event Token Id
     ///@param payNow pay venue fees now if(didn't pay earlier)
-    event EventStarted(uint256 indexed eventTokenId, bool payNow);
+    event EventPaid(uint256 indexed eventTokenId, bool payNow);
+
+    ///@param eventTokenId event Token Id
+    event EventStarted(uint eventTokenId);
 
     ///@param eventTokenId event Token Id
     event EventCanceled(uint256 indexed eventTokenId);
@@ -776,7 +779,7 @@ contract EventsV1 is EventMetadata {
         }
     
         eventStartedStatus[eventTokenId] = true;
-        emit EventStarted(eventTokenId, payNow);
+        emit EventPaid(eventTokenId, payNow);
     }
 
     function startEvent(uint256 eventTokenId) external {
@@ -795,7 +798,7 @@ contract EventsV1 is EventMetadata {
         );
         require(msg.sender == eventOrganiser, "Events: Invalid Address");
         require(payNow == true, "Events: Fees not paid");
-        emit EventStarted(eventTokenId, payNow);
+        emit EventStarted(eventTokenId);
 
     }
 
