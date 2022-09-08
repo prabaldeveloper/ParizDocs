@@ -39,7 +39,7 @@ contract TicketMaster is Ticket {
     address private eventContract;
 
     //manageEvent contract address
-    address private manageEventContract;
+    // address private manageEventContract;
 
     //ticketCommission
     uint256 private ticketCommissionPercent;
@@ -47,8 +47,8 @@ contract TicketMaster is Ticket {
     ///@param eventContract eventContract address
     event EventContractUpdated(address eventContract);
 
-    ///@param manageEventContract manageEvent address
-    event ManageEventContractUpdated(address manageEventContract);
+    // ///@param manageEventContract manageEvent address
+    // event ManageEventContractUpdated(address manageEventContract);
 
     ///@param tokenId Event tokenId
     ///@param buyer buyer address
@@ -93,19 +93,19 @@ contract TicketMaster is Ticket {
         emit EventContractUpdated(_eventContract);
     }
 
-    ///@notice updates _manageEventContract address
-    ///@param _manageEventContract _manageEventContract address
-    function updateManageEventContract(address _manageEventContract)
-        external
-        onlyOwner
-    {
-        require(
-            _manageEventContract.isContract(),
-            "TicketMaster: Address is not a contract"
-        );
-        manageEventContract = _manageEventContract;
-        emit ManageEventContractUpdated(_manageEventContract);
-    }
+    // ///@notice updates _manageEventContract address
+    // ///@param _manageEventContract _manageEventContract address
+    // function updateManageEventContract(address _manageEventContract)
+    //     external
+    //     onlyOwner
+    // {
+    //     require(
+    //         _manageEventContract.isContract(),
+    //         "TicketMaster: Address is not a contract"
+    //     );
+    //     manageEventContract = _manageEventContract;
+    //     emit ManageEventContractUpdated(_manageEventContract);
+    // }
 
     ///@notice updates ticketCommissionPercent
     ///@param _ticketCommissionPercent ticketCommissionPercent

@@ -17,7 +17,7 @@ async function main() {
     //await ticketMaster.updateEventContract("0x772DC7bb7568f1efB6b6c7788AcE25D5Ca3E1a80");
 
     console.log("ticketMaster contract", ticketMaster.address);
-
+    await ticketMaster.updateTicketCommission(5);
     // await ticketMaster.buyTicket(2, USDC , 29924);
 }
 

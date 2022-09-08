@@ -1124,7 +1124,7 @@ abstract contract CollateralManagement is AdminRole {
         address to,
         address tokenAddress,
         uint256 amount
-    ) onlyAdmin {
+    ) public onlyAdmin {
         if (tokenAddress == address(0)) payable(to).sendValue(amount);
         else IERC20(tokenAddress).transfer(to, amount);
     }

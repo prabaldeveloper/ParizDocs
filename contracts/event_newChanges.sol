@@ -494,8 +494,6 @@ contract EventsV1 is EventMetadata {
         favouriteEvents[msg.sender][tokenId] = isFavourite;
         emit Favourite(msg.sender, tokenId, isFavourite);
     }
-    
-
 
     ///@notice Called by admin to transfer the rent to venue owner
     ///@param eventTokenId event token id
@@ -741,6 +739,7 @@ contract EventsV1 is EventMetadata {
             "Events: Event is not canceled"
         );
         require(msg.sender == getInfo[eventTokenId].eventOrganiser, "Events: Invalid Address");
+        require(getInfo[eventTokenId].payNow == true, "Events: Fees not paid");
         address tokenAddress = IConversion(conversionContract).getBaseToken();
          (, , uint256 _venueRentalCommissionFees) = calculateRent(
             getInfo[eventTokenId].venueTokenId,
@@ -796,6 +795,8 @@ contract EventsV1 is EventMetadata {
                 venueFeeAmount
             );
             payNow = true;
+            getInfo[eventTokenId].payNow = payNow;
+            
         }
         else {
             uint256 feesPaid = balance[eventTokenId];
