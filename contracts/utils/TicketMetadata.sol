@@ -54,7 +54,7 @@ contract TicketMetadata is TicketERC721 {
     /**
      * @dev Called once after the initial deployment to set the initial tokenId.
      */
-    function _initializeNFT721Mint() internal onlyInitializing {
+    function _initializeNFT721Mint() internal {
         // Use ID 1 for the first NFT tokenId
         nextTokenId = 1;
         //__ERC721_init();

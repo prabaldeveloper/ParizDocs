@@ -8,8 +8,8 @@ async function main() {
     const Trace = "0xD028C2a5156069c7eFaeA40acCA7d9Da6f219A5f";
 
     const TicketMaster = await hre.ethers.getContractFactory("TicketMaster");
-    //const ticketMaster = await upgrades.deployProxy(TicketMaster, { initializer: 'initializeContract'})
-    const ticketMaster = await TicketMaster.deploy();
+    const ticketMaster = await upgrades.deployProxy(TicketMaster, [accounts[0]], { initializer: 'initialize'})
+    // const ticketMaster = await TicketMaster.deploy();
     //const ticketMaster = await TicketMaster.attach("0xf3626dFfdccD519FF882c31261114Be2c53E8DF1");
     //convert into proxy contract
     await ticketMaster.deployed();

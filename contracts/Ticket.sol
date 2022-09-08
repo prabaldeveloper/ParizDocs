@@ -4,8 +4,9 @@ import "./utils/TicketMetadata.sol";
 pragma solidity ^0.8.0;
 
 contract Ticket is TicketMetadata {
-    function initialize(string memory _name, string memory _symbol, uint256 _totalSupply, uint256 _eventId, uint256[2] memory _time) public initializer {
+    function init_deploy(string memory _name, string memory _symbol, uint256 _totalSupply, uint256 _eventId, uint256[2] memory _time) public {
         _initializeNFT721Mint();
+        Ownable.ownable_init();
         __ERC721_init(_name, _symbol, _totalSupply);
         time = _time;
         eventId = _eventId;

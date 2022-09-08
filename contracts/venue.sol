@@ -2,30 +2,14 @@
 
 pragma solidity ^0.8.0;
 
-import "../contracts/utils/VenueMetadata.sol";
+import "./utils/VenueMetadata.sol";
+import "./utils/VenueStorage.sol";
 
 ///@title Add and book venue
 ///@author Prabal Srivastav
 ///@notice Owner can add venues and event organisers can book it
 
-contract Venue is VenueMetadata {
-    ///Details of the venue
-    struct Details {
-        string name;
-        string location;
-        string category;
-        uint256 tokenId;
-        address payable owner;
-        uint256 totalCapacity;
-        uint256 rentPerBlock;
-        string tokenCID;
-    }
-
-    //mapping for getting venue details
-    mapping(uint256 => Details) public getInfo;
-
-    //venueRentalCommission
-    uint256 private venueRentalCommission;
+contract Venue is VenueMetadata, VenueStorage {
 
     ///@param tokenId Venue tokenId
     ///@param name Venue name

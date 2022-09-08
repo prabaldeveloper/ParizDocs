@@ -8,8 +8,7 @@ import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/IERC721Metad
 import "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/StringsUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol"; 
-import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "../access/Ownable.sol";
 
 interface ITicketMaster {
     function getJoinEventStatus(address ticketNft, uint256 eventId) external view returns(bool);
@@ -61,7 +60,7 @@ interface ITicketMaster {
     /**
      * @dev Initializes the contract by setting a `name` and a `symbol` to the token collection.
      */
-    function __ERC721_init(string memory name_, string memory symbol_, uint256 totalSupply_) internal onlyInitializing {
+    function __ERC721_init(string memory name_, string memory symbol_, uint256 totalSupply_) internal {
         _name = name_;
         _symbol = symbol_;
         _totalSupply = totalSupply_;

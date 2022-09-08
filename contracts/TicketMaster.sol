@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 
 pragma solidity ^0.8.0;
-
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./Ticket.sol";
 import "./interface/IConversion.sol";
@@ -71,6 +71,11 @@ contract TicketMaster is Ticket {
     );
 
     event RefundClaimed(uint256 indexed eventTokenId, uint256 ticketId);
+
+    function initialize(address earlyAdmin) public initializer {
+        adminAddress[earlyAdmin] == true;
+        Ownable.ownable_init();
+    }
 
     modifier onlyAdmin() {
         require(
@@ -155,7 +160,7 @@ contract TicketMaster is Ticket {
             )
         }
         ticketNFTAddress[eventId] = ticketNFTContract;
-        Ticket(ticketNFTContract).initialize(
+        Ticket(ticketNFTContract).init_deploy(
             name,
             "EventTicket",
             totalSupply,

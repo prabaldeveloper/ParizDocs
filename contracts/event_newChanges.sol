@@ -4,97 +4,17 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./interface/IVenue.sol";
-import "./utils/EventMetadata.sol";
-import "../contracts/interface/IConversion.sol";
+import "./interface/IConversion.sol";
 import "./interface/ITicketMaster.sol";
 import "./interface/ITreasury.sol";
+import "./utils/EventAdminRole.sol";
 
 ///@title Create and join events
 ///@author Prabal Srivastav
 ///@notice Users can create event and join events
 
-contract EventsV1 is EventMetadata {
-    using AddressUpgradeable for address;
-    using AddressUpgradeable for address payable;
-
-    //Details of the event
-    struct Details {
-        string name;
-        string category;
-        string description;
-        uint256 tokenId;
-        uint256 startTime;
-        uint256 endTime;
-        uint256 venueTokenId;
-        bool payNow;
-        address payable eventOrganiser;
-        uint256 ticketPrice;
-    }
-
-    //mapping for getting event details
-    mapping(uint256 => Details) public getInfo;
-
-    //mapping for getting supported erc20TokenAddress
-    mapping(address => bool) public tokenStatus;
-
-    //mapping for featured events
-    mapping(uint256 => bool) public featuredEvents;
-
-    //mapping for favourite events
-    mapping(address => mapping(uint256 => bool)) public favouriteEvents;
-
-    //mapping for whiteListed address
-    mapping(address => bool) public whiteListedAddress;
-
-    //map venue ID to eventId list which are booked in that venue
-    //when new event are created, add that event id to this array
-    mapping(uint256 => uint256[]) public eventsInVenue;
-
-    //mapping for getting rent status
-    mapping(address => mapping(uint256 => bool)) public rentStatus;
-
-    //mappping for storing erc20 balance against eventTokenId
-    mapping(uint256 => uint256) public balance;
-
-    // mapping for ticket NFT contract
-    mapping(uint256 => address) public ticketNFTAddress;
-
-    //mapping for storing tokenAddress against eventTokenId
-    mapping(uint256 => address) public eventTokenAddress;
-
-    //mapping for event start status
-    mapping(uint256 => bool) public eventStartedStatus;
-
-    //mapping for event cancel status
-    mapping(uint256 => bool) public eventCanceledStatus;
-
-    //block time
-    uint256 public constant blockTime = 2;
-
-    // Deviation Percentage
-    uint256 private deviationPercentage;
-
-    //venue contract address
-    address private venueContract;
-
-    //convesion contract address
-    address private conversionContract;
-
-    //ticket master contract address
-    address private ticketMaster;
-
-    //treasury contract
-    address payable private treasuryContract;
-
-    //isPublic true or false
-    bool private isPublic;
-
-    //platformFeePercent
-    uint256 private platformFeePercent;
-
-    //ticketCommission
-    uint256 private ticketCommissionPercent;
-
+contract EventsV1 is EventAdminRole {
+    
     ///@param tokenId Event tokenId
     ///@param tokenCID Event tokenCID
     ///@param venueTokenId venueTokenId
@@ -111,10 +31,6 @@ contract EventsV1 is EventMetadata {
         uint256 ticketPrice,
         address ticketNFTAddress
     );
-
-    // ///@param tokenId Event tokenId
-    // ///@param description Event description
-    // event DescriptionUpdated(uint256 indexed tokenId, string description);
 
     ///@param tokenId Event tokenId
     ///@param startTime Event startTime
@@ -134,41 +50,9 @@ contract EventsV1 is EventMetadata {
     ///@param isFavourite is event favourite(true or false)
     event Favourite(address user, uint256 indexed tokenId, bool isFavourite);
 
-    ///@param tokenAddress erc-20 token Address
-    ///@param status status of the address(true or false)
-    event TokenWhitelisted(address indexed tokenAddress, bool status);
-
     ///@param eventTokenId event tokenId
     ///@param eventOrganiser EventOrganiser address
     event VenueBooked(uint256 indexed eventTokenId, address eventOrganiser);
-
-    ///@param percentage deviationPercentage
-    event DeviationPercentageUpdated(uint256 percentage);
-
-    ///@param whitelistedAddress users address
-    ///@param status status of the address
-    event WhiteList(address whitelistedAddress, bool status);
-
-    ///@param venueContract venueContract address
-    event VenueContractUpdated(address venueContract);
-
-    // ///@param treasuryContract treasuryContract address
-    event TreasuryContractUpdated(address treasuryContract);
-
-    ///@param conversionContract conversionContract address
-    event ConversionContractUpdated(address conversionContract);
-
-    ///@param ticketMaster ticketMaster contract address
-    event TicketMasterContractUpdated(address ticketMaster);
-
-    ///@param isPublic isPublic true or false
-    event EventStatusUpdated(bool isPublic);
-
-    ///@param platformFeePercent platformFeePercent
-    event PlatformFeeUpdated(uint256 platformFeePercent);
-
-    ///@param ticketCommissionPercent ticketCommissionPercent
-    event TicketCommissionUpdated(uint256 ticketCommissionPercent);
 
     ///@param eventTokenId event Token Id
     ///@param payNow pay venue fees now if(didn't pay earlier)
@@ -197,125 +81,6 @@ contract EventsV1 is EventMetadata {
         );
         _;
     }
-
-    ///@notice Allows Admin to update deviation percentage
-    ///@param _deviationPercentage deviationPercentage
-    function updateDeviation(uint256 _deviationPercentage) external onlyOwner {
-        deviationPercentage = _deviationPercentage;
-        emit DeviationPercentageUpdated(_deviationPercentage);
-    }
-
-    ///@notice Add supported Erc-20 tokens for the payment
-    ///@dev Only admin can call
-    ///@dev -  Update the status of paymentToken
-    ///@param tokenAddress erc-20 token Address
-    ///@param status status of the address(true or false)
-    function whitelistTokenAddress(address tokenAddress, bool status)
-        external
-        onlyOwner
-    {
-        tokenStatus[tokenAddress] = status;
-        emit TokenWhitelisted(tokenAddress, status);
-    }
-
-    ///@notice updates conversionContract address
-    ///@param _conversionContract conversionContract address
-    function updateConversionContract(address _conversionContract)
-        external
-        onlyOwner
-    {
-        require(
-            _conversionContract.isContract(),
-            "Events: Address is not a contract"
-        );
-        conversionContract = _conversionContract;
-        emit ConversionContractUpdated(_conversionContract);
-    }
-
-    ///@notice updates conversionContract address
-    ///@param _venueContract venueContract address
-    function updateVenueContract(address _venueContract) external onlyOwner {
-        require(
-            _venueContract.isContract(),
-            "Events: Address is not a contract"
-        );
-        venueContract = _venueContract;
-        emit VenueContractUpdated(_venueContract);
-    }
-
-    ///@notice updates treasuryContract address
-    ///@param _treasuryContract treasuryContract address
-    function updateTreasuryContract(address payable _treasuryContract)
-        external
-        onlyOwner
-    {
-        require(
-            _treasuryContract.isContract(),
-            "Events: Address is not a contract"
-        );
-        treasuryContract = _treasuryContract;
-        emit TreasuryContractUpdated(_treasuryContract);
-    }
-
-    ///@notice updates ticketMaster address
-    ///@param _ticketMaster ticketMaster address
-    function updateticketMasterContract(address _ticketMaster)
-        external
-        onlyOwner
-    {
-        require(
-            _ticketMaster.isContract(),
-            "Events: Address is not a contract"
-        );
-        ticketMaster = _ticketMaster;
-        emit TicketMasterContractUpdated(_ticketMaster);
-    }
-
-    ///@notice To update the event status(public or private events)
-    ///@param _isPublic true or false
-    function updateEventStatus(bool _isPublic) external onlyOwner {
-        isPublic = _isPublic;
-        emit EventStatusUpdated(_isPublic);
-    }
-
-    ///@notice updates platformFeePercent
-    ///@param _platformFeePercent platformFeePercent
-    function updatePlatformFee(uint256 _platformFeePercent) external onlyOwner {
-        platformFeePercent = _platformFeePercent;
-        emit PlatformFeeUpdated(_platformFeePercent);
-    }
-
-    ///@notice updates ticketCommissionPercent
-    ///@param _ticketCommissionPercent ticketCommissionPercent
-    function updateTicketCommission(uint256 _ticketCommissionPercent)
-        external
-        onlyOwner
-    {
-        ticketCommissionPercent = _ticketCommissionPercent;
-        emit TicketCommissionUpdated(ticketCommissionPercent);
-    }
-
-    // ///@notice Update event description
-    // ///@dev Only event organiser can call
-    // ///@dev - Check whether event is started or not
-    // ///@dev - Update the event description
-    // ///@param tokenId Event tokenId
-    // ///@param description Event description
-    // function updateDescription(uint256 tokenId, string memory description)
-    //     external
-    // {
-    //     require(_exists(tokenId), "Events: TokenId does not exist");
-    //     require(
-    //         msg.sender == getInfo[tokenId].eventOrganiser,
-    //         "Events: Address is not the event organiser address"
-    //     );
-    //     require(
-    //         getInfo[tokenId].startTime > block.timestamp,
-    //         "Events: Event is started"
-    //     );
-    //     getInfo[tokenId].description = description;
-    //     emit DescriptionUpdated(tokenId, description);
-    // }
 
     function updateEvent(uint256 tokenId, string memory description, uint256[2] memory time) external {
         require(_exists(tokenId), "Events: TokenId does not exist");
@@ -397,14 +162,14 @@ contract EventsV1 is EventMetadata {
             "Events: Venue is not available"
         );
         if (payNow == true) {
-            checkVenueFees(
-                venueTokenId,
-                time[0],
-                time[1],
-                msg.sender,
-                _tokenId,
-                venueFeeAmount
-            );
+            // checkVenueFees(
+            //     venueTokenId,
+            //     time[0],
+            //     time[1],
+            //     msg.sender,
+            //     _tokenId,
+            //     venueFeeAmount
+            // );
         }
         if (isEventPaid == false) {
             ticketPrice = 0;
@@ -495,8 +260,8 @@ contract EventsV1 is EventMetadata {
         emit Favourite(msg.sender, tokenId, isFavourite);
     }
 
-    ///@notice Called by admin to transfer the rent to venue owner
-    ///@param eventTokenId event token id
+    // ///@notice Called by admin to transfer the rent to venue owner
+    // ///@param eventTokenId event token id
     // function complete(uint256 eventTokenId) external onlyOwner {
     //     require(_exists(eventTokenId), "Events: TokenId does not exist");
     //     require(
@@ -550,18 +315,6 @@ contract EventsV1 is EventMetadata {
     //     // }
     // }
 
-    ///@notice Admin can whiteList users
-    ///@param _whitelistAddresses users address
-    ///@param _status status of the address
-    function updateWhitelist(
-        address[] memory _whitelistAddresses,
-        bool[] memory _status
-    ) external onlyOwner {
-        for (uint256 i = 0; i < _whitelistAddresses.length; i++) {
-            whiteListedAddress[_whitelistAddresses[i]] = _status[i];
-            emit WhiteList(_whitelistAddresses[i], _status[i]);
-        }
-    }
 
     function initialize() public initializer {
         Ownable.ownable_init();
@@ -569,45 +322,6 @@ contract EventsV1 is EventMetadata {
         _updateBaseURI("https://ipfs.io/ipfs/");
     }
 
-    ///@notice Returns venue contract address
-    function getVenueContract() public view returns (address) {
-        return venueContract;
-    }
-
-    ///@notice Returns conversionContract address
-    function getConversionContract() public view returns (address) {
-        return conversionContract;
-    }
-
-    ///@notice Returns treasuryContract address
-    function getTreasuryContract() public view returns (address) {
-        return treasuryContract;
-    }
-
-    ///@notice Returns ticketMaster address
-    function getTicketMasterContract() public view returns (address) {
-        return ticketMaster;
-    }
-
-    ///@notice Returns deviationPercentage
-    function getDeviationPercentage() public view returns (uint256) {
-        return deviationPercentage;
-    }
-
-    ///@notice Returns eventStatus
-    function getEventStatus() public view returns (bool) {
-        return isPublic;
-    }
-
-    ///@notice Returns platformFeePercent
-    function getPlatformFeePercent() public view returns (uint256) {
-        return platformFeePercent;
-    }
-
-    ///@notice Returns deviationPercentage
-    function getTicketCommission() public view returns (uint256) {
-        return ticketCommissionPercent;
-    }
 
     ///@notice Returns true if rent paid
     ///@param eventOrganiser eventOrganiser address
