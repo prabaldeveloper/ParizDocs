@@ -330,8 +330,12 @@ contract TicketMaster is Ticket, TicketMasterStorage {
         address tokenAddress = buyTicketTokenAddress[eventId][ticketId];
         address conversionAddress = IEvents(eventContract)
             .getConversionContract();
-        uint256 convertedActualPrice = IConversion(conversionAddress)
+        address baseToken =  IConversion(conversionAddress).getBaseToken();
+        uint256 convertedActualPrice = actualPrice;
+        if(tokenAddress != baseToken) {
+            convertedActualPrice = IConversion(conversionAddress)
             .convertFee(tokenAddress, actualPrice);
+        }
         uint256 ticketCommissionFee = (convertedActualPrice *
             ticketCommissionPercent) / 100;
         ITreasury(IEvents(eventContract).getTreasuryContract()).claimFunds(payable(msg.sender), tokenAddress,convertedActualPrice - ticketCommissionFee);
