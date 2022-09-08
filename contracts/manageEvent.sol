@@ -3,42 +3,14 @@
 pragma solidity ^0.8.0;
 import "./access/Ownable.sol";
 import "./interface/IEvents.sol";
+import "./utils/ManageEventStorage.sol";
 
 ///@title Manage the events
 ///@author Prabal Srivastav
 ///@notice Event owner can start event or can cancel event
 
-contract ManageEvent is Ownable {
+contract ManageEvent is Ownable, ManageEventStorage {
     using AddressUpgradeable for address;
-
-    //Details of the agenda
-    struct agendaDetails {
-        uint256 agendaId;
-        uint256 agendaStartTime;
-        uint256 agendaEndTime;
-        string agendaName;
-        string[] guestName;
-        string[] guestAddress;
-        uint8 initiateStatus;
-        bool isAgendaDeleted;
-    }
-
-    //mapping for getting agenda details
-    mapping(uint256 => agendaDetails[]) public getAgendaInfo;
-
-    //mapping for getting number of agendas
-    mapping(uint256 => uint256) public noOfAgendas;
-
-    // //mapping for event start status
-    // mapping(uint256 => bool) public eventStartedStatus;
-
-    // //mapping for event cancel status
-    // mapping(uint256 => bool) public eventCanceledStatus;
-
-    mapping(uint256 => uint256[]) public agendaInEvents;
-
-    //Event contract address
-    address private eventContract;
 
     ///@param eventTokenId event Token Id
     ///@param agendaId agendaId

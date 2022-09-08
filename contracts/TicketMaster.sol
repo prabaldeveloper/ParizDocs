@@ -7,42 +7,10 @@ import "./Ticket.sol";
 import "./interface/IConversion.sol";
 import "./interface/IEvents.sol";
 import "./interface/ITreasury.sol";
+import "./utils/TicketMasterStorage.sol";
 
-contract TicketMaster is Ticket {
+contract TicketMaster is Ticket, TicketMasterStorage {
     using AddressUpgradeable for address;
-    // mapping for ticket NFT contract
-    mapping(uint256 => address) public ticketNFTAddress;
-
-    //mapping for storing user's address who bought the ticket of an event
-    mapping(address => mapping(uint256 => bool)) public ticketBoughtAddress;
-
-    //mapping for getting number of ticket sold against an event
-    mapping(uint256 => uint256) public ticketSold;
-
-    //mapping for getting ticket id of user
-    mapping(address => mapping(uint256 => uint256)) public ticketIdOfUser;
-
-    mapping(address => mapping(uint256 => bool)) public joinEventStatus;
-
-    //mapping for getting the tokenAddress using which ticket can be bought
-    mapping(uint256 => mapping(uint256 => address))
-        public buyTicketTokenAddress;
-
-    mapping(uint256 => mapping(address => uint256)) public ticketFeesBalance;
-
-    mapping(uint256 => mapping(uint256 => bool)) public refundTicketFeesStatus;
-
-    //mapping for storing owner address status
-    mapping(address => bool) public adminAddress;
-
-    //event contract address
-    address private eventContract;
-
-    //manageEvent contract address
-    // address private manageEventContract;
-
-    //ticketCommission
-    uint256 private ticketCommissionPercent;
 
     ///@param eventContract eventContract address
     event EventContractUpdated(address eventContract);

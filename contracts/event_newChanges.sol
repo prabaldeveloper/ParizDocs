@@ -162,14 +162,14 @@ contract EventsV1 is EventAdminRole {
             "Events: Venue is not available"
         );
         if (payNow == true) {
-            // checkVenueFees(
-            //     venueTokenId,
-            //     time[0],
-            //     time[1],
-            //     msg.sender,
-            //     _tokenId,
-            //     venueFeeAmount
-            // );
+            checkVenueFees(
+                venueTokenId,
+                time[0],
+                time[1],
+                msg.sender,
+                _tokenId,
+                venueFeeAmount
+            );
         }
         if (isEventPaid == false) {
             ticketPrice = 0;
