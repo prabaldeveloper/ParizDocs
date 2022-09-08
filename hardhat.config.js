@@ -55,7 +55,7 @@ module.exports = {
     mumbai: {
       url: MUMBAI_RPC_URL,
       accounts: [MUMBAI_PRIVATE_KEY],
-      gasPrice: 39000000000,
+      gasPrice: 34000000000,
       // accounts: {
       //   mnemonic: MNEMONIC,
       // },

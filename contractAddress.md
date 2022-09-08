@@ -47,3 +47,53 @@ MANAGE_EVENT_CONTRACT_ADDRESS =
 Event         : "0xCA985C3b8518Dbcd1D0821F140650bf8E1eD6A47"
 ticketMaster  : "0x048FAec3F23BF1B682A9C27C3d846e37e1BdAc3F"
 Manage Event  : "0x3B018Ef5856ab196a24Ff5d273b29490a045FEa9"
+
+08-09-22
+
+Event        : 0x3DBC17Cf31d27623ee7554D6E918Eb0c5Cd92ce7
+ticketMaster : 0x6630cA912b3A04Cb6cf8Ad17Ab3836199788fFd7
+ManageEvent  : 0xA4CbE3922C8e6C0cFb32AD30fe702233b7dECC57
+
+
+ {
+        "eventTokenId": "2",
+        "eventStartTime": "1662563700",
+        "eventEndTime": "1662564000"
+},
+
+
+{
+        "eventTokenId": [
+          "1",
+          "2",
+          "5"
+        ],
+        "eventStartTime": [
+          "1662553200",
+          "1662562800",
+          "1662670860"
+        ],
+        "eventEndTime": [
+          "1662559200",
+          "1662563100",
+          "1662671640"
+        ],
+}
+
+"times": [
+          {
+            "eventTokenId": "1",
+            "eventStartTime": "1662553200",
+            "eventEndTime": "1662559200"
+          },
+          {
+            "eventTokenId": "2",
+            "eventStartTime": "1662563700",
+            "eventEndTime": "1662564000"
+          },
+          {
+            "eventTokenId": "5",
+            "eventStartTime": "1662670860",
+            "eventEndTime": "1662671640"
+          }
+          ]

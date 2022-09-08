@@ -244,7 +244,7 @@ contract TicketMaster is Ticket, TicketMasterStorage {
         }
     }
 
-    function claimTicketFees(uint256 eventTokenId, address[] memory tokenAddress) external {
+    function claimTicketFees(uint256 eventId, address[] memory tokenAddress) external {
         require(
             IEvents(eventContract)._exists(eventId),
             "TicketMaster: TokenId does not exist"
@@ -257,9 +257,10 @@ contract TicketMaster is Ticket, TicketMasterStorage {
             .getEventDetails(eventId);
         require(msg.sender == eventOrganiser, "TicketMaster: Invalid Address");
         for(uint256 i=0; i< tokenAddress.length; i++) {
-            require(ticketFeesBalance[eventTokenId][tokenAddress[i]] > 0, "TicketMaster:  Funds already transferred");
-            ITreasury(IEvents(eventContract).getTreasuryContract()).claimFunds(eventOrganiser, tokenAddress[i],ticketFeesBalance[eventId][tokenAddress[i]]);
-            ticketFeesBalance[eventId][tokenAddress[i]] = 0;
+            if(ticketFeesBalance[eventId][tokenAddress[i]] > 0) {
+                ITreasury(IEvents(eventContract).getTreasuryContract()).claimFunds(eventOrganiser, tokenAddress[i],ticketFeesBalance[eventId][tokenAddress[i]]);
+                ticketFeesBalance[eventId][tokenAddress[i]] = 0;
+            }
         }
     }
 
@@ -306,7 +307,7 @@ contract TicketMaster is Ticket, TicketMasterStorage {
         emit Joined(eventId, msg.sender, block.timestamp, ticketId);
     }
 
-    function refundTicketFees(uint256 eventTokenId, uint256 ticketId) external {
+    function refundTicketFees(uint256 eventId, uint256 ticketId) external {
         require(
             IEvents(eventContract)._exists(eventId),
             "TicketMaster: TokenId does not exist"
@@ -316,7 +317,7 @@ contract TicketMaster is Ticket, TicketMasterStorage {
             "TicketMaster: Event is not canceled"
         );
         require(
-            refundTicketFeesStatus[eventTokenId][ticketId] == false,
+            refundTicketFeesStatus[eventId][ticketId] == false,
             "TicketMaster: Funds already transferred"
         );
         require(
@@ -344,8 +345,8 @@ contract TicketMaster is Ticket, TicketMasterStorage {
         //         convertedActualPrice - ticketCommissionFee
         //     );
         // }
-        refundTicketFeesStatus[eventTokenId][ticketId] == true;
-        emit RefundClaimed(eventTokenId, ticketId);
+        refundTicketFeesStatus[eventId][ticketId] == true;
+        emit RefundClaimed(eventId, ticketId);
     }
 
     function getJoinEventStatus(address _ticketNftAddress, uint256 _ticketId)

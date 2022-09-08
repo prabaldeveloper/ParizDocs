@@ -431,6 +431,10 @@ contract EventsV1 is EventAdminRole {
     }
 
     function claimVenueFees(uint256 venueTokenId) external {
+        require(
+            IVenue(getVenueContract())._exists(venueTokenId),
+            "Events: Venue tokenId does not exists"
+        );
         uint256[] memory eventIds = eventsInVenue[venueTokenId];
         address tokenAddress = IConversion(conversionContract).getBaseToken();
         address venueOwner = IVenue(getVenueContract()).getVenueOwner(venueTokenId);
@@ -455,13 +459,13 @@ contract EventsV1 is EventAdminRole {
         require(msg.sender == getInfo[eventTokenId].eventOrganiser, "Events: Invalid Address");
         require(getInfo[eventTokenId].payNow == true, "Events: Fees not paid");
         address tokenAddress = IConversion(conversionContract).getBaseToken();
-         (, , uint256 _venueRentalCommissionFees) = calculateRent(
+         (, , uint256 venueRentalCommissionFees) = calculateRent(
             getInfo[eventTokenId].venueTokenId,
             getInfo[eventTokenId].startTime,
             getInfo[eventTokenId].endTime
         );
-        uint256 venueRentalCommissionFees = IConversion(conversionContract)
-            .convertFee(tokenAddress, _venueRentalCommissionFees);
+        // uint256 venueRentalCommissionFees = IConversion(conversionContract)
+        //     .convertFee(tokenAddress, _venueRentalCommissionFees);
         require(balance[eventTokenId] > 0, "Events: Funds already transferred");
         address venueOwner = IVenue(getVenueContract()).getVenueOwner(getInfo[eventTokenId].venueTokenId);
         ITreasury(treasuryContract).claimFunds(getInfo[eventTokenId].eventOrganiser,tokenAddress, balance[eventTokenId] - venueRentalCommissionFees);
