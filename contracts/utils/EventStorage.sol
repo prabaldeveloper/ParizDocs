@@ -54,6 +54,9 @@ contract EventStorage {
     //mapping for event cancel status
     mapping(uint256 => bool) public eventCanceledStatus;
 
+    //mapping for event completed status
+    mapping(uint256 => bool) public eventCompletedStatus;
+
     //block time
     uint256 public constant blockTime = 2;
 

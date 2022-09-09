@@ -248,7 +248,7 @@ contract ManageEvent is Ownable, ManageEventStorage {
         uint256[] memory bookedAgendas = agendaInEvents[eventTokenId];
         uint256 currentTime = block.timestamp;
         for (uint256 i = 0; i < bookedAgendas.length; i++) {
-            if(bookedAgendas[i] == agendaId && getAgendaInfo[eventTokenId][bookedAgendas[i]].isAgendaDeleted == false) continue;
+            if(bookedAgendas[i] == agendaId || getAgendaInfo[eventTokenId][bookedAgendas[i]].isAgendaDeleted == true) continue;
             uint256 bookedStartTime = getAgendaInfo[eventTokenId][
                 bookedAgendas[i]
             ].agendaStartTime;

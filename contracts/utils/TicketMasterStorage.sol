@@ -13,15 +13,19 @@ contract TicketMasterStorage {
     mapping(uint256 => uint256) public ticketSold;
 
     //mapping for getting ticket id of user
-    mapping(address => mapping(uint256 => uint256)) public ticketIdOfUser;
+    mapping(uint256 => mapping(address => uint256[])) public ticketIdOfUser;
 
     mapping(address => mapping(uint256 => bool)) public joinEventStatus;
+
+    mapping(address => mapping(uint256 => bool)) public exitEventStatus;
 
     //mapping for getting the tokenAddress using which ticket can be bought
     mapping(uint256 => mapping(uint256 => address))
         public buyTicketTokenAddress;
 
     mapping(uint256 => mapping(address => uint256)) public ticketFeesBalance;
+
+    mapping(uint256 => mapping(uint256 => uint256)) public userTicketBalance;
 
     mapping(uint256 => mapping(uint256 => bool)) public refundTicketFeesStatus;
 
