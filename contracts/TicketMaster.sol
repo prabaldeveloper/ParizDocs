@@ -198,8 +198,13 @@ contract TicketMaster is Ticket, TicketMasterStorage {
         uint256 ticketId
     ) internal {
         // convert base token to fee token
-        uint256 convertedActualPrice = IConversion(conversionAddress)
-            .convertFee(tokenAddress, actualPrice);
+        address baseToken = IConversion(conversionAddress).getBaseToken();
+        uint256 convertedActualPrice = feeAmount;
+        if(tokenAddress != baseToken) {
+            convertedActualPrice = IConversion(conversionAddress)
+                .convertFee(tokenAddress, actualPrice);
+        }
+
         if (tokenAddress != address(0)) {
             checkDeviation(feeAmount, convertedActualPrice);
             uint256 ticketCommissionFee = (feeAmount *
@@ -329,8 +334,8 @@ contract TicketMaster is Ticket, TicketMasterStorage {
                 if(msg.sender == Ticket(ticketNFTAddress[eventId]).ownerOf(ticketIds[i])) {
                     address tokenAddress = buyTicketTokenAddress[eventId][ticketIds[i]];
                     uint256 refundAmount = userTicketBalance[eventId][ticketIds[i]];
-                    ITreasury(IEvents(eventContract).getTreasuryContract()).claimFunds(payable(msg.sender), tokenAddress, refundAmount);
-                    refundTicketFeesStatus[eventId][ticketIds[i]] == true;
+                    ITreasury(IEvents(eventContract).getTreasuryContract()).claimFunds(msg.sender, tokenAddress, refundAmount);
+                    refundTicketFeesStatus[eventId][ticketIds[i]] = true;
                     userTicketBalance[eventId][ticketIds[i]] = 0;
                     emit RefundClaimed(eventId, ticketIds[i]);
                 }

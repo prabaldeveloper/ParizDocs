@@ -55,45 +55,9 @@ ticketMaster : 0x6630cA912b3A04Cb6cf8Ad17Ab3836199788fFd7
 ManageEvent  : 0xA4CbE3922C8e6C0cFb32AD30fe702233b7dECC57
 
 
- {
-        "eventTokenId": "2",
-        "eventStartTime": "1662563700",
-        "eventEndTime": "1662564000"
-},
-
-
-{
-        "eventTokenId": [
-          "1",
-          "2",
-          "5"
-        ],
-        "eventStartTime": [
-          "1662553200",
-          "1662562800",
-          "1662670860"
-        ],
-        "eventEndTime": [
-          "1662559200",
-          "1662563100",
-          "1662671640"
-        ],
-}
-
-"times": [
-          {
-            "eventTokenId": "1",
-            "eventStartTime": "1662553200",
-            "eventEndTime": "1662559200"
-          },
-          {
-            "eventTokenId": "2",
-            "eventStartTime": "1662563700",
-            "eventEndTime": "1662564000"
-          },
-          {
-            "eventTokenId": "5",
-            "eventStartTime": "1662670860",
-            "eventEndTime": "1662671640"
-          }
-          ]
+          
+          9/9
+          Event contract 0xAa269be654cb1aE7d36F64c6432aBD9c130AbD66
+          ticketMaster contract 0xe083507f557A41f7CA839d4a88F1207F1a318014
+          Manage Event proxy 0x616d41e9289D6CD12b8955FeEa2677C976cB24d8
+          

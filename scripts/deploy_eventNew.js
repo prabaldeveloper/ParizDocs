@@ -9,7 +9,7 @@ async function main() {
     const venueAddress = "0xb63E63e8FbA2Ab8cde4AC85bE137565A584c9BC9"
     const conversionAddress = "0x7E37935D71853f6094aff6aD691Eab5CBbD8cf6C"
     const treasuryProxyAddress = "0x63DD48e1F95432bCc7e6c2e0568940a2f2c16c4A"
-    const ticketMasterAddress = "0x6630cA912b3A04Cb6cf8Ad17Ab3836199788fFd7"
+    const ticketMasterAddress = "0xe083507f557A41f7CA839d4a88F1207F1a318014"
 
     // local
     // const venueAddress = "0x778652Ca63b282fD60F500a800E9494bFD228b68"
@@ -41,7 +41,7 @@ async function main() {
     await new Promise(res => setTimeout(res, 1000));
     console.log("Event contract", eventProxy.address);
 
-    await new Promise(res => setTimeout(res, 1000));
+    // await new Promise(res => setTimeout(res, 1000));
     await ticketMaster.whitelistAdmin(eventProxy.address, true);
 
     // await new Promise(res => setTimeout(res, 1000));
@@ -53,10 +53,10 @@ async function main() {
     await new Promise(res => setTimeout(res, 1000));
     await eventProxy.whitelistTokenAddress(MATIC, true);
 
-    await new Promise(res => setTimeout(res, 1000));
+    // await new Promise(res => setTimeout(res, 1000));
     await eventProxy.whitelistTokenAddress(Trace, true);
 
-    await new Promise(res => setTimeout(res, 1000));
+    // await new Promise(res => setTimeout(res, 1000));
     await eventProxy.whitelistTokenAddress(USDC, true);
 
     await new Promise(res => setTimeout(res, 1000));
@@ -65,7 +65,7 @@ async function main() {
     await new Promise(res => setTimeout(res, 1000));
     await eventProxy.updateConversionContract(conversionAddress);
 
-    await new Promise(res => setTimeout(res, 1000));
+    // await new Promise(res => setTimeout(res, 1000));
     await eventProxy.updateTreasuryContract(treasuryProxy.address);
 
     await new Promise(res => setTimeout(res, 1000));
@@ -74,14 +74,14 @@ async function main() {
     await new Promise(res => setTimeout(res, 1000));
     await eventProxy.updateticketMasterContract(ticketMasterAddress);
 
-    await new Promise(res => setTimeout(res, 1000));
+    // await new Promise(res => setTimeout(res, 1000));
     await eventProxy.updatePlatformFee(5);
 
-    await new Promise(res => setTimeout(res, 1000));
+    // await new Promise(res => setTimeout(res, 1000));
     await ticketMaster.updateEventContract(eventProxy.address);
 
     console.log("done");
-    await new Promise(res => setTimeout(res, 5000));
+    // await new Promise(res => setTimeout(res, 5000));
 
     await treasuryProxy.grantAdmin(eventProxy.address);
     await new Promise(res => setTimeout(res, 1000));

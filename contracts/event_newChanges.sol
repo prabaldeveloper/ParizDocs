@@ -110,9 +110,8 @@ contract EventsV1 is EventAdminRole {
                 );
                 address tokenAddress = IConversion(conversionContract).getBaseToken();
                 if(feesPaid > estimatedCost - _platformFees) {
-                    // ITreasury(treasuryContract).claimFunds(getInfo[tokenId].eventOrganiser,tokenAddress, feesPaid - estimatedCost - _platformFees);
-                    // //IERC20(tokenAddress).transfer(getInfo[tokenId].eventOrganiser, feesPaid - estimatedCost - _platformFees);
-                    // balance[tokenId] -=  (feesPaid - estimatedCost - _platformFees);
+                    ITreasury(treasuryContract).claimFunds(getInfo[tokenId].eventOrganiser,tokenAddress, feesPaid - estimatedCost - _platformFees);
+                    balance[tokenId] -=  (feesPaid - estimatedCost - _platformFees);
 
                 }
                 else {
@@ -415,11 +414,11 @@ contract EventsV1 is EventAdminRole {
             if(isEventCanceled(eventIds[i]) == false && block.timestamp > getInfo[eventIds[i]].endTime) {
                 if(balance[eventIds[i]] > 0) {
                     ITreasury(treasuryContract).claimFunds(venueOwner,tokenAddress, balance[eventIds[i]]);
-                    //IERC20(tokenAddress).transfer(venueOwner, balance[eventIds[i]]);
                     balance[eventIds[i]] = 0;
                 }
             }
         }
+     //   emit VenueFeesClaimed()
     }
 
     function refundVenueFees(uint256 eventTokenId) external {
