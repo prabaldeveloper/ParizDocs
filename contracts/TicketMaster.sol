@@ -20,7 +20,9 @@ contract TicketMaster is Ticket, TicketMasterStorage {
     event Bought(
         uint256 indexed tokenId,
         address indexed buyer,
-        uint256 ticketId
+        uint256 ticketId,
+        address tokenAddress,
+        uint256 tokenAmount
     );
 
     ///@param ticketCommissionPercent ticketCommissionPercent
@@ -41,10 +43,11 @@ contract TicketMaster is Ticket, TicketMasterStorage {
         uint256 leavingTime
     );
 
-    event RefundClaimed(uint256 indexed eventTokenId, uint256 ticketId);
+    event TicketFeesClaimed(uint256 indexed eventTokenId, address eventOrganiser, address[] tokenAddress);
+    event TicketFeesRefund(uint256 indexed eventTokenId, address user, uint256 ticketId);
 
     function initialize(address earlyAdmin) public initializer {
-        adminAddress[earlyAdmin] == true;
+        adminAddress[earlyAdmin] = true;
         Ownable.ownable_init();
     }
 
@@ -100,14 +103,14 @@ contract TicketMaster is Ticket, TicketMasterStorage {
     }
 
     function deployTicketNFT(
-        uint256 eventId,
+        uint256 eventTokenId,
         string memory name,
         uint256[2] memory time,
         uint256 totalSupply
     ) external onlyAdmin returns (address ticketNFTContract) {
         // create ticket NFT contract
         bytes memory bytecode = type(Ticket).creationCode;
-        bytes32 salt = keccak256(abi.encodePacked(msg.sender, eventId));
+        bytes32 salt = keccak256(abi.encodePacked(msg.sender, eventTokenId));
         assembly {
             ticketNFTContract := create2(
                 0,
@@ -116,12 +119,12 @@ contract TicketMaster is Ticket, TicketMasterStorage {
                 salt
             )
         }
-        ticketNFTAddress[eventId] = ticketNFTContract;
+        ticketNFTAddress[eventTokenId] = ticketNFTContract;
         Ticket(ticketNFTContract).init_deploy(
             name,
             "EventTicket",
             totalSupply,
-            eventId,
+            eventTokenId,
             time
         );
         return ticketNFTContract;
@@ -132,20 +135,20 @@ contract TicketMaster is Ticket, TicketMasterStorage {
     ///@dev - Check whether event is paid or free
     ///@dev - Check whether user paid the price.
     ///@dev - Map event tokenId with user address
-    ///@param eventId Event tokenId
+    ///@param buyTicketId Event tokenId
     ///@param tokenAddress tokenAddress
     ///@param tokenAmount ticket Price
     function buyTicket(
-        uint256 eventId,
+        uint256 buyTicketId,
         address tokenAddress,
         uint256 tokenAmount
     ) external payable {
         require(
-            IEvents(eventContract)._exists(eventId),
+            IEvents(eventContract)._exists(buyTicketId),
             "TicketMaster: TokenId does not exist"
         );
         require(
-            IEvents(eventContract).isEventCanceled(eventId) == false,
+            IEvents(eventContract).isEventCanceled(buyTicketId) == false,
             "TicketMaster: Event is canceled"
         );
         (
@@ -155,18 +158,17 @@ contract TicketMaster is Ticket, TicketMasterStorage {
             ,
             ,
             uint256 actualPrice
-        ) = IEvents(eventContract).getEventDetails(eventId);
-        require(actualPrice != 0, "TicketMaster: Event is free");
-        require(block.timestamp <= endTime, "TicketMaster: Event ended");
-
+        ) = IEvents(eventContract).getEventDetails(buyTicketId);
+        // require(actualPrice != 0, "TicketMaster: Event is free");
+        require(block.timestamp <= endTime || IEvents(eventContract).isEventEnded(eventId) == true, "TicketMaster: Event ended");
         address conversionAddress = IEvents(eventContract)
             .getConversionContract();
-        uint256 totalCapacity = Ticket(ticketNFTAddress[eventId]).totalSupply();
-        uint256 mintedToken = Ticket(ticketNFTAddress[eventId]).mint(
+        uint256 totalCapacity = Ticket(ticketNFTAddress[buyTicketId]).totalSupply();
+        uint256 mintedToken = Ticket(ticketNFTAddress[buyTicketId]).mint(
             msg.sender
         );
         require(
-            ticketSold[eventId] <= totalCapacity,
+            ticketSold[buyTicketId] <= totalCapacity,
             "TicketMaster: All tickets are sold"
         );
         checkTicketFees(
@@ -175,15 +177,16 @@ contract TicketMaster is Ticket, TicketMasterStorage {
             eventOrganiser,
             tokenAddress,
             conversionAddress,
-            mintedToken
+            mintedToken,
+            buyTicketId
         );
-        buyTicketTokenAddress[eventId][mintedToken] = tokenAddress;
+        buyTicketTokenAddress[buyTicketId][mintedToken] = tokenAddress;
         ////////////not needed this two mappings
-        ticketBoughtAddress[msg.sender][eventId] = true;
-        ticketIdOfUser[eventId][msg.sender].push(mintedToken);
+        ticketBoughtAddress[msg.sender][buyTicketId] = true;
+        ticketIdOfUser[buyTicketId][msg.sender].push(mintedToken);
         ////////////////
-        ticketSold[eventId]++;
-        emit Bought(eventId, msg.sender, mintedToken);
+        ticketSold[buyTicketId]++;
+        emit Bought(buyTicketId, msg.sender, mintedToken, tokenAddress, tokenAmount);
     }
 
     ///@notice To check whether token is matic or any other token
@@ -195,7 +198,8 @@ contract TicketMaster is Ticket, TicketMasterStorage {
         address eventOrganiser,
         address tokenAddress,
         address conversionAddress,
-        uint256 ticketId
+        uint256 ticketId,
+        uint256 buyTicketId
     ) internal {
         // convert base token to fee token
         address baseToken = IConversion(conversionAddress).getBaseToken();
@@ -204,7 +208,6 @@ contract TicketMaster is Ticket, TicketMasterStorage {
             convertedActualPrice = IConversion(conversionAddress)
                 .convertFee(tokenAddress, actualPrice);
         }
-
         if (tokenAddress != address(0)) {
             checkDeviation(feeAmount, convertedActualPrice);
             uint256 ticketCommissionFee = (feeAmount *
@@ -214,9 +217,9 @@ contract TicketMaster is Ticket, TicketMasterStorage {
                 IEvents(eventContract).getTreasuryContract(),
                 feeAmount
             );
-            ticketFeesBalance[eventId][tokenAddress] += (feeAmount -
+            ticketFeesBalance[buyTicketId][tokenAddress] += (feeAmount -
                 ticketCommissionFee);
-            userTicketBalance[eventId][ticketId] = msg.value - ticketCommissionFee;
+            userTicketBalance[buyTicketId][ticketId] = feeAmount - ticketCommissionFee;
         } else {
             checkDeviation(msg.value, convertedActualPrice);
             uint256 ticketCommissionFee = (msg.value *
@@ -229,37 +232,32 @@ contract TicketMaster is Ticket, TicketMasterStorage {
                 successOwner,
                 "Events: Transfer to treasury contract failed"
             );
-            // (bool successTreasury, ) = IEvents(eventContract)
-            //     .getTreasuryContract()
-            //     .call{value: ticketCommissionFee}("");
-            // require(
-            //     successTreasury,
-            //     "Events: Transfer to treasury contract failed"
-            // );
-            ticketFeesBalance[eventId][tokenAddress] += (msg.value -
+            ticketFeesBalance[buyTicketId][tokenAddress] += (msg.value -
                 ticketCommissionFee);
-            userTicketBalance[eventId][ticketId] = msg.value - ticketCommissionFee;
+            userTicketBalance[buyTicketId][ticketId] = msg.value - ticketCommissionFee;
         }
     }
 
-    function claimTicketFees(uint256 eventId, address[] memory tokenAddress) external {
+    function claimTicketFees(uint256 eventTokenId, address[] memory tokenAddress) external {
         require(
-            IEvents(eventContract)._exists(eventId),
+            IEvents(eventContract)._exists(eventTokenId),
             "TicketMaster: TokenId does not exist"
         );
         require(
-            IEvents(eventContract).isEventCanceled(eventId) == false,
+            IEvents(eventContract).isEventCanceled(eventTokenId) == false,
             "TicketMaster: Event is canceled"
         );
         (, , address payable eventOrganiser, , , ) = IEvents(eventContract)
-            .getEventDetails(eventId);
+            .getEventDetails(eventTokenId);
         require(msg.sender == eventOrganiser, "TicketMaster: Invalid Address");
         for(uint256 i=0; i< tokenAddress.length; i++) {
-            if(ticketFeesBalance[eventId][tokenAddress[i]] > 0) {
-                ITreasury(IEvents(eventContract).getTreasuryContract()).claimFunds(eventOrganiser, tokenAddress[i],ticketFeesBalance[eventId][tokenAddress[i]]);
-                ticketFeesBalance[eventId][tokenAddress[i]] = 0;
+            if(ticketFeesBalance[eventTokenId][tokenAddress[i]] > 0) {
+                ITreasury(IEvents(eventContract).getTreasuryContract()).claimFunds(eventOrganiser, tokenAddress[i],ticketFeesBalance[eventTokenId][tokenAddress[i]]);
+                ticketFeesBalance[eventTokenId][tokenAddress[i]] = 0;
             }
         }
+
+        emit TicketFeesClaimed(eventTokenId, eventOrganiser, tokenAddress);
     }
 
     ///@notice Users can join events
@@ -267,47 +265,47 @@ contract TicketMaster is Ticket, TicketMasterStorage {
     ///@dev - Check whether event is started or not
     ///@dev - Check whether user has ticket if the event is paid
     ///@dev - Join the event
-    ///@param eventId Event tokenId
-    function join(uint256 eventId, uint256 ticketId) external {
+    ///@param eventTokenId Event tokenId
+    function join(uint256 eventTokenId, uint256 ticketId) external {
         require(
-            IEvents(eventContract).isEventCanceled(eventId) == false,
+            IEvents(eventContract).isEventCanceled(eventTokenId) == false,
             "TicketMaster: Event is canceled"
         );
         require(
-            IEvents(eventContract)._exists(eventId),
+            IEvents(eventContract)._exists(eventTokenId),
             "Events: TokenId does not exist"
         );
         (uint256 startTime, uint256 endTime, address eventOrganiser , , , ) = IEvents(
             eventContract
-        ).getEventDetails(eventId);
+        ).getEventDetails(eventTokenId);
         require(
-            IEvents(eventContract).isEventStarted(eventId) == true,
+            IEvents(eventContract).isEventStarted(eventTokenId) == true,
             "TicketMaster: Event not started"
         );
         require(
-            block.timestamp >= startTime && endTime > block.timestamp,
-            "Events: Event is not live"
+            block.timestamp >= startTime && endTime > block.timestamp || IEvents(eventContract).isEventEnded(eventId) == true,
+            "Events: Event is not live" 
         );
         if(msg.sender == eventOrganiser) {
-            emit Joined(eventId, msg.sender, block.timestamp, ticketId);
+            emit Joined(eventTokenId, msg.sender, block.timestamp, ticketId);
         }
         else {
             require(
-                msg.sender == Ticket(ticketNFTAddress[eventId]).ownerOf(ticketId),
+                msg.sender == Ticket(ticketNFTAddress[eventTokenId]).ownerOf(ticketId),
                 "TicketMaster: Caller is not the owner"
             );
-            joinEventStatus[ticketNFTAddress[eventId]][ticketId] = true;
-            emit Joined(eventId, msg.sender, block.timestamp, ticketId);
+            joinEventStatus[ticketNFTAddress[eventTokenId]][ticketId] = true;
+            emit Joined(eventTokenId, msg.sender, block.timestamp, ticketId);
         }
     }
 
     function exit(uint256 eventTokenId) external {
         require(
-            IEvents(eventContract)._exists(eventId),
+            IEvents(eventContract)._exists(eventTokenId),
             "Events: TokenId does not exist"
         );
         require(
-            IEvents(eventContract).isEventStarted(eventId) == true,
+            IEvents(eventContract).isEventStarted(eventTokenId) == true,
             "TicketMaster: Event not started"
         );
 
@@ -317,31 +315,31 @@ contract TicketMaster is Ticket, TicketMasterStorage {
 
     }
 
-    function refundTicketFees(uint256 eventId, uint256[] memory ticketIds) external {
+    function refundTicketFees(uint256 eventTokenId, uint256[] memory ticketIds) external {
         require(
-            IEvents(eventContract)._exists(eventId),
+            IEvents(eventContract)._exists(eventTokenId),
             "TicketMaster: TokenId does not exist"
         );
-        require(
-            IEvents(eventContract).isEventCanceled(eventId) == true,
-            "TicketMaster: Event is not canceled"
-        );
-        (, , , , , uint256 actualPrice) = IEvents(eventContract)
-            .getEventDetails(eventId);
+        (, uint256 endTime , , , , uint256 actualPrice) = IEvents(eventContract)
+        .getEventDetails(eventTokenId);
         require(actualPrice != 0, "TicketMaster: Event is free");
+        require(
+            IEvents(eventContract).isEventCanceled(eventTokenId) == true || IEvents(eventContract).isEventStarted(eventTokenId) == false && block.timestamp > endTime,
+            "TicketMaster: Event is neither canceled not expired"
+        );
+        address ownerAddress = msg.sender;
         for(uint256 i=0; i < ticketIds.length; i++) {
-            if(refundTicketFeesStatus[eventId][ticketIds[i]] == false) {
-                if(msg.sender == Ticket(ticketNFTAddress[eventId]).ownerOf(ticketIds[i])) {
-                    address tokenAddress = buyTicketTokenAddress[eventId][ticketIds[i]];
-                    uint256 refundAmount = userTicketBalance[eventId][ticketIds[i]];
-                    ITreasury(IEvents(eventContract).getTreasuryContract()).claimFunds(msg.sender, tokenAddress, refundAmount);
-                    refundTicketFeesStatus[eventId][ticketIds[i]] = true;
-                    userTicketBalance[eventId][ticketIds[i]] = 0;
-                    emit RefundClaimed(eventId, ticketIds[i]);
+            if(refundTicketFeesStatus[eventTokenId][ticketIds[i]] == false) {
+                if(ownerAddress == Ticket(ticketNFTAddress[eventTokenId]).ownerOf(ticketIds[i])) {
+                    address tokenAddress = buyTicketTokenAddress[eventTokenId][ticketIds[i]];
+                    uint256 refundAmount = userTicketBalance[eventTokenId][ticketIds[i]];
+                    ITreasury(IEvents(eventContract).getTreasuryContract()).claimFunds(ownerAddress, tokenAddress, refundAmount);
+                    refundTicketFeesStatus[eventTokenId][ticketIds[i]] = true;
+                    userTicketBalance[eventTokenId][ticketIds[i]] = 0;
+                    emit TicketFeesRefund(eventTokenId, ownerAddress, ticketIds[i]);
                 }
             }
         }
-        
     }
 
     function getJoinEventStatus(address _ticketNftAddress, uint256 _ticketId)

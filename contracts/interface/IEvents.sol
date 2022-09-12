@@ -10,5 +10,7 @@ interface IEvents {
     function getTreasuryContract() external view returns (address);
     function isEventCanceled(uint256 eventId) external view returns(bool);
     function isEventStarted(uint256 eventId) external view returns(bool);
+    function isEventEnded(uint256 eventId) external view returns(bool);
+    
     
 }

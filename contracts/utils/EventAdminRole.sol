@@ -28,8 +28,8 @@ contract EventAdminRole is EventStorage, EventMetadata {
     ///@param platformFeePercent platformFeePercent
     event PlatformFeeUpdated(uint256 platformFeePercent);
 
-    ///@param ticketCommissionPercent ticketCommissionPercent
-    event TicketCommissionUpdated(uint256 ticketCommissionPercent);
+    // ///@param ticketCommissionPercent ticketCommissionPercent
+    // event TicketCommissionUpdated(uint256 ticketCommissionPercent);
 
     ///@param tokenAddress erc-20 token Address
     ///@param status status of the address(true or false)
@@ -129,15 +129,15 @@ contract EventAdminRole is EventStorage, EventMetadata {
         emit PlatformFeeUpdated(_platformFeePercent);
     }
 
-    ///@notice updates ticketCommissionPercent
-    ///@param _ticketCommissionPercent ticketCommissionPercent
-    function updateTicketCommission(uint256 _ticketCommissionPercent)
-        external
-        onlyOwner
-    {
-        ticketCommissionPercent = _ticketCommissionPercent;
-        emit TicketCommissionUpdated(ticketCommissionPercent);
-    }
+    // ///@notice updates ticketCommissionPercent
+    // ///@param _ticketCommissionPercent ticketCommissionPercent
+    // function updateTicketCommission(uint256 _ticketCommissionPercent)
+    //     external
+    //     onlyOwner
+    // {
+    //     ticketCommissionPercent = _ticketCommissionPercent;
+    //     emit TicketCommissionUpdated(ticketCommissionPercent);
+    // }
 
     ///@notice Admin can whiteList users
     ///@param _whitelistAddresses users address
@@ -182,10 +182,10 @@ contract EventAdminRole is EventStorage, EventMetadata {
         return platformFeePercent;
     }
 
-    ///@notice Returns deviationPercentage
-    function getTicketCommission() public view returns (uint256) {
-        return ticketCommissionPercent;
-    }
+    // ///@notice Returns deviationPercentage
+    // function getTicketCommission() public view returns (uint256) {
+    //     return ticketCommissionPercent;
+    // }
 
     ///@notice Returns eventStatus
     function getEventStatus() public view returns (bool) {

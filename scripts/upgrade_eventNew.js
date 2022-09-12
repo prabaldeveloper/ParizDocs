@@ -1,7 +1,7 @@
 async function main() {
 
-    const EventsV1 = await ethers.getContractFactory("EventsV1")
-    let EventsV1Proxy = await upgrades.upgradeProxy("0x7e2c1d661ED252451774c6f5d0b0aa552eAEa7A6", EventsV1)
+    const ticketMaster = await ethers.getContractFactory("TicketMaster")
+    let EventsV1Proxy = await upgrades.upgradeProxy("0xe083507f557A41f7CA839d4a88F1207F1a318014", ticketMaster)
     console.log("Your upgraded proxy is done!", EventsV1Proxy.address);
     console.log(await EventsV1Proxy.owner());
 }

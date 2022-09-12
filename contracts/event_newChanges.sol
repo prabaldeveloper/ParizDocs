@@ -29,6 +29,7 @@ contract EventsV1 is EventAdminRole {
         bool isEventPaid,
         address eventOrganiser,
         uint256 ticketPrice,
+        uint256 venueFeeAmount,
         address ticketNFTAddress
     );
 
@@ -39,7 +40,8 @@ contract EventsV1 is EventAdminRole {
         uint256 indexed tokenId,
         string description,
         uint256 startTime,
-        uint256 endTime
+        uint256 endTime,
+        uint256 venueFeeAmount
     );
 
     ///@param tokenId Event tokenId
@@ -56,7 +58,7 @@ contract EventsV1 is EventAdminRole {
 
     ///@param eventTokenId event Token Id
     ///@param payNow pay venue fees now if(didn't pay earlier)
-    event EventPaid(uint256 indexed eventTokenId, bool payNow);
+    event EventPaid(uint256 indexed eventTokenId, bool payNow, uint256 venueFeeAmount);
 
     ///@param eventTokenId event Token Id
     event EventStarted(uint eventTokenId);
@@ -66,6 +68,12 @@ contract EventsV1 is EventAdminRole {
 
     ///@param eventTokenId event Token Id
     event EventCompleted(uint256 indexed eventTokenId);
+
+    event VenueFeesClaimed(uint256 indexed venueTokenId, uint256[] eventIds, address venueOwner);
+
+    event VenueFeesRefunded(uint256 indexed eventTokenId, address eventOrganiser);
+
+    event EventEnded(uint256 indexed eventTokenId);
 
     //modifier for checking whitelistedUsers
     modifier onlyWhitelistedUsers() {
@@ -127,7 +135,7 @@ contract EventsV1 is EventAdminRole {
             getInfo[tokenId].endTime = time[1];
         }
         getInfo[tokenId].description = description;
-        emit EventUpdated(tokenId, description, time[0], time[1]);
+        emit EventUpdated(tokenId, description, time[0], time[1], balance[tokenId]);
     }
 
     ///@notice Creates Event
@@ -204,6 +212,7 @@ contract EventsV1 is EventAdminRole {
             isEventPaid,
             msg.sender,
             ticketPrice,
+            venueFeeAmount,
             ticketNFTAddress[_tokenId] /////////***************Change/////////////// */
         );
     }
@@ -273,17 +282,28 @@ contract EventsV1 is EventAdminRole {
             isEventCanceled(eventTokenId) == false,
             "Events: Event is canceled"
         );
-
         require(
             isEventStarted(eventTokenId) == true,
             "Events: Event is not started"
         );
-
         require(msg.sender == getInfo[eventTokenId].eventOrganiser, "Events: Invalid Caller");
         eventCompletedStatus[eventTokenId] = true;
-
         emit EventCompleted(eventTokenId);
-  
+    }
+
+    function end(uint256 eventTokenId) external {
+        require(_exists(eventTokenId), "Events: TokenId does not exist");
+        require(
+            isEventCanceled(eventTokenId) == false,
+            "Events: Event is canceled"
+        );
+        require(
+            isEventStarted(eventTokenId) == true,
+            "Events: Event is not started"
+        );
+        require(msg.sender == getInfo[eventTokenId].eventOrganiser, "Events: Invalid Caller");
+        eventEndedStatus[eventTokenId] = true;
+        emit EventEnded(eventTokenId);
     }
 
 
@@ -418,7 +438,7 @@ contract EventsV1 is EventAdminRole {
                 }
             }
         }
-     //   emit VenueFeesClaimed()
+        emit VenueFeesClaimed(venueTokenId, eventIds, venueOwner);
     }
 
     function refundVenueFees(uint256 eventTokenId) external {
@@ -435,8 +455,6 @@ contract EventsV1 is EventAdminRole {
             getInfo[eventTokenId].startTime,
             getInfo[eventTokenId].endTime
         );
-        // uint256 venueRentalCommissionFees = IConversion(conversionContract)
-        //     .convertFee(tokenAddress, _venueRentalCommissionFees);
         require(balance[eventTokenId] > 0, "Events: Funds already transferred");
         address venueOwner = IVenue(getVenueContract()).getVenueOwner(getInfo[eventTokenId].venueTokenId);
         ITreasury(treasuryContract).claimFunds(getInfo[eventTokenId].eventOrganiser,tokenAddress, balance[eventTokenId] - venueRentalCommissionFees);
@@ -445,6 +463,8 @@ contract EventsV1 is EventAdminRole {
         //IERC20(tokenAddress).transfer(venueOwner, venueRentalCommissionFees);
 
         balance[eventTokenId] = 0;
+
+        emit VenueFeesRefunded(eventTokenId, getInfo[eventTokenId].eventOrganiser);
 
     }
 
@@ -510,9 +530,7 @@ contract EventsV1 is EventAdminRole {
                 balance[eventTokenId] += estimatedCost - _platformFees - feesPaid;
             }
         }
-    
-        // eventStartedStatus[eventTokenId] = true;
-        emit EventPaid(eventTokenId, payNow);
+        emit EventPaid(eventTokenId, payNow, venueFeeAmount);
     }
 
     function startEvent(uint256 eventTokenId) external {
@@ -578,6 +596,11 @@ contract EventsV1 is EventAdminRole {
 
     function isEventCanceled(uint256 eventId) public view returns (bool) {
         return eventCanceledStatus[eventId];
+    }
+
+    function isEventEnded(uint256 eventId) public view returns (bool) {
+        return eventEndedStatus[eventId];
+        
     }
 
     function getEventDetails(uint256 tokenId)

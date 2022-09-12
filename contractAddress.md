@@ -56,8 +56,23 @@ ManageEvent  : 0xA4CbE3922C8e6C0cFb32AD30fe702233b7dECC57
 
 
           
-          9/9
+          9/9(For UI)
           Event contract 0xAa269be654cb1aE7d36F64c6432aBD9c130AbD66
           ticketMaster contract 0xe083507f557A41f7CA839d4a88F1207F1a318014
           Manage Event proxy 0x616d41e9289D6CD12b8955FeEa2677C976cB24d8
-          
+
+For Internal Testing
+Event contract 0x9b5f8EfFd644E814Ec2ABE32A0D3E8586d10d46E
+ticketMaster contract 0x1E6fFBEf970DdCFcCAed171148D54BcaCD5EB73B
+Manage Event proxy 
+
+Local 
+Venue proxy 0x714507E1c8c5f88ED1FB2ba1E4a6DC8ba3C6fDa1
+conversion proxy 0x3684a94a84C1D69eb6E91210C048f5e319b1eb0e
+
+
+10-09-2022
+TicketMasterContract 0x6EA2fF546F9760CfeB0f8C4fD9d7cD24c86b38AF
+EventContract 0xAFBb715bB4e43F462260D96518a2c51B287aE1BD
+ManageEventContract 0x607D5eb6C17CA548BF817500A60aB28e2AF31668
+TreasuryContract 0x3c411a313Bd11Ba09c2e1243567Da9F9886837DD

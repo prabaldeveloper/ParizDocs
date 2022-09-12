@@ -84,6 +84,136 @@
       "address": "0x616d41e9289D6CD12b8955FeEa2677C976cB24d8",
       "txHash": "0x9115574b20906b2a8677cf2b262fe2d5cc5920b828b63708c1041db2dc902194",
       "kind": "transparent"
+    },
+    {
+      "address": "0x7D9C9682e899433951a3117E9263c23d1cC25028",
+      "txHash": "0xd1961560078e7e383444c5ca15d34825f99954304c9698e27ca13b5a31ad0e84",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xC703ebe0fc2f99987EbAA859d24d8e0eAaa04c93",
+      "txHash": "0xf49ef9ad9bf0528a83160e87080fc2997e24090834fa50bb537164d3578c69c4",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x1E6fFBEf970DdCFcCAed171148D54BcaCD5EB73B",
+      "txHash": "0xba6f04da610873573b0a4b6ed9aadcb027c64f67e40654ce54dc8a5be7ddb0dc",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x9b5f8EfFd644E814Ec2ABE32A0D3E8586d10d46E",
+      "txHash": "0x2a6d24b6f8b2aeba6d483d5f7a85e6e5953834833cf771f80cee1e3be474deac",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xE68392B87C9BA58eB9d00692D408eE993497AB66",
+      "txHash": "0xde0d20164910dc22575df619cbe097f70c61b2f6a1781de6c4d28101e9714a13",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x5C28dB4409380BB66983CdC27f38601091846BEc",
+      "txHash": "0x51092c36635ed439b361e148693f9a792e09c66d4069efa8e053365d937acef9",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xEF42e40A42c917cDD0bb72c0F6A6310056bAC728",
+      "txHash": "0x4623ee6cde44e27d45ecdef92b2e0b8993eafb0da08fe2b88e1e1eec6b19ef42",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x3522A29921a7e945a5e278a1d6a5787Ad951046F",
+      "txHash": "0xc9281fa28792365af43556bbeed7000d188da826cd438d1d70b43ab0b3e1594d",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xCE7DD08c8124eEa67ab91021be80aec3bBFdA766",
+      "txHash": "0x11ca34f6450a7f5b130f17ca3b1f6123a4238fbe770b6cb97fd038122f46c22f",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x3967888Aad7F90D742C91D363285E3819B38f015",
+      "txHash": "0xf48628908445ef79e4f9a05a574cee9f51f7509d1290e2a637ed8a1c91c75291",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x0b9C2423CDb3febFe57362107aEC5ECdc78C418A",
+      "txHash": "0x8fd16c0e46b1c6b55d89c05672033e927c8aebe9d3c0ef176eda8604fcd70810",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x2Dca52f4e4A5C714C953F6dF515Eabf71d725bC3",
+      "txHash": "0xaa4143296966116baa3c10857ad8550c6a145278fd5796979eab3f6044b353fe",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xeBe2a545d92F698Fe77C6697f3cEa485e4D49881",
+      "txHash": "0x247680fa489731bc0fc13413a9f7ff388208721da46e254819d1a69699853f12",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x3140758648f4876330A1D971AFcf19b6591e36b5",
+      "txHash": "0x72b4216e49da79b44e4bcd613e84d7fc717bb623b0a8e2b3b80f9bfc9c4204b4",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x07Ce3EF2b3f5e625FE69891D2F9B7f86BAea728b",
+      "txHash": "0xef5b8f72a1883cc0fbec4215e685a3a9a24a28ccf72e37b067de99de6402d081",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x88f041bd5Eaa306f8Cc532ACa9682200665FbCbb",
+      "txHash": "0xc9844c32f21307a16ab667f308d1146448af47bc76fa01d8b8a3b7e4053a24d4",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x3C35b49E43F0EfD7a86F66EeF9c39eC6a49C17C4",
+      "txHash": "0x7bac5b727e4d576901e3ecd190e4d49e7458b58a1ff400287e55c280474d8750",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x36678fA98de263513705880ecb3968b5e6eC068f",
+      "txHash": "0x13f6ea2d6486c3d3c816b0012140b60eda91b03da3de093f18e7a8be6cb26ead",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x6EA2fF546F9760CfeB0f8C4fD9d7cD24c86b38AF",
+      "txHash": "0x20661b711f49155300ea8bc0f65c398ebbcef4f3b825e0b6799a14229bfa2d7c",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x65Ab9Fe645FCb7D8885A06631Cac51D5F2f96a4B",
+      "txHash": "0x7b2c38d8315f81455df7bf97a752c39537e7e0fce592460fd997b3270c1c1655",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xBe20d62eD35558101b27CCE960FE3185Cf039673",
+      "txHash": "0x70f427ccf17266b03441d0c514a42cb0d07736f2a4b051eaf868db693405abd5",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xAFBb715bB4e43F462260D96518a2c51B287aE1BD",
+      "txHash": "0xc65a11bd0909b4bf5cc91b173fac376f41c761768b03aa6e56d5b969c3c1425f",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x607D5eb6C17CA548BF817500A60aB28e2AF31668",
+      "txHash": "0xd8f29394b4b22e00f171867e23094fd5334edcc329c93e1cf15f554e36d98b32",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xeBD9f8711dB196cb4474e642e5B7E7e54339E868",
+      "txHash": "0x646231b5428914cc3f467b8f2cb7c0b32396a513903dce73a6d758f9b61a26a9",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x41906638f1E3b42a851aFE57c05Bc5c9bEC4194A",
+      "txHash": "0x4144b7dc49b30cd61ff694958998dad946d403cb9645b8a953c039b46c47e813",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x628A140F58694562e849694a9f14882E0609020a",
+      "txHash": "0xb412550b4afe610be7826c138f3e35bdecde604887981f640c088e9e350e9720",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -3093,6 +3223,3875 @@
           "t_string_storage": {
             "label": "string",
             "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "823eeda8ef9c21f731c8c9d43b129ad3148daa368a7af0069dd24b5d168f75f7": {
+      "address": "0xdE3f3d60D82fF1346a60740e6EBb44006d23Fc92",
+      "txHash": "0x8d29178aa88a10d290364d1fcfaee69958e8fb8fcdb43c0e239b8865ec4b9b8d",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\introspection\\ERC165Upgradeable.sol:41"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_address",
+            "contract": "Ownable",
+            "src": "contracts\\access\\Ownable.sol:22"
+          },
+          {
+            "label": "_name",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_string_storage",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:34"
+          },
+          {
+            "label": "_symbol",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_string_storage",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:37"
+          },
+          {
+            "label": "_totalSupply",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_uint256",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:40"
+          },
+          {
+            "label": "masterContract",
+            "offset": 0,
+            "slot": "105",
+            "type": "t_address",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:42"
+          },
+          {
+            "label": "eventId",
+            "offset": 0,
+            "slot": "106",
+            "type": "t_uint256",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:44"
+          },
+          {
+            "label": "_owners",
+            "offset": 0,
+            "slot": "107",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:47"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "108",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:50"
+          },
+          {
+            "label": "_tokenApprovals",
+            "offset": 0,
+            "slot": "109",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:53"
+          },
+          {
+            "label": "time",
+            "offset": 0,
+            "slot": "110",
+            "type": "t_array(t_uint256)2_storage",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:55"
+          },
+          {
+            "label": "_operatorApprovals",
+            "offset": 0,
+            "slot": "112",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:58"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "113",
+            "type": "t_array(t_uint256)44_storage",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:561"
+          },
+          {
+            "label": "nextTokenId",
+            "offset": 0,
+            "slot": "157",
+            "type": "t_uint256",
+            "contract": "TicketMetadata",
+            "src": "contracts\\utils\\TicketMetadata.sol:12"
+          },
+          {
+            "label": "tokenIdToCreator",
+            "offset": 0,
+            "slot": "158",
+            "type": "t_mapping(t_uint256,t_address_payable)",
+            "contract": "TicketMetadata",
+            "src": "contracts\\utils\\TicketMetadata.sol:14"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "159",
+            "type": "t_array(t_uint256)999_storage",
+            "contract": "TicketMetadata",
+            "src": "contracts\\utils\\TicketMetadata.sol:77"
+          },
+          {
+            "label": "ticketNFTAddress",
+            "offset": 0,
+            "slot": "1158",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:7"
+          },
+          {
+            "label": "ticketBoughtAddress",
+            "offset": 0,
+            "slot": "1159",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:10"
+          },
+          {
+            "label": "ticketSold",
+            "offset": 0,
+            "slot": "1160",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:13"
+          },
+          {
+            "label": "ticketIdOfUser",
+            "offset": 0,
+            "slot": "1161",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_array(t_uint256)dyn_storage))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:16"
+          },
+          {
+            "label": "joinEventStatus",
+            "offset": 0,
+            "slot": "1162",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:18"
+          },
+          {
+            "label": "exitEventStatus",
+            "offset": 0,
+            "slot": "1163",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:20"
+          },
+          {
+            "label": "buyTicketTokenAddress",
+            "offset": 0,
+            "slot": "1164",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_address))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:23"
+          },
+          {
+            "label": "ticketFeesBalance",
+            "offset": 0,
+            "slot": "1165",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:26"
+          },
+          {
+            "label": "userTicketBalance",
+            "offset": 0,
+            "slot": "1166",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_uint256))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:28"
+          },
+          {
+            "label": "refundTicketFeesStatus",
+            "offset": 0,
+            "slot": "1167",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_bool))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:30"
+          },
+          {
+            "label": "adminAddress",
+            "offset": 0,
+            "slot": "1168",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:33"
+          },
+          {
+            "label": "eventContract",
+            "offset": 0,
+            "slot": "1169",
+            "type": "t_address",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:36"
+          },
+          {
+            "label": "ticketCommissionPercent",
+            "offset": 0,
+            "slot": "1170",
+            "type": "t_uint256",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:39"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "1171",
+            "type": "t_array(t_uint256)999_storage",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:46"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_address_payable": {
+            "label": "address payable",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)2_storage": {
+            "label": "uint256[2]",
+            "numberOfBytes": "64"
+          },
+          "t_array(t_uint256)44_storage": {
+            "label": "uint256[44]",
+            "numberOfBytes": "1408"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)999_storage": {
+            "label": "uint256[999]",
+            "numberOfBytes": "31968"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(address => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_bool))": {
+            "label": "mapping(address => mapping(uint256 => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address_payable)": {
+            "label": "mapping(uint256 => address payable)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_bool)": {
+            "label": "mapping(uint256 => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_array(t_uint256)dyn_storage))": {
+            "label": "mapping(uint256 => mapping(address => uint256[]))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(uint256 => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_address))": {
+            "label": "mapping(uint256 => mapping(uint256 => address))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_bool))": {
+            "label": "mapping(uint256 => mapping(uint256 => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_uint256))": {
+            "label": "mapping(uint256 => mapping(uint256 => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "4bf2d2b13d40145dc9a60d2cf8c8bc91d01f76a7d5c0029aaea0a8f2f2080af7": {
+      "address": "0xa9Fe12AB62863c36c2338fDdFd8A5e29F6542EBF",
+      "txHash": "0x33cc1887e2d605d8b430d71792cd2f895f87d56d84fac247ea7cd3676d5aff75",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\introspection\\ERC165Upgradeable.sol:41"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_address",
+            "contract": "Ownable",
+            "src": "contracts\\access\\Ownable.sol:22"
+          },
+          {
+            "label": "_name",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_string_storage",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:34"
+          },
+          {
+            "label": "_symbol",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_string_storage",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:37"
+          },
+          {
+            "label": "_totalSupply",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_uint256",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:40"
+          },
+          {
+            "label": "masterContract",
+            "offset": 0,
+            "slot": "105",
+            "type": "t_address",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:42"
+          },
+          {
+            "label": "eventId",
+            "offset": 0,
+            "slot": "106",
+            "type": "t_uint256",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:44"
+          },
+          {
+            "label": "_owners",
+            "offset": 0,
+            "slot": "107",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:47"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "108",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:50"
+          },
+          {
+            "label": "_tokenApprovals",
+            "offset": 0,
+            "slot": "109",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:53"
+          },
+          {
+            "label": "time",
+            "offset": 0,
+            "slot": "110",
+            "type": "t_array(t_uint256)2_storage",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:55"
+          },
+          {
+            "label": "_operatorApprovals",
+            "offset": 0,
+            "slot": "112",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:58"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "113",
+            "type": "t_array(t_uint256)44_storage",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:561"
+          },
+          {
+            "label": "nextTokenId",
+            "offset": 0,
+            "slot": "157",
+            "type": "t_uint256",
+            "contract": "TicketMetadata",
+            "src": "contracts\\utils\\TicketMetadata.sol:12"
+          },
+          {
+            "label": "tokenIdToCreator",
+            "offset": 0,
+            "slot": "158",
+            "type": "t_mapping(t_uint256,t_address_payable)",
+            "contract": "TicketMetadata",
+            "src": "contracts\\utils\\TicketMetadata.sol:14"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "159",
+            "type": "t_array(t_uint256)999_storage",
+            "contract": "TicketMetadata",
+            "src": "contracts\\utils\\TicketMetadata.sol:77"
+          },
+          {
+            "label": "ticketNFTAddress",
+            "offset": 0,
+            "slot": "1158",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:7"
+          },
+          {
+            "label": "ticketBoughtAddress",
+            "offset": 0,
+            "slot": "1159",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:10"
+          },
+          {
+            "label": "ticketSold",
+            "offset": 0,
+            "slot": "1160",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:13"
+          },
+          {
+            "label": "ticketIdOfUser",
+            "offset": 0,
+            "slot": "1161",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_array(t_uint256)dyn_storage))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:16"
+          },
+          {
+            "label": "joinEventStatus",
+            "offset": 0,
+            "slot": "1162",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:18"
+          },
+          {
+            "label": "exitEventStatus",
+            "offset": 0,
+            "slot": "1163",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:20"
+          },
+          {
+            "label": "buyTicketTokenAddress",
+            "offset": 0,
+            "slot": "1164",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_address))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:23"
+          },
+          {
+            "label": "ticketFeesBalance",
+            "offset": 0,
+            "slot": "1165",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:26"
+          },
+          {
+            "label": "userTicketBalance",
+            "offset": 0,
+            "slot": "1166",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_uint256))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:28"
+          },
+          {
+            "label": "refundTicketFeesStatus",
+            "offset": 0,
+            "slot": "1167",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_bool))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:30"
+          },
+          {
+            "label": "adminAddress",
+            "offset": 0,
+            "slot": "1168",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:33"
+          },
+          {
+            "label": "eventContract",
+            "offset": 0,
+            "slot": "1169",
+            "type": "t_address",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:36"
+          },
+          {
+            "label": "ticketCommissionPercent",
+            "offset": 0,
+            "slot": "1170",
+            "type": "t_uint256",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:39"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "1171",
+            "type": "t_array(t_uint256)999_storage",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:46"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_address_payable": {
+            "label": "address payable",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)2_storage": {
+            "label": "uint256[2]",
+            "numberOfBytes": "64"
+          },
+          "t_array(t_uint256)44_storage": {
+            "label": "uint256[44]",
+            "numberOfBytes": "1408"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)999_storage": {
+            "label": "uint256[999]",
+            "numberOfBytes": "31968"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(address => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_bool))": {
+            "label": "mapping(address => mapping(uint256 => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address_payable)": {
+            "label": "mapping(uint256 => address payable)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_bool)": {
+            "label": "mapping(uint256 => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_array(t_uint256)dyn_storage))": {
+            "label": "mapping(uint256 => mapping(address => uint256[]))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(uint256 => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_address))": {
+            "label": "mapping(uint256 => mapping(uint256 => address))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_bool))": {
+            "label": "mapping(uint256 => mapping(uint256 => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_uint256))": {
+            "label": "mapping(uint256 => mapping(uint256 => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "005b68b0fe4a51280b15c67c74bbd10774d0f467af9a16644ceab4bfa38c524a": {
+      "address": "0xe93250f01D079C5fe15B10A4b8a65125243EA77C",
+      "txHash": "0x81d616595b8ba910e7523eca96b5b64a6ccc124a45e08ad7d857933b1a61b4c9",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\introspection\\ERC165Upgradeable.sol:41"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_address",
+            "contract": "Ownable",
+            "src": "contracts\\access\\Ownable.sol:22"
+          },
+          {
+            "label": "_name",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_string_storage",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:34"
+          },
+          {
+            "label": "_symbol",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_string_storage",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:37"
+          },
+          {
+            "label": "_totalSupply",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_uint256",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:40"
+          },
+          {
+            "label": "masterContract",
+            "offset": 0,
+            "slot": "105",
+            "type": "t_address",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:42"
+          },
+          {
+            "label": "eventId",
+            "offset": 0,
+            "slot": "106",
+            "type": "t_uint256",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:44"
+          },
+          {
+            "label": "_owners",
+            "offset": 0,
+            "slot": "107",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:47"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "108",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:50"
+          },
+          {
+            "label": "_tokenApprovals",
+            "offset": 0,
+            "slot": "109",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:53"
+          },
+          {
+            "label": "time",
+            "offset": 0,
+            "slot": "110",
+            "type": "t_array(t_uint256)2_storage",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:55"
+          },
+          {
+            "label": "_operatorApprovals",
+            "offset": 0,
+            "slot": "112",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:58"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "113",
+            "type": "t_array(t_uint256)44_storage",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:561"
+          },
+          {
+            "label": "nextTokenId",
+            "offset": 0,
+            "slot": "157",
+            "type": "t_uint256",
+            "contract": "TicketMetadata",
+            "src": "contracts\\utils\\TicketMetadata.sol:12"
+          },
+          {
+            "label": "tokenIdToCreator",
+            "offset": 0,
+            "slot": "158",
+            "type": "t_mapping(t_uint256,t_address_payable)",
+            "contract": "TicketMetadata",
+            "src": "contracts\\utils\\TicketMetadata.sol:14"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "159",
+            "type": "t_array(t_uint256)999_storage",
+            "contract": "TicketMetadata",
+            "src": "contracts\\utils\\TicketMetadata.sol:77"
+          },
+          {
+            "label": "ticketNFTAddress",
+            "offset": 0,
+            "slot": "1158",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:7"
+          },
+          {
+            "label": "ticketBoughtAddress",
+            "offset": 0,
+            "slot": "1159",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:10"
+          },
+          {
+            "label": "ticketSold",
+            "offset": 0,
+            "slot": "1160",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:13"
+          },
+          {
+            "label": "ticketIdOfUser",
+            "offset": 0,
+            "slot": "1161",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_array(t_uint256)dyn_storage))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:16"
+          },
+          {
+            "label": "joinEventStatus",
+            "offset": 0,
+            "slot": "1162",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:18"
+          },
+          {
+            "label": "exitEventStatus",
+            "offset": 0,
+            "slot": "1163",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:20"
+          },
+          {
+            "label": "buyTicketTokenAddress",
+            "offset": 0,
+            "slot": "1164",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_address))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:23"
+          },
+          {
+            "label": "ticketFeesBalance",
+            "offset": 0,
+            "slot": "1165",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:26"
+          },
+          {
+            "label": "userTicketBalance",
+            "offset": 0,
+            "slot": "1166",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_uint256))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:28"
+          },
+          {
+            "label": "refundTicketFeesStatus",
+            "offset": 0,
+            "slot": "1167",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_bool))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:30"
+          },
+          {
+            "label": "adminAddress",
+            "offset": 0,
+            "slot": "1168",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:33"
+          },
+          {
+            "label": "eventContract",
+            "offset": 0,
+            "slot": "1169",
+            "type": "t_address",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:36"
+          },
+          {
+            "label": "ticketCommissionPercent",
+            "offset": 0,
+            "slot": "1170",
+            "type": "t_uint256",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:39"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "1171",
+            "type": "t_array(t_uint256)999_storage",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:46"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_address_payable": {
+            "label": "address payable",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)2_storage": {
+            "label": "uint256[2]",
+            "numberOfBytes": "64"
+          },
+          "t_array(t_uint256)44_storage": {
+            "label": "uint256[44]",
+            "numberOfBytes": "1408"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)999_storage": {
+            "label": "uint256[999]",
+            "numberOfBytes": "31968"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(address => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_bool))": {
+            "label": "mapping(address => mapping(uint256 => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address_payable)": {
+            "label": "mapping(uint256 => address payable)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_bool)": {
+            "label": "mapping(uint256 => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_array(t_uint256)dyn_storage))": {
+            "label": "mapping(uint256 => mapping(address => uint256[]))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(uint256 => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_address))": {
+            "label": "mapping(uint256 => mapping(uint256 => address))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_bool))": {
+            "label": "mapping(uint256 => mapping(uint256 => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_uint256))": {
+            "label": "mapping(uint256 => mapping(uint256 => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "7352a2b20bf19aef0bdc1edbe9f2207194fa4b6c019f983ac749e5a0cd511931": {
+      "address": "0xE5b2434dbff5513d9F8FAd78491a1b7B27fA8f29",
+      "txHash": "0xf2d3b30916b9522caf7649f7dda4e1e413ff72af2dab4e4a9444fce73c43c263",
+      "layout": {
+        "storage": [
+          {
+            "label": "getInfo",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_mapping(t_uint256,t_struct(Details)8399_storage)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:21"
+          },
+          {
+            "label": "tokenStatus",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:24"
+          },
+          {
+            "label": "featuredEvents",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_uint256,t_bool)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:27"
+          },
+          {
+            "label": "favouriteEvents",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:30"
+          },
+          {
+            "label": "whiteListedAddress",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:33"
+          },
+          {
+            "label": "eventsInVenue",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:37"
+          },
+          {
+            "label": "rentStatus",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:40"
+          },
+          {
+            "label": "balance",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:43"
+          },
+          {
+            "label": "ticketNFTAddress",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:46"
+          },
+          {
+            "label": "eventTokenAddress",
+            "offset": 0,
+            "slot": "9",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:49"
+          },
+          {
+            "label": "eventStartedStatus",
+            "offset": 0,
+            "slot": "10",
+            "type": "t_mapping(t_uint256,t_bool)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:52"
+          },
+          {
+            "label": "eventCanceledStatus",
+            "offset": 0,
+            "slot": "11",
+            "type": "t_mapping(t_uint256,t_bool)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:55"
+          },
+          {
+            "label": "eventCompletedStatus",
+            "offset": 0,
+            "slot": "12",
+            "type": "t_mapping(t_uint256,t_bool)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:58"
+          },
+          {
+            "label": "deviationPercentage",
+            "offset": 0,
+            "slot": "13",
+            "type": "t_uint256",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:64"
+          },
+          {
+            "label": "venueContract",
+            "offset": 0,
+            "slot": "14",
+            "type": "t_address",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:67"
+          },
+          {
+            "label": "conversionContract",
+            "offset": 0,
+            "slot": "15",
+            "type": "t_address",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:70"
+          },
+          {
+            "label": "ticketMaster",
+            "offset": 0,
+            "slot": "16",
+            "type": "t_address",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:73"
+          },
+          {
+            "label": "treasuryContract",
+            "offset": 0,
+            "slot": "17",
+            "type": "t_address_payable",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:76"
+          },
+          {
+            "label": "isPublic",
+            "offset": 20,
+            "slot": "17",
+            "type": "t_bool",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:79"
+          },
+          {
+            "label": "platformFeePercent",
+            "offset": 0,
+            "slot": "18",
+            "type": "t_uint256",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:82"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "19",
+            "type": "t_array(t_uint256)999_storage",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:92"
+          },
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "1018",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "1018",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1019",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "1069",
+            "type": "t_address",
+            "contract": "Ownable",
+            "src": "contracts\\access\\Ownable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1070",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\introspection\\ERC165Upgradeable.sol:41"
+          },
+          {
+            "label": "_name",
+            "offset": 0,
+            "slot": "1120",
+            "type": "t_string_storage",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:33"
+          },
+          {
+            "label": "_symbol",
+            "offset": 0,
+            "slot": "1121",
+            "type": "t_string_storage",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:36"
+          },
+          {
+            "label": "_owners",
+            "offset": 0,
+            "slot": "1122",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:39"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "1123",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:42"
+          },
+          {
+            "label": "_tokenApprovals",
+            "offset": 0,
+            "slot": "1124",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:45"
+          },
+          {
+            "label": "_tokenURIs",
+            "offset": 0,
+            "slot": "1125",
+            "type": "t_mapping(t_uint256,t_string_storage)",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:48"
+          },
+          {
+            "label": "_baseURI",
+            "offset": 0,
+            "slot": "1126",
+            "type": "t_string_storage",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:51"
+          },
+          {
+            "label": "_operatorApprovals",
+            "offset": 0,
+            "slot": "1127",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:54"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1128",
+            "type": "t_array(t_uint256)44_storage",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:587"
+          },
+          {
+            "label": "nextTokenId",
+            "offset": 0,
+            "slot": "1172",
+            "type": "t_uint256",
+            "contract": "EventMetadata",
+            "src": "contracts\\utils\\EventMetadata.sol:12"
+          },
+          {
+            "label": "tokenIdToCreator",
+            "offset": 0,
+            "slot": "1173",
+            "type": "t_mapping(t_uint256,t_address_payable)",
+            "contract": "EventMetadata",
+            "src": "contracts\\utils\\EventMetadata.sol:14"
+          },
+          {
+            "label": "creatorToIPFSHashToMinted",
+            "offset": 0,
+            "slot": "1174",
+            "type": "t_mapping(t_address,t_mapping(t_string_memory_ptr,t_bool))",
+            "contract": "EventMetadata",
+            "src": "contracts\\utils\\EventMetadata.sol:26"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "1175",
+            "type": "t_array(t_uint256)999_storage",
+            "contract": "EventMetadata",
+            "src": "contracts\\utils\\EventMetadata.sol:143"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "2174",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "EventAdminRole",
+            "src": "contracts\\utils\\EventAdminRole.sol:195"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_address_payable": {
+            "label": "address payable",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)44_storage": {
+            "label": "uint256[44]",
+            "numberOfBytes": "1408"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)999_storage": {
+            "label": "uint256[999]",
+            "numberOfBytes": "31968"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_string_memory_ptr,t_bool))": {
+            "label": "mapping(address => mapping(string => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_bool))": {
+            "label": "mapping(address => mapping(uint256 => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_string_memory_ptr,t_bool)": {
+            "label": "mapping(string => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address_payable)": {
+            "label": "mapping(uint256 => address payable)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(uint256 => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_bool)": {
+            "label": "mapping(uint256 => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_string_storage)": {
+            "label": "mapping(uint256 => string)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Details)8399_storage)": {
+            "label": "mapping(uint256 => struct EventStorage.Details)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Details)8399_storage": {
+            "label": "struct EventStorage.Details",
+            "members": [
+              {
+                "label": "name",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "category",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "description",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "tokenId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "startTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "endTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "venueTokenId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "payNow",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "7"
+              },
+              {
+                "label": "eventOrganiser",
+                "type": "t_address_payable",
+                "offset": 1,
+                "slot": "7"
+              },
+              {
+                "label": "ticketPrice",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "8"
+              }
+            ],
+            "numberOfBytes": "288"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "a659f0569cf775ef731f336fb60ce03d62e2c93555b1e63dad199a0a8770fc11": {
+      "address": "0x1531f0eCD7532290e5dCAd53587870DF0dEfFD58",
+      "txHash": "0x5a28cc237c9376e6031bd13dcbb73e808f32ae51b8a75320298250699d04a368",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "contracts\\Treasury.sol:24"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "contracts\\Treasury.sol:29"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "contracts\\Treasury.sol:266"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "contracts\\Treasury.sol:470"
+          },
+          {
+            "label": "_roles",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)633_storage)",
+            "contract": "AccessControlUpgradeable",
+            "src": "contracts\\Treasury.sol:578"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "AccessControlUpgradeable",
+            "src": "contracts\\Treasury.sol:803"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)1000_storage",
+            "contract": "AdminRole",
+            "src": "contracts\\Treasury.sol:846"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1151",
+            "type": "t_array(t_uint256)1000_storage",
+            "contract": "CollateralManagement",
+            "src": "contracts\\Treasury.sol:1206"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)1000_storage": {
+            "label": "uint256[1000]",
+            "numberOfBytes": "32000"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)633_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(RoleData)633_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "members",
+                "type": "t_mapping(t_address,t_bool)",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          }
+        }
+      }
+    },
+    "f3439b896cc298640538089f4b343a6e3bd4c958f2e4e31d2461887e6e793521": {
+      "address": "0x35d7383d86BB836c6F75F8573803BA691027bAe4",
+      "txHash": "0x2b40153cef82d70992c8839c4357fd90e805516b21c61642a58f7b37050bb808",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\introspection\\ERC165Upgradeable.sol:41"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_address",
+            "contract": "Ownable",
+            "src": "contracts\\access\\Ownable.sol:22"
+          },
+          {
+            "label": "_name",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_string_storage",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:34"
+          },
+          {
+            "label": "_symbol",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_string_storage",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:37"
+          },
+          {
+            "label": "_totalSupply",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_uint256",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:40"
+          },
+          {
+            "label": "masterContract",
+            "offset": 0,
+            "slot": "105",
+            "type": "t_address",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:42"
+          },
+          {
+            "label": "eventId",
+            "offset": 0,
+            "slot": "106",
+            "type": "t_uint256",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:44"
+          },
+          {
+            "label": "_owners",
+            "offset": 0,
+            "slot": "107",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:47"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "108",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:50"
+          },
+          {
+            "label": "_tokenApprovals",
+            "offset": 0,
+            "slot": "109",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:53"
+          },
+          {
+            "label": "time",
+            "offset": 0,
+            "slot": "110",
+            "type": "t_array(t_uint256)2_storage",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:55"
+          },
+          {
+            "label": "_operatorApprovals",
+            "offset": 0,
+            "slot": "112",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:58"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "113",
+            "type": "t_array(t_uint256)44_storage",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:561"
+          },
+          {
+            "label": "nextTokenId",
+            "offset": 0,
+            "slot": "157",
+            "type": "t_uint256",
+            "contract": "TicketMetadata",
+            "src": "contracts\\utils\\TicketMetadata.sol:12"
+          },
+          {
+            "label": "tokenIdToCreator",
+            "offset": 0,
+            "slot": "158",
+            "type": "t_mapping(t_uint256,t_address_payable)",
+            "contract": "TicketMetadata",
+            "src": "contracts\\utils\\TicketMetadata.sol:14"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "159",
+            "type": "t_array(t_uint256)999_storage",
+            "contract": "TicketMetadata",
+            "src": "contracts\\utils\\TicketMetadata.sol:77"
+          },
+          {
+            "label": "ticketNFTAddress",
+            "offset": 0,
+            "slot": "1158",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:7"
+          },
+          {
+            "label": "ticketBoughtAddress",
+            "offset": 0,
+            "slot": "1159",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:10"
+          },
+          {
+            "label": "ticketSold",
+            "offset": 0,
+            "slot": "1160",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:13"
+          },
+          {
+            "label": "ticketIdOfUser",
+            "offset": 0,
+            "slot": "1161",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_array(t_uint256)dyn_storage))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:16"
+          },
+          {
+            "label": "joinEventStatus",
+            "offset": 0,
+            "slot": "1162",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:18"
+          },
+          {
+            "label": "exitEventStatus",
+            "offset": 0,
+            "slot": "1163",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:20"
+          },
+          {
+            "label": "buyTicketTokenAddress",
+            "offset": 0,
+            "slot": "1164",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_address))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:23"
+          },
+          {
+            "label": "ticketFeesBalance",
+            "offset": 0,
+            "slot": "1165",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:26"
+          },
+          {
+            "label": "userTicketBalance",
+            "offset": 0,
+            "slot": "1166",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_uint256))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:28"
+          },
+          {
+            "label": "refundTicketFeesStatus",
+            "offset": 0,
+            "slot": "1167",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_bool))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:30"
+          },
+          {
+            "label": "adminAddress",
+            "offset": 0,
+            "slot": "1168",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:33"
+          },
+          {
+            "label": "eventContract",
+            "offset": 0,
+            "slot": "1169",
+            "type": "t_address",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:36"
+          },
+          {
+            "label": "ticketCommissionPercent",
+            "offset": 0,
+            "slot": "1170",
+            "type": "t_uint256",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:39"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "1171",
+            "type": "t_array(t_uint256)999_storage",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:46"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_address_payable": {
+            "label": "address payable",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)2_storage": {
+            "label": "uint256[2]",
+            "numberOfBytes": "64"
+          },
+          "t_array(t_uint256)44_storage": {
+            "label": "uint256[44]",
+            "numberOfBytes": "1408"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)999_storage": {
+            "label": "uint256[999]",
+            "numberOfBytes": "31968"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(address => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_bool))": {
+            "label": "mapping(address => mapping(uint256 => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address_payable)": {
+            "label": "mapping(uint256 => address payable)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_bool)": {
+            "label": "mapping(uint256 => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_array(t_uint256)dyn_storage))": {
+            "label": "mapping(uint256 => mapping(address => uint256[]))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(uint256 => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_address))": {
+            "label": "mapping(uint256 => mapping(uint256 => address))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_bool))": {
+            "label": "mapping(uint256 => mapping(uint256 => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_uint256))": {
+            "label": "mapping(uint256 => mapping(uint256 => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "0014b302e54edbb4d6ee77ac349e76d9b907b96dbb2643f5164d6871b5580b87": {
+      "address": "0xbb2cE025409d81e061AAEfc3d364bBed6e603E07",
+      "txHash": "0xccd59d2f05a7ae116c946ac7ef71b7b65516fef9f170444e722fdf72095182d0",
+      "layout": {
+        "storage": [
+          {
+            "label": "getInfo",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_mapping(t_uint256,t_struct(Details)8446_storage)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:21"
+          },
+          {
+            "label": "tokenStatus",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:24"
+          },
+          {
+            "label": "featuredEvents",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_uint256,t_bool)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:27"
+          },
+          {
+            "label": "favouriteEvents",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:30"
+          },
+          {
+            "label": "whiteListedAddress",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:33"
+          },
+          {
+            "label": "eventsInVenue",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:37"
+          },
+          {
+            "label": "rentStatus",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:40"
+          },
+          {
+            "label": "balance",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:43"
+          },
+          {
+            "label": "ticketNFTAddress",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:46"
+          },
+          {
+            "label": "eventTokenAddress",
+            "offset": 0,
+            "slot": "9",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:49"
+          },
+          {
+            "label": "eventStartedStatus",
+            "offset": 0,
+            "slot": "10",
+            "type": "t_mapping(t_uint256,t_bool)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:52"
+          },
+          {
+            "label": "eventCanceledStatus",
+            "offset": 0,
+            "slot": "11",
+            "type": "t_mapping(t_uint256,t_bool)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:55"
+          },
+          {
+            "label": "eventCompletedStatus",
+            "offset": 0,
+            "slot": "12",
+            "type": "t_mapping(t_uint256,t_bool)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:58"
+          },
+          {
+            "label": "deviationPercentage",
+            "offset": 0,
+            "slot": "13",
+            "type": "t_uint256",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:64"
+          },
+          {
+            "label": "venueContract",
+            "offset": 0,
+            "slot": "14",
+            "type": "t_address",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:67"
+          },
+          {
+            "label": "conversionContract",
+            "offset": 0,
+            "slot": "15",
+            "type": "t_address",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:70"
+          },
+          {
+            "label": "ticketMaster",
+            "offset": 0,
+            "slot": "16",
+            "type": "t_address",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:73"
+          },
+          {
+            "label": "treasuryContract",
+            "offset": 0,
+            "slot": "17",
+            "type": "t_address_payable",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:76"
+          },
+          {
+            "label": "isPublic",
+            "offset": 20,
+            "slot": "17",
+            "type": "t_bool",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:79"
+          },
+          {
+            "label": "platformFeePercent",
+            "offset": 0,
+            "slot": "18",
+            "type": "t_uint256",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:82"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "19",
+            "type": "t_array(t_uint256)999_storage",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:92"
+          },
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "1018",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "1018",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1019",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "1069",
+            "type": "t_address",
+            "contract": "Ownable",
+            "src": "contracts\\access\\Ownable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1070",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\introspection\\ERC165Upgradeable.sol:41"
+          },
+          {
+            "label": "_name",
+            "offset": 0,
+            "slot": "1120",
+            "type": "t_string_storage",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:33"
+          },
+          {
+            "label": "_symbol",
+            "offset": 0,
+            "slot": "1121",
+            "type": "t_string_storage",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:36"
+          },
+          {
+            "label": "_owners",
+            "offset": 0,
+            "slot": "1122",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:39"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "1123",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:42"
+          },
+          {
+            "label": "_tokenApprovals",
+            "offset": 0,
+            "slot": "1124",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:45"
+          },
+          {
+            "label": "_tokenURIs",
+            "offset": 0,
+            "slot": "1125",
+            "type": "t_mapping(t_uint256,t_string_storage)",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:48"
+          },
+          {
+            "label": "_baseURI",
+            "offset": 0,
+            "slot": "1126",
+            "type": "t_string_storage",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:51"
+          },
+          {
+            "label": "_operatorApprovals",
+            "offset": 0,
+            "slot": "1127",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:54"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1128",
+            "type": "t_array(t_uint256)44_storage",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:587"
+          },
+          {
+            "label": "nextTokenId",
+            "offset": 0,
+            "slot": "1172",
+            "type": "t_uint256",
+            "contract": "EventMetadata",
+            "src": "contracts\\utils\\EventMetadata.sol:12"
+          },
+          {
+            "label": "tokenIdToCreator",
+            "offset": 0,
+            "slot": "1173",
+            "type": "t_mapping(t_uint256,t_address_payable)",
+            "contract": "EventMetadata",
+            "src": "contracts\\utils\\EventMetadata.sol:14"
+          },
+          {
+            "label": "creatorToIPFSHashToMinted",
+            "offset": 0,
+            "slot": "1174",
+            "type": "t_mapping(t_address,t_mapping(t_string_memory_ptr,t_bool))",
+            "contract": "EventMetadata",
+            "src": "contracts\\utils\\EventMetadata.sol:26"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "1175",
+            "type": "t_array(t_uint256)999_storage",
+            "contract": "EventMetadata",
+            "src": "contracts\\utils\\EventMetadata.sol:143"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "2174",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "EventAdminRole",
+            "src": "contracts\\utils\\EventAdminRole.sol:195"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_address_payable": {
+            "label": "address payable",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)44_storage": {
+            "label": "uint256[44]",
+            "numberOfBytes": "1408"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)999_storage": {
+            "label": "uint256[999]",
+            "numberOfBytes": "31968"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_string_memory_ptr,t_bool))": {
+            "label": "mapping(address => mapping(string => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_bool))": {
+            "label": "mapping(address => mapping(uint256 => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_string_memory_ptr,t_bool)": {
+            "label": "mapping(string => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address_payable)": {
+            "label": "mapping(uint256 => address payable)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(uint256 => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_bool)": {
+            "label": "mapping(uint256 => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_string_storage)": {
+            "label": "mapping(uint256 => string)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Details)8446_storage)": {
+            "label": "mapping(uint256 => struct EventStorage.Details)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Details)8446_storage": {
+            "label": "struct EventStorage.Details",
+            "members": [
+              {
+                "label": "name",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "category",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "description",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "tokenId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "startTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "endTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "venueTokenId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "payNow",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "7"
+              },
+              {
+                "label": "eventOrganiser",
+                "type": "t_address_payable",
+                "offset": 1,
+                "slot": "7"
+              },
+              {
+                "label": "ticketPrice",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "8"
+              }
+            ],
+            "numberOfBytes": "288"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "6b83100cfa149bdf8b163cb6b910d02e9ca5516709085765865a634e4dc1cf4d": {
+      "address": "0x113F77D65776D72bDC115C961A66657299Bc970A",
+      "txHash": "0x2886515ae396ac79f82b6d319aeab965cab5d3648c5b2f31c4779b7bc8ad274c",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\introspection\\ERC165Upgradeable.sol:41"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_address",
+            "contract": "Ownable",
+            "src": "contracts\\access\\Ownable.sol:22"
+          },
+          {
+            "label": "_name",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_string_storage",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:34"
+          },
+          {
+            "label": "_symbol",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_string_storage",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:37"
+          },
+          {
+            "label": "_totalSupply",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_uint256",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:40"
+          },
+          {
+            "label": "masterContract",
+            "offset": 0,
+            "slot": "105",
+            "type": "t_address",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:42"
+          },
+          {
+            "label": "eventId",
+            "offset": 0,
+            "slot": "106",
+            "type": "t_uint256",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:44"
+          },
+          {
+            "label": "_owners",
+            "offset": 0,
+            "slot": "107",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:47"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "108",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:50"
+          },
+          {
+            "label": "_tokenApprovals",
+            "offset": 0,
+            "slot": "109",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:53"
+          },
+          {
+            "label": "time",
+            "offset": 0,
+            "slot": "110",
+            "type": "t_array(t_uint256)2_storage",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:55"
+          },
+          {
+            "label": "_operatorApprovals",
+            "offset": 0,
+            "slot": "112",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:58"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "113",
+            "type": "t_array(t_uint256)44_storage",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:561"
+          },
+          {
+            "label": "nextTokenId",
+            "offset": 0,
+            "slot": "157",
+            "type": "t_uint256",
+            "contract": "TicketMetadata",
+            "src": "contracts\\utils\\TicketMetadata.sol:12"
+          },
+          {
+            "label": "tokenIdToCreator",
+            "offset": 0,
+            "slot": "158",
+            "type": "t_mapping(t_uint256,t_address_payable)",
+            "contract": "TicketMetadata",
+            "src": "contracts\\utils\\TicketMetadata.sol:14"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "159",
+            "type": "t_array(t_uint256)999_storage",
+            "contract": "TicketMetadata",
+            "src": "contracts\\utils\\TicketMetadata.sol:77"
+          },
+          {
+            "label": "ticketNFTAddress",
+            "offset": 0,
+            "slot": "1158",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:7"
+          },
+          {
+            "label": "ticketBoughtAddress",
+            "offset": 0,
+            "slot": "1159",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:10"
+          },
+          {
+            "label": "ticketSold",
+            "offset": 0,
+            "slot": "1160",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:13"
+          },
+          {
+            "label": "ticketIdOfUser",
+            "offset": 0,
+            "slot": "1161",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_array(t_uint256)dyn_storage))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:16"
+          },
+          {
+            "label": "joinEventStatus",
+            "offset": 0,
+            "slot": "1162",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:18"
+          },
+          {
+            "label": "exitEventStatus",
+            "offset": 0,
+            "slot": "1163",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:20"
+          },
+          {
+            "label": "buyTicketTokenAddress",
+            "offset": 0,
+            "slot": "1164",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_address))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:23"
+          },
+          {
+            "label": "ticketFeesBalance",
+            "offset": 0,
+            "slot": "1165",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:26"
+          },
+          {
+            "label": "userTicketBalance",
+            "offset": 0,
+            "slot": "1166",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_uint256))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:28"
+          },
+          {
+            "label": "refundTicketFeesStatus",
+            "offset": 0,
+            "slot": "1167",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_bool))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:30"
+          },
+          {
+            "label": "adminAddress",
+            "offset": 0,
+            "slot": "1168",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:33"
+          },
+          {
+            "label": "eventContract",
+            "offset": 0,
+            "slot": "1169",
+            "type": "t_address",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:36"
+          },
+          {
+            "label": "ticketCommissionPercent",
+            "offset": 0,
+            "slot": "1170",
+            "type": "t_uint256",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:39"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "1171",
+            "type": "t_array(t_uint256)999_storage",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:46"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_address_payable": {
+            "label": "address payable",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)2_storage": {
+            "label": "uint256[2]",
+            "numberOfBytes": "64"
+          },
+          "t_array(t_uint256)44_storage": {
+            "label": "uint256[44]",
+            "numberOfBytes": "1408"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)999_storage": {
+            "label": "uint256[999]",
+            "numberOfBytes": "31968"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(address => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_bool))": {
+            "label": "mapping(address => mapping(uint256 => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address_payable)": {
+            "label": "mapping(uint256 => address payable)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_bool)": {
+            "label": "mapping(uint256 => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_array(t_uint256)dyn_storage))": {
+            "label": "mapping(uint256 => mapping(address => uint256[]))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(uint256 => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_address))": {
+            "label": "mapping(uint256 => mapping(uint256 => address))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_bool))": {
+            "label": "mapping(uint256 => mapping(uint256 => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_uint256))": {
+            "label": "mapping(uint256 => mapping(uint256 => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "53b0938d7364f2daed7c23ce2b6ad6d1b810c6d3f26dd464e0f9f484da58d70f": {
+      "address": "0x0F2e2B91761D0A2F230ADC82e1aDA911218F95dd",
+      "txHash": "0x5eb9538a78eacf3cb5be321231460b3a356d0f4a5fda160df43e0e74b2944fa1",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\introspection\\ERC165Upgradeable.sol:41"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_address",
+            "contract": "Ownable",
+            "src": "contracts\\access\\Ownable.sol:22"
+          },
+          {
+            "label": "_name",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_string_storage",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:34"
+          },
+          {
+            "label": "_symbol",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_string_storage",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:37"
+          },
+          {
+            "label": "_totalSupply",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_uint256",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:40"
+          },
+          {
+            "label": "masterContract",
+            "offset": 0,
+            "slot": "105",
+            "type": "t_address",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:42"
+          },
+          {
+            "label": "eventId",
+            "offset": 0,
+            "slot": "106",
+            "type": "t_uint256",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:44"
+          },
+          {
+            "label": "_owners",
+            "offset": 0,
+            "slot": "107",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:47"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "108",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:50"
+          },
+          {
+            "label": "_tokenApprovals",
+            "offset": 0,
+            "slot": "109",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:53"
+          },
+          {
+            "label": "time",
+            "offset": 0,
+            "slot": "110",
+            "type": "t_array(t_uint256)2_storage",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:55"
+          },
+          {
+            "label": "_operatorApprovals",
+            "offset": 0,
+            "slot": "112",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:58"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "113",
+            "type": "t_array(t_uint256)44_storage",
+            "contract": "TicketERC721",
+            "src": "contracts\\utils\\TicketERC721.sol:561"
+          },
+          {
+            "label": "nextTokenId",
+            "offset": 0,
+            "slot": "157",
+            "type": "t_uint256",
+            "contract": "TicketMetadata",
+            "src": "contracts\\utils\\TicketMetadata.sol:12"
+          },
+          {
+            "label": "tokenIdToCreator",
+            "offset": 0,
+            "slot": "158",
+            "type": "t_mapping(t_uint256,t_address_payable)",
+            "contract": "TicketMetadata",
+            "src": "contracts\\utils\\TicketMetadata.sol:14"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "159",
+            "type": "t_array(t_uint256)999_storage",
+            "contract": "TicketMetadata",
+            "src": "contracts\\utils\\TicketMetadata.sol:77"
+          },
+          {
+            "label": "ticketNFTAddress",
+            "offset": 0,
+            "slot": "1158",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:7"
+          },
+          {
+            "label": "ticketBoughtAddress",
+            "offset": 0,
+            "slot": "1159",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:10"
+          },
+          {
+            "label": "ticketSold",
+            "offset": 0,
+            "slot": "1160",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:13"
+          },
+          {
+            "label": "ticketIdOfUser",
+            "offset": 0,
+            "slot": "1161",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_array(t_uint256)dyn_storage))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:16"
+          },
+          {
+            "label": "joinEventStatus",
+            "offset": 0,
+            "slot": "1162",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:18"
+          },
+          {
+            "label": "exitEventStatus",
+            "offset": 0,
+            "slot": "1163",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:20"
+          },
+          {
+            "label": "buyTicketTokenAddress",
+            "offset": 0,
+            "slot": "1164",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_address))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:23"
+          },
+          {
+            "label": "ticketFeesBalance",
+            "offset": 0,
+            "slot": "1165",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:26"
+          },
+          {
+            "label": "userTicketBalance",
+            "offset": 0,
+            "slot": "1166",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_uint256))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:28"
+          },
+          {
+            "label": "refundTicketFeesStatus",
+            "offset": 0,
+            "slot": "1167",
+            "type": "t_mapping(t_uint256,t_mapping(t_uint256,t_bool))",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:30"
+          },
+          {
+            "label": "adminAddress",
+            "offset": 0,
+            "slot": "1168",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:33"
+          },
+          {
+            "label": "eventContract",
+            "offset": 0,
+            "slot": "1169",
+            "type": "t_address",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:36"
+          },
+          {
+            "label": "ticketCommissionPercent",
+            "offset": 0,
+            "slot": "1170",
+            "type": "t_uint256",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:39"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "1171",
+            "type": "t_array(t_uint256)999_storage",
+            "contract": "TicketMasterStorage",
+            "src": "contracts\\utils\\TicketMasterStorage.sol:46"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_address_payable": {
+            "label": "address payable",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)2_storage": {
+            "label": "uint256[2]",
+            "numberOfBytes": "64"
+          },
+          "t_array(t_uint256)44_storage": {
+            "label": "uint256[44]",
+            "numberOfBytes": "1408"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)999_storage": {
+            "label": "uint256[999]",
+            "numberOfBytes": "31968"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(address => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_bool))": {
+            "label": "mapping(address => mapping(uint256 => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address_payable)": {
+            "label": "mapping(uint256 => address payable)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_bool)": {
+            "label": "mapping(uint256 => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_array(t_uint256)dyn_storage))": {
+            "label": "mapping(uint256 => mapping(address => uint256[]))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(uint256 => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_address))": {
+            "label": "mapping(uint256 => mapping(uint256 => address))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_bool))": {
+            "label": "mapping(uint256 => mapping(uint256 => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_uint256,t_uint256))": {
+            "label": "mapping(uint256 => mapping(uint256 => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "627c58bd92c6809e9f6590ed66e27f99683012bc10f56437aae24f4bb2bb59f7": {
+      "address": "0x8356ee3229A193796f05E3dDd47515035759C915",
+      "txHash": "0xa5584136e71bc26867edee287bca704b1e561d9f1f63cd2a5c387be693ad3a39",
+      "layout": {
+        "storage": [
+          {
+            "label": "getInfo",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_mapping(t_uint256,t_struct(Details)8456_storage)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:21"
+          },
+          {
+            "label": "tokenStatus",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:24"
+          },
+          {
+            "label": "featuredEvents",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_uint256,t_bool)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:27"
+          },
+          {
+            "label": "favouriteEvents",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:30"
+          },
+          {
+            "label": "whiteListedAddress",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:33"
+          },
+          {
+            "label": "eventsInVenue",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:37"
+          },
+          {
+            "label": "rentStatus",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_bool))",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:40"
+          },
+          {
+            "label": "balance",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:43"
+          },
+          {
+            "label": "ticketNFTAddress",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:46"
+          },
+          {
+            "label": "eventTokenAddress",
+            "offset": 0,
+            "slot": "9",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:49"
+          },
+          {
+            "label": "eventStartedStatus",
+            "offset": 0,
+            "slot": "10",
+            "type": "t_mapping(t_uint256,t_bool)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:52"
+          },
+          {
+            "label": "eventCanceledStatus",
+            "offset": 0,
+            "slot": "11",
+            "type": "t_mapping(t_uint256,t_bool)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:55"
+          },
+          {
+            "label": "eventCompletedStatus",
+            "offset": 0,
+            "slot": "12",
+            "type": "t_mapping(t_uint256,t_bool)",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:58"
+          },
+          {
+            "label": "deviationPercentage",
+            "offset": 0,
+            "slot": "13",
+            "type": "t_uint256",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:64"
+          },
+          {
+            "label": "venueContract",
+            "offset": 0,
+            "slot": "14",
+            "type": "t_address",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:67"
+          },
+          {
+            "label": "conversionContract",
+            "offset": 0,
+            "slot": "15",
+            "type": "t_address",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:70"
+          },
+          {
+            "label": "ticketMaster",
+            "offset": 0,
+            "slot": "16",
+            "type": "t_address",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:73"
+          },
+          {
+            "label": "treasuryContract",
+            "offset": 0,
+            "slot": "17",
+            "type": "t_address_payable",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:76"
+          },
+          {
+            "label": "isPublic",
+            "offset": 20,
+            "slot": "17",
+            "type": "t_bool",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:79"
+          },
+          {
+            "label": "platformFeePercent",
+            "offset": 0,
+            "slot": "18",
+            "type": "t_uint256",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:82"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "19",
+            "type": "t_array(t_uint256)999_storage",
+            "contract": "EventStorage",
+            "src": "contracts\\utils\\EventStorage.sol:92"
+          },
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "1018",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "1018",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1019",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "1069",
+            "type": "t_address",
+            "contract": "Ownable",
+            "src": "contracts\\access\\Ownable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1070",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\introspection\\ERC165Upgradeable.sol:41"
+          },
+          {
+            "label": "_name",
+            "offset": 0,
+            "slot": "1120",
+            "type": "t_string_storage",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:33"
+          },
+          {
+            "label": "_symbol",
+            "offset": 0,
+            "slot": "1121",
+            "type": "t_string_storage",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:36"
+          },
+          {
+            "label": "_owners",
+            "offset": 0,
+            "slot": "1122",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:39"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "1123",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:42"
+          },
+          {
+            "label": "_tokenApprovals",
+            "offset": 0,
+            "slot": "1124",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:45"
+          },
+          {
+            "label": "_tokenURIs",
+            "offset": 0,
+            "slot": "1125",
+            "type": "t_mapping(t_uint256,t_string_storage)",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:48"
+          },
+          {
+            "label": "_baseURI",
+            "offset": 0,
+            "slot": "1126",
+            "type": "t_string_storage",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:51"
+          },
+          {
+            "label": "_operatorApprovals",
+            "offset": 0,
+            "slot": "1127",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:54"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1128",
+            "type": "t_array(t_uint256)44_storage",
+            "contract": "EventERC721",
+            "src": "contracts\\utils\\EventERC721.sol:587"
+          },
+          {
+            "label": "nextTokenId",
+            "offset": 0,
+            "slot": "1172",
+            "type": "t_uint256",
+            "contract": "EventMetadata",
+            "src": "contracts\\utils\\EventMetadata.sol:12"
+          },
+          {
+            "label": "tokenIdToCreator",
+            "offset": 0,
+            "slot": "1173",
+            "type": "t_mapping(t_uint256,t_address_payable)",
+            "contract": "EventMetadata",
+            "src": "contracts\\utils\\EventMetadata.sol:14"
+          },
+          {
+            "label": "creatorToIPFSHashToMinted",
+            "offset": 0,
+            "slot": "1174",
+            "type": "t_mapping(t_address,t_mapping(t_string_memory_ptr,t_bool))",
+            "contract": "EventMetadata",
+            "src": "contracts\\utils\\EventMetadata.sol:26"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "1175",
+            "type": "t_array(t_uint256)999_storage",
+            "contract": "EventMetadata",
+            "src": "contracts\\utils\\EventMetadata.sol:143"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "2174",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "EventAdminRole",
+            "src": "contracts\\utils\\EventAdminRole.sol:195"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_address_payable": {
+            "label": "address payable",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)44_storage": {
+            "label": "uint256[44]",
+            "numberOfBytes": "1408"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)999_storage": {
+            "label": "uint256[999]",
+            "numberOfBytes": "31968"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_string_memory_ptr,t_bool))": {
+            "label": "mapping(address => mapping(string => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_bool))": {
+            "label": "mapping(address => mapping(uint256 => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_string_memory_ptr,t_bool)": {
+            "label": "mapping(string => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address_payable)": {
+            "label": "mapping(uint256 => address payable)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(uint256 => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_bool)": {
+            "label": "mapping(uint256 => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_string_storage)": {
+            "label": "mapping(uint256 => string)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Details)8456_storage)": {
+            "label": "mapping(uint256 => struct EventStorage.Details)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Details)8456_storage": {
+            "label": "struct EventStorage.Details",
+            "members": [
+              {
+                "label": "name",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "category",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "description",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "tokenId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "startTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "endTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "venueTokenId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "payNow",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "7"
+              },
+              {
+                "label": "eventOrganiser",
+                "type": "t_address_payable",
+                "offset": 1,
+                "slot": "7"
+              },
+              {
+                "label": "ticketPrice",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "8"
+              }
+            ],
+            "numberOfBytes": "288"
           },
           "t_uint256": {
             "label": "uint256",

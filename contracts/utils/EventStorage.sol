@@ -57,6 +57,8 @@ contract EventStorage {
     //mapping for event completed status
     mapping(uint256 => bool) public eventCompletedStatus;
 
+    mapping(uint256 => bool) public eventEndedStatus;
+
     //block time
     uint256 public constant blockTime = 2;
 
@@ -81,8 +83,8 @@ contract EventStorage {
     //platformFeePercent
     uint256 internal platformFeePercent;
 
-    //ticketCommission
-    uint256 internal ticketCommissionPercent;
+    // //ticketCommission
+    // uint256 internal ticketCommissionPercent;
 
     //
     // This empty reserved space is put in place to allow future versions to add new
