@@ -171,15 +171,17 @@ contract TicketMaster is Ticket, TicketMasterStorage {
             ticketSold[buyTicketId] <= totalCapacity,
             "TicketMaster: All tickets are sold"
         );
-        checkTicketFees(
-            tokenAmount,
-            actualPrice,
-            eventOrganiser,
-            tokenAddress,
-            conversionAddress,
-            mintedToken,
-            buyTicketId
-        );
+        if(actualPrice != 0) {
+            checkTicketFees(
+                tokenAmount,
+                actualPrice,
+                eventOrganiser,
+                tokenAddress,
+                conversionAddress,
+                mintedToken,
+                buyTicketId
+            );
+        }
         buyTicketTokenAddress[buyTicketId][mintedToken] = tokenAddress;
         ////////////not needed this two mappings
         ticketBoughtAddress[msg.sender][buyTicketId] = true;

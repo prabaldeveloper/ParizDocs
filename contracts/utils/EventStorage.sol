@@ -57,8 +57,6 @@ contract EventStorage {
     //mapping for event completed status
     mapping(uint256 => bool) public eventCompletedStatus;
 
-    mapping(uint256 => bool) public eventEndedStatus;
-
     //block time
     uint256 public constant blockTime = 2;
 
@@ -86,10 +84,12 @@ contract EventStorage {
     // //ticketCommission
     // uint256 internal ticketCommissionPercent;
 
+    mapping(uint256 => bool) public eventEndedStatus;
+
     //
     // This empty reserved space is put in place to allow future versions to add new
     // variables without shifting down storage in the inheritance chain.
     // See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
     //
-    uint256[999] private ______gap;
+    uint256[998] private ______gap;
 }
