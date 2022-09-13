@@ -116,7 +116,7 @@ async function main() {
     // Cancel Event
     // await new Promise(res => setTimeout(res, 5000));
     // await eventProxy.cancelEvent(1);
-    // console.log("Event Canceled");
+    // console.log("Event Cancelled");
 
     // await new Promise(res => setTimeout(res, 2000));    
     // await ticketMaster.refundTicketFees(1,[1]);
@@ -127,7 +127,7 @@ async function main() {
     await eventProxy.refundVenueFees(1);
     console.log("Fees Refunded");
 
-    // console.log(await eventProxy.isEventCanceled(2));
+    // console.log(await eventProxy.isEventCancelled(2));
 
 
 }

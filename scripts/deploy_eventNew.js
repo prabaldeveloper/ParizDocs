@@ -12,10 +12,11 @@ async function main() {
     // const ticketMasterAddress = "0xeBD9f8711dB196cb4474e642e5B7E7e54339E868"
 
     // local
-    const venueAddress = "0x7310A96bCfe992089571716448429985Be6F1fAc"
-    const conversionAddress = "0x13Ab92D6a638fb7e3FC9aCc6fc5d5E062Ff1649F"
+    const venueAddress = "0x03b8C424F94390265f0D3F6e18b76ab3576B075f"
+    const conversionAddress = "0x6976186575ba7C12549958A7790bDA4DeA030c48"
     // const manageContract = "0x8d4E05C512D11426B8c16BfE573ff9946e480C7C";
-    const ticketMasterAddress = "0xD9020C10b5613B963b904438279715380dBAC4eE"
+    const ticketMasterAddress = "0x029aEDF6399b2BC99291EA80952060bDD354168F"
+    const nfttoken = "0x25878178dCd3a55f2BAb89DfB6370B3a8f64db44";
 
     const dropsTreasury = await ethers.getContractFactory("Treasury");
     const treasuryProxy = await upgrades.deployProxy(dropsTreasury, [accounts[0]], { initializer: 'initialize' })
@@ -43,7 +44,7 @@ async function main() {
     const eventProxy = await upgrades.deployProxy(eventContract, { initializer: 'initialize' })
     await eventProxy.deployed();
     // // await new Promise(res => setTimeout(res, 1000));
-    // console.log("Event contract", eventProxy.address);
+    console.log("Event contract", eventProxy.address);
 
     // const EventsV1 = await ethers.getContractFactory("EventsV1")
 
@@ -61,16 +62,18 @@ async function main() {
     await eventProxy.updateDeviation(5);
 
     // // await new Promise(res => setTimeout(res, 1000));
-    await eventProxy.whitelistTokenAddress(MATIC, true);
+    await eventProxy.whitelistErc20TokenAddress(MATIC, true);
 
     // // await new Promise(res => setTimeout(res, 1000));
-    await eventProxy.whitelistTokenAddress(Trace, true);
+    await eventProxy.whitelistErc20TokenAddress(Trace, true);
     // console.log("Token Added");
 
     // // await new Promise(res => setTimeout(res, 1000));
-    await eventProxy.whitelistTokenAddress(USDC, true);
+    await eventProxy.whitelistErc20TokenAddress(USDC, true);
 
-    await new Promise(res => setTimeout(res, 1000));
+    await eventProxy.whitelistErc721TokenAddress(nfttoken, true);
+
+    // await new Promise(res => setTimeout(res, 1000));
     await eventProxy.updateVenueContract(venueAddress);
 
     // await new Promise(res => setTimeout(res, 1000));
@@ -97,7 +100,7 @@ async function main() {
     // // await new Promise(res => setTimeout(res, 5000));
 
     await treasuryProxy.grantAdmin(eventProxy.address);
-    // await new Promise(res => setTimeout(res, 1000));
+    await new Promise(res => setTimeout(res, 3000));
     await treasuryProxy.grantAdmin(ticketMaster.address);
 
     const manageEvent = await ethers.getContractFactory("ManageEvent");
@@ -131,112 +134,113 @@ async function main() {
     console.log(fee[0]);
     // await TokenProxy.approve(eventProxy.address, fee[0]);
     
-    // console.log("approve done");
+    console.log("approve done");
 
     // console.log("balance", await TokenProxy.balanceOf(accounts[0]));
     // await new Promise(res => setTimeout(res, 3000));
     await eventProxy.add(["Event", "Test Category", "Test Event"], [startTime, endTime],
-        "QmQh36CsceXZoqS7v9YQLUyxXdRmWd8YWTBUz7WCXsiVty", 1, fee[0], "0", false, false);//tokenId = 1
+        "QmQh36CsceXZoqS7v9YQLUyxXdRmWd8YWTBUz7WCXsiVty", 1, fee[0], "20000000000000", true, false);//tokenId = 1
     console.log("done 1");
 
-    // let ticketPrice = await conversionProxy.convertFee("0x0000000000000000000000000000000000000000", "20000000000000");
-    // ticketPrice  = ticketPrice.toString();
-    // console.log("ticketPrice",ticketPrice);
+    let ticketPrice = await conversionProxy.convertFee("0x0000000000000000000000000000000000000000", "20000000000000");
+    ticketPrice  = ticketPrice.toString();
+    console.log("ticketPrice",ticketPrice);
 
-    await new Promise(res => setTimeout(res, 3000));
+    // await new Promise(res => setTimeout(res, 3000));
     
     // await TokenProxy.approve(ticketMasterAddress, "20000000000000");
 
     // await new Promise(res => setTimeout(res, 3000));
 
     // // //Buy Ticket
-    // await ticketMaster.buyTicket(1, "0x0000000000000000000000000000000000000000", ticketPrice, {value: ticketPrice})
+    await ticketMaster.buyTicket(1, "0x0000000000000000000000000000000000000000", ticketPrice, "ERC20",{value: ticketPrice})
+    console.log("Ticket Bought");
+
+    // await ticketMaster.buyTicket(1, Trace, "20000000000000", "ERC20");
     // console.log("Ticket Bought");
 
-    await ticketMaster.buyTicket(1, "0x0000000000000000000000000000000000000000", "0", {value: 
-        "500"
-    });
+    // // // // // //Buy Ticket
+    // // await new Promise(res => setTimeout(res, 3000));
+    const Token = await ethers.getContractFactory("Token721");
+    const TokenProxy = await Token.attach("0x25878178dCd3a55f2BAb89DfB6370B3a8f64db44");
+    await TokenProxy.approve(ticketMaster.address, "1");
+    await ticketMaster.buyTicket(1, nfttoken, "1", "ERC721");
     console.log("Ticket Bought");
 
-    // // // // //Buy Ticket
-    // await new Promise(res => setTimeout(res, 3000));
-    await ticketMaster.buyTicket(1, USDC, "10000000");
-    console.log("Ticket Bought");
+    // // // await new Promise(res => setTimeout(res, 1000));
+    // // // await eventProxy.updateEvent(1, "hello",[startTime, endTime-20]);
+    // // // console.log("Time Updated");
 
+    // // await new Promise(res => setTimeout(res, 4000));
+    // // await eventProxy.startEvent(1);
+    // // console.log("Event started");
+
+    // // await new Promise(res => setTimeout(res, 2000));
+    // // await ticketMaster.join(1,1);
+    // // console.log("joined");
+
+    // // await new Promise(res => setTimeout(res, 5000));
+
+    // // await eventProxy.claimVenueFees(1);
+    // // console.log("Venue Fees Claimed");
+
+    // // await new Promise(res => setTimeout(res, 4000));
+    // // await ticketMaster.claimTicketFees(1,["0x0000000000000000000000000000000000000000",Trace]);
+    // // console.log("TicketFees Claimed");
+
+
+    // // await new Promise(res => setTimeout(res, 5000));
+    // // await eventProxy.add(["Event", "Test Category", "Test Event"], [endTime + 8000, endTime + 10000],
+    // //     "Qmf3qJkz9S58TmvgFAeiHrzkyANUFwmyw5qDqFu29HJVAA", 1, fee[0], "1500000000000000000", true, false);
+
+    // // let fee2 = await eventProxy.calculateRent(1, endTime + 8000, endTime + 10000);
+    // // await TokenProxy.approve(eventProxy.address, fee2[0])
+
+    // // let ticketPrice2 = await conversionProxy.convertFee("0x0000000000000000000000000000000000000000","1500000000000000000");
+    // // ticketPrice2  = ticketPrice2.toString();
+    // // console.log("ticketPrice",ticketPrice2);
+
+    // // await new Promise(res => setTimeout(res, 2000));
+    // // await eventProxy.payEvent(2,fee2[0]);
+
+    // // // //Buy Ticket
     // // await new Promise(res => setTimeout(res, 1000));
-    // // await eventProxy.updateEvent(1, "hello",[startTime, endTime-20]);
-    // // console.log("Time Updated");
+    // // await ticketMaster.buyTicket(2, "0x0000000000000000000000000000000000000000", ticketPrice2, {value: ticketPrice2});
+    // // console.log("Ticket Bought");
 
-    // await new Promise(res => setTimeout(res, 4000));
-    // await eventProxy.startEvent(1);
-    // console.log("Event started");
+    // // // // // //Cancel Event
+    // // await new Promise(res => setTimeout(res, 5000));
+    // // await eventProxy.cancelEvent(2);
+    // // console.log("Event Cancelled");
 
-    // await new Promise(res => setTimeout(res, 2000));
-    // await ticketMaster.join(1,1);
-    // console.log("joined");
+    // // // await new Promise(res => setTimeout(res, 10000));
+    // // await eventProxy.refundVenueFees(2);
+    // // console.log("Venue Fees Refunded");
 
-    // await new Promise(res => setTimeout(res, 5000));
-
-    // await eventProxy.claimVenueFees(1);
-    // console.log("Venue Fees Claimed");
-
-    // await new Promise(res => setTimeout(res, 4000));
-    // await ticketMaster.claimTicketFees(1,["0x0000000000000000000000000000000000000000",Trace]);
-    // console.log("TicketFees Claimed");
-
-
-    // await new Promise(res => setTimeout(res, 5000));
-    // await eventProxy.add(["Event", "Test Category", "Test Event"], [endTime + 8000, endTime + 10000],
-    //     "Qmf3qJkz9S58TmvgFAeiHrzkyANUFwmyw5qDqFu29HJVAA", 1, fee[0], "1500000000000000000", true, false);
-
-    // let fee2 = await eventProxy.calculateRent(1, endTime + 8000, endTime + 10000);
-    // await TokenProxy.approve(eventProxy.address, fee2[0])
-
-    // let ticketPrice2 = await conversionProxy.convertFee("0x0000000000000000000000000000000000000000","1500000000000000000");
-    // ticketPrice2  = ticketPrice2.toString();
-    // console.log("ticketPrice",ticketPrice2);
-
-    // await new Promise(res => setTimeout(res, 2000));
-    // await eventProxy.payEvent(2,fee2[0]);
-
-    // // //Buy Ticket
-    // await new Promise(res => setTimeout(res, 1000));
-    // await ticketMaster.buyTicket(2, "0x0000000000000000000000000000000000000000", ticketPrice2, {value: ticketPrice2});
-    // console.log("Ticket Bought");
-
-    // // // // //Cancel Event
-    // await new Promise(res => setTimeout(res, 5000));
-    // await eventProxy.cancelEvent(2);
-    // console.log("Event Canceled");
-
-    // // await new Promise(res => setTimeout(res, 10000));
-    // await eventProxy.refundVenueFees(2);
-    // console.log("Venue Fees Refunded");
-
-    // // await new Promise(res => setTimeout(res, 10000));
-    // await ticketMaster.refundTicketFees(2,[1]);
-    // console.log("Ticket Fees Refunded");
+    // // // await new Promise(res => setTimeout(res, 10000));
+    // // await ticketMaster.refundTicketFees(2,[1]);
+    // // console.log("Ticket Fees Refunded");
 
        
-    // );//tokenId = 2
-    // console.log("done 2");
+    // // );//tokenId = 2
+    // // console.log("done 2");
 
 
-    // // await new Promise(res => setTimeout(res, 50000));
-    // let ticketId = await ticketMaster.ticketIdOfUser(accounts[0],1);
-    // console.log("ticketId",ticketId);
-    // let ticketContract = await eventProxy.ticketNFTAddress(1);
-    // console.log("ticketContract",ticketContract);
+    // // // await new Promise(res => setTimeout(res, 50000));
+    // // let ticketId = await ticketMaster.ticketIdOfUser(accounts[0],1);
+    // // console.log("ticketId",ticketId);
+    // // let ticketContract = await eventProxy.ticketNFTAddress(1);
+    // // console.log("ticketContract",ticketContract);
 
-    // const ticketContractAddress = await ethers.getContractFactory("Ticket");
-    // const TicketContractAddress = await ticketContractAddress.attach(ticketContract);
+    // // const ticketContractAddress = await ethers.getContractFactory("Ticket");
+    // // const TicketContractAddress = await ticketContractAddress.attach(ticketContract);
 
-    // let balance = await TicketContractAddress.balanceOf(accounts[0]);
-    // console.log("balance",balance);
-    // await new Promise(res => setTimeout(res, 10000));
-    // await ticketMaster.join(1, ticketId);
-    // console.log("join");
-    // await new Promise(res => setTimeout(res, 51000));
+    // // let balance = await TicketContractAddress.balanceOf(accounts[0]);
+    // // console.log("balance",balance);
+    // // await new Promise(res => setTimeout(res, 10000));
+    // // await ticketMaster.join(1, ticketId);
+    // // console.log("join");
+    // // await new Promise(res => setTimeout(res, 51000));
 
 }
 

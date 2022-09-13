@@ -7,6 +7,7 @@ import "./interface/IVenue.sol";
 import "./interface/IConversion.sol";
 import "./interface/ITicketMaster.sol";
 import "./interface/ITreasury.sol";
+import "./interface/ITicket.sol";
 import "./utils/EventAdminRole.sol";
 
 ///@title Create and join events
@@ -64,7 +65,22 @@ contract EventsV1 is EventAdminRole {
     event EventStarted(uint eventTokenId);
 
     ///@param eventTokenId event Token Id
-    event EventCanceled(uint256 indexed eventTokenId);
+    event EventCancelled(uint256 indexed eventTokenId);
+
+    event Exited(
+        uint256 indexed tokenId,
+        address indexed user,
+        uint256 leavingTime
+    );
+
+    // ///@param tokenId Event tokenId
+    // ///@param user User address
+    event Joined(
+        uint256 indexed tokenId,
+        address indexed user,
+        uint256 joiningTime,
+        uint256 ticketId
+    );
 
     ///@param eventTokenId event Token Id
     event EventCompleted(uint256 indexed eventTokenId);
@@ -213,7 +229,7 @@ contract EventsV1 is EventAdminRole {
             msg.sender,
             ticketPrice,
             venueFeeAmount,
-            ticketNFTAddress[_tokenId] /////////***************Change/////////////// */
+            ticketNFTAddress[_tokenId] 
         );
     }
 
@@ -279,8 +295,8 @@ contract EventsV1 is EventAdminRole {
             "Events: Event not ended"
         );
         require(
-            isEventCanceled(eventTokenId) == false,
-            "Events: Event is canceled"
+            isEventCancelled(eventTokenId) == false,
+            "Events: Event is cancelled"
         );
         require(
             isEventStarted(eventTokenId) == true,
@@ -294,8 +310,8 @@ contract EventsV1 is EventAdminRole {
     function end(uint256 eventTokenId) external {
         require(_exists(eventTokenId), "Events: TokenId does not exist");
         require(
-            isEventCanceled(eventTokenId) == false,
-            "Events: Event is canceled"
+            isEventCancelled(eventTokenId) == false,
+            "Events: Event is cancelled"
         );
         require(
             isEventStarted(eventTokenId) == true,
@@ -352,7 +368,7 @@ contract EventsV1 is EventAdminRole {
         uint256[] memory bookedEvents = eventsInVenue[venueTokenId];
         uint256 currentTime = block.timestamp;
         for (uint256 i = 0; i < bookedEvents.length; i++) {
-            if (bookedEvents[i] == eventTokenId || isEventCanceled(bookedEvents[i]) == true) continue;
+            if (bookedEvents[i] == eventTokenId || isEventCancelled(bookedEvents[i]) == true) continue;
             else {
                 uint256 bookedStartTime = getInfo[bookedEvents[i]].startTime;
                 uint256 bookedEndTime = getInfo[bookedEvents[i]].endTime;
@@ -401,7 +417,7 @@ contract EventsV1 is EventAdminRole {
     ) internal {
         address tokenAddress = IConversion(conversionContract).getBaseToken();
         require(
-            tokenStatus[tokenAddress] == true,
+            erc20TokenAddress[tokenAddress] == true,
             "Events: PaymentToken Not Supported"
         );
         (uint256 estimatedCost, uint256 _platformFees, ) = calculateRent(
@@ -431,7 +447,7 @@ contract EventsV1 is EventAdminRole {
         address venueOwner = IVenue(getVenueContract()).getVenueOwner(venueTokenId);
         require(msg.sender == venueOwner, "Events: Invalid Caller");
         for(uint256 i=0; i< eventIds.length; i++) {
-            if(isEventCanceled(eventIds[i]) == false && block.timestamp > getInfo[eventIds[i]].endTime) {
+            if(isEventCancelled(eventIds[i]) == false && block.timestamp > getInfo[eventIds[i]].endTime) {
                 if(balance[eventIds[i]] > 0) {
                     ITreasury(treasuryContract).claimFunds(venueOwner,tokenAddress, balance[eventIds[i]]);
                     balance[eventIds[i]] = 0;
@@ -444,8 +460,8 @@ contract EventsV1 is EventAdminRole {
     function refundVenueFees(uint256 eventTokenId) external {
         require(_exists(eventTokenId), "Events: TokenId does not exist");
         require(
-            isEventCanceled(eventTokenId) == true,
-            "Events: Event is not canceled"
+            isEventCancelled(eventTokenId) == true,
+            "Events: Event is not cancelled"
         );
         require(msg.sender == getInfo[eventTokenId].eventOrganiser, "Events: Invalid Address");
         require(getInfo[eventTokenId].payNow == true, "Events: Fees not paid");
@@ -459,9 +475,6 @@ contract EventsV1 is EventAdminRole {
         address venueOwner = IVenue(getVenueContract()).getVenueOwner(getInfo[eventTokenId].venueTokenId);
         ITreasury(treasuryContract).claimFunds(getInfo[eventTokenId].eventOrganiser,tokenAddress, balance[eventTokenId] - venueRentalCommissionFees);
         ITreasury(treasuryContract).claimFunds(venueOwner, tokenAddress, venueRentalCommissionFees);
-        //IERC20(tokenAddress).transfer(msg.sender, balance[eventTokenId] - venueRentalCommissionFees);
-        //IERC20(tokenAddress).transfer(venueOwner, venueRentalCommissionFees);
-
         balance[eventTokenId] = 0;
 
         emit VenueFeesRefunded(eventTokenId, getInfo[eventTokenId].eventOrganiser);
@@ -557,7 +570,7 @@ contract EventsV1 is EventAdminRole {
     ///@notice Cancel the event
     ///@param eventTokenId event Token Id
     function cancelEvent(uint256 eventTokenId) external {
-        require(_exists(eventTokenId), "ManageEvent: TokenId does not exist");
+        require(_exists(eventTokenId), "Events: TokenId does not exist");
         (
             ,
             ,
@@ -566,16 +579,67 @@ contract EventsV1 is EventAdminRole {
             ,
 
         ) = getEventDetails(eventTokenId);
-        //require(startTime > block.timestamp, "ManageEvent: Event started");
         require(isEventStarted(eventTokenId) == false, "Events: Event started");
         require(msg.sender == eventOrganiser, "Events: Invalid Address");
         require(
-            eventCanceledStatus[eventTokenId] == false,
-            "ManageEvent: Event already canceled"
+            eventCancelledStatus[eventTokenId] == false,
+            "Events: Event already cancelled"
         );
         
-        eventCanceledStatus[eventTokenId] = true;
-        emit EventCanceled(eventTokenId);
+        eventCancelledStatus[eventTokenId] = true;
+        emit EventCancelled(eventTokenId);
+    }
+
+    function exit(uint256 eventTokenId) external {
+        require(
+            _exists(eventTokenId),
+            "Events: TokenId does not exist"
+        );
+        require(
+         isEventStarted(eventTokenId) == true,
+            "Events: Event not started"
+        );
+        exitEventStatus[msg.sender][eventTokenId] = true;
+        emit Exited(eventTokenId, msg.sender, block.timestamp);
+
+    }
+
+    
+    ///@notice Users can join events
+    ///@dev Public function
+    ///@dev - Check whether event is started or not
+    ///@dev - Check whether user has ticket if the event is paid
+    ///@dev - Join the event
+    ///@param eventTokenId Event tokenId
+    function join(uint256 eventTokenId, uint256 ticketId) external {
+        require(
+            isEventCancelled(eventTokenId) == false,
+            "Events: Event is cancelled"
+        );
+        require(
+            _exists(eventTokenId),
+            "Events: TokenId does not exist"
+        );
+        (uint256 startTime, uint256 endTime, address eventOrganiser , , , ) = getEventDetails(eventTokenId);
+        require(
+            isEventStarted(eventTokenId) == true,
+            "Events: Event not started"
+        );
+        require(
+            block.timestamp >= startTime && endTime > block.timestamp || isEventEnded(eventTokenId) == true,
+            "Events: Event is not live" 
+        );
+        if(msg.sender == eventOrganiser) {
+            emit Joined(eventTokenId, msg.sender, block.timestamp, ticketId);
+        }
+        else {
+            require(
+                msg.sender == ITicket(ticketNFTAddress[eventTokenId]).ownerOf(ticketId),
+                "Events: Caller is not the owner"
+            );
+            joinEventStatus[ticketNFTAddress[eventTokenId]][ticketId] = true;
+            emit Joined(eventTokenId, msg.sender, block.timestamp, ticketId);
+        }
     }
 
     ///@notice Saves the status whether rent is paid or not
@@ -594,8 +658,8 @@ contract EventsV1 is EventAdminRole {
         return eventStartedStatus[eventId];
     }
 
-    function isEventCanceled(uint256 eventId) public view returns (bool) {
-        return eventCanceledStatus[eventId];
+    function isEventCancelled(uint256 eventId) public view returns (bool) {
+        return eventCancelledStatus[eventId];
     }
 
     function isEventEnded(uint256 eventId) public view returns (bool) {
@@ -623,5 +687,13 @@ contract EventsV1 is EventAdminRole {
             getInfo[tokenId].venueTokenId,
             getInfo[tokenId].ticketPrice
         );
+    }
+
+      function getJoinEventStatus(address _ticketNftAddress, uint256 _ticketId)
+        public
+        view
+        returns (bool)
+    {
+        return joinEventStatus[_ticketNftAddress][_ticketId];
     }
 }

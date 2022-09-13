@@ -21,7 +21,7 @@ contract ConversionV1 is Initializable, Ownable {
     event TokenAdded(address indexed tokenAddress);
     event Erc20Details(address indexed tokenAddress, string name, string symbol,uint256 decimal);
 
-    //event Erc721Details(address indexed tokenAddress, string name, string symbol);
+    event Erc721Details(address indexed tokenAddress, string name, string symbol);
 
     function initialize() public initializer {
         Ownable.ownable_init();
@@ -133,9 +133,9 @@ contract ConversionV1 is Initializable, Ownable {
         }
     }
 
-    // function getERC721Details(address _tokenAddress) public {
-    //     string memory _name =  IERC721MetadataUpgradeable(_tokenAddress).name();
-    //     string memory _symbol = IERC721MetadataUpgradeable(_tokenAddress).symbol();
-    //     emit Erc721Details(_tokenAddress, _name, _symbol);
-    // }
+    function getERC721Details(address _tokenAddress) public {
+        string memory _name =  IERC721Metadata(_tokenAddress).name();
+        string memory _symbol = IERC721Metadata(_tokenAddress).symbol();
+        emit Erc721Details(_tokenAddress, _name, _symbol);
+    }
 }

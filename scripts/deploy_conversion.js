@@ -49,6 +49,8 @@ async function main() {
     // await new Promise(res => setTimeout(res, 5000));
 
     await conversion.getERC20Details(USDC);
+
+    await conversion.getERC721Details("0x25878178dCd3a55f2BAb89DfB6370B3a8f64db44");
     // await new Promise(res => setTimeout(res, 5000));
 
     console.log("For USDT ------------------------------");

@@ -28,12 +28,13 @@ contract EventAdminRole is EventStorage, EventMetadata {
     ///@param platformFeePercent platformFeePercent
     event PlatformFeeUpdated(uint256 platformFeePercent);
 
-    // ///@param ticketCommissionPercent ticketCommissionPercent
-    // event TicketCommissionUpdated(uint256 ticketCommissionPercent);
-
     ///@param tokenAddress erc-20 token Address
     ///@param status status of the address(true or false)
-    event TokenWhitelisted(address indexed tokenAddress, bool status);
+    event Erc20TokenUpdated(address indexed tokenAddress, bool status);
+
+    ///@param tokenAddress erc-721 token address
+    ///@param status status of the address(true or false)
+    event Erc721TokenUpdated(address indexed tokenAddress, bool status);
 
     ///@param percentage deviationPercentage
     event DeviationPercentageUpdated(uint256 percentage);
@@ -54,12 +55,22 @@ contract EventAdminRole is EventStorage, EventMetadata {
     ///@dev -  Update the status of paymentToken
     ///@param tokenAddress erc-20 token Address
     ///@param status status of the address(true or false)
-    function whitelistTokenAddress(address tokenAddress, bool status)
+    function whitelistErc20TokenAddress(address tokenAddress, bool status)
         external
         onlyOwner
     {
-        tokenStatus[tokenAddress] = status;
-        emit TokenWhitelisted(tokenAddress, status);
+        erc20TokenAddress[tokenAddress] = status;
+        emit Erc20TokenUpdated(tokenAddress, status);
+    }
+
+    ///@notice Add supported Erc-721 tokens for the payment
+    ///@dev Only admin can call
+    ///@dev -  Update the status of paymentToken
+    ///@param tokenAddress erc-721 token Address
+    ///@param status status of the address(true or false)
+    function whitelistErc721TokenAddress(address tokenAddress, bool status) external onlyOwner {
+        erc721TokenAddress[tokenAddress] = status;
+        emit Erc721TokenUpdated(tokenAddress, status);
     }
 
     ///@notice updates conversionContract address
@@ -129,16 +140,6 @@ contract EventAdminRole is EventStorage, EventMetadata {
         emit PlatformFeeUpdated(_platformFeePercent);
     }
 
-    // ///@notice updates ticketCommissionPercent
-    // ///@param _ticketCommissionPercent ticketCommissionPercent
-    // function updateTicketCommission(uint256 _ticketCommissionPercent)
-    //     external
-    //     onlyOwner
-    // {
-    //     ticketCommissionPercent = _ticketCommissionPercent;
-    //     emit TicketCommissionUpdated(ticketCommissionPercent);
-    // }
-
     ///@notice Admin can whiteList users
     ///@param _whitelistAddresses users address
     ///@param _status status of the address
@@ -182,14 +183,19 @@ contract EventAdminRole is EventStorage, EventMetadata {
         return platformFeePercent;
     }
 
-    // ///@notice Returns deviationPercentage
-    // function getTicketCommission() public view returns (uint256) {
-    //     return ticketCommissionPercent;
-    // }
-
     ///@notice Returns eventStatus
     function getEventStatus() public view returns (bool) {
         return isPublic;
+    }
+
+    ///@notice Returns whitelisted status of erc721TokenAddress
+    function isErc721TokenWhitelisted(address tokenAddress) public view returns (bool) {
+        return erc721TokenAddress[tokenAddress];
+    }
+
+    ///@notice Returns whitelisted status of erc20TokenAddress
+    function isErc20TokenWhitelisted(address tokenAddress) public view returns (bool) {
+        return erc20TokenAddress[tokenAddress];
     }
 
     uint256[49] private ______gap;

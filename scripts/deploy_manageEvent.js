@@ -45,7 +45,7 @@ async function main() {
     // //Cancel Event
     // await manageEventContract.cancelEvent(2);
     // await new Promise(res => setTimeout(res, 1000));
-    // console.log(await  manageEventContract.isEventCanceled(3));
+    // console.log(await  manageEventContract.isEventCancelled(3));
     
     // //InitiateSession
     // await manageEventContract.initiateSession(1,0);
