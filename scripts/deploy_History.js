@@ -9,8 +9,8 @@ async function main() {
     await historyContract.deployed();
     console.log("History Contract", historyContract.address);
 
-    await new Promise(res => setTimeout(res, 1000));
-    await historyContract.addData(accounts[0], 1, "Hello");
+    // await new Promise(res => setTimeout(res, 1000));
+    // await historyContract.addData(accounts[0], 1, "Hello");
 }
 
 main()
