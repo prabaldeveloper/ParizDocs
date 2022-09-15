@@ -39,7 +39,6 @@ contract EventStorage {
     //when new event are created, add that event id to this array
     mapping(uint256 => uint256[]) public eventsInVenue;
 
-    mapping(address => mapping(uint256 => bool)) public exitEventStatus;
     //mapping for getting rent status
     mapping(address => mapping(uint256 => bool)) public rentStatus;
 
@@ -56,12 +55,7 @@ contract EventStorage {
     mapping(uint256 => bool) public eventStartedStatus;
 
     //mapping for event cancel status
-    mapping(uint256 => bool) public eventCanceledStatus;
-
-    //mapping for event completed status
-    mapping(uint256 => bool) public eventCompletedStatus;
-
-    mapping(uint256 => bool) public eventEndedStatus;
+    mapping(uint256 => bool) public eventCancelledStatus;
 
     mapping(address => mapping(uint256 => bool)) public joinEventStatus;
 
@@ -82,6 +76,8 @@ contract EventStorage {
 
     //treasury contract
     address payable internal treasuryContract;
+
+    address internal manageEvent;
 
     //isPublic true or false
     bool internal isPublic;

@@ -63,6 +63,14 @@ contract TicketMaster is Ticket, TicketMasterStorage {
         emit TicketCommissionUpdated(ticketCommissionPercent);
     }
 
+     function getEventContract() public view returns (address) {
+        return eventContract;
+    }
+
+    function getTicketCommissionPercent() public view returns (uint256) {
+        return ticketCommissionPercent;
+    }
+
     ///@notice updates ownerStatus
     ///@param _owner owner address
     ///@param status status(true or false)

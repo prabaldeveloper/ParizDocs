@@ -15,7 +15,7 @@ contract EventAdminRole is EventStorage, EventMetadata, VerifySignature {
     ///@param venueContract venueContract address
     event VenueContractUpdated(address venueContract);
 
-    // ///@param treasuryContract treasuryContract address
+    ///@param treasuryContract treasuryContract address
     event TreasuryContractUpdated(address treasuryContract);
 
     ///@param conversionContract conversionContract address
@@ -29,9 +29,6 @@ contract EventAdminRole is EventStorage, EventMetadata, VerifySignature {
 
     ///@param platformFeePercent platformFeePercent
     event PlatformFeeUpdated(uint256 platformFeePercent);
-
-    // ///@param ticketCommissionPercent ticketCommissionPercent
-    // event TicketCommissionUpdated(uint256 ticketCommissionPercent);
 
     ///@param tokenAddress erc-20 token Address
     ///@param status status of the address(true or false)
@@ -134,6 +131,15 @@ contract EventAdminRole is EventStorage, EventMetadata, VerifySignature {
         emit TicketMasterContractUpdated(_ticketMaster);
     }
 
+    function updateManageEventContract(address _manageEvent) external onlyOwner {
+        require(
+            _manageEvent.isContract(),
+            "Events: Address is not a contract"
+        );
+        manageEvent = _manageEvent;
+
+    }
+
     ///@notice To update the event status(public or private events)
     ///@param _isPublic true or false
     function updateEventStatus(bool _isPublic) external onlyOwner {
@@ -154,16 +160,6 @@ contract EventAdminRole is EventStorage, EventMetadata, VerifySignature {
         signerAddress = _signerAddress;
         emit signerAddressUpdated(_signerAddress);
     }
-
-    // ///@notice updates ticketCommissionPercent
-    // ///@param _ticketCommissionPercent ticketCommissionPercent
-    // function updateTicketCommission(uint256 _ticketCommissionPercent)
-    //     external
-    //     onlyOwner
-    // {
-    //     ticketCommissionPercent = _ticketCommissionPercent;
-    //     emit TicketCommissionUpdated(ticketCommissionPercent);
-    // }
 
     ///@notice Admin can whiteList users
     ///@param _whitelistAddresses users address
@@ -198,6 +194,10 @@ contract EventAdminRole is EventStorage, EventMetadata, VerifySignature {
         return ticketMaster;
     }
 
+    function getManageEventContract() public view returns (address) {
+        return manageEvent;
+    }
+
     ///@notice Returns deviationPercentage
     function getDeviationPercentage() public view returns (uint256) {
         return deviationPercentage;
@@ -207,11 +207,6 @@ contract EventAdminRole is EventStorage, EventMetadata, VerifySignature {
     function getPlatformFeePercent() public view returns (uint256) {
         return platformFeePercent;
     }
-
-    // ///@notice Returns deviationPercentage
-    // function getTicketCommission() public view returns (uint256) {
-    //     return ticketCommissionPercent;
-    // }
 
     ///@notice Returns eventStatus
     function getEventStatus() public view returns (bool) {

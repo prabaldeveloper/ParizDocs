@@ -8,7 +8,9 @@ import "./interface/IConversion.sol";
 import "./interface/ITicketMaster.sol";
 import "./interface/ITreasury.sol";
 import "./interface/ITicket.sol";
+import "./interface/IManageEvent.sol";
 import "./utils/EventAdminRole.sol";
+
 
 ///@title Create and join events
 ///@author Prabal Srivastav
@@ -67,23 +69,14 @@ contract EventsV1 is EventAdminRole {
     ///@param eventTokenId event Token Id
     event EventCancelled(uint256 indexed eventTokenId);
 
-        event Exited(
-        uint256 indexed tokenId,
-        address indexed user,
-        uint256 leavingTime
-    );
-
-    // ///@param tokenId Event tokenId
-    // ///@param user User address
+    ///@param tokenId Event tokenId
+    ///@param user User address
     event Joined(
         uint256 indexed tokenId,
         address indexed user,
         uint256 joiningTime,
         uint256 ticketId
     );
-
-    ///@param eventTokenId event Token Id
-    event EventCompleted(uint256 indexed eventTokenId);
 
     event VenueFeesClaimed(uint256 indexed venueTokenId, uint256[] eventIds, address venueOwner);
 
@@ -286,53 +279,6 @@ contract EventsV1 is EventAdminRole {
         emit Favourite(msg.sender, tokenId, isFavourite);
     }
 
-    ///@notice Called by event organiser to mark the event status as completed
-    ///@param eventTokenId event token id
-    function complete(uint256 eventTokenId) external {
-        require(_exists(eventTokenId), "Events: TokenId does not exist");
-        require(
-            block.timestamp >= getInfo[eventTokenId].endTime,
-            "Events: Event not ended"
-        );
-        require(
-            isEventCanceled(eventTokenId) == false,
-            "Events: Event is canceled"
-        );
-        require(
-            isEventStarted(eventTokenId) == true,
-            "Events: Event is not started"
-        );
-        require(msg.sender == getInfo[eventTokenId].eventOrganiser, "Events: Invalid Caller");
-        eventCompletedStatus[eventTokenId] = true;
-        emit EventCompleted(eventTokenId);
-    }
-
-    function end(
-        bytes memory signature,
-        address ticketHolder,
-        uint256 eventTokenId
-        ) external {
-            require(
-                recoverSigner(
-                    getMessageHash(ticketHolder, eventTokenId, 0),
-                    signature
-                ) == signerAddress
-            );
-            require(_exists(eventTokenId), "Events: TokenId does not exist");
-            require(
-                isEventCanceled(eventTokenId) == false,
-                "Events: Event is canceled"
-            );
-            require(
-                isEventStarted(eventTokenId) == true,
-                "Events: Event is not started"
-            );
-            require(ticketHolder == getInfo[eventTokenId].eventOrganiser, "Events: Invalid Caller");
-            eventEndedStatus[eventTokenId] = true;
-            emit EventEnded(eventTokenId);
-    }
-
-
     function initialize() public initializer {
         Ownable.ownable_init();
         _initializeNFT721Mint();
@@ -378,7 +324,7 @@ contract EventsV1 is EventAdminRole {
         uint256[] memory bookedEvents = eventsInVenue[venueTokenId];
         uint256 currentTime = block.timestamp;
         for (uint256 i = 0; i < bookedEvents.length; i++) {
-            if (bookedEvents[i] == eventTokenId || isEventCanceled(bookedEvents[i]) == true) continue;
+            if (bookedEvents[i] == eventTokenId || isEventCancelled(bookedEvents[i]) == true) continue;
             else {
                 uint256 bookedStartTime = getInfo[bookedEvents[i]].startTime;
                 uint256 bookedEndTime = getInfo[bookedEvents[i]].endTime;
@@ -457,7 +403,7 @@ contract EventsV1 is EventAdminRole {
         address venueOwner = IVenue(getVenueContract()).getVenueOwner(venueTokenId);
         require(msg.sender == venueOwner, "Events: Invalid Caller");
         for(uint256 i=0; i< eventIds.length; i++) {
-            if(isEventCanceled(eventIds[i]) == false && block.timestamp > getInfo[eventIds[i]].endTime) {
+            if(isEventCancelled(eventIds[i]) == false && block.timestamp > getInfo[eventIds[i]].endTime) {
                 if(balance[eventIds[i]] > 0) {
                     ITreasury(treasuryContract).claimFunds(venueOwner,tokenAddress, balance[eventIds[i]]);
                     balance[eventIds[i]] = 0;
@@ -470,7 +416,7 @@ contract EventsV1 is EventAdminRole {
     function refundVenueFees(uint256 eventTokenId) external {
         require(_exists(eventTokenId), "Events: TokenId does not exist");
         require(
-            isEventCanceled(eventTokenId) == true,
+            isEventCancelled(eventTokenId) == true,
             "Events: Event is not canceled"
         );
         require(msg.sender == getInfo[eventTokenId].eventOrganiser, "Events: Invalid Address");
@@ -490,7 +436,6 @@ contract EventsV1 is EventAdminRole {
         emit VenueFeesRefunded(eventTokenId, getInfo[eventTokenId].eventOrganiser);
 
     }
-
 
     ///@notice Start the event
     ///@param eventTokenId event Token Id
@@ -592,36 +537,13 @@ contract EventsV1 is EventAdminRole {
         require(isEventStarted(eventTokenId) == false, "Events: Event started");
         require(msg.sender == eventOrganiser, "Events: Invalid Address");
         require(
-            eventCanceledStatus[eventTokenId] == false,
+            eventCancelledStatus[eventTokenId] == false,
             "Events: Event already cancelled"
         );
-        eventCanceledStatus[eventTokenId] = true;
+        eventCancelledStatus[eventTokenId] = true;
         emit EventCancelled(eventTokenId);
     }
 
-    function exit(
-        bytes memory signature,
-        address ticketHolder,
-        uint256 eventTokenId
-        ) external {
-            require(
-                recoverSigner(
-                    getMessageHash(ticketHolder, eventTokenId, 0),
-                    signature
-                ) == getSignerAddress()
-            );
-            require(
-                _exists(eventTokenId),
-                "Events: TokenId does not exist"
-            );
-            require(
-                isEventStarted(eventTokenId) == true,
-                "Events: Event not started"
-            );
-            exitEventStatus[ticketHolder][eventTokenId] = true;
-            emit Exited(eventTokenId, ticketHolder, block.timestamp);
-
-    }
 
     ///@notice Users can join events
     ///@dev Public function
@@ -642,7 +564,7 @@ contract EventsV1 is EventAdminRole {
             ) == getSignerAddress()
         );
         require(
-            isEventCanceled(eventTokenId) == false,
+            isEventCancelled(eventTokenId) == false,
             "Events: Event is cancelled"
         );
         require(
@@ -687,13 +609,8 @@ contract EventsV1 is EventAdminRole {
         return eventStartedStatus[eventId];
     }
 
-    function isEventCanceled(uint256 eventId) public view returns (bool) {
-        return eventCanceledStatus[eventId];
-    }
-
-    function isEventEnded(uint256 eventId) public view returns (bool) {
-        return eventEndedStatus[eventId];
-        
+    function isEventCancelled(uint256 eventId) public view returns (bool) {
+        return eventCancelledStatus[eventId];
     }
 
     function getEventDetails(uint256 tokenId)
@@ -723,5 +640,9 @@ contract EventsV1 is EventAdminRole {
         returns (bool)
     {
         return joinEventStatus[_ticketNftAddress][_ticketId];
+    }
+
+    function isEventEnded(uint256 eventId) public view returns (bool) {
+        return IManageEvent(manageEvent).isEventEnded(eventId);
     }
 }
