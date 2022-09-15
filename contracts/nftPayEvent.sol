@@ -1,20 +1,337 @@
 // SPDX-License-Identifier: UNLICENSED
 
-pragma solidity ^0.8.0;
+// pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "./interface/IVenue.sol";
-import "./interface/IConversion.sol";
-import "./interface/ITicketMaster.sol";
-import "./interface/ITreasury.sol";
-import "./interface/ITicket.sol";
-import "./utils/EventAdminRole.sol";
+interface IEvents {
+    function _exists(uint256 eventTokenId) external view returns(bool);
+    function getEventDetails(uint256 tokenId) external view returns(uint256, uint256, address payable, bool, uint256, uint256);
+    function burn(uint256 tokenId) external;
+    function getConversionContract() external view returns (address);
+    function getDeviationPercentage() external view returns (uint256);
+    function getTreasuryContract() external view returns (address);
+    function isEventCancelled(uint256 eventId) external view returns(bool);
+    function isEventStarted(uint256 eventId) external view returns(bool);
+    function isEventEnded(uint256 eventId) external view returns(bool);
+    function isErc20TokenWhitelisted(address tokenAddress) external view returns (bool);
+    function isErc721TokenWhitelisted(address tokenAddress) external view returns (bool);
+    function getJoinEventStatus(address _ticketNftAddress, uint256 _ticketId) external view returns (bool);
+}
 
-///@title Create and join events
-///@author Prabal Srivastav
-///@notice Users can create event and join events
+// pragma solidity ^0.8.0;
 
-// contract EventsV2 is EventAdminRole {
+// import "./EventStorage.sol";
+// import "./EventMetadata.sol";
+
+// contract EventAdminRole is EventStorage, EventMetadata {
+
+//     using AddressUpgradeable for address;
+//     using AddressUpgradeable for address payable;
+
+//     ///@param venueContract venueContract address
+//     event VenueContractUpdated(address venueContract);
+
+//     // ///@param treasuryContract treasuryContract address
+//     event TreasuryContractUpdated(address treasuryContract);
+
+//     ///@param conversionContract conversionContract address
+//     event ConversionContractUpdated(address conversionContract);
+
+//     ///@param ticketMaster ticketMaster contract address
+//     event TicketMasterContractUpdated(address ticketMaster);
+
+//     ///@param isPublic isPublic true or false
+//     event EventStatusUpdated(bool isPublic);
+
+//     ///@param platformFeePercent platformFeePercent
+//     event PlatformFeeUpdated(uint256 platformFeePercent);
+
+//     ///@param tokenAddress erc-20 token Address
+//     ///@param status status of the address(true or false)
+//     event Erc20TokenUpdated(address indexed tokenAddress, bool status);
+
+//     ///@param tokenAddress erc-721 token address
+//     ///@param status status of the address(true or false)
+//     event Erc721TokenUpdated(address indexed tokenAddress, bool status);
+
+//     ///@param percentage deviationPercentage
+//     event DeviationPercentageUpdated(uint256 percentage);
+
+//     ///@param whitelistedAddress users address
+//     ///@param status status of the address
+//     event WhiteList(address whitelistedAddress, bool status);
+
+//     ///@notice Allows Admin to update deviation percentage
+//     ///@param _deviationPercentage deviationPercentage
+//     function updateDeviation(uint256 _deviationPercentage) external onlyOwner {
+//         deviationPercentage = _deviationPercentage;
+//         emit DeviationPercentageUpdated(_deviationPercentage);
+//     }
+
+//     ///@notice Add supported Erc-20 tokens for the payment
+//     ///@dev Only admin can call
+//     ///@dev -  Update the status of paymentToken
+//     ///@param tokenAddress erc-20 token Address
+//     ///@param status status of the address(true or false)
+//     function whitelistErc20TokenAddress(address tokenAddress, bool status)
+//         external
+//         onlyOwner
+//     {
+//         erc20TokenAddress[tokenAddress] = status;
+//         emit Erc20TokenUpdated(tokenAddress, status);
+//     }
+
+//     ///@notice Add supported Erc-721 tokens for the payment
+//     ///@dev Only admin can call
+//     ///@dev -  Update the status of paymentToken
+//     ///@param tokenAddress erc-721 token Address
+//     ///@param status status of the address(true or false)
+//     function whitelistErc721TokenAddress(address tokenAddress, bool status) external onlyOwner {
+//         erc721TokenAddress[tokenAddress] = status;
+//         emit Erc721TokenUpdated(tokenAddress, status);
+//     }
+
+//     ///@notice updates conversionContract address
+//     ///@param _conversionContract conversionContract address
+//     function updateConversionContract(address _conversionContract)
+//         external
+//         onlyOwner
+//     {
+//         require(
+//             _conversionContract.isContract(),
+//             "Events: Address is not a contract"
+//         );
+//         conversionContract = _conversionContract;
+//         emit ConversionContractUpdated(_conversionContract);
+//     }
+
+//     ///@notice updates conversionContract address
+//     ///@param _venueContract venueContract address
+//     function updateVenueContract(address _venueContract) external onlyOwner {
+//         require(
+//             _venueContract.isContract(),
+//             "Events: Address is not a contract"
+//         );
+//         venueContract = _venueContract;
+//         emit VenueContractUpdated(_venueContract);
+//     }
+
+//     ///@notice updates treasuryContract address
+//     ///@param _treasuryContract treasuryContract address
+//     function updateTreasuryContract(address payable _treasuryContract)
+//         external
+//         onlyOwner
+//     {
+//         require(
+//             _treasuryContract.isContract(),
+//             "Events: Address is not a contract"
+//         );
+//         treasuryContract = _treasuryContract;
+//         emit TreasuryContractUpdated(_treasuryContract);
+//     }
+
+//     ///@notice updates ticketMaster address
+//     ///@param _ticketMaster ticketMaster address
+//     function updateticketMasterContract(address _ticketMaster)
+//         external
+//         onlyOwner
+//     {
+//         require(
+//             _ticketMaster.isContract(),
+//             "Events: Address is not a contract"
+//         );
+//         ticketMaster = _ticketMaster;
+//         emit TicketMasterContractUpdated(_ticketMaster);
+//     }
+
+//     ///@notice To update the event status(public or private events)
+//     ///@param _isPublic true or false
+//     function updateEventStatus(bool _isPublic) external onlyOwner {
+//         isPublic = _isPublic;
+//         emit EventStatusUpdated(_isPublic);
+//     }
+
+//     ///@notice updates platformFeePercent
+//     ///@param _platformFeePercent platformFeePercent
+//     function updatePlatformFee(uint256 _platformFeePercent) external onlyOwner {
+//         platformFeePercent = _platformFeePercent;
+//         emit PlatformFeeUpdated(_platformFeePercent);
+//     }
+
+//     ///@notice Admin can whiteList users
+//     ///@param _whitelistAddresses users address
+//     ///@param _status status of the address
+//     function updateWhitelist(
+//         address[] memory _whitelistAddresses,
+//         bool[] memory _status
+//     ) external onlyOwner {
+//         for (uint256 i = 0; i < _whitelistAddresses.length; i++) {
+//             whiteListedAddress[_whitelistAddresses[i]] = _status[i];
+//             emit WhiteList(_whitelistAddresses[i], _status[i]);
+//         }
+//     }
+
+//     ///@notice Returns venue contract address
+//     function getVenueContract() public view returns (address) {
+//         return venueContract;
+//     }
+
+//     ///@notice Returns conversionContract address
+//     function getConversionContract() public view returns (address) {
+//         return conversionContract;
+//     }
+
+//     ///@notice Returns treasuryContract address
+//     function getTreasuryContract() public view returns (address) {
+//         return treasuryContract;
+//     }
+
+//     ///@notice Returns ticketMaster address
+//     function getTicketMasterContract() public view returns (address) {
+//         return ticketMaster;
+//     }
+
+//     ///@notice Returns deviationPercentage
+//     function getDeviationPercentage() public view returns (uint256) {
+//         return deviationPercentage;
+//     }
+
+//     ///@notice Returns platformFeePercent
+//     function getPlatformFeePercent() public view returns (uint256) {
+//         return platformFeePercent;
+//     }
+
+//     ///@notice Returns eventStatus
+//     function getEventStatus() public view returns (bool) {
+//         return isPublic;
+//     }
+
+//     ///@notice Returns whitelisted status of erc721TokenAddress
+//     function isErc721TokenWhitelisted(address tokenAddress) public view returns (bool) {
+//         return erc721TokenAddress[tokenAddress];
+//     }
+
+//     ///@notice Returns whitelisted status of erc20TokenAddress
+//     function isErc20TokenWhitelisted(address tokenAddress) public view returns (bool) {
+//         return erc20TokenAddress[tokenAddress];
+//     }
+
+//     uint256[49] private ______gap;
+// }
+
+// pragma solidity ^0.8.0;
+
+// contract EventStorage {
+//     //Details of the event
+//     struct Details {
+//         string name;
+//         string category;
+//         string description;
+//         uint256 tokenId;
+//         uint256 startTime;
+//         uint256 endTime;
+//         uint256 venueTokenId;
+//         bool payNow;
+//         address payable eventOrganiser;
+//         uint256 ticketPrice;
+//     }
+
+//     //mapping for getting event details
+//     mapping(uint256 => Details) public getInfo;
+
+//     //mapping for getting supported erc20TokenAddress
+//     mapping(address => bool) public erc20TokenAddress;
+
+//     //mapping for getting supported erc721TokenAddress
+//     mapping(address => bool) public erc721TokenAddress;
+
+//     //mapping for featured events
+//     mapping(uint256 => bool) public featuredEvents;
+
+//     //mapping for favourite events
+//     mapping(address => mapping(uint256 => bool)) public favouriteEvents;
+
+//     //mapping for whiteListed address
+//     mapping(address => bool) public whiteListedAddress;
+
+//     //map venue ID to eventId list which are booked in that venue
+//     //when new event are created, add that event id to this array
+//     mapping(uint256 => uint256[]) public eventsInVenue;
+
+//     mapping(address => mapping(uint256 => bool)) public exitEventStatus;
+
+//     //mapping for getting rent status
+//     mapping(address => mapping(uint256 => bool)) public rentStatus;
+
+//     //mappping for storing erc20 balance against eventTokenId
+//     mapping(uint256 => uint256) public balance;
+
+//     // mapping for ticket NFT contract
+//     mapping(uint256 => address) public ticketNFTAddress;
+
+//     //mapping for storing tokenAddress against eventTokenId
+//     mapping(uint256 => address) public eventTokenAddress;
+
+//     //mapping for event start status
+//     mapping(uint256 => bool) public eventStartedStatus;
+
+//     //mapping for event cancel status
+//     mapping(uint256 => bool) public eventCancelledStatus;
+
+//     //mapping for event completed status
+//     mapping(uint256 => bool) public eventCompletedStatus;
+
+//     mapping(uint256 => bool) public eventEndedStatus;
+
+//     mapping(address => mapping(uint256 => bool)) public joinEventStatus;
+
+//     //block time
+//     uint256 public constant blockTime = 2;
+
+//     // Deviation Percentage
+//     uint256 internal deviationPercentage;
+
+//     //venue contract address
+//     address internal venueContract;
+
+//     //convesion contract address
+//     address internal conversionContract;
+
+//     //ticket master contract address
+//     address internal ticketMaster;
+
+//     //treasury contract
+//     address payable internal treasuryContract;
+
+//     //isPublic true or false
+//     bool internal isPublic;
+
+//     //platformFeePercent
+//     uint256 internal platformFeePercent;
+
+//     //
+//     // This empty reserved space is put in place to allow future versions to add new
+//     // variables without shifting down storage in the inheritance chain.
+//     // See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
+//     //
+//     uint256[999] private ______gap;
+// }
+
+
+// pragma solidity ^0.8.0;
+
+// import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+// import "./interface/IVenue.sol";
+// import "./interface/IConversion.sol";
+// import "./interface/ITicketMaster.sol";
+// import "./interface/ITreasury.sol";
+// import "./interface/ITicket.sol";
+// import "./utils/EventAdminRole.sol";
+
+// ///@title Create and join events
+// ///@author Prabal Srivastav
+// ///@notice Users can create event and join events
+
+// contract EventsV1 is EventAdminRole {
     
 //     ///@param tokenId Event tokenId
 //     ///@param tokenCID Event tokenCID

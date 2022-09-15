@@ -28,6 +28,9 @@ contract EventAdminRole is EventStorage, EventMetadata {
     ///@param platformFeePercent platformFeePercent
     event PlatformFeeUpdated(uint256 platformFeePercent);
 
+    // ///@param ticketCommissionPercent ticketCommissionPercent
+    // event TicketCommissionUpdated(uint256 ticketCommissionPercent);
+
     ///@param tokenAddress erc-20 token Address
     ///@param status status of the address(true or false)
     event Erc20TokenUpdated(address indexed tokenAddress, bool status);
@@ -35,7 +38,6 @@ contract EventAdminRole is EventStorage, EventMetadata {
     ///@param tokenAddress erc-721 token address
     ///@param status status of the address(true or false)
     event Erc721TokenUpdated(address indexed tokenAddress, bool status);
-
     ///@param percentage deviationPercentage
     event DeviationPercentageUpdated(uint256 percentage);
 
@@ -59,8 +61,9 @@ contract EventAdminRole is EventStorage, EventMetadata {
         external
         onlyOwner
     {
-        erc20TokenAddress[tokenAddress] = status;
+         erc20TokenAddress[tokenAddress] = status;
         emit Erc20TokenUpdated(tokenAddress, status);
+    
     }
 
     ///@notice Add supported Erc-721 tokens for the payment
@@ -140,6 +143,16 @@ contract EventAdminRole is EventStorage, EventMetadata {
         emit PlatformFeeUpdated(_platformFeePercent);
     }
 
+    // ///@notice updates ticketCommissionPercent
+    // ///@param _ticketCommissionPercent ticketCommissionPercent
+    // function updateTicketCommission(uint256 _ticketCommissionPercent)
+    //     external
+    //     onlyOwner
+    // {
+    //     ticketCommissionPercent = _ticketCommissionPercent;
+    //     emit TicketCommissionUpdated(ticketCommissionPercent);
+    // }
+
     ///@notice Admin can whiteList users
     ///@param _whitelistAddresses users address
     ///@param _status status of the address
@@ -183,12 +196,17 @@ contract EventAdminRole is EventStorage, EventMetadata {
         return platformFeePercent;
     }
 
+    // ///@notice Returns deviationPercentage
+    // function getTicketCommission() public view returns (uint256) {
+    //     return ticketCommissionPercent;
+    // }
+
     ///@notice Returns eventStatus
     function getEventStatus() public view returns (bool) {
         return isPublic;
     }
 
-    ///@notice Returns whitelisted status of erc721TokenAddress
+     ///@notice Returns whitelisted status of erc721TokenAddress
     function isErc721TokenWhitelisted(address tokenAddress) public view returns (bool) {
         return erc721TokenAddress[tokenAddress];
     }
