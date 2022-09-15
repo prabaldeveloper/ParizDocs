@@ -8,10 +8,10 @@ interface IEvents {
     function getConversionContract() external view returns (address);
     function getDeviationPercentage() external view returns (uint256);
     function getTreasuryContract() external view returns (address);
-    function isEventCanceled(uint256 eventId) external view returns(bool);
+    function isEventCancelled(uint256 eventId) external view returns(bool);
     function isEventStarted(uint256 eventId) external view returns(bool);
     function isEventEnded(uint256 eventId) external view returns(bool);
-    function getSignerAddress() external view returns (address);
-    
-    
+    function isErc20TokenWhitelisted(address tokenAddress) external view returns (bool);
+    function isErc721TokenWhitelisted(address tokenAddress) external view returns (bool);
+    function getJoinEventStatus(address _ticketNftAddress, uint256 _ticketId) external view returns (bool);
 }

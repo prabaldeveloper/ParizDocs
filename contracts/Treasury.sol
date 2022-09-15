@@ -1129,6 +1129,19 @@ abstract contract CollateralManagement is AdminRole {
         else IERC20(tokenAddress).transfer(to, amount);
     }
 
+    function claimNft(address to, address tokenAddress, uint256 tokenId) public onlyAdmin {
+        require(
+            address(this) == IERC721Upgradeable(tokenAddress).ownerOf(tokenId),
+            "Contract is not the Owner"
+        );
+        IERC721Upgradeable(tokenAddress).safeTransferFrom(
+        address(this),
+        to,
+        tokenId
+    );
+        
+    }
+
     /**
      * @notice Allows an admin to withdraw funds.
      * @dev    In normal operation only ETH is required, but this allows access to any
