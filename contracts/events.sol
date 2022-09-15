@@ -7,7 +7,7 @@ import "./interface/IVenue.sol";
 import "./interface/IConversion.sol";
 import "./interface/ITicketMaster.sol";
 import "./interface/ITreasury.sol";
-import "./interface/ITicket.sol";
+//import "./interface/ITicket.sol";
 import "./utils/EventAdminRole.sol";
 
 ///@title Create and join events

@@ -21,10 +21,7 @@ contract EventStorage {
     mapping(uint256 => Details) public getInfo;
 
     //mapping for getting supported erc20TokenAddress
-    mapping(address => bool) public erc20TokenAddress;
-
-    //mapping for getting supported erc721TokenAddress
-    mapping(address => bool) public erc721TokenAddress;
+    mapping(address => bool) public tokenStatus;
 
     //mapping for featured events
     mapping(uint256 => bool) public featuredEvents;
@@ -39,7 +36,6 @@ contract EventStorage {
     //when new event are created, add that event id to this array
     mapping(uint256 => uint256[]) public eventsInVenue;
 
-    mapping(address => mapping(uint256 => bool)) public exitEventStatus;
     //mapping for getting rent status
     mapping(address => mapping(uint256 => bool)) public rentStatus;
 
@@ -60,10 +56,6 @@ contract EventStorage {
 
     //mapping for event completed status
     mapping(uint256 => bool) public eventCompletedStatus;
-
-    mapping(uint256 => bool) public eventEndedStatus;
-
-    mapping(address => mapping(uint256 => bool)) public joinEventStatus;
 
     //block time
     uint256 public constant blockTime = 2;
@@ -89,10 +81,15 @@ contract EventStorage {
     //platformFeePercent
     uint256 internal platformFeePercent;
 
+    // //ticketCommission
+    // uint256 internal ticketCommissionPercent;
+
+    mapping(uint256 => bool) public eventEndedStatus;
+
     //
     // This empty reserved space is put in place to allow future versions to add new
     // variables without shifting down storage in the inheritance chain.
     // See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
     //
-    uint256[999] private ______gap;
+    uint256[998] private ______gap;
 }

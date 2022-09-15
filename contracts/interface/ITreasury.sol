@@ -2,10 +2,9 @@
 pragma solidity ^0.8.0;
 
 /**
- * @dev Interface of the Treasury contract
+ * @dev Interface of the Price conversion contract
  */
 
 interface ITreasury {
-    function claimFunds(address to, address tokenAddress, uint256 amount) external;
-    function claimNft(address to, address tokenAddress, uint256 tokenId) external;
+    function claimFunds(address to, address tokenAddress, uint256 amount) external ;
 }

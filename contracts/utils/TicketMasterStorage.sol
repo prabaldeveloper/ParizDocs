@@ -6,11 +6,21 @@ contract TicketMasterStorage {
     // mapping for ticket NFT contract
     mapping(uint256 => address) public ticketNFTAddress;
 
+    //mapping for storing user's address who bought the ticket of an event
+    mapping(address => mapping(uint256 => bool)) public ticketBoughtAddress;
+
     //mapping for getting number of ticket sold against an event
     mapping(uint256 => uint256) public ticketSold;
 
-    //mapping for getting the tokenAddress using which ticket is bought
-    mapping(uint256 => mapping(uint256 => address)) 
+    //mapping for getting ticket id of user
+    mapping(uint256 => mapping(address => uint256[])) public ticketIdOfUser;
+
+    mapping(address => mapping(uint256 => bool)) public joinEventStatus;
+
+    mapping(address => mapping(uint256 => bool)) public exitEventStatus;
+
+    //mapping for getting the tokenAddress using which ticket can be bought
+    mapping(uint256 => mapping(uint256 => address))
         public buyTicketTokenAddress;
 
     mapping(uint256 => mapping(address => uint256)) public ticketFeesBalance;
@@ -19,12 +29,8 @@ contract TicketMasterStorage {
 
     mapping(uint256 => mapping(uint256 => bool)) public refundTicketFeesStatus;
 
-    mapping(address => uint256[]) public nftTicketIds;
-
     //mapping for storing owner address status
     mapping(address => bool) public adminAddress;
-
-    mapping(address => bool) public erc721Address;
 
     //event contract address
     address internal eventContract;
