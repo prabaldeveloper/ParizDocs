@@ -45,11 +45,24 @@ contract ManageEvent is Ownable, ManageEventStorage {
     ///@param eventContract eventContractAddress
     event EventContractUpdated(address eventContract);
 
-    event AgendaUpdated(uint256 indexed eventTokenId,uint256 agendaId, uint256 agendaStartTime, uint256 agendaEndTime, string agenda, string[] guestName, string[] guestAddress, uint8 initiateStatus);
+    event AgendaUpdated(
+        uint256 indexed eventTokenId,
+        uint256 agendaId,
+        uint256 agendaStartTime,
+        uint256 agendaEndTime,
+        string agenda,
+        string[] guestName,
+        string[] guestAddress,
+        uint8 initiateStatus
+    );
 
     ///@param eventTokenId event Token Id
     ///@param agendaId agendaId
-    event AgendaDeleted(uint256 indexed eventTokenId, uint256 indexed agendaId, bool deletedStatus);
+    event AgendaDeleted(
+        uint256 indexed eventTokenId,
+        uint256 indexed agendaId,
+        bool deletedStatus
+    );
 
     //modifier for checking valid time
     modifier isValidTime(uint256 startTime, uint256 endTime) {
@@ -155,13 +168,35 @@ contract ManageEvent is Ownable, ManageEventStorage {
         );
     }
 
-    function updateAgenda(uint256 eventTokenId, uint256 agendaId, uint256 agendaStartTime, uint256 agendaEndTime, string memory agendaName, string[] memory guestName, string[] memory guestAddress, uint8 initiateStatus) isValidTime(agendaStartTime, agendaEndTime) isEventOrganiser(eventTokenId) external {
+    function updateAgenda(
+        uint256 eventTokenId,
+        uint256 agendaId,
+        uint256 agendaStartTime,
+        uint256 agendaEndTime,
+        string memory agendaName,
+        string[] memory guestName,
+        string[] memory guestAddress,
+        uint8 initiateStatus
+    )
+        external
+        isValidTime(agendaStartTime, agendaEndTime)
+        isEventOrganiser(eventTokenId)
+    {
         require(
             block.timestamp <
                 getAgendaInfo[eventTokenId][agendaId].agendaStartTime,
             "ManageEvent: Agenda already started"
         );
-        require(isAgendaTimeAvailable(eventTokenId, agendaId, agendaStartTime, agendaEndTime, 1),"ManageEvent: Agenda Time not available");
+        require(
+            isAgendaTimeAvailable(
+                eventTokenId,
+                agendaId,
+                agendaStartTime,
+                agendaEndTime,
+                1
+            ),
+            "ManageEvent: Agenda Time not available"
+        );
         require(
             getAgendaInfo[eventTokenId][agendaId].isAgendaDeleted == false,
             "ManageEvent: agenda deleted"
@@ -172,7 +207,16 @@ contract ManageEvent is Ownable, ManageEventStorage {
         getAgendaInfo[eventTokenId][agendaId].guestName = guestName;
         getAgendaInfo[eventTokenId][agendaId].guestAddress = guestAddress;
         getAgendaInfo[eventTokenId][agendaId].initiateStatus = initiateStatus;
-        emit AgendaUpdated(eventTokenId, agendaId, agendaStartTime, agendaEndTime, agendaName, guestName, guestAddress, initiateStatus);
+        emit AgendaUpdated(
+            eventTokenId,
+            agendaId,
+            agendaStartTime,
+            agendaEndTime,
+            agendaName,
+            guestName,
+            guestAddress,
+            initiateStatus
+        );
     }
 
     function deleteAgenda(uint256 eventTokenId, uint256 agendaId)
@@ -248,7 +292,11 @@ contract ManageEvent is Ownable, ManageEventStorage {
         uint256[] memory bookedAgendas = agendaInEvents[eventTokenId];
         uint256 currentTime = block.timestamp;
         for (uint256 i = 0; i < bookedAgendas.length; i++) {
-            if(bookedAgendas[i] == agendaId || getAgendaInfo[eventTokenId][bookedAgendas[i]].isAgendaDeleted == true) continue;
+            if (
+                bookedAgendas[i] == agendaId ||
+                getAgendaInfo[eventTokenId][bookedAgendas[i]].isAgendaDeleted ==
+                true
+            ) continue;
             uint256 bookedStartTime = getAgendaInfo[eventTokenId][
                 bookedAgendas[i]
             ].agendaStartTime;
@@ -276,8 +324,7 @@ contract ManageEvent is Ownable, ManageEventStorage {
                 }
             }
         }
-        if(timeType == 0)
-        agendaInEvents[eventTokenId].push(agendaId);
+        if (timeType == 0) agendaInEvents[eventTokenId].push(agendaId);
         return true;
     }
 }

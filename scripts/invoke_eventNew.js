@@ -12,24 +12,26 @@ async function main() {
     const eventContract = await hre.ethers.getContractFactory("EventsV1");
     const eventProxy = await eventContract.attach(eventProxyAddress);
 
-    const Token = await ethers.getContractFactory("Token");
-    const TokenProxy = await Token.attach(Trace);
-    // const TokenProxy = await Token.deploy();
-    // console.log(TokenProxy.address);
+    await new Promise(res => setTimeout(res, 1000));
+    await eventProxy.updateVenueContract(venueAddress);
 
-    // await TokenProxy.mint(accounts[0], "2000000000000000000000000000")
+    await new Promise(res => setTimeout(res, 1000));
+    await eventProxy.updateConversionContract(conversionAddress);
 
-    const TicketMaster = await hre.ethers.getContractFactory("TicketMaster");
-    //const ticketMaster = await TicketMaster.deploy();
-    const ticketMaster = await TicketMaster.attach(ticketMasterAddress);
-    
-    const blockNumBefore = await ethers.provider.getBlockNumber();
-    const blockBefore = await ethers.provider.getBlock(blockNumBefore);
-    const thirtyDays = 1 * 24 * 60 * 60; // 1 days
-    const startTime = blockBefore.timestamp + 20;
-    const endTime = startTime + 200;
+    await new Promise(res => setTimeout(res, 1000));
+    await eventProxy.updateTreasuryContract(treasuryProxy.address);
 
-    console.log("time", startTime, endTime);
+    await new Promise(res => setTimeout(res, 1000));
+    await eventProxy.updateEventStatus(true);
+
+    await new Promise(res => setTimeout(res, 1000));
+    await eventProxy.updateticketMasterContract(ticketMaster.address);
+
+    await new Promise(res => setTimeout(res, 1000));
+    await eventProxy.updatePlatformFee(5);
+
+    await new Promise(res => setTimeout(res, 1000));
+    await ticketMaster.updateEventContract(eventProxy.address);
 
     // // let fee = await eventProxy.calculateRent(1, startTime, endTime);
     // // // let totalFee = Number(fee[0]) + Number(fee[1]);

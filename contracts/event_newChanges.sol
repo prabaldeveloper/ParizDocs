@@ -14,7 +14,6 @@ import "./utils/EventAdminRole.sol";
 ///@notice Users can create event and join events
 
 contract EventsV1 is EventAdminRole {
-    
     ///@param tokenId Event tokenId
     ///@param tokenCID Event tokenCID
     ///@param venueTokenId venueTokenId
@@ -58,10 +57,14 @@ contract EventsV1 is EventAdminRole {
 
     ///@param eventTokenId event Token Id
     ///@param payNow pay venue fees now if(didn't pay earlier)
-    event EventPaid(uint256 indexed eventTokenId, bool payNow, uint256 venueFeeAmount);
+    event EventPaid(
+        uint256 indexed eventTokenId,
+        bool payNow,
+        uint256 venueFeeAmount
+    );
 
     ///@param eventTokenId event Token Id
-    event EventStarted(uint eventTokenId);
+    event EventStarted(uint256 eventTokenId);
 
     ///@param eventTokenId event Token Id
     event EventCanceled(uint256 indexed eventTokenId);
@@ -69,9 +72,16 @@ contract EventsV1 is EventAdminRole {
     ///@param eventTokenId event Token Id
     event EventCompleted(uint256 indexed eventTokenId);
 
-    event VenueFeesClaimed(uint256 indexed venueTokenId, uint256[] eventIds, address venueOwner);
+    event VenueFeesClaimed(
+        uint256 indexed venueTokenId,
+        uint256[] eventIds,
+        address venueOwner
+    );
 
-    event VenueFeesRefunded(uint256 indexed eventTokenId, address eventOrganiser);
+    event VenueFeesRefunded(
+        uint256 indexed eventTokenId,
+        address eventOrganiser
+    );
 
     event EventEnded(uint256 indexed eventTokenId);
 
@@ -93,7 +103,11 @@ contract EventsV1 is EventAdminRole {
         _;
     }
 
-    function updateEvent(uint256 tokenId, string memory description, uint256[2] memory time) external {
+    function updateEvent(
+        uint256 tokenId,
+        string memory description,
+        uint256[2] memory time
+    ) external {
         require(_exists(tokenId), "Events: TokenId does not exist");
         require(
             msg.sender == getInfo[tokenId].eventOrganiser,
@@ -108,34 +122,51 @@ contract EventsV1 is EventAdminRole {
             isVenueAvailable(tokenId, venueTokenId, time[0], time[1], 1),
             "ERR_100:Events:Venue is not available"
         );
-        if(time[0] != getInfo[tokenId].startTime || time[1] != getInfo[tokenId].endTime) {
-            if(getInfo[tokenId].payNow == true) {
+        if (
+            time[0] != getInfo[tokenId].startTime ||
+            time[1] != getInfo[tokenId].endTime
+        ) {
+            if (getInfo[tokenId].payNow == true) {
                 uint256 feesPaid = balance[tokenId];
-                (uint256 estimatedCost, uint256 _platformFees, ) = calculateRent(
-                venueTokenId,
-                time[0],
-                time[1]
-                );
-                address tokenAddress = IConversion(conversionContract).getBaseToken();
-                if(feesPaid > estimatedCost - _platformFees) {
-                    ITreasury(treasuryContract).claimFunds(getInfo[tokenId].eventOrganiser,tokenAddress, feesPaid - estimatedCost - _platformFees);
-                    balance[tokenId] -=  (feesPaid - estimatedCost - _platformFees);
+                (
+                    uint256 estimatedCost,
+                    uint256 _platformFees,
 
-                }
-                else {
-                    IERC20(tokenAddress).transferFrom(
-                    getInfo[tokenId].eventOrganiser,
-                    treasuryContract,
-                    estimatedCost - _platformFees - feesPaid
+                ) = calculateRent(venueTokenId, time[0], time[1]);
+                address tokenAddress = IConversion(conversionContract)
+                    .getBaseToken();
+                if (feesPaid > estimatedCost - _platformFees) {
+                    ITreasury(treasuryContract).claimFunds(
+                        getInfo[tokenId].eventOrganiser,
+                        tokenAddress,
+                        feesPaid - estimatedCost - _platformFees
                     );
-                    balance[tokenId] += estimatedCost - _platformFees - feesPaid;
+                    balance[tokenId] -= (feesPaid -
+                        estimatedCost -
+                        _platformFees);
+                } else {
+                    IERC20(tokenAddress).transferFrom(
+                        getInfo[tokenId].eventOrganiser,
+                        treasuryContract,
+                        estimatedCost - _platformFees - feesPaid
+                    );
+                    balance[tokenId] +=
+                        estimatedCost -
+                        _platformFees -
+                        feesPaid;
                 }
             }
             getInfo[tokenId].startTime = time[0];
             getInfo[tokenId].endTime = time[1];
         }
         getInfo[tokenId].description = description;
-        emit EventUpdated(tokenId, description, time[0], time[1], balance[tokenId]);
+        emit EventUpdated(
+            tokenId,
+            description,
+            time[0],
+            time[1],
+            balance[tokenId]
+        );
     }
 
     ///@notice Creates Event
@@ -286,12 +317,25 @@ contract EventsV1 is EventAdminRole {
             isEventStarted(eventTokenId) == true,
             "Events: Event is not started"
         );
-        require(msg.sender == getInfo[eventTokenId].eventOrganiser, "Events: Invalid Caller");
+        require(
+            msg.sender == getInfo[eventTokenId].eventOrganiser,
+            "Events: Invalid Caller"
+        );
         eventCompletedStatus[eventTokenId] = true;
         emit EventCompleted(eventTokenId);
     }
 
-    function end(bytes memory signature, address ticketHolder, uint256 eventTokenId) external {
+    function end(
+        bytes memory signature,
+        address ticketHolder,
+        uint256 eventTokenId
+    ) external {
+        require(
+            recoverSigner(
+                getMessageHash(ticketHolder, eventTokenId, 0),
+                signature
+            ) == signerAddress
+        );
         require(_exists(eventTokenId), "Events: TokenId does not exist");
         require(
             isEventCanceled(eventTokenId) == false,
@@ -301,18 +345,19 @@ contract EventsV1 is EventAdminRole {
             isEventStarted(eventTokenId) == true,
             "Events: Event is not started"
         );
-        require(ticketHolder == getInfo[eventTokenId].eventOrganiser, "Events: Invalid Caller");
+        require(
+            ticketHolder == getInfo[eventTokenId].eventOrganiser,
+            "Events: Invalid Caller"
+        );
         eventEndedStatus[eventTokenId] = true;
         emit EventEnded(eventTokenId);
     }
-
 
     function initialize() public initializer {
         Ownable.ownable_init();
         _initializeNFT721Mint();
         _updateBaseURI("https://ipfs.io/ipfs/");
     }
-
 
     ///@notice Returns true if rent paid
     ///@param eventOrganiser eventOrganiser address
@@ -352,7 +397,10 @@ contract EventsV1 is EventAdminRole {
         uint256[] memory bookedEvents = eventsInVenue[venueTokenId];
         uint256 currentTime = block.timestamp;
         for (uint256 i = 0; i < bookedEvents.length; i++) {
-            if (bookedEvents[i] == eventTokenId || isEventCanceled(bookedEvents[i]) == true) continue;
+            if (
+                bookedEvents[i] == eventTokenId ||
+                isEventCanceled(bookedEvents[i]) == true
+            ) continue;
             else {
                 uint256 bookedStartTime = getInfo[bookedEvents[i]].startTime;
                 uint256 bookedEndTime = getInfo[bookedEvents[i]].endTime;
@@ -428,12 +476,21 @@ contract EventsV1 is EventAdminRole {
         );
         uint256[] memory eventIds = eventsInVenue[venueTokenId];
         address tokenAddress = IConversion(conversionContract).getBaseToken();
-        address venueOwner = IVenue(getVenueContract()).getVenueOwner(venueTokenId);
+        address venueOwner = IVenue(getVenueContract()).getVenueOwner(
+            venueTokenId
+        );
         require(msg.sender == venueOwner, "Events: Invalid Caller");
-        for(uint256 i=0; i< eventIds.length; i++) {
-            if(isEventCanceled(eventIds[i]) == false && block.timestamp > getInfo[eventIds[i]].endTime) {
-                if(balance[eventIds[i]] > 0) {
-                    ITreasury(treasuryContract).claimFunds(venueOwner,tokenAddress, balance[eventIds[i]]);
+        for (uint256 i = 0; i < eventIds.length; i++) {
+            if (
+                isEventCanceled(eventIds[i]) == false &&
+                block.timestamp > getInfo[eventIds[i]].endTime
+            ) {
+                if (balance[eventIds[i]] > 0) {
+                    ITreasury(treasuryContract).claimFunds(
+                        venueOwner,
+                        tokenAddress,
+                        balance[eventIds[i]]
+                    );
                     balance[eventIds[i]] = 0;
                 }
             }
@@ -447,34 +504,46 @@ contract EventsV1 is EventAdminRole {
             isEventCanceled(eventTokenId) == true,
             "Events: Event is not canceled"
         );
-        require(msg.sender == getInfo[eventTokenId].eventOrganiser, "Events: Invalid Address");
+        require(
+            msg.sender == getInfo[eventTokenId].eventOrganiser,
+            "Events: Invalid Address"
+        );
         require(getInfo[eventTokenId].payNow == true, "Events: Fees not paid");
         address tokenAddress = IConversion(conversionContract).getBaseToken();
-         (, , uint256 venueRentalCommissionFees) = calculateRent(
+        (, , uint256 venueRentalCommissionFees) = calculateRent(
             getInfo[eventTokenId].venueTokenId,
             getInfo[eventTokenId].startTime,
             getInfo[eventTokenId].endTime
         );
         require(balance[eventTokenId] > 0, "Events: Funds already transferred");
-        address venueOwner = IVenue(getVenueContract()).getVenueOwner(getInfo[eventTokenId].venueTokenId);
-        ITreasury(treasuryContract).claimFunds(getInfo[eventTokenId].eventOrganiser,tokenAddress, balance[eventTokenId] - venueRentalCommissionFees);
-        ITreasury(treasuryContract).claimFunds(venueOwner, tokenAddress, venueRentalCommissionFees);
+        address venueOwner = IVenue(getVenueContract()).getVenueOwner(
+            getInfo[eventTokenId].venueTokenId
+        );
+        ITreasury(treasuryContract).claimFunds(
+            getInfo[eventTokenId].eventOrganiser,
+            tokenAddress,
+            balance[eventTokenId] - venueRentalCommissionFees
+        );
+        ITreasury(treasuryContract).claimFunds(
+            venueOwner,
+            tokenAddress,
+            venueRentalCommissionFees
+        );
         //IERC20(tokenAddress).transfer(msg.sender, balance[eventTokenId] - venueRentalCommissionFees);
         //IERC20(tokenAddress).transfer(venueOwner, venueRentalCommissionFees);
 
         balance[eventTokenId] = 0;
 
-        emit VenueFeesRefunded(eventTokenId, getInfo[eventTokenId].eventOrganiser);
-
+        emit VenueFeesRefunded(
+            eventTokenId,
+            getInfo[eventTokenId].eventOrganiser
+        );
     }
-
 
     ///@notice Start the event
     ///@param eventTokenId event Token Id
     ///@param venueFeeAmount fee of the venue
-    function payEvent(uint256 eventTokenId, uint256 venueFeeAmount)
-        external
-    {
+    function payEvent(uint256 eventTokenId, uint256 venueFeeAmount) external {
         require(_exists(eventTokenId), "Events: TokenId does not exist");
         (
             uint256 startTime,
@@ -484,10 +553,7 @@ contract EventsV1 is EventAdminRole {
             uint256 venueTokenId,
 
         ) = getEventDetails(eventTokenId);
-        require(
-            endTime > block.timestamp,
-            "Events: Event ended"
-        );
+        require(endTime > block.timestamp, "Events: Event ended");
         require(msg.sender == eventOrganiser, "Events: Invalid Address");
 
         require(
@@ -505,29 +571,35 @@ contract EventsV1 is EventAdminRole {
             );
             payNow = true;
             getInfo[eventTokenId].payNow = payNow;
-            
-        }
-        else {
+        } else {
             uint256 feesPaid = balance[eventTokenId];
             (uint256 estimatedCost, uint256 _platformFees, ) = calculateRent(
-            venueTokenId,
-            startTime,
-            endTime
+                venueTokenId,
+                startTime,
+                endTime
             );
-            address tokenAddress = IConversion(conversionContract).getBaseToken();
-            if(feesPaid > estimatedCost - _platformFees) {
-                ITreasury(treasuryContract).claimFunds(eventOrganiser,tokenAddress, feesPaid - estimatedCost - _platformFees);
-                //IERC20(tokenAddress).transfer(eventOrganiser, feesPaid - estimatedCost - _platformFees);
-                balance[eventTokenId] -=  (feesPaid - estimatedCost - _platformFees);
-
-            }
-            else {
-                IERC20(tokenAddress).transferFrom(
-                eventOrganiser,
-                treasuryContract,
-                estimatedCost - _platformFees - feesPaid
+            address tokenAddress = IConversion(conversionContract)
+                .getBaseToken();
+            if (feesPaid > estimatedCost - _platformFees) {
+                ITreasury(treasuryContract).claimFunds(
+                    eventOrganiser,
+                    tokenAddress,
+                    feesPaid - estimatedCost - _platformFees
                 );
-                balance[eventTokenId] += estimatedCost - _platformFees - feesPaid;
+                //IERC20(tokenAddress).transfer(eventOrganiser, feesPaid - estimatedCost - _platformFees);
+                balance[eventTokenId] -= (feesPaid -
+                    estimatedCost -
+                    _platformFees);
+            } else {
+                IERC20(tokenAddress).transferFrom(
+                    eventOrganiser,
+                    treasuryContract,
+                    estimatedCost - _platformFees - feesPaid
+                );
+                balance[eventTokenId] +=
+                    estimatedCost -
+                    _platformFees -
+                    feesPaid;
             }
         }
         emit EventPaid(eventTokenId, payNow, venueFeeAmount);
@@ -551,21 +623,15 @@ contract EventsV1 is EventAdminRole {
         require(payNow == true, "Events: Fees not paid");
         eventStartedStatus[eventTokenId] = true;
         emit EventStarted(eventTokenId);
-
     }
 
     ///@notice Cancel the event
     ///@param eventTokenId event Token Id
     function cancelEvent(uint256 eventTokenId) external {
         require(_exists(eventTokenId), "ManageEvent: TokenId does not exist");
-        (
-            ,
-            ,
-            address payable eventOrganiser,
-            ,
-            ,
-
-        ) = getEventDetails(eventTokenId);
+        (, , address payable eventOrganiser, , , ) = getEventDetails(
+            eventTokenId
+        );
         //require(startTime > block.timestamp, "ManageEvent: Event started");
         require(isEventStarted(eventTokenId) == false, "Events: Event started");
         require(msg.sender == eventOrganiser, "Events: Invalid Address");
@@ -573,7 +639,7 @@ contract EventsV1 is EventAdminRole {
             eventCanceledStatus[eventTokenId] == false,
             "ManageEvent: Event already canceled"
         );
-        
+
         eventCanceledStatus[eventTokenId] = true;
         emit EventCanceled(eventTokenId);
     }
@@ -600,7 +666,6 @@ contract EventsV1 is EventAdminRole {
 
     function isEventEnded(uint256 eventId) public view returns (bool) {
         return eventEndedStatus[eventId];
-        
     }
 
     function getEventDetails(uint256 tokenId)

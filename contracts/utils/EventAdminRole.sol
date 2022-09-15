@@ -4,8 +4,9 @@ pragma solidity ^0.8.0;
 
 import "./EventStorage.sol";
 import "./EventMetadata.sol";
+import "./VerifySignature.sol";
 
-contract EventAdminRole is EventStorage, EventMetadata {
+contract EventAdminRole is EventStorage, EventMetadata, VerifySignature {
 
     using AddressUpgradeable for address;
     using AddressUpgradeable for address payable;
@@ -41,6 +42,9 @@ contract EventAdminRole is EventStorage, EventMetadata {
     ///@param whitelistedAddress users address
     ///@param status status of the address
     event WhiteList(address whitelistedAddress, bool status);
+
+    ///@param signerAddress signer Address
+    event signerAddressUpdated(address signerAddress);
 
     ///@notice Allows Admin to update deviation percentage
     ///@param _deviationPercentage deviationPercentage
@@ -129,6 +133,13 @@ contract EventAdminRole is EventStorage, EventMetadata {
         emit PlatformFeeUpdated(_platformFeePercent);
     }
 
+    ///@notice updates signer Address
+    ///@param _signerAddress eventContract address
+    function updateSignerAddress(address _signerAddress) external onlyOwner {
+        signerAddress = _signerAddress;
+        emit signerAddressUpdated(_signerAddress);
+    }
+
     // ///@notice updates ticketCommissionPercent
     // ///@param _ticketCommissionPercent ticketCommissionPercent
     // function updateTicketCommission(uint256 _ticketCommissionPercent)
@@ -190,6 +201,10 @@ contract EventAdminRole is EventStorage, EventMetadata {
     ///@notice Returns eventStatus
     function getEventStatus() public view returns (bool) {
         return isPublic;
+    }
+
+    function getSignerAddress() public view returns (address) {
+        return signerAddress;
     }
 
     uint256[49] private ______gap;

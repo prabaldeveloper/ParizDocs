@@ -11,6 +11,7 @@ interface IEvents {
     function isEventCanceled(uint256 eventId) external view returns(bool);
     function isEventStarted(uint256 eventId) external view returns(bool);
     function isEventEnded(uint256 eventId) external view returns(bool);
+    function getSignerAddress() external view returns (address);
     
     
 }
