@@ -51,12 +51,6 @@ contract EventStorage {
     //mapping for storing tokenAddress against eventTokenId
     mapping(uint256 => address) public eventTokenAddress;
 
-    //mapping for event start status
-    mapping(uint256 => bool) public eventStartedStatus;
-
-    //mapping for event cancel status
-    mapping(uint256 => bool) public eventCancelledStatus;
-
     mapping(address => mapping(uint256 => bool)) public joinEventStatus;
 
     //block time

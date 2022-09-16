@@ -63,12 +63,6 @@ contract EventsV1 is EventAdminRole {
     ///@param payNow pay venue fees now if(didn't pay earlier)
     event EventPaid(uint256 indexed eventTokenId, bool payNow, uint256 venueFeeAmount);
 
-    ///@param eventTokenId event Token Id
-    event EventStarted(uint eventTokenId);
-
-    ///@param eventTokenId event Token Id
-    event EventCancelled(uint256 indexed eventTokenId);
-
     ///@param tokenId Event tokenId
     ///@param user User address
     event Joined(
@@ -459,7 +453,7 @@ contract EventsV1 is EventAdminRole {
         require(msg.sender == eventOrganiser, "Events: Invalid Address");
 
         require(
-            eventStartedStatus[eventTokenId] == false,
+            isEventStarted(eventTokenId) == false,
             "Events: Event already started"
         );
         if (payNow == false) {
@@ -501,50 +495,6 @@ contract EventsV1 is EventAdminRole {
         emit EventPaid(eventTokenId, payNow, venueFeeAmount);
     }
 
-    function startEvent(uint256 eventTokenId) external {
-        require(_exists(eventTokenId), "Events: TokenId does not exist");
-        (
-            uint256 startTime,
-            uint256 endTime,
-            address eventOrganiser,
-            bool payNow,
-            ,
-
-        ) = getEventDetails(eventTokenId);
-        require(
-            block.timestamp >= startTime && endTime > block.timestamp,
-            "Events: Event not live"
-        );
-        require(msg.sender == eventOrganiser, "Events: Invalid Address");
-        require(payNow == true, "Events: Fees not paid");
-        eventStartedStatus[eventTokenId] = true;
-        emit EventStarted(eventTokenId);
-
-    }
-
-    ///@notice Cancel the event
-    ///@param eventTokenId event Token Id
-    function cancelEvent(uint256 eventTokenId) external {
-        require(_exists(eventTokenId), "Events: TokenId does not exist");
-        (
-            ,
-            ,
-            address payable eventOrganiser,
-            ,
-            ,
-
-        ) = getEventDetails(eventTokenId);
-        require(isEventStarted(eventTokenId) == false, "Events: Event started");
-        require(msg.sender == eventOrganiser, "Events: Invalid Address");
-        require(
-            eventCancelledStatus[eventTokenId] == false,
-            "Events: Event already cancelled"
-        );
-        eventCancelledStatus[eventTokenId] = true;
-        emit EventCancelled(eventTokenId);
-    }
-
-
     ///@notice Users can join events
     ///@dev Public function
     ///@dev - Check whether event is started or not
@@ -561,7 +511,8 @@ contract EventsV1 is EventAdminRole {
             recoverSigner(
                 getMessageHash(ticketHolder, eventTokenId, ticketId),
                 signature
-            ) == getSignerAddress()
+            ) == getSignerAddress(),
+                "Signature does not match"
         );
         require(
             isEventCancelled(eventTokenId) == false,
@@ -606,11 +557,11 @@ contract EventsV1 is EventAdminRole {
     }
 
     function isEventStarted(uint256 eventId) public view returns (bool) {
-        return eventStartedStatus[eventId];
+        return IManageEvent(manageEvent).isEventStarted(eventId);
     }
 
     function isEventCancelled(uint256 eventId) public view returns (bool) {
-        return eventCancelledStatus[eventId];
+        return IManageEvent(manageEvent).isEventCancelled(eventId);
     }
 
     function getEventDetails(uint256 tokenId)
@@ -634,10 +585,11 @@ contract EventsV1 is EventAdminRole {
             getInfo[tokenId].ticketPrice
         );
     }
-        function getJoinEventStatus(address _ticketNftAddress, uint256 _ticketId)
-        public
-        view
-        returns (bool)
+
+    function getJoinEventStatus(address _ticketNftAddress, uint256 _ticketId)
+    public
+    view
+    returns (bool)
     {
         return joinEventStatus[_ticketNftAddress][_ticketId];
     }

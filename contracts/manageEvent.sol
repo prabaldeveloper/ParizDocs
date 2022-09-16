@@ -67,7 +67,14 @@ contract ManageEvent is Ownable, ManageEventStorage, VerifySignature {
     ///@param eventTokenId event Token Id
     event EventCompleted(uint256 indexed eventTokenId);
 
+    ///@param eventTokenId event Token Id
     event EventEnded(uint256 indexed eventTokenId);
+
+    ///@param eventTokenId event Token Id
+    event EventStarted(uint256 indexed eventTokenId);
+
+    ///@param eventTokenId event Token Id   
+    event EventCancelled(uint256 indexed eventTokenId);
 
     //modifier for checking valid time
     modifier isValidTime(uint256 startTime, uint256 endTime) {
@@ -309,7 +316,8 @@ contract ManageEvent is Ownable, ManageEventStorage, VerifySignature {
                 recoverSigner(
                     getMessageHash(ticketHolder, eventTokenId, 0),
                     signature
-                ) == IEvents(eventContract).getSignerAddress()
+                ) == IEvents(eventContract).getSignerAddress(),
+                "Signature does not match"
             );
             require(
                 IEvents(eventContract)._exists(eventTokenId),
@@ -333,7 +341,8 @@ contract ManageEvent is Ownable, ManageEventStorage, VerifySignature {
                 recoverSigner(
                     getMessageHash(ticketHolder, eventTokenId, 0),
                     signature
-                ) == IEvents(eventContract).getSignerAddress()
+                ) == IEvents(eventContract).getSignerAddress(),
+                "Signature does not match"
             );
             require(IEvents(eventContract)._exists(eventTokenId), "Events: TokenId does not exist");
             require(
@@ -352,6 +361,51 @@ contract ManageEvent is Ownable, ManageEventStorage, VerifySignature {
             emit EventEnded(eventTokenId);
     }
 
+    ///@notice Start the event
+    ///@param eventTokenId event Token Id
+    function startEvent(uint256 eventTokenId) external {
+        require(IEvents(eventContract)._exists(eventTokenId), "Events: TokenId does not exist");
+        (
+            uint256 startTime,
+            uint256 endTime,
+            address eventOrganiser,
+            bool payNow,
+            ,
+
+        ) = IEvents(eventContract).getEventDetails(eventTokenId);
+        require(
+            block.timestamp >= startTime && endTime > block.timestamp,
+            "Events: Event not live"
+        );
+        require(msg.sender == eventOrganiser, "Events: Invalid Address");
+        require(payNow == true, "Events: Fees not paid");
+        eventStartedStatus[eventTokenId] = true;
+        emit EventStarted(eventTokenId);
+
+    }
+
+    ///@notice Cancel the event
+    ///@param eventTokenId event Token Id
+    function cancelEvent(uint256 eventTokenId) external {
+        require(IEvents(eventContract)._exists(eventTokenId), "Events: TokenId does not exist");
+        (
+            ,
+            ,
+            address payable eventOrganiser,
+            ,
+            ,
+
+        ) = IEvents(eventContract).getEventDetails(eventTokenId);
+        require(isEventStarted(eventTokenId) == false, "Events: Event started");
+        require(msg.sender == eventOrganiser, "Events: Invalid Address");
+        require(
+            eventCancelledStatus[eventTokenId] == false,
+            "Events: Event already cancelled"
+        );
+        eventCancelledStatus[eventTokenId] = true;
+        emit EventCancelled(eventTokenId);
+    }
+
     ///@notice Returns event contract address
     function getEventContract() public view returns (address) {
         return eventContract;
@@ -359,6 +413,14 @@ contract ManageEvent is Ownable, ManageEventStorage, VerifySignature {
 
     function isEventEnded(uint256 eventId) public view returns (bool) {
         return eventEndedStatus[eventId];   
+    }
+
+    function isEventStarted(uint256 eventId) public view returns (bool) {
+        return eventStartedStatus[eventId];
+    }
+
+    function isEventCancelled(uint256 eventId) public view returns (bool) {
+        return eventCancelledStatus[eventId];
     }
 
     function isAgendaTimeAvailable(

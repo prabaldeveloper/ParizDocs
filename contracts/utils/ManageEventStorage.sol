@@ -30,6 +30,12 @@ contract ManageEventStorage {
 
     mapping(uint256 => uint256[]) public agendaInEvents;
 
+    //mapping for event start status
+    mapping(uint256 => bool) public eventStartedStatus;
+    
+    //mapping for event cancel status
+    mapping(uint256 => bool) public eventCancelledStatus;
+
     //Event contract address
     address internal eventContract;
 

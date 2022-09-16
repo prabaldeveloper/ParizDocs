@@ -30,6 +30,11 @@ contract Venue is VenueMetadata, VenueStorage {
         address owner
     );
 
+    event VenueFeesUpdated(
+        uint256 indexed tokenId,
+        uint256 rentPerBlock
+    );
+
     ///@param venueRentalCommission venueRentalCommission
     event VenueRentalCommissionUpdated(uint256 venueRentalCommission);
 
@@ -83,6 +88,13 @@ contract Venue is VenueMetadata, VenueStorage {
             _tokenCID,
             msg.sender
         );
+    }
+
+    function updateVenueFees(uint256 venueTokenId, uint256 rentPerBlock) external {
+        require(msg.sender == getInfo[venueTokenId].owner, "Venue: Invalid owner");
+        getInfo[venueTokenId].rentPerBlock = rentPerBlock;
+
+        emit VenueFeesUpdated(venueTokenId, rentPerBlock);
     }
 
     function initialize() public initializer {
