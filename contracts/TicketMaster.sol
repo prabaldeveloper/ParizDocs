@@ -87,7 +87,7 @@ contract TicketMaster is Ticket, TicketMasterStorage {
         require(
             feeAmount >= price - ((price * (deviationPercentage)) / (100)) &&
                 feeAmount <= price + ((price * (deviationPercentage)) / (100)),
-            "Events: Amount not within deviation percentage"
+            "TicketMaster: Amount not within deviation percentage"
         );
     }
 
@@ -172,6 +172,9 @@ contract TicketMaster is Ticket, TicketMasterStorage {
     ///@notice To check whether token is matic or any other token
     ///@param tokenAddress erc20 tokenAddress
     ///@param feeAmount price of the ticket
+    ///@param tokenAddress tokenAddress
+    ///@param ticketId ticketId
+    ///@param buyTicketId Event tokenId
     function checkTicketFees(
         uint256 feeAmount,
         uint256 actualPrice,
@@ -211,7 +214,7 @@ contract TicketMaster is Ticket, TicketMasterStorage {
                 }("");
                 require(
                     successOwner,
-                    "Events: Transfer to treasury contract failed"
+                    "TicketMaster: Transfer to treasury contract failed"
                 );
                 ticketFeesBalance[buyTicketId][tokenAddress] += (msg.value -
                     ticketCommissionFee);
@@ -279,21 +282,21 @@ contract TicketMaster is Ticket, TicketMasterStorage {
             IEvents(eventContract).isEventCancelled(eventTokenId) == true || IEvents(eventContract).isEventStarted(eventTokenId) == false && block.timestamp > endTime,
             "TicketMaster: Event is neither cancelled not expired"
         );
-        //address ownerAddress = msg.sender;
+        address ownerAddress = msg.sender;
         for(uint256 i=0; i < ticketIds.length; i++) {
             if(refundTicketFeesStatus[eventTokenId][ticketIds[i]] == false) {
-                if(msg.sender == Ticket(ticketNFTAddress[eventTokenId]).ownerOf(ticketIds[i])) {
+                if(ownerAddress == Ticket(ticketNFTAddress[eventTokenId]).ownerOf(ticketIds[i])) {
                     address tokenAddress = buyTicketTokenAddress[eventTokenId][ticketIds[i]];
                     uint256 refundAmount = userTicketBalance[eventTokenId][ticketIds[i]];
                     if(erc721Address[tokenAddress] == true) {
-                        ITreasury(IEvents(eventContract).getTreasuryContract()).claimNft(msg.sender, tokenAddress, refundAmount);
+                        ITreasury(IEvents(eventContract).getTreasuryContract()).claimNft(ownerAddress, tokenAddress, refundAmount);
                     }
                     else {
-                        ITreasury(IEvents(eventContract).getTreasuryContract()).claimFunds(msg.sender, tokenAddress, refundAmount);
+                        ITreasury(IEvents(eventContract).getTreasuryContract()).claimFunds(ownerAddress, tokenAddress, refundAmount);
                     }
                     refundTicketFeesStatus[eventTokenId][ticketIds[i]] = true;
                     userTicketBalance[eventTokenId][ticketIds[i]] = 0;
-                    emit TicketFeesRefund(eventTokenId, msg.sender, ticketIds[i]);
+                    emit TicketFeesRefund(eventTokenId, ownerAddress, ticketIds[i]);
                 }
             }
         }

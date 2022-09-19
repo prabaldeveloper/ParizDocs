@@ -6,8 +6,6 @@ import "./interface/IEvents.sol";
 import "./utils/ManageEventStorage.sol";
 import "./utils/VerifySignature.sol";
 
-///@title Manage the events
-///@author Prabal Srivastav
 ///@notice Event owner can start event or can cancel event
 
 contract ManageEvent is Ownable, ManageEventStorage, VerifySignature {
@@ -283,7 +281,7 @@ contract ManageEvent is Ownable, ManageEventStorage, VerifySignature {
     ///@notice Called by event organiser to mark the event status as completed
     ///@param eventTokenId event token id
     function complete(uint256 eventTokenId) external {
-        require(IEvents(eventContract)._exists(eventTokenId), "Events: TokenId does not exist");
+        require(IEvents(eventContract)._exists(eventTokenId), "ManageEvent: TokenId does not exist");
         (
             , uint256 endTime,
             address payable eventOrganiser
@@ -292,17 +290,17 @@ contract ManageEvent is Ownable, ManageEventStorage, VerifySignature {
         
         require(
             block.timestamp >= endTime,
-            "Events: Event not ended"
+            "ManageEvent: Event not ended"
         );
         require(
-            IEvents(eventContract).isEventCancelled(eventTokenId) == false,
-            "Events: Event is canceled"
+            isEventCancelled(eventTokenId) == false,
+            "ManageEvent: Event is canceled"
         );
         require(
-            IEvents(eventContract).isEventStarted(eventTokenId) == true,
-            "Events: Event is not started"
+            isEventStarted(eventTokenId) == true,
+            "ManageEvent: Event is not started"
         );
-        require(msg.sender == eventOrganiser, "Events: Invalid Caller");
+        require(msg.sender == eventOrganiser, "ManageEvent: Invalid Caller");
         eventCompletedStatus[eventTokenId] = true;
         emit EventCompleted(eventTokenId);
     }
@@ -317,15 +315,15 @@ contract ManageEvent is Ownable, ManageEventStorage, VerifySignature {
                     getMessageHash(ticketHolder, eventTokenId, 0),
                     signature
                 ) == IEvents(eventContract).getSignerAddress(),
-                "Signature does not match"
+                "ManageEvent: Signature does not match"
             );
             require(
                 IEvents(eventContract)._exists(eventTokenId),
-                "Events: TokenId does not exist"
+                "ManageEvent: TokenId does not exist"
             );
             require(
-                IEvents(eventContract).isEventStarted(eventTokenId) == true,
-                "Events: Event not started"
+                isEventStarted(eventTokenId) == true,
+                "ManageEvent: Event not started"
             );
             exitEventStatus[ticketHolder][eventTokenId] = true;
             emit Exited(eventTokenId, ticketHolder, block.timestamp);
@@ -342,21 +340,21 @@ contract ManageEvent is Ownable, ManageEventStorage, VerifySignature {
                     getMessageHash(ticketHolder, eventTokenId, 0),
                     signature
                 ) == IEvents(eventContract).getSignerAddress(),
-                "Signature does not match"
+                "ManageEvent: Signature does not match"
             );
-            require(IEvents(eventContract)._exists(eventTokenId), "Events: TokenId does not exist");
+            require(IEvents(eventContract)._exists(eventTokenId), "ManageEvent: TokenId does not exist");
             require(
-                IEvents(eventContract).isEventCancelled(eventTokenId) == false,
-                "Events: Event is cancelled"
+                isEventCancelled(eventTokenId) == false,
+                "ManageEvent: Event is cancelled"
             );
             require(
-                IEvents(eventContract).isEventStarted(eventTokenId) == true,
-                "Events: Event is not started"
+                isEventStarted(eventTokenId) == true,
+                "ManageEvent: Event is not started"
             );
              (, , address payable eventOrganiser , , , ) = IEvents(
                 getEventContract()
             ).getEventDetails(eventTokenId);
-            require(ticketHolder == eventOrganiser, "Events: Invalid Caller");
+            require(ticketHolder == eventOrganiser, "ManageEvent: Invalid Caller");
             eventEndedStatus[eventTokenId] = true;
             emit EventEnded(eventTokenId);
     }
@@ -364,7 +362,7 @@ contract ManageEvent is Ownable, ManageEventStorage, VerifySignature {
     ///@notice Start the event
     ///@param eventTokenId event Token Id
     function startEvent(uint256 eventTokenId) external {
-        require(IEvents(eventContract)._exists(eventTokenId), "Events: TokenId does not exist");
+        require(IEvents(eventContract)._exists(eventTokenId), "ManageEvent: TokenId does not exist");
         (
             uint256 startTime,
             uint256 endTime,
@@ -375,10 +373,10 @@ contract ManageEvent is Ownable, ManageEventStorage, VerifySignature {
         ) = IEvents(eventContract).getEventDetails(eventTokenId);
         require(
             block.timestamp >= startTime && endTime > block.timestamp,
-            "Events: Event not live"
+            "ManageEvent: Event not live"
         );
-        require(msg.sender == eventOrganiser, "Events: Invalid Address");
-        require(payNow == true, "Events: Fees not paid");
+        require(msg.sender == eventOrganiser, "ManageEvent: Invalid Address");
+        require(payNow == true, "ManageEvent: Fees not paid");
         eventStartedStatus[eventTokenId] = true;
         emit EventStarted(eventTokenId);
 
@@ -387,7 +385,7 @@ contract ManageEvent is Ownable, ManageEventStorage, VerifySignature {
     ///@notice Cancel the event
     ///@param eventTokenId event Token Id
     function cancelEvent(uint256 eventTokenId) external {
-        require(IEvents(eventContract)._exists(eventTokenId), "Events: TokenId does not exist");
+        require(IEvents(eventContract)._exists(eventTokenId), "ManageEvent: TokenId does not exist");
         (
             ,
             ,
@@ -396,11 +394,11 @@ contract ManageEvent is Ownable, ManageEventStorage, VerifySignature {
             ,
 
         ) = IEvents(eventContract).getEventDetails(eventTokenId);
-        require(isEventStarted(eventTokenId) == false, "Events: Event started");
-        require(msg.sender == eventOrganiser, "Events: Invalid Address");
+        require(isEventStarted(eventTokenId) == false, "ManageEvent: Event started");
+        require(msg.sender == eventOrganiser, "ManageEvent: Invalid Address");
         require(
             eventCancelledStatus[eventTokenId] == false,
-            "Events: Event already cancelled"
+            "ManageEvent: Event already cancelled"
         );
         eventCancelledStatus[eventTokenId] = true;
         emit EventCancelled(eventTokenId);
@@ -469,18 +467,3 @@ contract ManageEvent is Ownable, ManageEventStorage, VerifySignature {
         return true;
     }
 }
-//Event organiser first has to start the event then user can join
-
-// manageContract => addAgenda,
-// Graph for addAgenda(Done)
-
-// Web3 for addAgenda
-
-// Graph for event Contract buy, join and //favourite
-
-// Web3 for buy, join and favourite
-
-//Query for addAgenda
-
-//Check whether payNow is changing it's value in graph after fees is paid
-//To test startEvent function

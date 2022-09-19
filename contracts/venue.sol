@@ -5,8 +5,6 @@ pragma solidity ^0.8.0;
 import "./utils/VenueMetadata.sol";
 import "./utils/VenueStorage.sol";
 
-///@title Add and book venue
-///@author Prabal Srivastav
 ///@notice Owner can add venues and event organisers can book it
 
 contract Venue is VenueMetadata, VenueStorage {

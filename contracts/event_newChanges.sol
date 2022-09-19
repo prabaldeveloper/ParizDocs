@@ -12,8 +12,6 @@ import "./interface/IManageEvent.sol";
 import "./utils/EventAdminRole.sol";
 
 
-///@title Create and join events
-///@author Prabal Srivastav
 ///@notice Users can create event and join events
 
 contract EventsV1 is EventAdminRole {
@@ -105,7 +103,7 @@ contract EventsV1 is EventAdminRole {
         require(
             getInfo[tokenId].startTime > block.timestamp,
             "Events: Event is started"
-        );
+        );       
         uint256 venueTokenId = getInfo[tokenId].venueTokenId;
         require(
             isVenueAvailable(tokenId, venueTokenId, time[0], time[1], 1),
@@ -113,32 +111,33 @@ contract EventsV1 is EventAdminRole {
         );
         if(time[0] != getInfo[tokenId].startTime || time[1] != getInfo[tokenId].endTime) {
             if(getInfo[tokenId].payNow == true) {
-                uint256 feesPaid = balance[tokenId];
+                uint256 feesPaid = balance[tokenId] + platformFeesPaid[tokenId];
                 (uint256 estimatedCost, uint256 _platformFees, ) = calculateRent(
                 venueTokenId,
                 time[0],
                 time[1]
                 );
                 address tokenAddress = IConversion(conversionContract).getBaseToken();
-                if(feesPaid > estimatedCost - _platformFees) {
-                    ITreasury(treasuryContract).claimFunds(getInfo[tokenId].eventOrganiser,tokenAddress, feesPaid - estimatedCost - _platformFees);
-                    balance[tokenId] -=  (feesPaid - estimatedCost - _platformFees);
-
+                if(feesPaid > estimatedCost) {
+                    ITreasury(treasuryContract).claimFunds(getInfo[tokenId].eventOrganiser,tokenAddress, feesPaid - estimatedCost);
+                    balance[tokenId] = estimatedCost - _platformFees;
+                    platformFeesPaid[tokenId] = _platformFees;
                 }
                 else {
                     IERC20(tokenAddress).transferFrom(
                     getInfo[tokenId].eventOrganiser,
                     treasuryContract,
-                    estimatedCost - _platformFees - feesPaid
+                    estimatedCost - feesPaid
                     );
-                    balance[tokenId] += estimatedCost - _platformFees - feesPaid;
+                    balance[tokenId] = estimatedCost - _platformFees;
+                    platformFeesPaid[tokenId] = _platformFees;
                 }
             }
             getInfo[tokenId].startTime = time[0];
             getInfo[tokenId].endTime = time[1];
         }
         getInfo[tokenId].description = description;
-        emit EventUpdated(tokenId, description, time[0], time[1], balance[tokenId]);
+        emit EventUpdated(tokenId, description, time[0], time[1], balance[tokenId] + platformFeesPaid[tokenId]);
     }
 
     ///@notice Creates Event
@@ -382,6 +381,7 @@ contract EventsV1 is EventAdminRole {
             treasuryContract,
             feeAmount
         );
+        platformFeesPaid[eventTokenId] = platformFees;
         balance[eventTokenId] = feeAmount - platformFees;
         eventTokenAddress[eventTokenId] = tokenAddress;
         bookVenue(eventTokenId);
@@ -470,26 +470,27 @@ contract EventsV1 is EventAdminRole {
             
         }
         else {
-            uint256 feesPaid = balance[eventTokenId];
+            uint256 feesPaid = balance[eventTokenId] + platformFeesPaid[eventTokenId];
             (uint256 estimatedCost, uint256 _platformFees, ) = calculateRent(
             venueTokenId,
             startTime,
             endTime
             );
             address tokenAddress = IConversion(conversionContract).getBaseToken();
-            if(feesPaid > estimatedCost - _platformFees) {
-                ITreasury(treasuryContract).claimFunds(eventOrganiser,tokenAddress, feesPaid - estimatedCost - _platformFees);
-                //IERC20(tokenAddress).transfer(eventOrganiser, feesPaid - estimatedCost - _platformFees);
-                balance[eventTokenId] -=  (feesPaid - estimatedCost - _platformFees);
+            if(feesPaid > estimatedCost) {
+                ITreasury(treasuryContract).claimFunds(eventOrganiser,tokenAddress, feesPaid - estimatedCost);
+                balance[eventTokenId] = estimatedCost - _platformFees;
+                platformFeesPaid[eventTokenId] = _platformFees;
 
             }
             else {
                 IERC20(tokenAddress).transferFrom(
-                eventOrganiser,
+                getInfo[eventTokenId].eventOrganiser,
                 treasuryContract,
-                estimatedCost - _platformFees - feesPaid
+                estimatedCost - feesPaid
                 );
-                balance[eventTokenId] += estimatedCost - _platformFees - feesPaid;
+                balance[eventTokenId] = estimatedCost - _platformFees;
+                platformFeesPaid[eventTokenId] = _platformFees;
             }
         }
         emit EventPaid(eventTokenId, payNow, venueFeeAmount);

@@ -45,6 +45,8 @@ contract EventStorage {
     //mappping for storing erc20 balance against eventTokenId
     mapping(uint256 => uint256) public balance;
 
+    mapping(uint256 => uint256) public platformFeesPaid;
+
     // mapping for ticket NFT contract
     mapping(uint256 => address) public ticketNFTAddress;
 
