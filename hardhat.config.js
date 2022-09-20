@@ -1,6 +1,6 @@
 require("@nomiclabs/hardhat-waffle");
 require('@openzeppelin/hardhat-upgrades')
-
+require("@nomiclabs/hardhat-etherscan");
 require("dotenv").config()
 
 // require('@primitivefi/hardhat-dodoc');

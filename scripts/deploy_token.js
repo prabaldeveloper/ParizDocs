@@ -6,8 +6,9 @@ async function main() {
     const accounts = await ethers.provider.listAccounts();
     console.log("Accounts", accounts[0]);
     const Token = await ethers.getContractFactory("Token721");
-    const TokenProxy = await Token.deploy();
-    await TokenProxy.initialize("Test NFT", "Test NFT");
+    const TokenProxy = await Token.attach("0x8E3DB4bf0Cbfed015F56643b6030bDB2aA45A06F");
+    //const TokenProxy = await Token.deploy();
+    //await TokenProxy.initialize("Test NFT", "Test NFT");
     console.log("Token Address", TokenProxy.address);
 
     await TokenProxy.mint(accounts[0], 1)
@@ -18,23 +19,10 @@ async function main() {
     await TokenProxy.mint(accounts[0], 6)
 
     console.log(await TokenProxy.ownerOf(1));
-    console.log(await TokenProxy.balanceOf("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"));
     console.log("minted");
     
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

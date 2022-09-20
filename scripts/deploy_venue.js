@@ -144,12 +144,3 @@ main()
         console.error(error)
         process.exit(1)
     })
-
-
-// Venue proxy 0x85c7eE172B92F0f1393f98926adF320c434E3262
-// conversion proxy 0x02e90531aac91fD8e6B8a5F323cE171DD3c29AdF
-
-//New
-//Venue Proxy 0xD959B719922b7b70b2AC4b10D466aAbE3745d86c
-
-//Local venue = "0x78B3CeB87C561e746d0Cec5195BDE870E11Ca81d"
