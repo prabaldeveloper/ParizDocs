@@ -18,31 +18,31 @@ async function main() {
     // const ticketMasterAddress = "0x07Ba11Ef168db9acc4B4E32C732e4FF4cB40dEFD"
     // const nfttoken = "0x9D6A70e2e1003d0bfc95129D658d1eBa5f08B481";
 
-    const dropsTreasury = await ethers.getContractFactory("Treasury");
-    const treasuryProxy = await upgrades.deployProxy(dropsTreasury, [accounts[0]], { initializer: 'initialize' })
-    //const treasuryProxy = await dropsTreasury.attach(treasuryProxyAddress);
-    await treasuryProxy.deployed();
+    // const dropsTreasury = await ethers.getContractFactory("Treasury");
+    // const treasuryProxy = await upgrades.deployProxy(dropsTreasury, [accounts[0]], { initializer: 'initialize' })
+    // //const treasuryProxy = await dropsTreasury.attach(treasuryProxyAddress);
+    // await treasuryProxy.deployed();
 
     // await new Promise(res => setTimeout(res, 1000));
-    console.log("Treasury proxy", treasuryProxy.address);
-    console.log("Is admin", await treasuryProxy.isAdmin(accounts[0]));
+    // console.log("Treasury proxy", treasuryProxy.address);
+    // console.log("Is admin", await treasuryProxy.isAdmin(accounts[0]));
 
-    const Conversion = await ethers.getContractFactory("ConversionV1");
-    const conversionProxy = await Conversion.attach(conversionAddress);
+    // const Conversion = await ethers.getContractFactory("ConversionV1");
+    // const conversionProxy = await Conversion.attach(conversionAddress);
 
     // await new Promise(res => setTimeout(res, 1000));
 
-    const TicketMaster = await hre.ethers.getContractFactory("TicketMaster");
-    // // //const ticketMaster = await upgrades.deployProxy(TicketMaster, [accounts[0]], { initializer: 'initialize'})
-    const ticketMaster = await TicketMaster.attach(ticketMasterAddress);
+    // const TicketMaster = await hre.ethers.getContractFactory("TicketMaster");
+    // // // //const ticketMaster = await upgrades.deployProxy(TicketMaster, [accounts[0]], { initializer: 'initialize'})
+    // const ticketMaster = await TicketMaster.attach(ticketMasterAddress);
     // // await new Promise(res => setTimeout(res, 1000));
     // await ticketMaster.deployed();
-    console.log("ticketMaster contract", ticketMaster.address);
+    // console.log("ticketMaster contract", ticketMaster.address);
 
     const eventContract = await hre.ethers.getContractFactory("EventsV1");
-    // const eventProxy = await eventContract.attach("0xCC975b87e6b2b09A0a1Df78799E6D0393Facb881");
-    const eventProxy = await upgrades.deployProxy(eventContract, { initializer: 'initialize' })
-    await eventProxy.deployed();
+    const eventProxy = await eventContract.attach("0x7e81AF15A2700595E7A596Bd46D915c368f97B92");
+    // const eventProxy = await upgrades.deployProxy(eventContract, { initializer: 'initialize' })
+    // await eventProxy.deployed();
     // // // await new Promise(res => setTimeout(res, 1000));
     console.log("Event contract", eventProxy.address);
 
@@ -53,69 +53,73 @@ async function main() {
     // console.log(EventsV1Proxy.address)
 
     // await new Promise(res => setTimeout(res, 1000));
-    await ticketMaster.whitelistAdmin(eventProxy.address, true);
-
-    // await new Promise(res => setTimeout(res, 1000));
-    await eventProxy.updateSignerAddress(accounts[0]);
-
-    // await new Promise(res => setTimeout(res, 1000));
-    await eventProxy.updateWhitelist([accounts[0]], [true]);
+    // await ticketMaster.whitelistAdmin(eventProxy.address, true);
 
     // // await new Promise(res => setTimeout(res, 1000));
-    await eventProxy.updateDeviation(5);
-
-    // await new Promise(res => setTimeout(res, 1000));
-    await eventProxy.whitelistErc20TokenAddress(MATIC, true);
+    // await eventProxy.updateSignerAddress(accounts[0]);
 
     // // await new Promise(res => setTimeout(res, 1000));
-    await eventProxy.whitelistErc20TokenAddress(Trace, true);
-    console.log("Token Added");
+    // await eventProxy.updateWhitelist([accounts[0]], [true]);
 
-    await new Promise(res => setTimeout(res, 1000));
-    await eventProxy.whitelistErc20TokenAddress(USDC, true);
+    // // await new Promise(res => setTimeout(res, 1000));
+    // await eventProxy.updateDeviation(5);
 
-    await eventProxy.whitelistErc721TokenAddress(nfttoken, true);
+    // // await new Promise(res => setTimeout(res, 1000));
+    // await eventProxy.whitelistErc20TokenAddress(MATIC, true);
 
-    await new Promise(res => setTimeout(res, 1000));
-    await eventProxy.updateVenueContract(venueAddress);
-
-    await new Promise(res => setTimeout(res, 1000));
-    await eventProxy.updateConversionContract(conversionAddress);
+    // // // await new Promise(res => setTimeout(res, 1000));
+    // await eventProxy.whitelistErc20TokenAddress(Trace, true);
+    // console.log("Token Added");
 
     // await new Promise(res => setTimeout(res, 1000));
-    await eventProxy.updateTreasuryContract(treasuryProxy.address);
+    // await eventProxy.whitelistErc20TokenAddress(USDC, true);
 
-    console.log("Address Addded");
+    //await eventProxy.whitelistErc721TokenAddress(nfttoken, true);
+
+    await eventProxy.whitelistErc721TokenAddress("0x11c3a46087b34870C23452E5A62326E324ec1360", true);
+
+    await eventProxy.whitelistErc721TokenAddress("0x60f969Dd2c310C65E13bB9c9FEC75dc4F9144576", true);
 
     // await new Promise(res => setTimeout(res, 1000));
-    await eventProxy.updateEventStatus(true);
+    // await eventProxy.updateVenueContract(venueAddress);
 
     // await new Promise(res => setTimeout(res, 1000));
-    await eventProxy.updateticketMasterContract(ticketMasterAddress);
+    // await eventProxy.updateConversionContract(conversionAddress);
 
-    await new Promise(res => setTimeout(res, 1000));
-    await eventProxy.updatePlatformFee(5);
+    // // await new Promise(res => setTimeout(res, 1000));
+    // await eventProxy.updateTreasuryContract(treasuryProxy.address);
 
-    await new Promise(res => setTimeout(res, 1000));
-    await ticketMaster.updateEventContract(eventProxy.address);
+    // console.log("Address Addded");
 
-    console.log("done");
-    // await new Promise(res => setTimeout(res, 5000));
+    // // await new Promise(res => setTimeout(res, 1000));
+    // await eventProxy.updateEventStatus(true);
 
-    await treasuryProxy.grantAdmin(eventProxy.address);
-    // await new Promise(res => setTimeout(res, 3000));
-    await treasuryProxy.grantAdmin(ticketMaster.address);
+    // // await new Promise(res => setTimeout(res, 1000));
+    // await eventProxy.updateticketMasterContract(ticketMasterAddress);
 
-    const manageEvent = await ethers.getContractFactory("ManageEvent");
-    const manageEventContract = await upgrades.deployProxy(manageEvent,{initializer: 'initialize'});
-    // const manageEventContract = await manageEvent.attach("0xE6aed862B2613815629Af5b7e0517Bc3E906eaB0");
-    await manageEventContract.deployed();
-    //await new Promise(res => setTimeout(res, 1000));
-    console.log("Manage Event proxy", manageEventContract.address);
+    // await new Promise(res => setTimeout(res, 1000));
+    // await eventProxy.updatePlatformFee(5);
 
-    await manageEventContract.updateEventContract(eventProxy.address);
+    // await new Promise(res => setTimeout(res, 1000));
+    // await ticketMaster.updateEventContract(eventProxy.address);
 
-    await eventProxy.updateManageEventContract(manageEventContract.address);
+    // console.log("done");
+    // // await new Promise(res => setTimeout(res, 5000));
+
+    // await treasuryProxy.grantAdmin(eventProxy.address);
+    // // await new Promise(res => setTimeout(res, 3000));
+    // await treasuryProxy.grantAdmin(ticketMaster.address);
+
+    // const manageEvent = await ethers.getContractFactory("ManageEvent");
+    // const manageEventContract = await upgrades.deployProxy(manageEvent,{initializer: 'initialize'});
+    // // const manageEventContract = await manageEvent.attach("0xE6aed862B2613815629Af5b7e0517Bc3E906eaB0");
+    // await manageEventContract.deployed();
+    // //await new Promise(res => setTimeout(res, 1000));
+    // console.log("Manage Event proxy", manageEventContract.address);
+
+    // await manageEventContract.updateEventContract(eventProxy.address);
+
+    // await eventProxy.updateManageEventContract(manageEventContract.address);
 
     // const Token = await ethers.getContractFactory("Token");
     // const TokenProxy = await Token.attach(Trace);
