@@ -21,10 +21,10 @@ contract EventStorage {
     mapping(uint256 => Details) public getInfo;
 
     //mapping for getting supported erc20TokenAddress
-    mapping(address => bool) public erc20TokenAddress;
+    // mapping(address => bool) public erc20TokenAddress;
 
-    //mapping for getting supported erc721TokenAddress
-    mapping(address => bool) public erc721TokenAddress;
+    // //mapping for getting supported erc721TokenAddress
+    // mapping(address => bool) public erc721TokenAddress;
 
     //mapping for featured events
     mapping(uint256 => bool) public featuredEvents;
@@ -32,8 +32,8 @@ contract EventStorage {
     //mapping for favourite events
     mapping(address => mapping(uint256 => bool)) public favouriteEvents;
 
-    //mapping for whiteListed address
-    mapping(address => bool) public whiteListedAddress;
+    // //mapping for whiteListed address
+    // mapping(address => bool) public whiteListedAddress;
 
     //map venue ID to eventId list which are booked in that venue
     //when new event are created, add that event id to this array
@@ -55,33 +55,36 @@ contract EventStorage {
 
     mapping(address => mapping(uint256 => bool)) public joinEventStatus;
 
-    //block time
+    // //block time
     uint256 public constant blockTime = 2;
 
-    // Deviation Percentage
-    uint256 internal deviationPercentage;
+    // // Deviation Percentage
+    // uint256 internal deviationPercentage;
 
-    //venue contract address
-    address internal venueContract;
+    // //venue contract address
+    // address internal venueContract;
 
-    //convesion contract address
-    address internal conversionContract;
+    // //convesion contract address
+    // address internal conversionContract;
 
-    //ticket master contract address
-    address internal ticketMaster;
+    // //ticket master contract address
+    // address internal ticketMaster;
 
-    //treasury contract
-    address payable internal treasuryContract;
+    // //treasury contract
+    // address payable internal treasuryContract;
 
-    address internal manageEvent;
+    // //manageEvent contract
+    // address internal manageEvent;
 
-    //isPublic true or false
-    bool internal isPublic;
+    // //isPublic true or false
+    // bool internal isPublic;
 
-    //platformFeePercent
-    uint256 internal platformFeePercent;
+    // //platformFeePercent
+    // uint256 internal platformFeePercent;
 
-    address public signerAddress;
+    // address public signerAddress;
+
+    address public adminContract;
 
     //
     // This empty reserved space is put in place to allow future versions to add new

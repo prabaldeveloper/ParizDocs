@@ -6,17 +6,17 @@ async function main() {
     const accounts = await ethers.provider.listAccounts();
     console.log("Accounts", accounts[0]);
     const Token = await ethers.getContractFactory("Token721");
-    const TokenProxy = Token.attach("0x60f969Dd2c310C65E13bB9c9FEC75dc4F9144576");
-    //const TokenProxy = await Token.deploy();
-    //await TokenProxy.deployed();
+    // const TokenProxy = Token.attach("0x11c3a46087b34870c23452e5a62326e324ec1360");
+    const TokenProxy = await Token.deploy();
+    await TokenProxy.deployed();
     console.log("Token Address", TokenProxy.address);
     //await new Promise(res => setTimeout(res, 3000));
-    //await TokenProxy.initialize("RareGuys", "RG");
+    await TokenProxy.initialize("Guys", "RG");
     
     
 
-    // await TokenProxy.mint(accounts[0], 1)
-    // await TokenProxy.mint(accounts[0], 2)
+    await TokenProxy.mint(accounts[0], 1)
+    await TokenProxy.mint(accounts[0], 2)
     // await TokenProxy.mint(accounts[0], 3)
     // await TokenProxy.mint(accounts[0], 4)
     // await TokenProxy.mint(accounts[0], 5)
@@ -44,7 +44,10 @@ async function main() {
 
     // await TokenProxy.mint("0x1e1f81176A625e5a4a097704e9D5C3747Ef48D18", 17);
 
-    await TokenProxy.mint(accounts[0], 18);
+    // await TokenProxy.mint(accounts[0], 18);
+
+    // await TokenProxy.mint("0x1e1f81176A625e5a4a097704e9D5C3747Ef48D18",19);
+
 
 
 

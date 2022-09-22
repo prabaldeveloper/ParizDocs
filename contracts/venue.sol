@@ -33,19 +33,6 @@ contract Venue is VenueMetadata, VenueStorage {
         uint256 rentPerBlock
     );
 
-    ///@param venueRentalCommission venueRentalCommission
-    event VenueRentalCommissionUpdated(uint256 venueRentalCommission);
-
-    ///@notice updates venueRentalCommission
-    ///@param _venueRentalCommission venueRentalCommission
-    function updateVenueRentalCommission(uint256 _venueRentalCommission)
-        external
-        onlyOwner
-    {
-        venueRentalCommission = _venueRentalCommission;
-        emit VenueRentalCommissionUpdated(_venueRentalCommission);
-    }
-
     ///@notice Adds venue
     ///@param _name Venue name
     ///@param _location Venue location
@@ -121,15 +108,6 @@ contract Venue is VenueMetadata, VenueStorage {
     {
         require(_exists(tokenId), "Venue: TokenId does not exist");
         return getInfo[tokenId].totalCapacity;
-    }
-
-    ///@notice Returns the venueRentalCommission
-    function getVenueRentalCommission()
-        public
-        view
-        returns (uint256 _venueRentalCommission)
-    {
-        return venueRentalCommission;
     }
 
     ///@notice Returns the venue owner

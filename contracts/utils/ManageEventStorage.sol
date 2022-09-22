@@ -36,8 +36,15 @@ contract ManageEventStorage {
     //mapping for event cancel status
     mapping(uint256 => bool) public eventCancelledStatus;
 
-    //Event contract address
-    address internal eventContract;
+    mapping(uint256 => mapping(uint256 => bool)) public refundTicketFeesStatus;
+
+    mapping(uint256 => mapping(uint256 => bool)) public claimERC721TicketStatus;
+
+    mapping(uint256 => mapping(address => bool)) public claimERC20TicketStatus;
+
+
+    //admin contract address
+    address public adminContract;
 
     //
     // This empty reserved space is put in place to allow future versions to add new

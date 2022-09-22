@@ -2,8 +2,7 @@
 
 pragma solidity ^0.8.0;
 
-abstract contract VerifySignature {
-    
+contract VerifySignature {
     function getMessageHash(
         address ticketHolder,
         uint256 eventTokenId,
@@ -18,10 +17,11 @@ abstract contract VerifySignature {
                 );
     }
 
-    function recoverSigner(
-        bytes32 hash,
-        bytes memory signature
-    ) public pure returns (address) {
+    function recoverSigner(bytes32 hash, bytes memory signature)
+        public
+        pure
+        returns (address)
+    {
         // Check the signature length
         if (signature.length != 65) {
             revert("ECDSA: invalid signature length");
@@ -74,5 +74,4 @@ abstract contract VerifySignature {
 
         return signer;
     }
-
 }

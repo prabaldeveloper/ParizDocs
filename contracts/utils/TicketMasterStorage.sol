@@ -19,6 +19,8 @@ contract TicketMasterStorage {
 
     mapping(uint256 => mapping(uint256 => bool)) public refundTicketFeesStatus;
 
+    mapping(address => mapping(uint256 => bool)) public nftIdPassStatus;
+
     mapping(address => uint256[]) public nftTicketIds;
 
     //mapping for storing owner address status
@@ -26,11 +28,8 @@ contract TicketMasterStorage {
 
     mapping(address => bool) public erc721Address;
 
-    //event contract address
-    address internal eventContract;
-
-    //ticketCommission
-    uint256 internal ticketCommissionPercent;
+    //admin contract address
+    address public adminContract;
 
     //
     // This empty reserved space is put in place to allow future versions to add new
