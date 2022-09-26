@@ -40,7 +40,7 @@ async function main() {
     // console.log("ticketMaster contract", ticketMaster.address);
 
     const eventContract = await hre.ethers.getContractFactory("EventsV1");
-    const eventProxy = await eventContract.attach("0x0fFF6fe174E187743c09E9014824625FE3a6b187");
+    const eventProxy = await eventContract.attach("0xc8677C605080Ab0aa7d47C890fe36f6DD7d834f3");
     //const eventProxy = await upgrades.deployProxy(eventContract, { initializer: 'initialize' })
     await eventProxy.deployed();
     // // await new Promise(res => setTimeout(res, 1000));
@@ -125,28 +125,29 @@ async function main() {
     // // await TokenProxy.mint(accounts[0], "2000000000000000000000000000")
     // console.log("minted");
     
-    const blockNumBefore = await ethers.provider.getBlockNumber();
-    const blockBefore = await ethers.provider.getBlock(blockNumBefore);
-    const thirtyDays = 1 * 24 * 60 * 60; // 1 days
-    const startTime = blockBefore.timestamp + 15;
-    const endTime = startTime + 86400;
+    // const blockNumBefore = await ethers.provider.getBlockNumber();
+    // const blockBefore = await ethers.provider.getBlock(blockNumBefore);
+    // const thirtyDays = 1 * 24 * 60 * 60; // 1 days
+    // const startTime = blockBefore.timestamp + 15;
+    // const endTime = startTime + 86400;
 
-    console.log("time", startTime, endTime);
+    // console.log("time", startTime, endTime);
 
-    let fee = await eventProxy.calculateRent(1, startTime, endTime);
-    //let totalFee = Number(fee[0]) + Number(fee[1]);
-    fee[0] = fee[0].toString();
-    console.log(fee[0]);
+    // let fee = await eventProxy.calculateRent(1, startTime, endTime);
+    // //let totalFee = Number(fee[0]) + Number(fee[1]);
+    // fee[0] = fee[0].toString();
+    // console.log(fee[0]);
     // await TokenProxy.approve(eventProxy.address, fee[0]);
     
+    await eventProxy.featured(17, true);
     
     // console.log("approve done");
 
     // console.log("balance", await TokenProxy.balanceOf(accounts[0]));
-    await new Promise(res => setTimeout(res, 1000));
-    await eventProxy.add(["Event", "Test Category", "Test Event"], [startTime, endTime],
-        "QmQh36CsceXZoqS7v9YQLUyxXdRmWd8YWTBUz7WCXsiVty", 1, fee[0], "20000000000000", true, true);//tokenId = 1
-    console.log("done 1");
+    // await new Promise(res => setTimeout(res, 1000));
+    // await eventProxy.add(["Event", "Test Category", "Test Event"], [startTime, endTime],
+    //     "QmQh36CsceXZoqS7v9YQLUyxXdRmWd8YWTBUz7WCXsiVty", 1, fee[0], "20000000000000", true, true);//tokenId = 1
+    // console.log("done 1");
 
     // let ticketPrice = await conversionProxy.convertFee("0x0000000000000000000000000000000000000000", "20000000000000");
     // ticketPrice  = ticketPrice.toString();
@@ -177,9 +178,9 @@ async function main() {
     // // // await eventProxy.updateEvent(1, "hello",[startTime, endTime-20]);
     // // // console.log("Time Updated");
 
-    await new Promise(res => setTimeout(res, 15000));
-    await eventProxy.startEvent(1);
-    console.log("Event started");
+    // await new Promise(res => setTimeout(res, 15000));
+    // await eventProxy.startEvent(1);
+    // console.log("Event started");
 
     // // await new Promise(res => setTimeout(res, 2000));
     // // await ticketMaster.join(1,1);
