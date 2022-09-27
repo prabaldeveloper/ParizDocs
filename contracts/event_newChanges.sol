@@ -112,15 +112,22 @@ contract EventsV1 is EventAdminRole {
                 );
                 address tokenAddress = IAdminFunctions(adminContract).getBaseToken();
                 if(feesPaid > estimatedCost) {
-                    ITreasury(IAdminFunctions(adminContract).getTreasuryContract()).claimFunds(getInfo[tokenId].eventOrganiser,tokenAddress, feesPaid - estimatedCost);
+                    ITreasury(IAdminFunctions(adminContract).getTreasuryContract()).claimFunds(getInfo[tokenId].eventOrganiser,tokenAddress, (feesPaid - platformFeesPaid[tokenId])  - (estimatedCost - _platformFees));
+
                     balance[tokenId] = estimatedCost - _platformFees;
                     platformFeesPaid[tokenId] = _platformFees;
                 }
                 else {
                     IERC20(tokenAddress).transferFrom(
-                    getInfo[tokenId].eventOrganiser,
-                    IAdminFunctions(adminContract).getTreasuryContract(),
-                    estimatedCost - feesPaid
+                        getInfo[tokenId].eventOrganiser,
+                        IAdminFunctions(adminContract).getTreasuryContract(),
+                        (estimatedCost - _platformFees) - (feesPaid - platformFeesPaid[tokenId])
+                    );
+
+                    IERC20(tokenAddress).transferFrom(
+                        getInfo[tokenId].eventOrganiser,
+                        IAdminFunctions(adminContract).getAdminTreasuryContract(),
+                        _platformFees - platformFeesPaid[tokenId]
                     );
                     balance[tokenId] = estimatedCost - _platformFees;
                     platformFeesPaid[tokenId] = _platformFees;
@@ -353,7 +360,12 @@ contract EventsV1 is EventAdminRole {
         IERC20(tokenAddress).transferFrom(
             eventOrganiser,
             IAdminFunctions(adminContract).getTreasuryContract(),
-            feeAmount
+            feeAmount - platformFees
+        );
+        IERC20(tokenAddress).transferFrom(
+            eventOrganiser, 
+            IAdminFunctions(adminContract).getAdminTreasuryContract(), 
+            platformFees
         );
         platformFeesPaid[eventTokenId] = platformFees;
         balance[eventTokenId] = feeAmount - platformFees;
@@ -437,32 +449,8 @@ contract EventsV1 is EventAdminRole {
             );
             payNow = true;
             getInfo[eventTokenId].payNow = payNow;
+        }
             
-        }
-        else {
-            uint256 feesPaid = balance[eventTokenId] + platformFeesPaid[eventTokenId];
-            (uint256 estimatedCost, uint256 _platformFees, ) = calculateRent(
-            venueTokenId,
-            startTime,
-            endTime
-            );
-            address tokenAddress = IAdminFunctions(adminContract).getBaseToken();
-            if(feesPaid > estimatedCost) {
-                ITreasury(IAdminFunctions(adminContract).getTreasuryContract()).claimFunds(eventOrganiser,tokenAddress, feesPaid - estimatedCost);
-                balance[eventTokenId] = estimatedCost - _platformFees;
-                platformFeesPaid[eventTokenId] = _platformFees;
-
-            }
-            else {
-                IERC20(tokenAddress).transferFrom(
-                getInfo[eventTokenId].eventOrganiser,
-                IAdminFunctions(adminContract).getTreasuryContract(),
-                estimatedCost - feesPaid
-                );
-                balance[eventTokenId] = estimatedCost - _platformFees;
-                platformFeesPaid[eventTokenId] = _platformFees;
-            }
-        }
         emit EventPaid(eventTokenId, payNow, venueFeeAmount);
     }
 

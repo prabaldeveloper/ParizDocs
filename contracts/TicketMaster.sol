@@ -106,7 +106,7 @@ contract TicketMaster is Ticket, TicketMasterStorage {
             , uint256 endTime,
             , , , uint256 actualPrice
         ) = IEvents(IAdminFunctions(adminContract).getEventContract()).getEventDetails(buyTicketId);
-        require(block.timestamp <= endTime || IAdminFunctions(adminContract).isEventEnded(buyTicketId) == true, "TicketMaster: Event ended");
+        require(block.timestamp <= endTime && IAdminFunctions(adminContract).isEventEnded(buyTicketId) == false, "TicketMaster: Event ended");
         uint256 totalCapacity = Ticket(ticketNFTAddress[buyTicketId]).totalSupply();
         uint256 mintedToken = Ticket(ticketNFTAddress[buyTicketId]).mint(
             msg.sender
@@ -158,7 +158,12 @@ contract TicketMaster is Ticket, TicketMasterStorage {
                 IERC20(tokenAddress).transferFrom(
                     msg.sender,
                     IAdminFunctions(adminContract).getTreasuryContract(),
-                    feeAmount
+                    feeAmount - ticketCommissionFee
+                );
+                IERC20(tokenAddress).transferFrom(
+                    msg.sender,
+                    IAdminFunctions(adminContract).getAdminTreasuryContract(),
+                    ticketCommissionFee
                 );
                 ticketFeesBalance[buyTicketId][tokenAddress] += (feeAmount -
                     ticketCommissionFee);
@@ -169,11 +174,18 @@ contract TicketMaster is Ticket, TicketMasterStorage {
                     IAdminFunctions(adminContract).getTicketCommissionPercent()) / 100;
 
                 (bool successOwner, ) = IAdminFunctions(adminContract).getTreasuryContract().call{
-                    value: msg.value
+                    value: msg.value - ticketCommissionFee
                 }("");
                 require(
                     successOwner,
                     "TicketMaster: Transfer to treasury contract failed"
+                );
+                 (bool successAdminTreasury, ) = IAdminFunctions(adminContract).getAdminTreasuryContract().call{
+                    value: ticketCommissionFee
+                }("");
+                require(
+                    successAdminTreasury,
+                    "TicketMaster: Transfer to  admin treasury contract failed"
                 );
                 ticketFeesBalance[buyTicketId][tokenAddress] += (msg.value -
                     ticketCommissionFee);

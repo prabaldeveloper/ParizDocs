@@ -339,7 +339,20 @@ contract AdminFunctions is Ownable, AdminStorage {
     function convertFee(address paymentToken, uint256 mintFee) public view returns (uint256) {
         return IConversion(conversionContract).convertFee(paymentToken, mintFee);
     }
-        
+    
+    function updateAdminTreasuryContract(address payable _adminTreasuryContract) external onlyOwner {
+        require(
+            _adminTreasuryContract.isContract(),
+            "AdminFunctions: Address is not a contract"
+        );
+        adminTreasuryContract = _adminTreasuryContract;
+    }
+
+    ///@notice Returns admintreasuryContract address
+    function getAdminTreasuryContract() public view returns (address) {
+        return adminTreasuryContract;
+    }
+
     uint256[49] private ______gap;
 
 

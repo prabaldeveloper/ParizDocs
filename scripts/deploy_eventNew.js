@@ -22,14 +22,14 @@ async function main() {
     const Erc721_2 = "0x3Ae8f1e0680013272F913B9Ad9e442cDe52E523F"
     // const nfttoken = "0x9D6A70e2e1003d0bfc95129D658d1eBa5f08B481";
 
-    // const dropsTreasury = await ethers.getContractFactory("Treasury");
-    // const treasuryProxy = await upgrades.deployProxy(dropsTreasury, [accounts[0]], { initializer: 'initialize' })
-    // // const treasuryProxy = dropsTreasury.attach(treasuryProxyAddress);
-    // await treasuryProxy.deployed();
+    const dropsTreasury = await ethers.getContractFactory("AdminTreasury");
+    const treasuryProxy = await upgrades.deployProxy(dropsTreasury, [accounts[0]], { initializer: 'initialize' })
+    // const treasuryProxy = dropsTreasury.attach(treasuryProxyAddress);
+    await treasuryProxy.deployed();
 
-    // // await new Promise(res => setTimeout(res, 1000));
-    // console.log("Treasury proxy", treasuryProxy.address);
-    // console.log("Is admin", await treasuryProxy.isAdmin(accounts[0]));
+    await new Promise(res => setTimeout(res, 1000));
+    console.log("Treasury proxy", treasuryProxy.address);
+    console.log("Is admin", await treasuryProxy.isAdmin(accounts[0]));
 
     // const Conversion = await ethers.getContractFactory("ConversionV1");
     // const conversionProxy = await Conversion.attach(conversionAddress);

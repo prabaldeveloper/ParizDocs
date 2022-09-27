@@ -212,7 +212,7 @@ contract ManageEvent is Ownable, ManageEventStorage {
         );
         require(
             getAgendaInfo[eventTokenId][agendaId].isAgendaDeleted == false,
-            "ManageEvent: agenda deleted"
+            "ManageEvent: Agenda deleted"
         );
         getAgendaInfo[eventTokenId][agendaId].agendaStartTime = agendaStartTime;
         getAgendaInfo[eventTokenId][agendaId].agendaEndTime = agendaEndTime;
@@ -303,7 +303,7 @@ contract ManageEvent is Ownable, ManageEventStorage {
             isEventStarted(eventTokenId) == true,
             "ManageEvent: Event is not started"
         );
-        require(msg.sender == eventOrganiser, "ManageEvent: Invalid Caller");
+        require(msg.sender == eventOrganiser, "ManageEvent: Invalid Address");
         eventCompletedStatus[eventTokenId] = true;
         emit EventCompleted(eventTokenId);
     }
@@ -334,17 +334,8 @@ contract ManageEvent is Ownable, ManageEventStorage {
     }
 
     function end(
-        bytes memory signature,
-        address ticketHolder,
         uint256 eventTokenId
         ) external {
-            require(
-                IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).recoverSigner(
-                    IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).getMessageHash(ticketHolder, eventTokenId, 0),
-                    signature
-                ) == IAdminFunctions(adminContract).getSignerAddress(),
-                "ManageEvent: Signature does not match"
-            );
             require(IEvents(IAdminFunctions(adminContract).getEventContract())._exists(eventTokenId), "ManageEvent: TokenId does not exist");
             require(
                 isEventCancelled(eventTokenId) == false,
@@ -357,7 +348,7 @@ contract ManageEvent is Ownable, ManageEventStorage {
              (, , address payable eventOrganiser , , , ) = IEvents(
                 IAdminFunctions(adminContract).getEventContract()
             ).getEventDetails(eventTokenId);
-            require(ticketHolder == eventOrganiser, "ManageEvent: Invalid Caller");
+            require(msg.sender == eventOrganiser, "ManageEvent: Invalid Address");
             eventEndedStatus[eventTokenId] = true;
             emit EventEnded(eventTokenId);
     }

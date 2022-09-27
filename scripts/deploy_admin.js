@@ -18,7 +18,8 @@ async function main() {
     //// ************ DEPLOY ADMIN **************/////
 
     const admin = await ethers.getContractFactory("AdminFunctions");
-    //const adminContract = await upgrades.deployProxy(admin, { initializer: 'initialize' })
+    // const adminContract = await upgrades.deployProxy(admin, { initializer: 'initialize' })
+    // const adminContract = await admin.deploy();
     const adminContract = admin.attach("0x8e8AC44aF92fB9b853cc70eC300F6D9793b1F2Fe")
     // await new Promise(res => setTimeout(res, 5000));
     console.log("Admin proxy", adminContract.address);
@@ -57,7 +58,7 @@ async function main() {
     // await adminContract.updatePlatformFee(5);
 
     // // // await new Promise(res => setTimeout(res, 1000));
-    await adminContract.updateSignerAddress("0x3B2091278d903435232e8E0F3F364A4e9b9F670C");
+    // await adminContract.updateSignerAddress("0x3B2091278d903435232e8E0F3F364A4e9b9F670C");
 
     // // // // await new Promise(res => setTimeout(res, 1000));
     // await adminContract.updateWhitelist([accounts[0]], [true]);
@@ -74,6 +75,8 @@ async function main() {
     // await adminContract.updateEventContract(eventContract);
 
     // await adminContract.updateTreasuryContract(treasuryProxy);
+
+    await adminContract.updateAdminTreasuryContract("0x8c1a9a4C448eBaC625FB5159f49d1AaDC8f9F98A");
 
 
 }

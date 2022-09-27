@@ -25,4 +25,5 @@ interface IAdminFunctions {
     function getSignatureContract() external view returns (address);
     function isERC721TokenFreePass(address tokenAddress) external view returns (uint256);
     function getVenueRentalCommission() external view returns (uint256);
+    function getAdminTreasuryContract() external view returns (address);
 }
