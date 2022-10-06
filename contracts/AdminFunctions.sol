@@ -100,7 +100,7 @@ contract AdminFunctions is Ownable, AdminStorage {
     {
         require(
             _conversionContract.isContract(),
-            "AdminFunctions: Address is not a contract"
+            "ERR_128:AdminFunctions:Address is not a contract"
         );
         conversionContract = _conversionContract;
         emit ConversionContractUpdated(_conversionContract);
@@ -111,7 +111,7 @@ contract AdminFunctions is Ownable, AdminStorage {
     function updateVenueContract(address _venueContract) external onlyOwner {
         require(
             _venueContract.isContract(),
-            "AdminFunctions: Address is not a contract"
+            "ERR_128:AdminFunctions:Address is not a contract"
         );
         venueContract = _venueContract;
         emit VenueContractUpdated(_venueContract);
@@ -125,7 +125,7 @@ contract AdminFunctions is Ownable, AdminStorage {
     {
         require(
             _treasuryContract.isContract(),
-            "AdminFunctions: Address is not a contract"
+            "ERR_128:AdminFunctions:Address is not a contract"
         );
         treasuryContract = _treasuryContract;
         emit TreasuryContractUpdated(_treasuryContract);
@@ -139,7 +139,7 @@ contract AdminFunctions is Ownable, AdminStorage {
     {
         require(
             _ticketMaster.isContract(),
-            "AdminFunctions: Address is not a contract"
+            "ERR_128:AdminFunctions:Address is not a contract"
         );
         ticketMaster = _ticketMaster;
         emit TicketMasterContractUpdated(_ticketMaster);
@@ -148,7 +148,7 @@ contract AdminFunctions is Ownable, AdminStorage {
     function updateManageEventContract(address _manageEvent) external onlyOwner {
         require(
             _manageEvent.isContract(),
-            "AdminFunctions: Address is not a contract"
+            "ERR_128:AdminFunctions:Address is not a contract"
         );
         manageEvent = _manageEvent;
     }
@@ -158,7 +158,7 @@ contract AdminFunctions is Ownable, AdminStorage {
     function updateEventContract(address _eventContract) external onlyOwner {
         require(
             _eventContract.isContract(),
-            "AdminFunctions: Address is not a contract"
+            "ERR_128:AdminFunctions:Address is not a contract"
         );
         eventContract = _eventContract;
     }
@@ -168,7 +168,7 @@ contract AdminFunctions is Ownable, AdminStorage {
     function updateSignatureContract(address _signatureContract) external onlyOwner {
         require(
             _signatureContract.isContract(),
-            "AdminFunctions: Address is not a contract"
+            "ERR_128:AdminFunctions:Address is not a contract"
         );
         signatureContract = _signatureContract;
     }
@@ -234,7 +234,7 @@ contract AdminFunctions is Ownable, AdminStorage {
         require(
             feeAmount >= price - ((price * (deviationPercentage)) / (100)) &&
                 feeAmount <= price + ((price * (deviationPercentage)) / (100)),
-            "AdminFunctions: Amount not within deviation percentage"
+            "ERR_129:AdminFunctions:Amount not within deviation percentage"
         );
     }
 
@@ -343,7 +343,7 @@ contract AdminFunctions is Ownable, AdminStorage {
     function updateAdminTreasuryContract(address payable _adminTreasuryContract) external onlyOwner {
         require(
             _adminTreasuryContract.isContract(),
-            "AdminFunctions: Address is not a contract"
+            "ERR_128:AdminFunctions:Address is not a contract"
         );
         adminTreasuryContract = _adminTreasuryContract;
     }
