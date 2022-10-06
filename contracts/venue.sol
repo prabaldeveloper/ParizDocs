@@ -50,7 +50,7 @@ contract Venue is VenueMetadata, VenueStorage {
     ) external onlyOwner {
         require(
             _totalCapacity != 0 && _rentPerBlock != 0,
-            "Venue: Invalid inputs"
+            "ERR_127:Venue:Invalid inputs"
         );
         uint256 _tokenId = _mintInternal(_tokenCID);
         getInfo[_tokenId] = Details(
@@ -95,7 +95,7 @@ contract Venue is VenueMetadata, VenueStorage {
         view
         returns (uint256 rentPerBlock)
     {
-        require(_exists(tokenId), "Venue: TokenId does not exist");
+        require(_exists(tokenId), "ERR_126:Venue:TokenId does not exist");
         return getInfo[tokenId].rentPerBlock;
     }
 
@@ -106,7 +106,7 @@ contract Venue is VenueMetadata, VenueStorage {
         view
         returns (uint256 _totalCapacity)
     {
-        require(_exists(tokenId), "Venue: TokenId does not exist");
+        require(_exists(tokenId), "ERR_126:Venue:TokenId does not exist");
         return getInfo[tokenId].totalCapacity;
     }
 
@@ -117,7 +117,7 @@ contract Venue is VenueMetadata, VenueStorage {
         view
         returns (address payable owner)
     {
-        require(_exists(tokenId), "Venue: TokenId does not exist");
+        require(_exists(tokenId), "ERR_126:Venue:TokenId does not exist");
         return getInfo[tokenId].owner;
     }
 }
