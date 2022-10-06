@@ -29,7 +29,7 @@ contract TicketMaster is Ticket, TicketMasterStorage {
     modifier onlyAdmin() {
         require(
             adminAddress[msg.sender] == true,
-            "TicketMaster: Caller is not the admin"
+            "ERR_117:TicketMaster:Caller is not the admin"
         );
         _;
     }
@@ -39,7 +39,7 @@ contract TicketMaster is Ticket, TicketMasterStorage {
     function updateAdminContract(address _adminContract) external onlyOwner {
         require(
             _adminContract.isContract(),
-            "TicketMaster: Address is not a contract"
+            "ERR_118:TicketMaster:Address is not a contract"
         );
         adminContract = _adminContract;
 
@@ -96,11 +96,11 @@ contract TicketMaster is Ticket, TicketMasterStorage {
     ) external payable {
         require(
             IEvents(IAdminFunctions(adminContract).getEventContract())._exists(buyTicketId),
-            "TicketMaster: TokenId does not exist"
+            "ERR_119:TicketMaster:TokenId does not exist"
         );
         require(
             IAdminFunctions(adminContract).isEventCancelled(buyTicketId) == false,
-            "TicketMaster: Event is cancelled"
+            "ERR_120:TicketMaster:Event is cancelled"
         );
         (
             , uint256 endTime,
@@ -113,7 +113,7 @@ contract TicketMaster is Ticket, TicketMasterStorage {
         );
         require(
             ticketSold[buyTicketId] <= totalCapacity,
-            "TicketMaster: All tickets are sold"
+            "ERR_121:TicketMaster:All tickets are sold"
         );
         if(actualPrice != 0) {
             checkTicketFees(
@@ -147,7 +147,7 @@ contract TicketMaster is Ticket, TicketMasterStorage {
         if (keccak256(abi.encodePacked((tokenType))) == keccak256(abi.encodePacked(("ERC20")))) {
             require(
                 IAdminFunctions(adminContract).isErc20TokenWhitelisted(tokenAddress) == true,
-                "TicketMaster : PaymentToken Not Supported"
+                "ERR_122:TicketMaster: PaymentToken Not Supported"
             );
             uint256 convertedActualPrice = IAdminFunctions(adminContract)
                     .convertFee(tokenAddress, actualPrice);
@@ -178,14 +178,14 @@ contract TicketMaster is Ticket, TicketMasterStorage {
                 }("");
                 require(
                     successOwner,
-                    "TicketMaster: Transfer to treasury contract failed"
+                    "ERR_123:TicketMaster:Transfer to treasury contract failed"
                 );
                  (bool successAdminTreasury, ) = IAdminFunctions(adminContract).getAdminTreasuryContract().call{
                     value: ticketCommissionFee
                 }("");
                 require(
                     successAdminTreasury,
-                    "TicketMaster: Transfer to  admin treasury contract failed"
+                    "ERR_123:TicketMaster:Transfer to  admin treasury contract failed"
                 );
                 ticketFeesBalance[buyTicketId][tokenAddress] += (msg.value -
                     ticketCommissionFee);
@@ -195,12 +195,12 @@ contract TicketMaster is Ticket, TicketMasterStorage {
         else {
             require(
                 IAdminFunctions(adminContract).isErc721TokenWhitelisted(tokenAddress) == true,
-                "TicketMaster : PaymentToken Not Supported"
+                "ERR_122:TicketMaster: PaymentToken Not Supported"
             );
             require(
                 msg.sender ==
                     IERC721Upgradeable(tokenAddress).ownerOf(feeAmount),
-                "TicketMaster : Caller is not the owner"
+                "ERR_124:TicketMaster: Caller is not the owner"
             );
             if(IAdminFunctions(adminContract).isERC721TokenFreePass(tokenAddress) == 0)  {
                 IERC721Upgradeable(tokenAddress).transferFrom(msg.sender, IAdminFunctions(adminContract).getTreasuryContract(), feeAmount);
@@ -209,7 +209,7 @@ contract TicketMaster is Ticket, TicketMasterStorage {
                 erc721Address[tokenAddress] = true;
             }
             else {
-                require(nftIdPassStatus[tokenAddress][feeAmount] == false, "TicketMaster: Nft id already used");
+                require(nftIdPassStatus[tokenAddress][feeAmount] == false, "ERR_125:TicketMaster:Nft id already used");
                 nftIdPassStatus[tokenAddress][feeAmount] = true;
             }
         }
