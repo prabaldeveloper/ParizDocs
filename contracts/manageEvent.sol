@@ -317,7 +317,7 @@ contract ManageEvent is Ownable, ManageEventStorage {
         ) external {
             require(
                 IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).recoverSigner(
-                    IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).getMessageHash(ticketHolder, eventTokenId, 0),
+                    IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).getMessageHash(ticketHolder, eventTokenId, ticketId),
                     signature
                 ) == IAdminFunctions(adminContract).getSignerAddress(),
                 "ERR_140:ManageEvent:Signature does not match"
