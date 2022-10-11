@@ -73,7 +73,7 @@ contract EventsV1 is EventAdminRole {
     modifier onlyWhitelistedUsers() {
         require(
             IAdminFunctions(adminContract).isUserWhitelisted(msg.sender) == true || IAdminFunctions(adminContract).getEventStatus() == true,
-            "Events : User address not whitelisted"
+            "ERR_100:Events:User address not whitelisted"
         );
         _;
     }
@@ -82,25 +82,25 @@ contract EventsV1 is EventAdminRole {
     modifier isValidTime(uint256 startTime, uint256 endTime) {
         require(
             startTime < endTime && startTime >= block.timestamp,
-            "Invalid time input"
+            "ERR_101:Events:Invalid time input"
         );
         _;
     }
 
     function updateEvent(uint256 tokenId, string memory description, uint256[2] memory time) external {
-        require(_exists(tokenId), "Events: TokenId does not exist");
+        require(_exists(tokenId), "ERR_102:Events:TokenId does not exist");
         require(
             msg.sender == getInfo[tokenId].eventOrganiser,
-            "Events: Address is not the event organiser address"
+            "ERR_103:Events:Address is not the event organiser address"
         );
         require(
             getInfo[tokenId].startTime > block.timestamp,
-            "Events: Event is started"
+            "ERR_104:Events:Event is started"
         );       
         uint256 venueTokenId = getInfo[tokenId].venueTokenId;
         require(
             isVenueAvailable(tokenId, venueTokenId, time[0], time[1], 1),
-            "ERR_100:Events:Venue is not available"
+            "ERR_105:Events:Venue is not available"
         );
         if(time[0] != getInfo[tokenId].startTime || time[1] != getInfo[tokenId].endTime) {
             if(getInfo[tokenId].payNow == true) {
@@ -167,11 +167,11 @@ contract EventsV1 is EventAdminRole {
         uint256 _tokenId = _mintInternal(tokenCID);
         require(
             IVenue(IAdminFunctions(adminContract).getVenueContract())._exists(venueTokenId),
-            "Events: Venue tokenId does not exists"
+            "ERR_106:Events:Venue tokenId does not exists"
         );
         require(
             isVenueAvailable(_tokenId, venueTokenId, time[0], time[1], 0),
-            "ERR_100:Events:Venue is not available"
+            "ERR_105:Events:Venue is not available"
         );
         if (payNow == true) {
             checkVenueFees(
@@ -250,7 +250,7 @@ contract EventsV1 is EventAdminRole {
     ///@param tokenId Event tokenId
     ///@param isFeatured Event featured(true/false)
     function featured(uint256 tokenId, bool isFeatured) external onlyOwner {
-        require(_exists(tokenId), "Events: TokenId does not exist");
+        require(_exists(tokenId), "ERR_102:Events:TokenId does not exist");
         featuredEvents[tokenId] = isFeatured;
         emit Featured(tokenId, isFeatured);
     }
@@ -259,7 +259,7 @@ contract EventsV1 is EventAdminRole {
     ///@param tokenId Event tokenId
     ///@param isFavourite Event favourite(true/false)
     function updateFavourite(uint256 tokenId, bool isFavourite) external {
-        require(_exists(tokenId), "Events: TokenId does not exist");
+        require(_exists(tokenId), "ERR_102:Events:TokenId does not exist");
         favouriteEvents[msg.sender][tokenId] = isFavourite;
         emit Favourite(msg.sender, tokenId, isFavourite);
     }
@@ -348,7 +348,7 @@ contract EventsV1 is EventAdminRole {
         address tokenAddress = IAdminFunctions(adminContract).getBaseToken();
         require(
             IAdminFunctions(adminContract).isErc20TokenWhitelisted(tokenAddress) == true,
-            "Events: PaymentToken Not Supported"
+            "ERR_107:Events:PaymentToken Not Supported"
         );
         (uint256 estimatedCost, uint256 _platformFees, ) = calculateRent(
             venueTokenId,
@@ -376,12 +376,12 @@ contract EventsV1 is EventAdminRole {
     function claimVenueFees(uint256 venueTokenId) external {
         require(
             IVenue(IAdminFunctions(adminContract).getVenueContract())._exists(venueTokenId),
-            "Events: Venue tokenId does not exists"
+            "ERR_106:Events:Venue tokenId does not exists"
         );
         uint256[] memory eventIds = eventsInVenue[venueTokenId];
         address tokenAddress = IAdminFunctions(adminContract).getBaseToken();
         address venueOwner = IVenue(IAdminFunctions(adminContract).getVenueContract()).getVenueOwner(venueTokenId);
-        require(msg.sender == venueOwner, "Events: Invalid Caller");
+        require(msg.sender == venueOwner, "ERR_108:Events:Invalid Caller");
         for(uint256 i=0; i< eventIds.length; i++) {
             if(IAdminFunctions(adminContract).isEventCancelled(eventIds[i]) == false && block.timestamp > getInfo[eventIds[i]].endTime) {
                 if(balance[eventIds[i]] > 0) {
@@ -394,20 +394,20 @@ contract EventsV1 is EventAdminRole {
     }
 
     function refundVenueFees(uint256 eventTokenId) external {
-        require(_exists(eventTokenId), "Events: TokenId does not exist");
+        require(_exists(eventTokenId), "ERR_102:Events:TokenId does not exist");
         require(
             IAdminFunctions(adminContract).isEventCancelled(eventTokenId) == true,
-            "Events: Event is not canceled"
+            "ERR_109:Events:Event is not cancelled"
         );
-        require(msg.sender == getInfo[eventTokenId].eventOrganiser, "Events: Address is not the event organiser address");
-        require(getInfo[eventTokenId].payNow == true, "Events: Fees not paid");
+        require(msg.sender == getInfo[eventTokenId].eventOrganiser, "ERR_103:Events:Address is not the event organiser address");
+        require(getInfo[eventTokenId].payNow == true, "ERR_110:Events:Fees not paid");
         address tokenAddress = IAdminFunctions(adminContract).getBaseToken();
          (, , uint256 venueRentalCommissionFees) = calculateRent(
             getInfo[eventTokenId].venueTokenId,
             getInfo[eventTokenId].startTime,
             getInfo[eventTokenId].endTime
         );
-        require(balance[eventTokenId] > 0, "Events: Funds already transferred");
+        require(balance[eventTokenId] > 0, "ERR_111:Events:Funds already transferred");
         address venueOwner = IVenue(IAdminFunctions(adminContract).getVenueContract()).getVenueOwner(getInfo[eventTokenId].venueTokenId);
         ITreasury(IAdminFunctions(adminContract).getTreasuryContract()).claimFunds(getInfo[eventTokenId].eventOrganiser,tokenAddress, balance[eventTokenId] - venueRentalCommissionFees);
         ITreasury(IAdminFunctions(adminContract).getTreasuryContract()).claimFunds(venueOwner, tokenAddress, venueRentalCommissionFees);
@@ -423,7 +423,7 @@ contract EventsV1 is EventAdminRole {
     function payEvent(uint256 eventTokenId, uint256 venueFeeAmount)
         external
     {
-        require(_exists(eventTokenId), "Events: TokenId does not exist");
+        require(_exists(eventTokenId), "ERR_102:Events:TokenId does not exist");
         (
             uint256 startTime,
             uint256 endTime,
@@ -434,9 +434,9 @@ contract EventsV1 is EventAdminRole {
         ) = getEventDetails(eventTokenId);
         require(
             endTime > block.timestamp,
-            "Events: Event ended"
+            "ERR_112:Events:Event ended"
         );
-        require(msg.sender == eventOrganiser, "Events: Address is not the event organiser address");
+        require(msg.sender == eventOrganiser, "ERR_108:Events:Invalid Caller");
 
         if (payNow == false) {
             checkVenueFees(
@@ -471,7 +471,7 @@ contract EventsV1 is EventAdminRole {
                 IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).getMessageHash(ticketHolder, eventTokenId, ticketId),
                 signature
             ) == IAdminFunctions(adminContract).getSignerAddress(),
-                "Events: Signature does not match"
+                "ERR_113:Events:Signature does not match"
         );
         require(
             IAdminFunctions(adminContract).isEventCancelled(eventTokenId) == false,
@@ -479,16 +479,16 @@ contract EventsV1 is EventAdminRole {
         );
         require(
             _exists(eventTokenId),
-            "Events: TokenId does not exist"
+            "ERR_102:Events:TokenId does not exist"
         );
         (uint256 startTime, uint256 endTime, address eventOrganiser , , , ) = getEventDetails(eventTokenId);
         require(
             IAdminFunctions(adminContract).isEventStarted(eventTokenId) == true,
-            "Events: Event not started"
+            "ERR_114:Events:Event is not live"
         );
         require(
             (block.timestamp >= startTime && endTime > block.timestamp) && IAdminFunctions(adminContract).isEventEnded(eventTokenId) == false,
-            "Events: Event is not live" 
+            "ERR_114:Events:Event is not live" 
         );
         if(ticketHolder == eventOrganiser) {
             emit Joined(eventTokenId, ticketHolder, block.timestamp, ticketId);
@@ -496,7 +496,7 @@ contract EventsV1 is EventAdminRole {
         else {
             require(
                 ticketHolder == ITicket(ticketNFTAddress[eventTokenId]).ownerOf(ticketId),
-                "Events: Caller is not the owner"
+                "ERR_115:Events:Caller is not the owner"
             );
             joinEventStatus[ticketNFTAddress[eventTokenId]][ticketId] = true;
             emit Joined(eventTokenId, ticketHolder, block.timestamp, ticketId);

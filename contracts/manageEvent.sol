@@ -309,7 +309,7 @@ contract ManageEvent is Ownable, ManageEventStorage {
         emit EventCompleted(eventTokenId);
     }
 
-    function exit(
+    function userExitEvent(
         bytes memory signature,
         address ticketHolder,
         uint256 eventTokenId,

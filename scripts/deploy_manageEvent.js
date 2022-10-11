@@ -1,4 +1,4 @@
-const { ethers } = require("hardhat")
+const { ethers, upgrades } = require("hardhat")
 async function main() {
     const accounts = await ethers.provider.listAccounts();
     console.log("Accounts", accounts[0]);
@@ -7,7 +7,8 @@ async function main() {
     const adminContract = "";
     
     const manageEvent = await ethers.getContractFactory("ManageEvent");
-    const manageEventContract = await upgrades.deployProxy(manageEvent,{initializer: 'initialize'});
+    //const manageEventContract = await upgrades.deployProxy(manageEvent,{initializer: 'initialize'});
+    const manageEventContract = await manageEvent.deploy();
     await manageEventContract.deployed();
     // await new Promise(res => setTimeout(res, 1000));
     console.log("Manage Event proxy", manageEventContract.address);

@@ -12,7 +12,7 @@ contract EventAdminRole is EventStorage, EventMetadata {
     function updateAdminContract(address _adminContract) external onlyOwner {
         require(
             _adminContract.isContract(),
-            "Events: Address is not a contract"
+            "ERR_116:Events:Address is not a contract"
         );
         adminContract = _adminContract;
 
