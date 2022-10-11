@@ -194,7 +194,7 @@ contract TicketMaster is Ticket, TicketMasterStorage {
         }
         else {
             require(
-                IAdminFunctions(adminContract).isErc721TokenWhitelisted(tokenAddress) == true,
+                IAdminFunctions(adminContract).isErc721TokenWhitelisted(buyTicketId, tokenAddress) == true,
                 "ERR_122:TicketMaster: PaymentToken Not Supported"
             );
             require(
@@ -202,7 +202,7 @@ contract TicketMaster is Ticket, TicketMasterStorage {
                     IERC721Upgradeable(tokenAddress).ownerOf(feeAmount),
                 "ERR_124:TicketMaster: Caller is not the owner"
             );
-            if(IAdminFunctions(adminContract).isERC721TokenFreePass(tokenAddress) == 0)  {
+            if(IAdminFunctions(adminContract).isErc721TokenFreePass(buyTicketId, tokenAddress) == 0)  {
                 IERC721Upgradeable(tokenAddress).transferFrom(msg.sender, IAdminFunctions(adminContract).getTreasuryContract(), feeAmount);
                 userTicketBalance[buyTicketId][ticketId] = feeAmount;
                 nftTicketIds[tokenAddress].push(ticketId);
