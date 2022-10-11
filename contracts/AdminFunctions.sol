@@ -5,6 +5,7 @@ pragma solidity ^0.8.0;
 import "./utils/AdminStorage.sol";
 import "./access/Ownable.sol";
 import "./interface/IManageEvent.sol";
+import "./interface/IEvents.sol";
 import "./interface/IConversion.sol";
 
 contract AdminFunctions is Ownable, AdminStorage {
@@ -37,7 +38,7 @@ contract AdminFunctions is Ownable, AdminStorage {
     ///@param tokenAddress erc-721 token address
     ///@param status status of the address(true or false)
     ///@param freePassStatus 1 for free pass else 0
-    event Erc721TokenUpdated(address indexed tokenAddress, bool status, uint256 freePassStatus);
+    event Erc721TokenUpdated(uint256 indexed eventTokenId, address indexed tokenAddress, bool status, uint256 freePassStatus);
     
     ///@param percentage deviationPercentage
     event DeviationPercentageUpdated(uint256 percentage);
@@ -83,15 +84,23 @@ contract AdminFunctions is Ownable, AdminStorage {
     ///@notice Add supported Erc-721 tokens for the payment
     ///@dev Only admin can call
     ///@dev -  Update the status of paymentToken
+    ///@param eventTokenId event tokenId
     ///@param tokenAddress erc-721 token Address
     ///@param status status of the address(true or false)
     ///@param freePassStatus 1 for free pass else 0
-    function whitelistErc721TokenAddress(address tokenAddress, bool status, uint256 freePassStatus) external onlyOwner {
-        erc721TokenAddress[tokenAddress] = status;
-        tokenFreePassStatus[tokenAddress] = freePassStatus;
-        emit Erc721TokenUpdated(tokenAddress, status, freePassStatus);
-    }
+    
 
+    function whitelistErc721TokenAddress(uint256 eventTokenId, address tokenAddress, bool status, uint256 freePassStatus) external {
+        require(IEvents(eventContract)._exists(eventTokenId), "AdminFunctions:TokenId does not exist");
+        (, , address eventOrganiser,
+        , , ) =  IEvents(eventContract).getEventDetails(eventTokenId);
+        require(msg.sender == eventOrganiser || msg.sender ==  owner(), "AdminFunctions:Invalid Caller");
+        erc721TokenAddress[eventTokenId][tokenAddress] = status;
+        tokenFreePassStatus[eventTokenId][tokenAddress] = freePassStatus;
+        emit Erc721TokenUpdated(eventTokenId, tokenAddress, status, freePassStatus);
+
+    }
+    
     ///@notice updates conversionContract address
     ///@param _conversionContract conversionContract address
     function updateConversionContract(address _conversionContract)
@@ -295,12 +304,12 @@ contract AdminFunctions is Ownable, AdminStorage {
     }
 
      ///@notice Returns whitelisted status of erc721TokenAddress
-    function isErc721TokenWhitelisted(address tokenAddress) public view returns (bool) {
-        return erc721TokenAddress[tokenAddress];
+    function isErc721TokenWhitelisted(uint256 eventTokenId, address tokenAddress) public view returns (bool) {
+        return erc721TokenAddress[eventTokenId][tokenAddress];
     }
 
-    function isERC721TokenFreePass(address tokenAddress) public view returns (uint256) {
-        return tokenFreePassStatus[tokenAddress];
+    function isErc721TokenFreePass(uint256 eventTokenId, address tokenAddress) public view returns (uint256) {
+        return tokenFreePassStatus[eventTokenId][tokenAddress];
     }
 
     ///@notice Returns whitelisted status of erc20TokenAddress

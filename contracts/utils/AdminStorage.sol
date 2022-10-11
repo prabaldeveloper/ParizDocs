@@ -7,12 +7,12 @@ contract AdminStorage {
     mapping(address => bool) public erc20TokenAddress;
 
     //mapping for getting supported erc721TokenAddress
-    mapping(address => bool) public erc721TokenAddress;
+    mapping(uint256 => mapping(address => bool)) public erc721TokenAddress;
 
     //mapping for whiteListed address
     mapping(address => bool) public whiteListedAddress;
 
-    mapping(address => uint256) public tokenFreePassStatus;
+    mapping(uint256 => mapping(address => uint256)) public tokenFreePassStatus;
 
     // Deviation Percentage
     uint256 internal deviationPercentage;

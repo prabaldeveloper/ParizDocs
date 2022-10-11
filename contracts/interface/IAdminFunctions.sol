@@ -12,7 +12,7 @@ interface IAdminFunctions {
     function getPlatformFeePercent() external view returns (uint256);
     function getEventStatus() external view returns (bool);
     function checkDeviation(uint256 feeAmount, uint256 estimatedCost) external view;
-    function isErc721TokenWhitelisted(address tokenAddress) external view returns (bool);
+    function isErc721TokenWhitelisted(uint256 eventTokenId, address tokenAddress) external view returns (bool);
     function isErc20TokenWhitelisted(address tokenAddress) external view returns (bool);
     function isUserWhitelisted(address userAddress) external view returns (bool); 
     function getSignerAddress() external view returns (address);
@@ -23,7 +23,7 @@ interface IAdminFunctions {
     function getBaseToken() external view returns(address);
     function convertFee(address paymentToken, uint256 mintFee) external view returns (uint256);
     function getSignatureContract() external view returns (address);
-    function isERC721TokenFreePass(address tokenAddress) external view returns (uint256);
+    function isErc721TokenFreePass(uint256 eventTokenId, address tokenAddress) external view returns (uint256);
     function getVenueRentalCommission() external view returns (uint256);
     function getAdminTreasuryContract() external view returns (address);
 }
