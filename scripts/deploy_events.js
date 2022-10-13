@@ -40,8 +40,8 @@ async function main() {
     // console.log("ticketMaster contract", ticketMaster.address);
 
     const eventContract = await hre.ethers.getContractFactory("EventsV1");
-    const eventProxy = await eventContract.attach("0xc8677C605080Ab0aa7d47C890fe36f6DD7d834f3");
-    //const eventProxy = await upgrades.deployProxy(eventContract, { initializer: 'initialize' })
+    // const eventProxy = await eventContract.attach("0xc8677C605080Ab0aa7d47C890fe36f6DD7d834f3");
+    const eventProxy = await upgrades.deployProxy(eventContract, { initializer: 'initialize' })
     await eventProxy.deployed();
     // // await new Promise(res => setTimeout(res, 1000));
     console.log("Event contract", eventProxy.address);
@@ -139,7 +139,7 @@ async function main() {
     // console.log(fee[0]);
     // await TokenProxy.approve(eventProxy.address, fee[0]);
     
-    await eventProxy.featured(17, true);
+    // await eventProxy.featured(17, true);
     
     // console.log("approve done");
 

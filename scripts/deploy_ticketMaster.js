@@ -9,16 +9,17 @@ async function main() {
     
 
     const TicketMaster = await hre.ethers.getContractFactory("TicketMaster");
-    const ticketMaster = await upgrades.deployProxy(TicketMaster, [accounts[0]], { initializer: 'initialize'})
+    // const ticketMaster = await upgrades.deployProxy(TicketMaster, [accounts[0]], { initializer: 'initialize'})
     // const ticketMaster = await TicketMaster.deploy();
-    //const ticketMaster = await TicketMaster.attach("0xf3626dFfdccD519FF882c31261114Be2c53E8DF1");
+    const ticketMaster = await TicketMaster.attach("0x9C57d0C1aA00fb4E43b49334c260717ae645904A");
     //convert into proxy contract
     await ticketMaster.deployed();
 
     console.log("ticketMaster contract", ticketMaster.address);
-    
 
-    //await ticketMaster.updateAdminContract(adminContract);
+    // await ticketMaster.updateAdminContract(adminContract);
+
+    await ticketMaster.buyTicket(114, "0x8E3DB4bf0Cbfed015F56643b6030bDB2aA45A06F", 1, "ERC721");
 }
 
 main()

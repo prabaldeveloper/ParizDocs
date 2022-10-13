@@ -120,6 +120,26 @@
       "address": "0xD4Da245ba5912Be5F8275aE017F38cF422bBbBbf",
       "txHash": "0x70e20848b8df44b85ff19b633727e65448a2c8fa3a664ec962ce84d93d1895ac",
       "kind": "transparent"
+    },
+    {
+      "address": "0xf037B46181fF44A401C0A3F2F3Ec51CE70026775",
+      "txHash": "0x39f9c6a77d4580ba6f7a3d9f2dad96f0918a9cf4077344144522a794210ab940",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xe5A7EFD7f9B20D2e4E0Ee373680381166752478a",
+      "txHash": "0xe87b18230ed1d5d47f6a93a1cbb9dd896af3ca9e0b2748cba8a5d2a7a5636961",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xC147a3526E587a41e4397398EE9A6B84EfC91ed5",
+      "txHash": "0xb3f42a62afa501685b16fce7b41cb9ab312e6040281b011ba4ca5cfa13492881",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xcE0A81Ae0e9353d7716d346d50D1BC9A63662530",
+      "txHash": "0x724d88587026ed6878431a05013909139a1179c264cb7ced541bc96fbf8d6976",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -12140,6 +12160,516 @@
           },
           "t_string_storage": {
             "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "df819364ca64105f1392e654d8a92a9f65724c4d4d26e34b5f03d3c22477e8ba": {
+      "address": "0x422ca52506Ece29Ba5b63Bc795eabEaf3200d8b6",
+      "txHash": "0x4d253076c20bf51e7e372fa0cf7d18b4305b245a8452128201d9874b30d0b512",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "Ownable",
+            "src": "contracts\\access\\Ownable.sol:22"
+          },
+          {
+            "label": "erc20TokenAddress",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:7"
+          },
+          {
+            "label": "erc721TokenAddress",
+            "offset": 0,
+            "slot": "53",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_bool))",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:10"
+          },
+          {
+            "label": "whiteListedAddress",
+            "offset": 0,
+            "slot": "54",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:13"
+          },
+          {
+            "label": "tokenFreePassStatus",
+            "offset": 0,
+            "slot": "55",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:15"
+          },
+          {
+            "label": "deviationPercentage",
+            "offset": 0,
+            "slot": "56",
+            "type": "t_uint256",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:18"
+          },
+          {
+            "label": "venueContract",
+            "offset": 0,
+            "slot": "57",
+            "type": "t_address",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:21"
+          },
+          {
+            "label": "conversionContract",
+            "offset": 0,
+            "slot": "58",
+            "type": "t_address",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:24"
+          },
+          {
+            "label": "ticketMaster",
+            "offset": 0,
+            "slot": "59",
+            "type": "t_address",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:27"
+          },
+          {
+            "label": "treasuryContract",
+            "offset": 0,
+            "slot": "60",
+            "type": "t_address_payable",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:30"
+          },
+          {
+            "label": "manageEvent",
+            "offset": 0,
+            "slot": "61",
+            "type": "t_address",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:33"
+          },
+          {
+            "label": "eventContract",
+            "offset": 0,
+            "slot": "62",
+            "type": "t_address",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:36"
+          },
+          {
+            "label": "signatureContract",
+            "offset": 0,
+            "slot": "63",
+            "type": "t_address",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:39"
+          },
+          {
+            "label": "isPublic",
+            "offset": 20,
+            "slot": "63",
+            "type": "t_bool",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:42"
+          },
+          {
+            "label": "platformFeePercent",
+            "offset": 0,
+            "slot": "64",
+            "type": "t_uint256",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:45"
+          },
+          {
+            "label": "signerAddress",
+            "offset": 0,
+            "slot": "65",
+            "type": "t_address",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:48"
+          },
+          {
+            "label": "venueRentalCommission",
+            "offset": 0,
+            "slot": "66",
+            "type": "t_uint256",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:51"
+          },
+          {
+            "label": "ticketCommissionPercent",
+            "offset": 0,
+            "slot": "67",
+            "type": "t_uint256",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:54"
+          },
+          {
+            "label": "adminTreasuryContract",
+            "offset": 0,
+            "slot": "68",
+            "type": "t_address_payable",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:57"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "69",
+            "type": "t_array(t_uint256)998_storage",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:64"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "1067",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "AdminFunctions",
+            "src": "contracts\\AdminFunctions.sol:386"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_address_payable": {
+            "label": "address payable",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)998_storage": {
+            "label": "uint256[998]",
+            "numberOfBytes": "31936"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_bool))": {
+            "label": "mapping(uint256 => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(uint256 => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "2e023cf1295814e4bd2455e34b053cbfeb60e455f67fcdddbd6abd5b90abb6b1": {
+      "address": "0x5d8d5952229BB6a1Ea224340Ab249E4d1AdD8050",
+      "txHash": "0x25ed66a0d37c6bc5cab5a9f58d3d80b31344bdfcbe26c56157d1495d2c906cee",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "Ownable",
+            "src": "contracts\\access\\Ownable.sol:22"
+          },
+          {
+            "label": "erc20TokenAddress",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:7"
+          },
+          {
+            "label": "erc721TokenAddress",
+            "offset": 0,
+            "slot": "53",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_bool))",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:10"
+          },
+          {
+            "label": "whiteListedAddress",
+            "offset": 0,
+            "slot": "54",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:13"
+          },
+          {
+            "label": "tokenFreePassStatus",
+            "offset": 0,
+            "slot": "55",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:15"
+          },
+          {
+            "label": "deviationPercentage",
+            "offset": 0,
+            "slot": "56",
+            "type": "t_uint256",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:18"
+          },
+          {
+            "label": "venueContract",
+            "offset": 0,
+            "slot": "57",
+            "type": "t_address",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:21"
+          },
+          {
+            "label": "conversionContract",
+            "offset": 0,
+            "slot": "58",
+            "type": "t_address",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:24"
+          },
+          {
+            "label": "ticketMaster",
+            "offset": 0,
+            "slot": "59",
+            "type": "t_address",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:27"
+          },
+          {
+            "label": "treasuryContract",
+            "offset": 0,
+            "slot": "60",
+            "type": "t_address_payable",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:30"
+          },
+          {
+            "label": "manageEvent",
+            "offset": 0,
+            "slot": "61",
+            "type": "t_address",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:33"
+          },
+          {
+            "label": "eventContract",
+            "offset": 0,
+            "slot": "62",
+            "type": "t_address",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:36"
+          },
+          {
+            "label": "signatureContract",
+            "offset": 0,
+            "slot": "63",
+            "type": "t_address",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:39"
+          },
+          {
+            "label": "isPublic",
+            "offset": 20,
+            "slot": "63",
+            "type": "t_bool",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:42"
+          },
+          {
+            "label": "platformFeePercent",
+            "offset": 0,
+            "slot": "64",
+            "type": "t_uint256",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:45"
+          },
+          {
+            "label": "signerAddress",
+            "offset": 0,
+            "slot": "65",
+            "type": "t_address",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:48"
+          },
+          {
+            "label": "venueRentalCommission",
+            "offset": 0,
+            "slot": "66",
+            "type": "t_uint256",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:51"
+          },
+          {
+            "label": "ticketCommissionPercent",
+            "offset": 0,
+            "slot": "67",
+            "type": "t_uint256",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:54"
+          },
+          {
+            "label": "adminTreasuryContract",
+            "offset": 0,
+            "slot": "68",
+            "type": "t_address_payable",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:57"
+          },
+          {
+            "label": "baseTokenAddress",
+            "offset": 0,
+            "slot": "69",
+            "type": "t_address",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:59"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "70",
+            "type": "t_array(t_uint256)997_storage",
+            "contract": "AdminStorage",
+            "src": "contracts\\utils\\AdminStorage.sol:66"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "1067",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "AdminFunctions",
+            "src": "contracts\\AdminFunctions.sol:405"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_address_payable": {
+            "label": "address payable",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)997_storage": {
+            "label": "uint256[997]",
+            "numberOfBytes": "31904"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_bool))": {
+            "label": "mapping(uint256 => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(uint256 => mapping(address => uint256))",
             "numberOfBytes": "32"
           },
           "t_uint256": {

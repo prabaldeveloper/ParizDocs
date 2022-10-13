@@ -11,6 +11,4 @@ interface IConversion {
         view
         returns (uint256);
 
-    function getBaseToken() external view returns(address);
-
 }

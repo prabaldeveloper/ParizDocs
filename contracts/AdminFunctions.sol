@@ -2,6 +2,8 @@
 
 pragma solidity ^0.8.0;
 
+import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/IERC721MetadataUpgradeable.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 import "./utils/AdminStorage.sol";
 import "./access/Ownable.sol";
 import "./interface/IManageEvent.sol";
@@ -33,12 +35,13 @@ contract AdminFunctions is Ownable, AdminStorage {
 
     ///@param tokenAddress erc-20 token Address
     ///@param status status of the address(true or false)
-    event Erc20TokenUpdated(address indexed tokenAddress, bool status);
+    event Erc20TokenUpdated(address indexed tokenAddress, bool status, string name, string symbol, uint256 decimal);
 
     ///@param tokenAddress erc-721 token address
     ///@param status status of the address(true or false)
     ///@param freePassStatus 1 for free pass else 0
-    event Erc721TokenUpdated(uint256 indexed eventTokenId, address indexed tokenAddress, bool status, uint256 freePassStatus);
+    event Erc721TokenUpdated(uint256 indexed eventTokenId, address indexed tokenAddress, bool status, uint256 freePassStatus,
+    string name, string symbol, uint256 decimal);
     
     ///@param percentage deviationPercentage
     event DeviationPercentageUpdated(uint256 percentage);
@@ -55,6 +58,9 @@ contract AdminFunctions is Ownable, AdminStorage {
 
     ///@param ticketCommissionPercent ticketCommissionPercent
     event TicketCommissionUpdated(uint256 ticketCommissionPercent);
+
+    ///@param baseTokenAddress base TokenAddress 
+    event BaseTokenUpdated(address indexed baseTokenAddress, string name, string symbol, uint256 decimal);
 
     function initialize() public initializer {
          Ownable.ownable_init();
@@ -77,7 +83,10 @@ contract AdminFunctions is Ownable, AdminStorage {
         onlyOwner
     {
          erc20TokenAddress[tokenAddress] = status;
-        emit Erc20TokenUpdated(tokenAddress, status);
+         (string memory name, 
+         string memory symbol, 
+         uint256 decimal) = getTokenDetails(tokenAddress, "ERC20");
+         emit Erc20TokenUpdated(tokenAddress, status, name, symbol, decimal);
     
     }
 
@@ -97,7 +106,10 @@ contract AdminFunctions is Ownable, AdminStorage {
         require(msg.sender == eventOrganiser || msg.sender ==  owner(), "AdminFunctions:Invalid Caller");
         erc721TokenAddress[eventTokenId][tokenAddress] = status;
         tokenFreePassStatus[eventTokenId][tokenAddress] = freePassStatus;
-        emit Erc721TokenUpdated(eventTokenId, tokenAddress, status, freePassStatus);
+         (string memory name, 
+         string memory symbol, 
+         uint256 decimal) = getTokenDetails(tokenAddress, "ERC721");
+        emit Erc721TokenUpdated(eventTokenId, tokenAddress, status, freePassStatus, name, symbol, decimal);
 
     }
     
@@ -342,7 +354,7 @@ contract AdminFunctions is Ownable, AdminStorage {
     }
 
    function getBaseToken() public view returns(address) {
-        return IConversion(conversionContract).getBaseToken();
+        return baseTokenAddress;
     }
 
     function convertFee(address paymentToken, uint256 mintFee) public view returns (uint256) {
@@ -360,6 +372,34 @@ contract AdminFunctions is Ownable, AdminStorage {
     ///@notice Returns admintreasuryContract address
     function getAdminTreasuryContract() public view returns (address) {
         return adminTreasuryContract;
+    }
+
+    function getTokenDetails(address _tokenAddress, string memory tokenType) public view returns(string memory , string memory, uint256) {
+       if(keccak256(abi.encodePacked((tokenType))) == keccak256(abi.encodePacked(("ERC721")))) {
+            string memory _name =  IERC721MetadataUpgradeable(_tokenAddress).name();
+            string memory _symbol = IERC721MetadataUpgradeable(_tokenAddress).symbol();
+            return (_name, _symbol, 0);
+        }
+        else { 
+            if(_tokenAddress!= address(0)) {
+                string memory _name = IERC20Metadata(_tokenAddress).name();
+                string memory _symbol = IERC20Metadata(_tokenAddress).symbol();
+                uint256 _decimal = IERC20Metadata(_tokenAddress).decimals();
+                return ( _name, _symbol, _decimal);
+            }
+            else {
+                return ("Matic", "Matic", 18);
+            }
+        }
+    }
+
+    function updateBaseToken(address _baseTokenAddress) external onlyOwner {
+        baseTokenAddress = _baseTokenAddress;
+        (string memory name, 
+         string memory symbol, 
+         uint256 decimal) = getTokenDetails(_baseTokenAddress, "ERC20");
+
+        emit BaseTokenUpdated(baseTokenAddress, name, symbol, decimal);
     }
 
     uint256[49] private ______gap;

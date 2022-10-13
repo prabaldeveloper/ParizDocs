@@ -18,66 +18,78 @@ async function main() {
     //// ************ DEPLOY ADMIN **************/////
 
     const admin = await ethers.getContractFactory("AdminFunctions");
-    // const adminContract = await upgrades.deployProxy(admin, { initializer: 'initialize' })
+    //const adminContract = await upgrades.deployProxy(admin, { initializer: 'initialize' })
     // const adminContract = await admin.deploy();
-    const adminContract = admin.attach("0x8e8AC44aF92fB9b853cc70eC300F6D9793b1F2Fe")
-    // await new Promise(res => setTimeout(res, 5000));
-    console.log("Admin proxy", adminContract.address);
+    const adminContract = admin.attach("0xcE0A81Ae0e9353d7716d346d50D1BC9A63662530")
+    // await new Promise(res => setTimeout(res, 2000));
+    // await adminContract.deployed();
+    // console.log("Admin proxy", adminContract.address);
 
     // await adminContract.updateDeviation(5);
 
-    // // // await new Promise(res => setTimeout(res, 1000));
+    // // // // await new Promise(res => setTimeout(res, 1000));
     // await adminContract.whitelistErc20TokenAddress(MATIC, true);
 
-    // // // // await new Promise(res => setTimeout(res, 1000));
     // await adminContract.whitelistErc20TokenAddress(Trace, true);
-    // console.log("Token Added");
 
+    await adminContract.updateBaseToken(Trace);
+    
     // await adminContract.whitelistErc20TokenAddress(USDC, true);
 
-    // await adminContract.whitelistErc721TokenAddress("0x8e3db4bf0cbfed015f56643b6030bdb2aa45a06f", true, 0);
+    // console.log("Token Added");
+
+    // await new Promise(res => setTimeout(res, 1000));
+
+    // await adminContract.updateEventContract(eventContract);
+
+    // await new Promise(res => setTimeout(res, 5000));
+
+    // await adminContract.whitelistErc721TokenAddress(1,"0x8e3db4bf0cbfed015f56643b6030bdb2aa45a06f", true, 0);
     
-    // await adminContract.whitelistErc721TokenAddress("0x11c3a46087b34870C23452E5A62326E324ec1360", true, 1);
+    // await adminContract.whitelistErc721TokenAddress(1,"0x11c3a46087b34870C23452E5A62326E324ec1360", true, 1);
 
-    // await adminContract.whitelistErc721TokenAddress("0x60f969Dd2c310C65E13bB9c9FEC75dc4F9144576", true, 1);
+    // await adminContract.whitelistErc721TokenAddress(1, "0x60f969Dd2c310C65E13bB9c9FEC75dc4F9144576", true, 1);
 
-    // // await new Promise(res => setTimeout(res, 1000));
+    // await adminContract.whitelistErc721TokenAddress(37,"0x8e3db4bf0cbfed015f56643b6030bdb2aa45a06f", true, 0);
+    
+    // await adminContract.whitelistErc721TokenAddress(37,"0x11c3a46087b34870C23452E5A62326E324ec1360", true, 1);
+
+    // await adminContract.whitelistErc721TokenAddress(37, "0x60f969Dd2c310C65E13bB9c9FEC75dc4F9144576", true, 1);
+
+    // // // // await new Promise(res => setTimeout(res, 1000));
     // await adminContract.updateConversionContract(conversionAddress);
 
-    // // await new Promise(res => setTimeout(res, 1000));
+    // // // // await new Promise(res => setTimeout(res, 1000));
     // await adminContract.updateVenueContract(venueAddress);
 
     // await new Promise(res => setTimeout(res, 1000));
 
     // await adminContract.updateSignatureContract(signContract);
 
-    // // await new Promise(res => setTimeout(res, 1000));
+    // // // await new Promise(res => setTimeout(res, 1000));
     // await adminContract.updateEventStatus(true);
 
-    // // await new Promise(res => setTimeout(res, 1000));
+    // // // // await new Promise(res => setTimeout(res, 1000));
     // await adminContract.updatePlatformFee(5);
 
-    // // // await new Promise(res => setTimeout(res, 1000));
+    // // // // // await new Promise(res => setTimeout(res, 1000));
     // await adminContract.updateSignerAddress("0x3B2091278d903435232e8E0F3F364A4e9b9F670C");
 
-    // // // // await new Promise(res => setTimeout(res, 1000));
+    // // // // // // await new Promise(res => setTimeout(res, 1000));
     // await adminContract.updateWhitelist([accounts[0]], [true]);
 
     // await adminContract.updateVenueRentalCommission(5);
 
     // await adminContract.updateTicketCommission(5);
 
-    // // // await new Promise(res => setTimeout(res, 1000));
+    // // // // // await new Promise(res => setTimeout(res, 1000));
     // await adminContract.updateTicketMasterContract(ticketMasterAddress);
 
     // await adminContract.updateManageEventContract(manageEventContract);
 
-    // await adminContract.updateEventContract(eventContract);
-
     // await adminContract.updateTreasuryContract(treasuryProxy);
 
-    await adminContract.updateAdminTreasuryContract("0x8c1a9a4C448eBaC625FB5159f49d1AaDC8f9F98A");
-
+    // await adminContract.updateAdminTreasuryContract("0x8c1a9a4C448eBaC625FB5159f49d1AaDC8f9F98A");
 
 }
 
@@ -87,3 +99,5 @@ main()
         console.error(error)
         process.exit(1)
     })
+
+    //https://mumbai.polygonscan.com/address/0x5d8d5952229bb6a1ea224340ab249e4d1add8050
