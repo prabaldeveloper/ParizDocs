@@ -473,22 +473,10 @@ contract EventsV1 is EventAdminRole {
             ) == IAdminFunctions(adminContract).getSignerAddress(),
                 "ERR_113:Events:Signature does not match"
         );
+        (, uint256 endTime, address eventOrganiser , , , ) = getEventDetails(eventTokenId);
         require(
-            IAdminFunctions(adminContract).isEventCancelled(eventTokenId) == false,
-            "Events: Event is cancelled"
-        );
-        require(
-            _exists(eventTokenId),
-            "ERR_102:Events:TokenId does not exist"
-        );
-        (uint256 startTime, uint256 endTime, address eventOrganiser , , , ) = getEventDetails(eventTokenId);
-        require(
-            IAdminFunctions(adminContract).isEventStarted(eventTokenId) == true,
+            IAdminFunctions(adminContract).isEventStarted(eventTokenId) == true && endTime > block.timestamp,
             "ERR_114:Events:Event is not live"
-        );
-        require(
-            (block.timestamp >= startTime && endTime > block.timestamp) && IAdminFunctions(adminContract).isEventEnded(eventTokenId) == false,
-            "ERR_114:Events:Event is not live" 
         );
         if(ticketHolder == eventOrganiser) {
             emit Joined(eventTokenId, ticketHolder, block.timestamp, ticketId);
