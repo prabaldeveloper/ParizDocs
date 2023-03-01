@@ -309,28 +309,30 @@ contract ManageEvent is Ownable, ManageEventStorage {
 
     ///@notice To mark the user exit from an event
     function userExitEvent(
-        bytes memory signature,
-        address ticketHolder,
-        uint256 eventTokenId,
-        uint256 ticketId
+        bytes[]  memory signature,
+        address[] memory  ticketHolder,
+        uint256[] memory eventTokenId,
+        uint256[] memory ticketId
         ) external {
-            require(
-                IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).recoverSigner(
-                    IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).getMessageHash(ticketHolder, eventTokenId, ticketId),
-                    signature
-                ) == IAdminFunctions(adminContract).getSignerAddress(),
-                "ERR_140:ManageEvent:Signature does not match"
-            );
+            for(uint256 i = 0 ; i < signature.length; i++) {
+                require(
+                    IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).recoverSigner(
+                        IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).getMessageHash(ticketHolder[i], eventTokenId[i], ticketId[i]),
+                        signature[i]
+                    ) == IAdminFunctions(adminContract).getSignerAddress(),
+                    "ERR_140:ManageEvent:Signature does not match"
+                );
 
-            require(
-                isEventStarted(eventTokenId) == true,
-                "ERR_139:ManageEvent:Event is not started"
-            );
-            require(ticketHolder ==
-            ITicket(ITicketMaster(IAdminFunctions(adminContract).getTicketMasterContract()).getTicketNFTAddress(eventTokenId)).ownerOf(ticketId), 
-            "ERR_146:ManageEvent:Caller is not the owner");
-            exitEventStatus[ticketHolder][eventTokenId] = true;
-            emit Exited(eventTokenId, ticketHolder, block.timestamp, ticketId);
+                require(
+                    isEventStarted(eventTokenId[i]) == true,
+                    "ERR_139:ManageEvent:Event is not started"
+                );
+                require(ticketHolder[i] ==
+                ITicket(ITicketMaster(IAdminFunctions(adminContract).getTicketMasterContract()).getTicketNFTAddress(eventTokenId[i])).ownerOf(ticketId[i]), 
+                "ERR_146:ManageEvent:Caller is not the owner");
+                exitEventStatus[ticketHolder[i]][eventTokenId[i]] = true;
+                emit Exited(eventTokenId[i], ticketHolder[i], block.timestamp, ticketId[i]);
+            }
 
     }
 

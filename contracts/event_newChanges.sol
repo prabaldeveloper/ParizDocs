@@ -258,10 +258,12 @@ contract EventsV1 is EventAdminRole {
     ///@notice Users can mark their favourite events
     ///@param tokenId Event tokenId
     ///@param isFavourite Event favourite(true/false)
-    function updateFavourite(uint256 tokenId, bool isFavourite) external {
-        require(_exists(tokenId), "ERR_102:Events:TokenId does not exist");
-        favouriteEvents[msg.sender][tokenId] = isFavourite;
-        emit Favourite(msg.sender, tokenId, isFavourite);
+    function updateFavourite(address[] memory userAddress, uint256[] memory tokenId, bool[] memory isFavourite) external {
+        for(uint256 i = 0 ; i < tokenId.length; i++) {
+            require(_exists(tokenId[i]), "ERR_102:Events:TokenId does not exist");
+            favouriteEvents[userAddress[i]][tokenId[i]] = isFavourite[i];
+            emit Favourite(userAddress[i], tokenId[i], isFavourite[i]);
+        }
     }
 
     function initialize() public initializer {
@@ -461,33 +463,35 @@ contract EventsV1 is EventAdminRole {
     ///@dev - Join the event
     ///@param eventTokenId Event tokenId
     function join(
-        bytes memory signature,
-        address ticketHolder, 
-        uint256 eventTokenId, 
-        uint256 ticketId
+        bytes[] memory signature,
+        address[] memory ticketHolder, 
+        uint256[] memory eventTokenId, 
+        uint256[] memory ticketId
     ) external {
-        require(
-            IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).recoverSigner(
-                IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).getMessageHash(ticketHolder, eventTokenId, ticketId),
-                signature
-            ) == IAdminFunctions(adminContract).getSignerAddress(),
-                "ERR_113:Events:Signature does not match"
-        );
-        (, uint256 endTime, address eventOrganiser , , , ) = getEventDetails(eventTokenId);
-        require(
-            IAdminFunctions(adminContract).isEventStarted(eventTokenId) == true && endTime > block.timestamp,
-            "ERR_114:Events:Event is not live"
-        );
-        if(ticketHolder == eventOrganiser) {
-            emit Joined(eventTokenId, ticketHolder, block.timestamp, ticketId);
-        }
-        else {
+        for(uint256 i = 0 ; i < signature.length; i++) {
             require(
-                ticketHolder == ITicket(ticketNFTAddress[eventTokenId]).ownerOf(ticketId),
-                "ERR_115:Events:Caller is not the owner"
+                IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).recoverSigner(
+                    IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).getMessageHash(ticketHolder[i], eventTokenId[i], ticketId[i]),
+                    signature[i]
+                ) == IAdminFunctions(adminContract).getSignerAddress(),
+                    "ERR_113:Events:Signature does not match"
             );
-            joinEventStatus[ticketNFTAddress[eventTokenId]][ticketId] = true;
-            emit Joined(eventTokenId, ticketHolder, block.timestamp, ticketId);
+            (, uint256 endTime, address eventOrganiser , , , ) = getEventDetails(eventTokenId[i]);
+            require(
+                IAdminFunctions(adminContract).isEventStarted(eventTokenId[i]) == true && endTime > block.timestamp,
+                "ERR_114:Events:Event is not live"
+            );
+            if(ticketHolder[i] == eventOrganiser) {
+                emit Joined(eventTokenId[i], ticketHolder[i], block.timestamp, ticketId[i]);
+            }
+            else {
+                require(
+                    ticketHolder[i] == ITicket(ticketNFTAddress[eventTokenId[i]]).ownerOf(ticketId[i]),
+                    "ERR_115:Events:Caller is not the owner"
+                );
+                joinEventStatus[ticketNFTAddress[eventTokenId[i]]][ticketId[i]] = true;
+                emit Joined(eventTokenId[i], ticketHolder[i], block.timestamp, ticketId[i]);
+            }
         }
     }
 
