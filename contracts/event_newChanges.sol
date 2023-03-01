@@ -88,7 +88,6 @@ contract EventsV1 is EventAdminRole {
     }
 
     function updateEvent(uint256 tokenId, string memory description, uint256[2] memory time) external {
-        require(_exists(tokenId), "ERR_102:Events:TokenId does not exist");
         require(
             msg.sender == getInfo[tokenId].eventOrganiser,
             "ERR_103:Events:Address is not the event organiser address"
@@ -250,7 +249,6 @@ contract EventsV1 is EventAdminRole {
     ///@param tokenId Event tokenId
     ///@param isFeatured Event featured(true/false)
     function featured(uint256 tokenId, bool isFeatured) external onlyOwner {
-        require(_exists(tokenId), "ERR_102:Events:TokenId does not exist");
         featuredEvents[tokenId] = isFeatured;
         emit Featured(tokenId, isFeatured);
     }
@@ -260,7 +258,6 @@ contract EventsV1 is EventAdminRole {
     ///@param isFavourite Event favourite(true/false)
     function updateFavourite(address[] memory userAddress, uint256[] memory tokenId, bool[] memory isFavourite) external {
         for(uint256 i = 0 ; i < tokenId.length; i++) {
-            require(_exists(tokenId[i]), "ERR_102:Events:TokenId does not exist");
             favouriteEvents[userAddress[i]][tokenId[i]] = isFavourite[i];
             emit Favourite(userAddress[i], tokenId[i], isFavourite[i]);
         }
@@ -396,7 +393,6 @@ contract EventsV1 is EventAdminRole {
     }
 
     function refundVenueFees(uint256 eventTokenId) external {
-        require(_exists(eventTokenId), "ERR_102:Events:TokenId does not exist");
         require(
             IAdminFunctions(adminContract).isEventCancelled(eventTokenId) == true,
             "ERR_109:Events:Event is not cancelled"
@@ -425,7 +421,6 @@ contract EventsV1 is EventAdminRole {
     function payEvent(uint256 eventTokenId, uint256 venueFeeAmount)
         external
     {
-        require(_exists(eventTokenId), "ERR_102:Events:TokenId does not exist");
         (
             uint256 startTime,
             uint256 endTime,
