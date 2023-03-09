@@ -75,7 +75,8 @@ contract TicketMaster is Ticket, TicketMasterStorage {
             "EventTicket",
             totalSupply,
             eventTokenId,
-            time
+            time,
+            address(this)
         );
         return ticketNFTContract;
     }
