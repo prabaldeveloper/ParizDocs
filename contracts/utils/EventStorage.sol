@@ -58,32 +58,6 @@ contract EventStorage {
     // //block time
     uint256 public constant blockTime = 2;
 
-    // // Deviation Percentage
-    // uint256 internal deviationPercentage;
-
-    // //venue contract address
-    // address internal venueContract;
-
-    // //convesion contract address
-    // address internal conversionContract;
-
-    // //ticket master contract address
-    // address internal ticketMaster;
-
-    // //treasury contract
-    // address payable internal treasuryContract;
-
-    // //manageEvent contract
-    // address internal manageEvent;
-
-    // //isPublic true or false
-    // bool internal isPublic;
-
-    // //platformFeePercent
-    // uint256 internal platformFeePercent;
-
-    // address public signerAddress;
-
     address public adminContract;
 
     //

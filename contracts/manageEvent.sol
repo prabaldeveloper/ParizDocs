@@ -322,16 +322,24 @@ contract ManageEvent is Ownable, ManageEventStorage {
                     ) == IAdminFunctions(adminContract).getSignerAddress(),
                     "ERR_140:ManageEvent:Signature does not match"
                 );
-
+              
                 require(
                     isEventStarted(eventTokenId[i]) == true,
                     "ERR_139:ManageEvent:Event is not started"
                 );
-                require(ticketHolder[i] ==
-                ITicket(ITicketMaster(IAdminFunctions(adminContract).getTicketMasterContract()).getTicketNFTAddress(eventTokenId[i])).ownerOf(ticketId[i]), 
-                "ERR_146:ManageEvent:Caller is not the owner");
-                exitEventStatus[ticketHolder[i]][eventTokenId[i]] = true;
-                emit Exited(eventTokenId[i], ticketHolder[i], block.timestamp, ticketId[i]);
+                (, , address eventOrganiser , , , ) = IEvents(IAdminFunctions(adminContract).getEventContract()).getEventDetails(eventTokenId[i]);
+
+                if(ticketHolder[i] == eventOrganiser) {
+                    emit Exited(eventTokenId[i], ticketHolder[i], block.timestamp, ticketId[i]);
+                }
+                else {
+                    require(ticketHolder[i] ==
+                        ITicket(ITicketMaster(IAdminFunctions(adminContract).getTicketMasterContract()).getTicketNFTAddress(eventTokenId[i])).ownerOf(ticketId[i]), 
+                        "ERR_146:ManageEvent:Caller is not the owner"
+                    );
+                    exitEventStatus[ticketHolder[i]][eventTokenId[i]] = true;
+                    emit Exited(eventTokenId[i], ticketHolder[i], block.timestamp, ticketId[i]);
+                }
             }
 
     }
