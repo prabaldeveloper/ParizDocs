@@ -13,7 +13,7 @@ import "./utils/EventAdminRole.sol";
 
 ///@notice Users can create event and join events
 
-contract EventsV1 is EventAdminRole {
+contract Events is EventAdminRole {
     
     ///@param tokenId Event tokenId
     ///@param tokenCID Event tokenCID

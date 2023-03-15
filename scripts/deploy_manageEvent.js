@@ -4,16 +4,16 @@ async function main() {
     console.log("Accounts", accounts[0]);
     const MATIC = "0x0000000000000000000000000000000000000000";
     //mumbai
-    const adminContract = "";
+    const adminContract = "0x9E4FaeEDc23da50bB3D18AA51F9Cc27f1611a2a7";
     
     const manageEvent = await ethers.getContractFactory("ManageEvent");
-    //const manageEventContract = await upgrades.deployProxy(manageEvent,{initializer: 'initialize'});
-    const manageEventContract = await manageEvent.deploy();
-    await manageEventContract.deployed();
-    // await new Promise(res => setTimeout(res, 1000));
+    const manageEventContract = await upgrades.deployProxy(manageEvent,{initializer: 'initialize'});
+    //const manageEventContract = await manageEvent.deploy();
+    //await manageEventContract.deployed();
+    await new Promise(res => setTimeout(res, 1000));
     console.log("Manage Event proxy", manageEventContract.address);
 
-    // await manageEventContract.updateAdminContract(adminContract);
+    await manageEventContract.updateAdminContract(adminContract);
     // await new Promise(res => setTimeout(res, 1000));
 
     // await manageEventContract.deleteAgenda(1,1)

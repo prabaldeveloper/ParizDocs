@@ -5,41 +5,41 @@ async function main() {
     console.log("Accounts", accounts[0]);
 
     // testnet 
-    const USDT = "0xf2fe21e854c838c66579f62ba0a60ca84367cd8f"
-    const USDC = "0xb0040280A0C97F20C92c09513b8C6e6Ff9Aa86DC"
+    const USDT = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
+    const USDC = "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
     const MATIC = "0x0000000000000000000000000000000000000000"
 
-    const PRICE_MATIC_USD = "0xd0D5e3DB44DE05E9F294BB0a3bEEaF030DE24Ada"
-    const PRICE_USDT_USD = "0x92C09849638959196E976289418e5973CC96d645";
-    const PRICE_USDC_USD = "0x572dDec9087154dC5dfBB1546Bb62713147e0Ab0";
+    const PRICE_MATIC_USD = "0xAB594600376Ec9fD91F8e885dADF0CE036862dE0"
+    const PRICE_USDT_USD = "0x0A6513e40db6EB1b165753AD52E80663aeA50545";
+    const PRICE_USDC_USD = "0xfE4A8cc5b5B2366C1B58Bea3858e81843581b2F7";
 
-    const Trace = "0xD028C2a5156069c7eFaeA40acCA7d9Da6f219A5f"
-    const router = "0x8954AfA98594b838bda56FE4C12a09D7739D179b"
-    const factory = "0x5757371414417b8c6caad45baef941abc7d3ab32"
+    const Trace = "0x4287F07CBE6954f9F0DecD91d0705C926d8d03A4"
+    const router = "0x630144415F6a084CE89461cf4F53B9C6368270bE"
+    const factory = "0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32"
 
     //// ************ DEPLOY CONVERSION **************/////
 
-    const Conversion = await ethers.getContractFactory("ConversionV1");
-    const conversion = await upgrades.deployProxy(Conversion, { initializer: 'initialize' })
-    // const conversion = await Conversion.attach("0xccb93Ceb1f9A1b29341f638e4755D54D339646BA");
-    // await new Promise(res => setTimeout(res, 5000));
+    const Conversion = await ethers.getContractFactory("Conversion");
+    //const conversion = await upgrades.deployProxy(Conversion, { initializer: 'initialize' })
+    const conversion = await Conversion.attach("0x5Ee0441C6cdf1e166e438615Afb8401c96c5E5c0");
+    // await new Promise(res => setTimeout(res, 10000));
     console.log("conversion proxy", conversion.address);
 
     //// ************ ADD PRICE FEED ADDRESS **************/////
 
     // await new Promise(res => setTimeout(res, 5000));
-    await conversion.addToken(MATIC, PRICE_MATIC_USD);
+    // await conversion.addToken(MATIC, PRICE_MATIC_USD);
 
     // await new Promise(res => setTimeout(res, 5000));
     await conversion.addToken(USDC, PRICE_USDC_USD);
 
-    // await new Promise(res => setTimeout(res, 5000));
+    await new Promise(res => setTimeout(res, 5000));
     await conversion.addToken(USDT, PRICE_USDT_USD);
 
-    // await new Promise(res => setTimeout(res, 5000));
+    await new Promise(res => setTimeout(res, 5000));
     await conversion.addToken(Trace, router);
 
-    // await new Promise(res => setTimeout(res, 5000));
+    await new Promise(res => setTimeout(res, 5000));
     await conversion.adminUpdate(Trace, router, factory);
     // await new Promise(res => setTimeout(res, 5000));
 

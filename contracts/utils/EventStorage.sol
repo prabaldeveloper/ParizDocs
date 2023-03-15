@@ -20,20 +20,11 @@ contract EventStorage {
     //mapping for getting event details
     mapping(uint256 => Details) public getInfo;
 
-    //mapping for getting supported erc20TokenAddress
-    // mapping(address => bool) public erc20TokenAddress;
-
-    // //mapping for getting supported erc721TokenAddress
-    // mapping(address => bool) public erc721TokenAddress;
-
     //mapping for featured events
     mapping(uint256 => bool) public featuredEvents;
 
     //mapping for favourite events
     mapping(address => mapping(uint256 => bool)) public favouriteEvents;
-
-    // //mapping for whiteListed address
-    // mapping(address => bool) public whiteListedAddress;
 
     //map venue ID to eventId list which are booked in that venue
     //when new event are created, add that event id to this array

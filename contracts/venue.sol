@@ -46,19 +46,20 @@ contract Venue is VenueMetadata, VenueStorage {
         string memory _category,
         uint256 _totalCapacity,
         uint256 _rentPerBlock,
-        string memory _tokenCID
+        string memory _tokenCID,
+        address payable _owner
     ) external onlyOwner {
         require(
-            _totalCapacity != 0 && _rentPerBlock != 0,
+            _totalCapacity != 0 && _rentPerBlock != 0 && _owner != address(0),
             "ERR_127:Venue:Invalid inputs"
         );
-        uint256 _tokenId = _mintInternal(_tokenCID);
+        uint256 _tokenId = _mintInternal(_owner, _tokenCID);
         getInfo[_tokenId] = Details(
             _name,
             _location,
             _category,
             _tokenId,
-            payable(msg.sender),
+            _owner,
             _totalCapacity,
             _rentPerBlock,
             _tokenCID
@@ -71,7 +72,7 @@ contract Venue is VenueMetadata, VenueStorage {
             _totalCapacity,
             _rentPerBlock,
             _tokenCID,
-            msg.sender
+            _owner
         );
     }
 

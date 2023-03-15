@@ -121,15 +121,15 @@ contract VenueMetadata is VenueERC721 {
     /**
      * @notice Allows a creator to mint an NFT.
      */
-    function _mintInternal(string memory _tokenIPFSPath)
+    function _mintInternal(address payable _owner, string memory _tokenIPFSPath)
         internal
         returns (uint256 tokenId)
     {
         tokenId = nextTokenId++;
-        _mint(msg.sender, tokenId);
-        _updateTokenCreator(tokenId, payable(msg.sender));
+        _mint(_owner, tokenId);
+        _updateTokenCreator(tokenId, _owner);
         _setTokenIPFSPath(tokenId, _tokenIPFSPath);
-        emit Minted(msg.sender, tokenId, _tokenIPFSPath, _tokenIPFSPath);
+        emit Minted(_owner, tokenId, _tokenIPFSPath, _tokenIPFSPath);
     }
 
     uint256[999] private ______gap;

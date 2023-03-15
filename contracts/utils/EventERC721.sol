@@ -57,8 +57,8 @@ import "../access/Ownable.sol";
      * @dev Initializes the contract by setting a `name` and a `symbol` to the token collection.
      */
     function __ERC721_init() internal onlyInitializing {
-        _name = "Event NFT";
-        _symbol = "EventNFT";
+        _name = "PARIZ EVENTS";
+        _symbol = "PARIZEVENTS";
     }
 
     /**

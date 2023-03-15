@@ -52,8 +52,8 @@ contract VenueERC721 is
      * @dev Initializes the contract by setting a `name` and a `symbol` to the token collection.
      */
     function __ERC721_init() internal onlyInitializing {
-        _name = "Test Venue NFT";
-        _symbol = "VenueNFT";
+        _name = "PARIZ PROPERTY";
+        _symbol = "PARIZPROPERTY";
     }
 
     /**

@@ -10,7 +10,7 @@ import "../contracts/interface/IQuickswapPair.sol";
 import "../contracts/interface/IQuickswapRouter.sol";
 import "../contracts/interface/IAggregatorV3Interface.sol";
 
-contract ConversionV1 is Initializable, Ownable {
+contract Conversion is Initializable, Ownable {
     address internal Trace;
     address constant USD = 0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174;
 
