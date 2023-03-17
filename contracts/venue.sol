@@ -89,7 +89,7 @@ contract Venue is VenueMetadata, VenueStorage {
         emit VenueFeesUpdated(venueTokenId, rentPerBlock);
     }
 
-    function activeStatus(uint256 tokenId, bool _active) external {
+    function activeStatus(uint256 tokenId, bool _active) external onlyOwner{
         require(_exists(tokenId), "ERR_126:Venue:TokenId does not exist");
         isActive[tokenId] = _active;
 
