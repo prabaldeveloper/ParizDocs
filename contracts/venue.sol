@@ -33,6 +33,11 @@ contract Venue is VenueMetadata, VenueStorage {
         uint256 rentPerBlock
     );
 
+    event ActiveStatusUpdated(
+        uint256 indexed tokenId,
+        bool active
+    );
+
     ///@notice Adds venue
     ///@param _name Venue name
     ///@param _location Venue location
@@ -54,6 +59,7 @@ contract Venue is VenueMetadata, VenueStorage {
             "ERR_127:Venue:Invalid inputs"
         );
         uint256 _tokenId = _mintInternal(_owner, _tokenCID);
+        isActive[_tokenId] = true;
         getInfo[_tokenId] = Details(
             _name,
             _location,
@@ -81,6 +87,14 @@ contract Venue is VenueMetadata, VenueStorage {
         getInfo[venueTokenId].rentPerBlock = rentPerBlock;
 
         emit VenueFeesUpdated(venueTokenId, rentPerBlock);
+    }
+
+    function activeStatus(uint256 tokenId, bool _active) external {
+        require(_exists(tokenId), "ERR_126:Venue:TokenId does not exist");
+        isActive[tokenId] = _active;
+
+        emit ActiveStatusUpdated(tokenId, _active);
+
     }
 
     function initialize() public initializer {

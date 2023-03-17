@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
  
 import "./access/Ownable.sol";
 
-abstract contract VerifySignature1 {
+abstract contract VerifySignature {
     function getMessageHash(
         address userAddress,
         uint256 eventTokenId,
@@ -75,7 +75,7 @@ abstract contract VerifySignature1 {
     }
 }
 
-contract History is Ownable, VerifySignature1 {
+contract History is Ownable, VerifySignature {
 
     address public signerAddress;
 
@@ -104,8 +104,8 @@ contract History is Ownable, VerifySignature1 {
         string[] memory data
     ) public {
         for(uint256 i = 0 ; i < signature.length; i++) {
-            require(VerifySignature1.recoverSigner(
-                VerifySignature1.getMessageHash(userAddress[i], eventTokenId[i], data[i]), signature[i]) == signerAddress,
+            require(VerifySignature.recoverSigner(
+                VerifySignature.getMessageHash(userAddress[i], eventTokenId[i], data[i]), signature[i]) == signerAddress,
                 "Signature does not match"
             );
 
