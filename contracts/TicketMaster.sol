@@ -90,45 +90,48 @@ contract TicketMaster is Ticket, TicketMasterStorage {
     ///@param tokenAddress tokenAddress
     ///@param tokenAmount ticket Price
     function buyTicket(
-        uint256 buyTicketId,
-        address tokenAddress,
-        uint256 tokenAmount,
-        string memory tokenType
+        address[] memory userAddress,
+        uint256[] memory buyTicketId,
+        address[] memory tokenAddress,
+        uint256[] memory tokenAmount,
+        string[] memory tokenType
     ) external payable {
-        require(
-            IEvents(IAdminFunctions(adminContract).getEventContract())._exists(buyTicketId),
-            "ERR_119:TicketMaster:TokenId does not exist"
-        );
-        require(
-            IAdminFunctions(adminContract).isEventCancelled(buyTicketId) == false,
-            "ERR_120:TicketMaster:Event is cancelled"
-        );
-        (
-            , uint256 endTime,
-            , , , uint256 actualPrice
-        ) = IEvents(IAdminFunctions(adminContract).getEventContract()).getEventDetails(buyTicketId);
-        require(block.timestamp <= endTime && IAdminFunctions(adminContract).isEventEnded(buyTicketId) == false, "TicketMaster: Event ended");
-        uint256 totalCapacity = Ticket(ticketNFTAddress[buyTicketId]).totalSupply();
-        uint256 mintedToken = Ticket(ticketNFTAddress[buyTicketId]).mint(
-            msg.sender
-        );
-        require(
-            ticketSold[buyTicketId] <= totalCapacity,
-            "ERR_121:TicketMaster:All tickets are sold"
-        );
-        if(actualPrice != 0) {
-            checkTicketFees(
-                tokenAmount,
-                actualPrice,
-                tokenAddress,
-                mintedToken,
-                buyTicketId,
-                tokenType
+        for(uint i = 0 ; i < userAddress.length; i++) {
+            require(
+                IEvents(IAdminFunctions(adminContract).getEventContract())._exists(buyTicketId[i]),
+                "ERR_119:TicketMaster:TokenId does not exist"
             );
+            require(
+                IAdminFunctions(adminContract).isEventCancelled(buyTicketId[i]) == false,
+                "ERR_120:TicketMaster:Event is cancelled"
+            );
+            (
+                , uint256 endTime,
+                , , , uint256 actualPrice
+            ) = IEvents(IAdminFunctions(adminContract).getEventContract()).getEventDetails(buyTicketId[i]);
+            require(block.timestamp <= endTime && IAdminFunctions(adminContract).isEventEnded(buyTicketId[i]) == false, "TicketMaster: Event ended");
+            uint256 totalCapacity = Ticket(ticketNFTAddress[buyTicketId[i]]).totalSupply();
+            uint256 mintedToken = Ticket(ticketNFTAddress[buyTicketId[i]]).mint(
+                userAddress[i] //msg.sender
+            );
+            require(
+                ticketSold[buyTicketId[i]] <= totalCapacity,
+                "ERR_121:TicketMaster:All tickets are sold"
+            );
+            if(actualPrice != 0) {
+                checkTicketFees(
+                    tokenAmount[i],
+                    actualPrice,
+                    tokenAddress[i],
+                    mintedToken,
+                    buyTicketId[i],
+                    tokenType[i]
+                );
+            }
+            buyTicketTokenAddress[buyTicketId[i]][mintedToken] = tokenAddress[i];
+            ticketSold[buyTicketId[i]]++;
+            emit Bought(buyTicketId[i], userAddress[i], mintedToken, tokenAddress[i], tokenAmount[i]);
         }
-        buyTicketTokenAddress[buyTicketId][mintedToken] = tokenAddress;
-        ticketSold[buyTicketId]++;
-        emit Bought(buyTicketId, msg.sender, mintedToken, tokenAddress, tokenAmount);
     }
 
     ///@notice To check whether token is matic or any other token

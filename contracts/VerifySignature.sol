@@ -6,15 +6,13 @@ contract VerifySignature {
     function getMessageHash(
         address ticketHolder,
         uint256 eventTokenId,
-        uint256 ticketId
+        uint256 ticketId,
+        uint256 time
     ) public pure returns (bytes32) {
-        if (ticketId == 0)
-            return keccak256(abi.encodePacked(ticketHolder, eventTokenId));
-        else
-            return
-                keccak256(
-                    abi.encodePacked(ticketHolder, eventTokenId, ticketId)
-                );
+        return
+            keccak256(
+                abi.encodePacked(ticketHolder, eventTokenId, ticketId, time)
+            );  
     }
 
     function recoverSigner(bytes32 hash, bytes memory signature)

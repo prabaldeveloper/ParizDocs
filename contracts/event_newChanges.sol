@@ -13,7 +13,7 @@ import "./utils/EventAdminRole.sol";
 
 ///@notice Users can create event and join events
 
-contract Events is EventAdminRole {
+contract EventsV2 is EventAdminRole {
     
     ///@param tokenId Event tokenId
     ///@param tokenCID Event tokenCID
@@ -373,10 +373,10 @@ contract Events is EventAdminRole {
     }
 
     function claimVenueFees(uint256 venueTokenId) external {
-        require(
-            IVenue(IAdminFunctions(adminContract).getVenueContract())._exists(venueTokenId),
-            "ERR_106:Events:Venue tokenId does not exists"
-        );
+        // require(
+        //     IVenue(IAdminFunctions(adminContract).getVenueContract())._exists(venueTokenId),
+        //     "ERR_106:Events:Venue tokenId does not exists"
+        // );
         uint256[] memory eventIds = eventsInVenue[venueTokenId];
         address tokenAddress = IAdminFunctions(adminContract).getBaseToken();
         address venueOwner = IVenue(IAdminFunctions(adminContract).getVenueContract()).getVenueOwner(venueTokenId);
@@ -461,23 +461,24 @@ contract Events is EventAdminRole {
         bytes[] memory signature,
         address[] memory ticketHolder, 
         uint256[] memory eventTokenId, 
-        uint256[] memory ticketId
+        uint256[] memory ticketId,
+        uint256[] memory joinTime
     ) external {
         for(uint256 i = 0 ; i < signature.length; i++) {
             require(
                 IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).recoverSigner(
-                    IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).getMessageHash(ticketHolder[i], eventTokenId[i], ticketId[i]),
+                    IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).getMessageHash(ticketHolder[i], eventTokenId[i], ticketId[i], joinTime[i]),
                     signature[i]
                 ) == IAdminFunctions(adminContract).getSignerAddress(),
                     "ERR_113:Events:Signature does not match"
             );
             (, uint256 endTime, address eventOrganiser , , , ) = getEventDetails(eventTokenId[i]);
             require(
-                IAdminFunctions(adminContract).isEventStarted(eventTokenId[i]) == true && endTime > block.timestamp,
+                IAdminFunctions(adminContract).isEventStarted(eventTokenId[i]) == true && endTime > joinTime[i],
                 "ERR_114:Events:Event is not live"
             );
             if(ticketHolder[i] == eventOrganiser) {
-                emit Joined(eventTokenId[i], ticketHolder[i], block.timestamp, ticketId[i]);
+                emit Joined(eventTokenId[i], ticketHolder[i], joinTime[i], ticketId[i]);
             }
             else {
                 require(
@@ -485,7 +486,7 @@ contract Events is EventAdminRole {
                     "ERR_115:Events:Caller is not the owner"
                 );
                 joinEventStatus[ticketNFTAddress[eventTokenId[i]]][ticketId[i]] = true;
-                emit Joined(eventTokenId[i], ticketHolder[i], block.timestamp, ticketId[i]);
+                emit Joined(eventTokenId[i], ticketHolder[i], joinTime[i], ticketId[i]);
             }
         }
     }

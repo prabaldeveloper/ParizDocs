@@ -12,7 +12,7 @@ import "./utils/ManageEventStorage.sol";
 
 ///@notice Event owner can start event or can cancel event
 
-contract ManageEvent is Ownable, ManageEventStorage {
+contract ManageEventV1 is Ownable, ManageEventStorage {
     using AddressUpgradeable for address;
 
     ///@param eventTokenId event Token Id
@@ -312,12 +312,13 @@ contract ManageEvent is Ownable, ManageEventStorage {
         bytes[]  memory signature,
         address[] memory  ticketHolder,
         uint256[] memory eventTokenId,
-        uint256[] memory ticketId
+        uint256[] memory ticketId,
+        uint256[] memory exitTime
         ) external {
             for(uint256 i = 0 ; i < signature.length; i++) {
                 require(
                     IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).recoverSigner(
-                        IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).getMessageHash(ticketHolder[i], eventTokenId[i], ticketId[i]),
+                        IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).getMessageHash(ticketHolder[i], eventTokenId[i], ticketId[i], exitTime[i]),
                         signature[i]
                     ) == IAdminFunctions(adminContract).getSignerAddress(),
                     "ERR_140:ManageEvent:Signature does not match"
@@ -330,7 +331,7 @@ contract ManageEvent is Ownable, ManageEventStorage {
                 (, , address eventOrganiser , , , ) = IEvents(IAdminFunctions(adminContract).getEventContract()).getEventDetails(eventTokenId[i]);
 
                 if(ticketHolder[i] == eventOrganiser) {
-                    emit Exited(eventTokenId[i], ticketHolder[i], block.timestamp, ticketId[i]);
+                    emit Exited(eventTokenId[i], ticketHolder[i], exitTime[i], ticketId[i]);
                 }
                 else {
                     require(ticketHolder[i] ==
@@ -338,7 +339,7 @@ contract ManageEvent is Ownable, ManageEventStorage {
                         "ERR_146:ManageEvent:Caller is not the owner"
                     );
                     exitEventStatus[ticketHolder[i]][eventTokenId[i]] = true;
-                    emit Exited(eventTokenId[i], ticketHolder[i], block.timestamp, ticketId[i]);
+                    emit Exited(eventTokenId[i], ticketHolder[i], exitTime[i], ticketId[i]);
                 }
             }
 

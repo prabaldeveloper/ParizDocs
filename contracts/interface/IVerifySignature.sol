@@ -5,7 +5,8 @@ interface IVerifySignature {
     function getMessageHash(
         address ticketHolder,
         uint256 eventTokenId,
-        uint256 ticketId
+        uint256 ticketId,
+        uint256 time
     ) external pure returns (bytes32);
 
     function recoverSigner(bytes32 hash, bytes memory signature)
