@@ -94,7 +94,8 @@ contract TicketMaster is Ticket, TicketMasterStorage {
         uint256[] memory buyTicketId,
         address[] memory tokenAddress,
         uint256[] memory tokenAmount,
-        string[] memory tokenType
+        string[] memory tokenType,
+        uint256[] memory ticketTime
     ) external payable {
         for(uint i = 0 ; i < userAddress.length; i++) {
             require(
@@ -109,7 +110,7 @@ contract TicketMaster is Ticket, TicketMasterStorage {
                 , uint256 endTime,
                 , , , uint256 actualPrice
             ) = IEvents(IAdminFunctions(adminContract).getEventContract()).getEventDetails(buyTicketId[i]);
-            require(block.timestamp <= endTime && IAdminFunctions(adminContract).isEventEnded(buyTicketId[i]) == false, "TicketMaster: Event ended");
+            require(ticketTime[i] <= endTime, "TicketMaster: Event ended");
             uint256 totalCapacity = Ticket(ticketNFTAddress[buyTicketId[i]]).totalSupply();
             uint256 mintedToken = Ticket(ticketNFTAddress[buyTicketId[i]]).mint(
                 userAddress[i] //msg.sender
