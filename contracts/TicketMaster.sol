@@ -8,7 +8,7 @@ import "./interface/IAdminFunctions.sol";
 import "./interface/IEvents.sol";
 import "./utils/TicketMasterStorage.sol";
 
-contract TicketMaster is Ticket, TicketMasterStorage {
+contract TicketMasterV1 is Ticket, TicketMasterStorage {
     using AddressUpgradeable for address;
 
     ///@param tokenId Event tokenId

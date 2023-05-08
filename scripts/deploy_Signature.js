@@ -4,7 +4,8 @@ async function main() {
     console.log("Accounts", accounts[0]);
 
     const sign = await ethers.getContractFactory("VerifySignature");
-    const signContract = await sign.deploy();
+    const signContract =  await upgrades.deployProxy(sign);
+    //const signContract = await sign.deploy();
 
     console.log("signContract proxy", signContract.address);
 
