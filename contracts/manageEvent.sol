@@ -4,10 +4,11 @@ pragma solidity ^0.8.0;
 import "./access/Ownable.sol";
 import "./interface/IEvents.sol";
 import "./interface/IAdminFunctions.sol";
-import "./interface/IVerifySignature.sol";
 import "./interface/ITreasury.sol";
 import "./interface/ITicket.sol";
 import "./interface/ITicketMaster.sol";
+import "./interface/ITicketController.sol";
+import "./interface/IEventCall.sol";
 import "./utils/ManageEventStorage.sol";
 
 ///@notice Event owner can start event or can cancel event
@@ -284,26 +285,8 @@ contract ManageEventV1 is Ownable, ManageEventStorage {
 
     ///@notice Called by event organiser to mark the event status as completed
     ///@param eventTokenId event token id
-    function complete(uint256 eventTokenId) external isEventOrganiser(eventTokenId) {
-        require(IEvents(IAdminFunctions(adminContract).getEventContract())._exists(eventTokenId), "ERR_132:ManageEvent:TokenId does not exist");
-        (
-            , uint256 endTime,
-            , , , 
-        ) = IEvents(IAdminFunctions(adminContract).getEventContract()).getEventDetails(eventTokenId);
-        
-        require(
-            block.timestamp >= endTime,
-            "ManageEvent: Event not ended"
-        );
-        require(
-            isEventCancelled(eventTokenId) == false,
-            "ERR_138:ManageEvent:Event is cancelled"
-        );
-        require(
-            isEventStarted(eventTokenId) == true,
-            "ERR_139:ManageEvent:Event is not started"
-        );
-        eventCompletedStatus[eventTokenId] = true;
+    function complete(uint256 eventTokenId) external {
+        IEventCall(IAdminFunctions(adminContract).getEventCallContract()).completeInternal(eventTokenId);
         emit EventCompleted(eventTokenId);
     }
 
@@ -314,96 +297,51 @@ contract ManageEventV1 is Ownable, ManageEventStorage {
         uint256[] memory eventTokenId,
         uint256[] memory ticketId,
         uint256[] memory exitTime
-        ) external {
-            for(uint256 i = 0 ; i < signature.length; i++) {
-                require(
-                    IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).recoverSigner(
-                        IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).getMessageHash(ticketHolder[i], eventTokenId[i], ticketId[i], exitTime[i]),
-                        signature[i]
-                    ) == IAdminFunctions(adminContract).getSignerAddress(),
-                    "ERR_140:ManageEvent:Signature does not match"
-                );
-              
-                require(
-                    isEventStarted(eventTokenId[i]) == true,
-                    "ERR_139:ManageEvent:Event is not started"
-                );
-                (, , address eventOrganiser , , , ) = IEvents(IAdminFunctions(adminContract).getEventContract()).getEventDetails(eventTokenId[i]);
+    ) external {
+        for(uint256 i = 0 ; i < signature.length; i++) {
+            address eventOrganiser = IEventCall(IAdminFunctions(adminContract).getEventCallContract())
+                .userExitEventInternal(signature[i], ticketHolder[i], eventTokenId[i], ticketId[i], exitTime[i]);
 
-                if(ticketHolder[i] == eventOrganiser) {
-                    emit Exited(eventTokenId[i], ticketHolder[i], exitTime[i], ticketId[i]);
-                }
-                else {
-                    require(ticketHolder[i] ==
-                        ITicket(ITicketMaster(IAdminFunctions(adminContract).getTicketMasterContract()).getTicketNFTAddress(eventTokenId[i])).ownerOf(ticketId[i]), 
-                        "ERR_146:ManageEvent:Caller is not the owner"
-                    );
-                    exitEventStatus[ticketHolder[i]][eventTokenId[i]] = true;
-                    emit Exited(eventTokenId[i], ticketHolder[i], exitTime[i], ticketId[i]);
-                }
+            if(ticketHolder[i] != eventOrganiser) {
+                require(ticketHolder[i] ==
+                    ITicket(ITicketMaster(IAdminFunctions(adminContract).getTicketMasterContract()).getTicketNFTAddress(eventTokenId[i])).ownerOf(ticketId[i]), 
+                    "ERR_146:ManageEvent:Caller is not the owner"
+                );
+                exitEventStatus[ticketHolder[i]][eventTokenId[i]] = true;
             }
+            emit Exited(eventTokenId[i], ticketHolder[i], exitTime[i], ticketId[i]);
+        }
 
     }
 
     ///@notice To end the event before endTime
     function end(
         uint256 eventTokenId
-        ) external isEventOrganiser(eventTokenId) {
-            require(
-                isEventStarted(eventTokenId) == true,
-                "ERR_139:ManageEvent:Event is not started"
-            );
-            eventEndedStatus[eventTokenId] = true;
-            emit EventEnded(eventTokenId);
+        ) external {
+        IEventCall(IAdminFunctions(adminContract).getEventCallContract()).endInternal(eventTokenId);
+        emit EventEnded(eventTokenId);
     }
 
-    ///@notice Start the event
+     ///@notice Start the event
     ///@param eventTokenId event Token Id
-    function startEvent(uint256 eventTokenId) external isEventOrganiser(eventTokenId) {
-        require(IEvents(IAdminFunctions(adminContract).getEventContract())._exists(eventTokenId), "ERR_132:ManageEvent:TokenId does not exist");
-        (
-            uint256 startTime,
-            uint256 endTime,
-            ,
-            bool payNow,
-            ,
-
-        ) = IEvents(IAdminFunctions(adminContract).getEventContract()).getEventDetails(eventTokenId);
-        require(
-            block.timestamp >= startTime && endTime > block.timestamp,
-            "ERR_141:ManageEvent:Event not live"
-        );
-        require(payNow == true, "ERR_142:ManageEvent:Fees not paid");
-        eventStartedStatus[eventTokenId] = true;
+    function startEvent(uint256 eventTokenId) external {
+        IEventCall(IAdminFunctions(adminContract).getEventCallContract()).startEventInternal(eventTokenId);
+        
         emit EventStarted(eventTokenId);
 
     }
 
     ///@notice Cancel the event
     ///@param eventTokenId event Token Id
-    function cancelEvent(uint256 eventTokenId) external isEventOrganiser(eventTokenId) {
-        require(IEvents(IAdminFunctions(adminContract).getEventContract())._exists(eventTokenId), "ERR_132:ManageEvent:TokenId does not exist");
-        require(isEventStarted(eventTokenId) == false, "ERR_143:ManageEvent:Event started");
-        require(
-            eventCancelledStatus[eventTokenId] == false,
-            "ERR_138:ManageEvent:Event is cancelled"
-        );
-        eventCancelledStatus[eventTokenId] = true;
+    function cancelEvent(uint256 eventTokenId) external {
+        IEventCall(IAdminFunctions(adminContract).getEventCallContract()).cancelEventInternal(eventTokenId);
+        
         emit EventCancelled(eventTokenId);
     }
 
     function claimTicketFees(uint256 eventTokenId, address[] memory tokenAddress) external {
-        require(
-            IEvents(IAdminFunctions(adminContract).getEventContract())._exists(eventTokenId),
-            "ERR_132:ManageEvent:TokenId does not exist"
-        );
-        require(
-            IAdminFunctions(adminContract).isEventCancelled(eventTokenId) == false && IAdminFunctions(adminContract).isEventStarted(eventTokenId) == true,
-            "ERR_138:ManageEvent:Event is cancelled"
-        );
-        (, , address payable eventOrganiser, , , ) = IEvents(IAdminFunctions(adminContract).getEventContract())
-            .getEventDetails(eventTokenId);
-        require(msg.sender == eventOrganiser, "ERR_131:ManageEvent:Invalid Address");
+        address eventOrganiser = ITicketController(IAdminFunctions(adminContract).getTicketControllerContract())
+            .claimTicketFeesInternal(eventTokenId);
         for(uint256 i = 0; i< tokenAddress.length; i++) {
             if((ITicketMaster(IAdminFunctions(adminContract).getTicketMasterContract()).isERC721TokenAddress(tokenAddress[i])) == true) {
                 uint256[] memory ticketIds = ITicketMaster(IAdminFunctions(adminContract).getTicketMasterContract()).getTicketIds(tokenAddress[i]);
@@ -432,17 +370,7 @@ contract ManageEventV1 is Ownable, ManageEventStorage {
     }
 
     function refundTicketFees(uint256 eventTokenId, uint256[] memory ticketIds) external {
-        require(
-            IEvents(IAdminFunctions(adminContract).getEventContract())._exists(eventTokenId),
-            "ERR_132:ManageEvent:TokenId does not exist"
-        );
-        (, uint256 endTime , , , , uint256 actualPrice) = IEvents(IAdminFunctions(adminContract).getEventContract())
-        .getEventDetails(eventTokenId);
-        require(actualPrice != 0, "ERR_144:ManageEvent:Event is free");
-        require(
-            IAdminFunctions(adminContract).isEventCancelled(eventTokenId) == true || IAdminFunctions(adminContract).isEventStarted(eventTokenId) == false && block.timestamp > endTime,
-            "ERR_145:ManageEvent:Event is neither cancelled nor expired"
-        );
+        ITicketController(IAdminFunctions(adminContract).getTicketControllerContract()).refundTicketFeesInternal(eventTokenId);
         address ownerAddress = msg.sender;
         for(uint256 i=0; i < ticketIds.length; i++) {
             if(refundTicketFeesStatus[eventTokenId][ticketIds[i]] == false) {
@@ -461,18 +389,6 @@ contract ManageEventV1 is Ownable, ManageEventStorage {
                  }
             }
         }
-    }
-
-    function isEventEnded(uint256 eventId) public view returns (bool) {
-        return eventEndedStatus[eventId];   
-    }
-
-    function isEventStarted(uint256 eventId) public view returns (bool) {
-        return eventStartedStatus[eventId];
-    }
-
-    function isEventCancelled(uint256 eventId) public view returns (bool) {
-        return eventCancelledStatus[eventId];
     }
 
     function isAgendaTimeAvailable(
