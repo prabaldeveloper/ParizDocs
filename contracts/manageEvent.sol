@@ -195,22 +195,25 @@ contract ManageEventV1 is Ownable, ManageEventStorage {
         external
         isValidTime(agendaStartTime, agendaEndTime)
         isEventOrganiser(eventTokenId)
-    {
-        require(
-            block.timestamp <
-                getAgendaInfo[eventTokenId][agendaId].agendaStartTime,
-            "ERR_136:ManageEvent:Agenda already started"
-        );
-        require(
-            isAgendaTimeAvailable(
-                eventTokenId,
-                agendaId,
-                agendaStartTime,
-                agendaEndTime,
-                1
-            ),
-            "ERR_135:ManageEvent:Agenda Time not available"
-        );
+    {   
+        if(getAgendaInfo[eventTokenId][agendaId].agendaStartTime != agendaStartTime ||
+        getAgendaInfo[eventTokenId][agendaId].agendaEndTime != agendaEndTime) {
+            require(
+                block.timestamp <
+                    getAgendaInfo[eventTokenId][agendaId].agendaStartTime,
+                "ERR_136:ManageEvent:Agenda already started"
+            );
+            require(
+                isAgendaTimeAvailable(
+                    eventTokenId,
+                    agendaId,
+                    agendaStartTime,
+                    agendaEndTime,
+                    1
+                ),
+                "ERR_135:ManageEvent:Agenda Time not available"
+            );
+        }
         require(
             getAgendaInfo[eventTokenId][agendaId].isAgendaDeleted == false,
             "ERR_137:ManageEvent:Agenda deleted"
