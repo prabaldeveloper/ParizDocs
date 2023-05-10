@@ -2,10 +2,11 @@
 
 pragma solidity ^0.8.0;
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+//import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./Ticket.sol";
 import "./interface/IAdminFunctions.sol";
 import "./interface/IEvents.sol";
+import "./interface/ITicketController.sol";
 import "./utils/TicketMasterStorage.sol";
 
 contract TicketMasterV1 is Ticket, TicketMasterStorage {
@@ -97,24 +98,14 @@ contract TicketMasterV1 is Ticket, TicketMasterStorage {
         string[] memory tokenType,
         uint256[] memory ticketTime
     ) external payable {
+
         for(uint i = 0 ; i < userAddress.length; i++) {
-            require(
-                IEvents(IAdminFunctions(adminContract).getEventContract())._exists(buyTicketId[i]),
-                "ERR_119:TicketMaster:TokenId does not exist"
-            );
-            require(
-                IAdminFunctions(adminContract).isEventCancelled(buyTicketId[i]) == false,
-                "ERR_120:TicketMaster:Event is cancelled"
-            );
-            (
-                , uint256 endTime,
-                , , , uint256 actualPrice
-            ) = IEvents(IAdminFunctions(adminContract).getEventContract()).getEventDetails(buyTicketId[i]);
-            require(ticketTime[i] <= endTime, "TicketMaster: Event ended");
+            uint256 actualPrice =  ITicketController(IAdminFunctions(adminContract).getTicketControllerContract())
+                .buyTicketInternal(buyTicketId[i], ticketTime[i]);
             uint256 totalCapacity = Ticket(ticketNFTAddress[buyTicketId[i]]).totalSupply();
             uint256 mintedToken = Ticket(ticketNFTAddress[buyTicketId[i]]).mint(
                 userAddress[i] //msg.sender
-            );
+            ); 
             require(
                 ticketSold[buyTicketId[i]] <= totalCapacity,
                 "ERR_121:TicketMaster:All tickets are sold"
@@ -149,64 +140,22 @@ contract TicketMasterV1 is Ticket, TicketMasterStorage {
         uint256 buyTicketId,
         string memory tokenType
     ) internal {
+        uint256 ticketCommissionFee = ITicketController(IAdminFunctions(adminContract).getTicketControllerContract())
+            .checkTicketFeesInternal(feeAmount, actualPrice, tokenAddress, buyTicketId, tokenType);
+
         if (keccak256(abi.encodePacked((tokenType))) == keccak256(abi.encodePacked(("ERC20")))) {
-            require(
-                IAdminFunctions(adminContract).isErc20TokenWhitelisted(tokenAddress) == true,
-                "ERR_122:TicketMaster: PaymentToken Not Supported"
-            );
-            uint256 convertedActualPrice = IAdminFunctions(adminContract)
-                    .convertFee(tokenAddress, actualPrice);
             if (tokenAddress != address(0)) {
-                IAdminFunctions(adminContract).checkDeviation(feeAmount, convertedActualPrice);
-                uint256 ticketCommissionFee = (feeAmount *
-                    IAdminFunctions(adminContract).getTicketCommissionPercent()) / 100;
-                IERC20(tokenAddress).transferFrom(
-                    msg.sender,
-                    IAdminFunctions(adminContract).getTreasuryContract(),
-                    feeAmount - ticketCommissionFee
-                );
-                IERC20(tokenAddress).transferFrom(
-                    msg.sender,
-                    IAdminFunctions(adminContract).getAdminTreasuryContract(),
-                    ticketCommissionFee
-                );
                 ticketFeesBalance[buyTicketId][tokenAddress] += (feeAmount -
                     ticketCommissionFee);
                 userTicketBalance[buyTicketId][ticketId] = feeAmount - ticketCommissionFee;
             } else {
-                IAdminFunctions(adminContract).checkDeviation(msg.value, convertedActualPrice);
-                uint256 ticketCommissionFee = (msg.value *
-                    IAdminFunctions(adminContract).getTicketCommissionPercent()) / 100;
 
-                (bool successOwner, ) = IAdminFunctions(adminContract).getTreasuryContract().call{
-                    value: msg.value - ticketCommissionFee
-                }("");
-                require(
-                    successOwner,
-                    "ERR_123:TicketMaster:Transfer to treasury contract failed"
-                );
-                 (bool successAdminTreasury, ) = IAdminFunctions(adminContract).getAdminTreasuryContract().call{
-                    value: ticketCommissionFee
-                }("");
-                require(
-                    successAdminTreasury,
-                    "ERR_123:TicketMaster:Transfer to  admin treasury contract failed"
-                );
                 ticketFeesBalance[buyTicketId][tokenAddress] += (msg.value -
                     ticketCommissionFee);
                 userTicketBalance[buyTicketId][ticketId] = msg.value - ticketCommissionFee;
             }
         }
         else {
-            require(
-                IAdminFunctions(adminContract).isErc721TokenWhitelisted(buyTicketId, tokenAddress) == true,
-                "ERR_122:TicketMaster: PaymentToken Not Supported"
-            );
-            require(
-                msg.sender ==
-                    IERC721Upgradeable(tokenAddress).ownerOf(feeAmount),
-                "ERR_124:TicketMaster: Caller is not the owner"
-            );
             if(IAdminFunctions(adminContract).isErc721TokenFreePass(buyTicketId, tokenAddress) == 0)  {
                 IERC721Upgradeable(tokenAddress).transferFrom(msg.sender, IAdminFunctions(adminContract).getTreasuryContract(), feeAmount);
                 userTicketBalance[buyTicketId][ticketId] = feeAmount;
