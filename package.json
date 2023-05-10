@@ -30,6 +30,6 @@
     "@openzeppelin/hardhat-upgrades": "^1.16.1",
     "@primitivefi/hardhat-dodoc": "^0.2.3",
     "dotenv": "^16.0.0",
-    "hardhat-contract-sizer": "^2.6.1"
+    "hardhat-contract-sizer": "^2.8.0"
   }
 }
