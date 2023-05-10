@@ -6,9 +6,9 @@ async function main() {
     const MATIC = "0x0000000000000000000000000000000000000000";
     const USDC = "0xb0040280A0C97F20C92c09513b8C6e6Ff9Aa86DC";
     const Trace = "0xD028C2a5156069c7eFaeA40acCA7d9Da6f219A5f";
-    const eventProxy = "0x75ceF0380d2F9004cDD590C8F1ABd8852Bc1C569";
+    const eventProxy = "0xb0abe1623c73ee874b94083A349a7C1d00A8B573";
 
-    const adminContract = "0x060fF4A3b764004d0bA5D42d042Edb61F80448BE";
+    const adminContract = "0x5DF40949F4063132E7C181A41C1e0edd3D99A7E5";
     const TicketMaster = await hre.ethers.getContractFactory("TicketMasterV1");
     const ticketMaster = await upgrades.deployProxy(TicketMaster, [accounts[0]], { initializer: 'initialize'})
     //const ticketMaster = await TicketMaster.deploy();
@@ -20,7 +20,7 @@ async function main() {
 
     await ticketMaster.updateAdminContract(adminContract);
 
-    // await ticketMaster.whitelistAdmin(eventProxy, true);
+    await ticketMaster.whitelistAdmin(eventProxy, true);
 
     //await ticketMaster.buyTicket(1, "0x0000000000000000000000000000000000000000", "491773029829", "ERC20");
 }
