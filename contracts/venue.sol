@@ -2,12 +2,15 @@
 
 pragma solidity ^0.8.0;
 
+import "./interface/IAdminFunctions.sol";
+import "./interface/IEvents.sol";
 import "./utils/VenueMetadata.sol";
 import "./utils/VenueStorage.sol";
 
 ///@notice Owner can add venues and event organisers can book it
 
 contract Venue is VenueMetadata, VenueStorage {
+    using AddressUpgradeable for address;
 
     ///@param tokenId Venue tokenId
     ///@param name Venue name
@@ -37,6 +40,15 @@ contract Venue is VenueMetadata, VenueStorage {
         uint256 indexed tokenId,
         bool active
     );
+
+    function updateAdminContract(address _adminContract) external onlyOwner {
+        require(
+            _adminContract.isContract(),
+            "Venue:Address is not a contract"
+        );
+        adminContract = _adminContract;
+
+    }
 
     ///@notice Adds venue
     ///@param _name Venue name
@@ -94,6 +106,46 @@ contract Venue is VenueMetadata, VenueStorage {
         isActive[tokenId] = _status;
 
         emit ActiveStatusUpdated(tokenId, _status);
+
+    }
+
+    function claimVenueFeesInternal(uint256 venueTokenId) external view returns(address) {
+        require(
+            _exists(venueTokenId),
+            "Venue:Venue tokenId does not exists"
+        );
+
+        address venueOwner = getVenueOwner(venueTokenId);
+        //check for msg.sender
+        require(msg.sender == venueOwner, "Venue:Invalid Caller");
+        return  venueOwner;
+    }
+    
+    function refundVenueFeesInternal(uint256 eventTokenId, uint256 balance) external view returns(uint256, address) {
+        require(
+            IAdminFunctions(adminContract).isEventCancelled(eventTokenId) == true,
+            "ERR_109:Events:Event is not cancelled"
+        );
+        (
+            uint256 startTime,
+            uint256 endTime,
+            address eventOrganiser,
+            bool payNow,
+            uint256 venueTokenId,
+
+        ) = IEvents(IAdminFunctions(adminContract).getEventContract()).getEventDetails(eventTokenId);
+        //check for msg.sender
+        
+        require(msg.sender == eventOrganiser, "ERR_103:Events:Address is not the event organiser address");
+        require(payNow == true, "ERR_110:Events:Fees not paid");
+         (, , uint256 venueRentalCommissionFees) = IEvents(IAdminFunctions(adminContract).getEventContract()).calculateRent(
+            venueTokenId,
+            startTime,
+            endTime
+        );
+        require(balance > 0, "ERR_111:Events:Funds already transferred");
+        address venueOwner = getVenueOwner(venueTokenId);
+        return (venueRentalCommissionFees, venueOwner);
 
     }
 
