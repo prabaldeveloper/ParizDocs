@@ -2,7 +2,9 @@ require("@nomiclabs/hardhat-waffle");
 require('@openzeppelin/hardhat-upgrades')
 require("@nomiclabs/hardhat-etherscan");
 require('hardhat-contract-sizer');
-require("dotenv").config()
+require("dotenv").config();
+require('hardhat-contract-sizer');
+
 
 // require('@primitivefi/hardhat-dodoc');
 

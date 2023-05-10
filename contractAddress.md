@@ -236,3 +236,6 @@ History	0x5129b6D1EA5e00Acf18cdfEc75F07E944fe5ABe6
 
 History Testnet - 0x9739990261bF5BA72be02D72c447022Cd6DCE324
 History Mainnet - 0x5129b6D1EA5e00Acf18cdfEc75F07E944fe5ABe6
+
+
+maximum contract size - 24576 bytes(24 KiB)
