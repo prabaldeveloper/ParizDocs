@@ -12,17 +12,17 @@ async function main() {
     // const nfttoken = "0x8E3DB4bf0Cbfed015F56643b6030bDB2aA45A06F"
     const manageContract = "0xe8CC1F3ECdB4d0f7eeB9bd6C18866eA69d2ECb7C";
     //const eventProxy = "0x71c2592C6424E1822F35841b40F0FE9dbFcEcF64";
-    const adminContract = "0x060fF4A3b764004d0bA5D42d042Edb61F80448BE";
+    const adminContract = "0x5DF40949F4063132E7C181A41C1e0edd3D99A7E5";
     // const nfttoken = "0x9D6A70e2e1003d0bfc95129D658d1eBa5f08B481";
 
-    // const Treasury = await ethers.getContractFactory("Treasury");
-    // const treasuryProxy = await upgrades.deployProxy(Treasury, [accounts[0]], { initializer: 'initialize' })
+    const Treasury = await ethers.getContractFactory("AdminTreasury");
+    const treasuryProxy = await upgrades.deployProxy(Treasury, [accounts[0]], { initializer: 'initialize' })
     // // //const treasuryProxy = await Treasury.deploy();
     // // // // const treasuryProxy = dropsTreasury.attach(treasuryProxyAddress);
-    // await treasuryProxy.deployed();
+    await treasuryProxy.deployed();
 
     // // await new Promise(res => setTimeout(res, 1000));
-    // console.log("Treasury proxy", treasuryProxy.address);
+    console.log("Treasury proxy", treasuryProxy.address);
     // console.log("Is admin", await treasuryProxy.isAdmin(accounts[0]));
 
     // const Conversion = await ethers.getContractFactory("ConversionV1");
@@ -38,11 +38,12 @@ async function main() {
     // // console.log("ticketMaster contract", ticketMaster.address);
 
     // await ticketMaster.updateAdminContract(adminContract);
-    // await new Promise(res => setTimeout(res, 6000));
+    await new Promise(res => setTimeout(res, 6000));
     const eventContract = await hre.ethers.getContractFactory("EventsV2");
+    const eventProxy = await upgrades.deployProxy(eventContract, { initializer: 'initialize' })
     // const eventProxy = await eventContract.attach("0x75ceF0380d2F9004cDD590C8F1ABd8852Bc1C569");
-    // const eventProxy = await upgrades.deployProxy(eventContract, { initializer: 'initialize' })
-    const eventProxy = await eventContract.deploy();
+    
+    // const eventProxy = await eventContract.deploy();
     await eventProxy.deployed();
     
     console.log("Event contract", eventProxy.address);
@@ -51,7 +52,7 @@ async function main() {
 
     // await eventProxy.featured(5, true);
 
-    // await eventProxy.updateAdminContract(adminContract);
+    await eventProxy.updateAdminContract(adminContract);
     // const EventsV1 = await ethers.getContractFactory("EventsV1")
 
     // const EventsV1Proxy = await EventsV1.deploy();

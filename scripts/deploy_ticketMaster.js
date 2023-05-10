@@ -10,15 +10,15 @@ async function main() {
 
     const adminContract = "0x060fF4A3b764004d0bA5D42d042Edb61F80448BE";
     const TicketMaster = await hre.ethers.getContractFactory("TicketMasterV1");
-    // const ticketMaster = await upgrades.deployProxy(TicketMaster, [accounts[0]], { initializer: 'initialize'})
-    const ticketMaster = await TicketMaster.deploy();
+    const ticketMaster = await upgrades.deployProxy(TicketMaster, [accounts[0]], { initializer: 'initialize'})
+    //const ticketMaster = await TicketMaster.deploy();
     //const ticketMaster = await TicketMaster.attach("0x1d967fa86A191A710af564dF7fa05D9Ee0E86616");
     //convert into proxy contract
-    // await ticketMaster.deployed();
+    await ticketMaster.deployed();
 
     console.log("ticketMaster contract", ticketMaster.address);
 
-    // await ticketMaster.updateAdminContract(adminContract);
+    await ticketMaster.updateAdminContract(adminContract);
 
     // await ticketMaster.whitelistAdmin(eventProxy, true);
 

@@ -239,3 +239,10 @@ History Mainnet - 0x5129b6D1EA5e00Acf18cdfEc75F07E944fe5ABe6
 
 
 maximum contract size - 24576 bytes(24 KiB)
+
+
+New contracts for testing
+conversion proxy 0xc5b9C6F3F350dBba6DF40f9309eC60adb5C6b98c
+Admin proxy 0x5DF40949F4063132E7C181A41C1e0edd3D99A7E5
+Admin Treasury proxy 0xa8B0F6f54Bc8510714eec8f7F09Dd8fcB4C79934   
+Event contract 0xb0abe1623c73ee874b94083A349a7C1d00A8B573

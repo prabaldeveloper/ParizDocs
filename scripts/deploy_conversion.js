@@ -19,7 +19,7 @@ async function main() {
 
     //// ************ DEPLOY CONVERSION **************/////
 
-    const Conversion = await ethers.getContractFactory("ConversionV1");
+    const Conversion = await ethers.getContractFactory("Conversion");
     const conversion = await upgrades.deployProxy(Conversion, { initializer: 'initialize' })
     // const conversion = await Conversion.attach("0xccb93Ceb1f9A1b29341f638e4755D54D339646BA");
     // await new Promise(res => setTimeout(res, 5000));
