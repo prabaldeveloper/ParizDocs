@@ -26,4 +26,6 @@ interface IAdminFunctions {
     function isErc721TokenFreePass(uint256 eventTokenId, address tokenAddress) external view returns (uint256);
     function getVenueRentalCommission() external view returns (uint256);
     function getAdminTreasuryContract() external view returns (address);
+    function getEventCallContract() external view returns (address);
+    function getTicketControllerContract() external view returns (address);
 }

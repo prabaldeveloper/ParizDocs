@@ -6,8 +6,8 @@ import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/IERC721Metad
 import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 import "./utils/AdminStorage.sol";
 import "./access/Ownable.sol";
-import "./interface/IManageEvent.sol";
 import "./interface/IEvents.sol";
+import "./interface/IEventCall.sol";
 import "./interface/IConversion.sol";
 
 contract AdminFunctions is Ownable, AdminStorage {
@@ -183,6 +183,26 @@ contract AdminFunctions is Ownable, AdminStorage {
         );
         eventContract = _eventContract;
     }
+    
+    ///@notice updates eventCallContract address
+    ///@param _eventCallContract eventContract address
+    function updateEventCallContract(address _eventCallContract) external onlyOwner {
+        require(
+            _eventCallContract.isContract(),
+            "ERR_128:AdminFunctions:Address is not a contract"
+        );
+        eventCallContract = _eventCallContract;
+    }
+
+    ///@notice updates eventCallContract address
+    ///@param _ticketControllerContract eventContract address
+    function updateTicketControllerContract(address _ticketControllerContract) external onlyOwner {
+        require(
+            _ticketControllerContract.isContract(),
+            "ERR_128:AdminFunctions:Address is not a contract"
+        );
+        ticketControllerContract = _ticketControllerContract;
+    }
 
     ///@notice updates eventContract address
     ///@param _signatureContract eventContract address
@@ -287,6 +307,14 @@ contract AdminFunctions is Ownable, AdminStorage {
         return eventContract;
     }
 
+    function getTicketControllerContract() public view returns (address) {
+        return ticketControllerContract;
+    }
+
+    function getEventCallContract() public view returns (address) {
+        return eventCallContract;
+    }
+
     ///@notice Returns deviationPercentage
     function getDeviationPercentage() public view returns (uint256) {
         return deviationPercentage;
@@ -342,15 +370,15 @@ contract AdminFunctions is Ownable, AdminStorage {
     }
 
     function isEventEnded(uint256 eventId) public view returns (bool) {
-        return IManageEvent(manageEvent).isEventEnded(eventId);
+        return IEventCall(eventCallContract).isEventEnded(eventId);
     }
 
     function isEventStarted(uint256 eventId) public view returns (bool) {
-        return IManageEvent(manageEvent).isEventStarted(eventId);
+        return IEventCall(eventCallContract).isEventStarted(eventId);
     }
 
     function isEventCancelled(uint256 eventId) public view returns (bool) {
-        return IManageEvent(manageEvent).isEventCancelled(eventId);
+        return IEventCall(eventCallContract).isEventCancelled(eventId);
     }
 
    function getBaseToken() public view returns(address) {

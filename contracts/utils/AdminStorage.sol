@@ -35,6 +35,12 @@ contract AdminStorage {
     //event Contract
     address internal eventContract;
 
+    //event Call Contract
+    address internal eventCallContract;
+
+    //Ticket Controller Contract
+    address internal ticketControllerContract;
+
     //signature Contract
     address internal signatureContract;
 
