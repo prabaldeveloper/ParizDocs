@@ -193,11 +193,14 @@ contract ManageEventV1 is Ownable, ManageEventStorage {
         uint8 initiateStatus
     )
         external
-        isValidTime(agendaStartTime, agendaEndTime)
         isEventOrganiser(eventTokenId)
     {   
         if(getAgendaInfo[eventTokenId][agendaId].agendaStartTime != agendaStartTime ||
         getAgendaInfo[eventTokenId][agendaId].agendaEndTime != agendaEndTime) {
+            require(
+                agendaStartTime < agendaEndTime && agendaStartTime >= block.timestamp,
+                "ERR_130:ManageEvent:Invalid time input"
+            );
             require(
                 block.timestamp <
                     getAgendaInfo[eventTokenId][agendaId].agendaStartTime,
