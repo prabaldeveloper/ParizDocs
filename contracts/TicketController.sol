@@ -38,7 +38,7 @@ contract TicketController is Ownable, TicketControllerStorage {
     function buyTicketInternal(
         uint256 buyTicketId,
         uint256 ticketTime
-    ) internal view returns(uint256) {
+    ) public view returns(uint256) {
         require(
             IEvents(IAdminFunctions(adminContract).getEventContract())._exists(buyTicketId),
             "ERR_119:TicketMaster:TokenId does not exist"
@@ -59,11 +59,13 @@ contract TicketController is Ownable, TicketControllerStorage {
         uint256 actualPrice,
         address tokenAddress,
         uint256 buyTicketId,
-        string memory tokenType
-    ) internal returns(uint256) {
+        string memory tokenType,
+        address userAddress
+    ) public returns(uint256) {
          if (keccak256(abi.encodePacked((tokenType))) == keccak256(abi.encodePacked(("ERC20")))) {
             require(
-                IAdminFunctions(adminContract).isErc20TokenWhitelisted(tokenAddress) == true,
+                IAdminFunctions(adminContract).isErc20TokenWhitelisted(tokenAddress) == true ||
+                IAdminFunctions(adminContract).isErc20TokenWhitelistedEvent(buyTicketId, tokenAddress) == true ,
                 "ERR_122:TicketMaster: PaymentToken Not Supported"
             );
             uint256 convertedActualPrice = IAdminFunctions(adminContract)
@@ -73,72 +75,58 @@ contract TicketController is Ownable, TicketControllerStorage {
                 IAdminFunctions(adminContract).checkDeviation(feeAmount, convertedActualPrice);
                 uint256 ticketCommissionFee = (feeAmount *
                     IAdminFunctions(adminContract).getTicketCommissionPercent()) / 100;
-                //check for msg.sender
                  IERC20(tokenAddress).transferFrom(
-                    msg.sender,
+                    userAddress,
                     IAdminFunctions(adminContract).getTreasuryContract(),
                     feeAmount - ticketCommissionFee
                 );
                 IERC20(tokenAddress).transferFrom(
-                    msg.sender,
+                    userAddress,
                     IAdminFunctions(adminContract).getAdminTreasuryContract(),
                     ticketCommissionFee
                 );
                 return ticketCommissionFee;
             }  else {
-                IAdminFunctions(adminContract).checkDeviation(msg.value, convertedActualPrice);
-                uint256 ticketCommissionFee = (msg.value *
+                IAdminFunctions(adminContract).checkDeviation(feeAmount, convertedActualPrice);
+                uint256 ticketCommissionFee = (feeAmount *
                     IAdminFunctions(adminContract).getTicketCommissionPercent()) / 100;
-
-                (bool successOwner, ) = IAdminFunctions(adminContract).getTreasuryContract().call{
-                    value: msg.value - ticketCommissionFee
-                }("");
-                 require(
-                    successOwner,
-                    "ERR_123:TicketMaster:Transfer to treasury contract failed"
-                );
-                 (bool successAdminTreasury, ) = IAdminFunctions(adminContract).getAdminTreasuryContract().call{
-                    value: ticketCommissionFee
-                }("");
-                require(
-                    successAdminTreasury,
-                    "ERR_123:TicketMaster:Transfer to  admin treasury contract failed"
-                );
                 return ticketCommissionFee;
             }
          }
          else {
+            // require(
+            //     IAdminFunctions(adminContract).isErc721TokenWhitelistedEvent(buyTicketId, tokenAddress) == true,
+            //     "ERR_122:TicketMaster: PaymentToken Not Supported"
+            // );
+            //check at master level at event level
             require(
-                IAdminFunctions(adminContract).isErc721TokenWhitelisted(buyTicketId, tokenAddress) == true,
+                IAdminFunctions(adminContract).isErc721TokenWhitelisted(tokenAddress) == true ||
+                IAdminFunctions(adminContract).isErc721TokenWhitelistedEvent(buyTicketId, tokenAddress) == true,
                 "ERR_122:TicketMaster: PaymentToken Not Supported"
             );
-
-            //check for msg.sender
             require(
-                msg.sender ==
+                userAddress ==
                     IERC721Upgradeable(tokenAddress).ownerOf(feeAmount),
                 "ERR_124:TicketMaster: Caller is not the owner"
             );
 
-            return 0;
-            
+            return 0; 
          }
 
     }  
 
-    function claimTicketFeesInternal(uint256 eventTokenId) internal view returns(address) {
+    function claimTicketFeesInternal(uint256 _eventTokenId, address _eventOrganiser) internal view returns(address) {
         require(
-            IEvents(IAdminFunctions(adminContract).getEventContract())._exists(eventTokenId),
+            IEvents(IAdminFunctions(adminContract).getEventContract())._exists(_eventTokenId),
             "ERR_132:ManageEvent:TokenId does not exist"
         );
         require(
-            IAdminFunctions(adminContract).isEventCancelled(eventTokenId) == false && IAdminFunctions(adminContract).isEventStarted(eventTokenId) == true,
+            IAdminFunctions(adminContract).isEventCancelled(_eventTokenId) == false && IAdminFunctions(adminContract).isEventStarted(_eventTokenId) == true,
             "ERR_138:ManageEvent:Event is cancelled"
         );
         (, , address payable eventOrganiser, , , ) = IEvents(IAdminFunctions(adminContract).getEventContract())
-            .getEventDetails(eventTokenId);
-        //check for msg.sender
-        require(msg.sender == eventOrganiser, "ERR_131:ManageEvent:Invalid Address");
+            .getEventDetails(_eventTokenId);
+        require(eventOrganiser == _eventOrganiser, "ERR_131:ManageEvent:Invalid Address");
         return eventOrganiser;
     }
 

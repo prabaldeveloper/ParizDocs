@@ -16,10 +16,10 @@ contract EventCall is Ownable, EventCallStorage {
     }
 
     // modifier for checking event organiser address
-    modifier isEventOrganiser(uint256 eventTokenId) {
-        (, , address eventOrganiser, , , ) = IEvents(IAdminFunctions(adminContract).getEventContract())
+    modifier isEventOrganiser(uint256 eventTokenId, address eventOrganiser) {
+        (, , address _eventOrganiser, , , ) = IEvents(IAdminFunctions(adminContract).getEventContract())
             .getEventDetails(eventTokenId);
-        require(msg.sender == eventOrganiser, "ERR_131:ManageEvent:Invalid Address");
+        require(eventOrganiser == _eventOrganiser, "ERR_131:ManageEvent:Invalid Address");
         _;
     }
 
@@ -34,7 +34,7 @@ contract EventCall is Ownable, EventCallStorage {
 
     ///@notice Called by event organiser to mark the event status as completed
     ///@param eventTokenId event token id
-    function completeInternal(uint256 eventTokenId) internal isEventOrganiser(eventTokenId) {
+    function completeInternal(uint256 eventTokenId, address eventOrganiser) public view isEventOrganiser(eventTokenId, eventOrganiser) {
         require(IEvents(IAdminFunctions(adminContract).getEventContract())._exists(eventTokenId), "ERR_132:ManageEvent:TokenId does not exist");
         (
             , uint256 endTime,
@@ -53,23 +53,21 @@ contract EventCall is Ownable, EventCallStorage {
             IAdminFunctions(adminContract).isEventStarted(eventTokenId) == true,
             "ERR_139:ManageEvent:Event is not started"
         );
-        eventCompletedStatus[eventTokenId] = true;
     }
 
     ///@notice To end the event before endTime
     function endInternal(
-        uint256 eventTokenId
-        ) internal isEventOrganiser(eventTokenId) {
+        uint256 eventTokenId, address eventOrganiser
+        ) public view isEventOrganiser(eventTokenId, eventOrganiser) {
         require(
             IAdminFunctions(adminContract).isEventStarted(eventTokenId) == true,
             "ERR_139:ManageEvent:Event is not started"
         );
-        eventEndedStatus[eventTokenId] = true;
     }
 
      ///@notice Start the event
     ///@param eventTokenId event Token Id
-    function startEventInternal(uint256 eventTokenId) internal isEventOrganiser(eventTokenId) {
+    function startEventInternal(uint256 eventTokenId, address eventOrganiser) public view isEventOrganiser(eventTokenId, eventOrganiser) {
         require(IEvents(IAdminFunctions(adminContract).getEventContract())._exists(eventTokenId), "ERR_132:ManageEvent:TokenId does not exist");
         (
             uint256 startTime,
@@ -84,20 +82,14 @@ contract EventCall is Ownable, EventCallStorage {
             "ERR_141:ManageEvent:Event not live"
         );
         require(payNow == true, "ERR_142:ManageEvent:Fees not paid");
-        eventStartedStatus[eventTokenId] = true;
 
     }
 
     ///@notice Cancel the event
     ///@param eventTokenId event Token Id
-    function cancelEventInternal(uint256 eventTokenId) external isEventOrganiser(eventTokenId) {
+    function cancelEventInternal(uint256 eventTokenId, address eventOrganiser) public view isEventOrganiser(eventTokenId, eventOrganiser) {
         require(IEvents(IAdminFunctions(adminContract).getEventContract())._exists(eventTokenId), "ERR_132:ManageEvent:TokenId does not exist");
         require(IAdminFunctions(adminContract).isEventStarted(eventTokenId) == false, "ERR_143:ManageEvent:Event started");
-        require(
-            eventCancelledStatus[eventTokenId] == false,
-            "ERR_138:ManageEvent:Event is cancelled"
-        );
-        eventCancelledStatus[eventTokenId] = true;
     }
 
     function joinInternal(
@@ -106,7 +98,7 @@ contract EventCall is Ownable, EventCallStorage {
         uint256 eventTokenId, 
         uint256 ticketId,
         uint256 joinTime
-    ) internal view returns(address) {
+    ) public view returns(address) {
         require(
             IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).recoverSigner(
                 IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).getMessageHash(ticketHolder, eventTokenId, ticketId, joinTime),
@@ -123,7 +115,7 @@ contract EventCall is Ownable, EventCallStorage {
         return eventOrganiser;
     }
 
-    function userExitEventInternal(bytes memory signature, address ticketHolder, uint256 eventTokenId, uint256 ticketId, uint256 exitTime) internal view returns(address) {
+    function userExitEventInternal(bytes memory signature, address ticketHolder, uint256 eventTokenId, uint256 ticketId, uint256 exitTime) public view returns(address) {
         require(
             IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).recoverSigner(
                 IVerifySignature(IAdminFunctions(adminContract).getSignatureContract()).getMessageHash(ticketHolder, eventTokenId, ticketId, exitTime),
@@ -142,44 +134,16 @@ contract EventCall is Ownable, EventCallStorage {
 
     }
 
-    function updateEventInternal(uint256 eventTokenId) internal view returns(uint256) {
-         (uint256 startTime, , address eventOrganiser, , uint256 venueTokenId, ) = IEvents(IAdminFunctions(adminContract).getEventContract()).getEventDetails(eventTokenId);
-         //check for msg.sender
-         require(
-            msg.sender == eventOrganiser,
+    function updateEventInternal(uint256 eventTokenId, address eventOrganiser) public view returns(uint256) {
+        (uint256 _startTime, , address _eventOrganiser, , uint256 _venueTokenId, ) = IEvents(IAdminFunctions(adminContract).getEventContract()).getEventDetails(eventTokenId);
+        require(
+            eventOrganiser == _eventOrganiser,
             "ERR_103:Events:Address is not the event organiser address"
         );
         require(
-            startTime > block.timestamp,
+            _startTime > block.timestamp,
             "ERR_104:Events:Event is started"
         );       
-        return venueTokenId;
+        return _venueTokenId;
     }
-
-    function payEventInternal(uint256 eventTokenId) internal view returns(uint256, uint256, bool, uint256) {
-        (uint256 startTime, uint256 endTime, 
-        address eventOrganiser, bool payNow, 
-        uint256 venueTokenId, ) = IEvents(IAdminFunctions(adminContract).getEventContract()).getEventDetails(eventTokenId);
-        require(
-            endTime > block.timestamp,
-            "ERR_112:Events:Event ended"
-        );
-        //check for msg.sender
-        require(msg.sender == eventOrganiser, "ERR_108:Events:Invalid Caller");
-   
-        return (startTime, endTime, payNow, venueTokenId);
-    }
-
-    function isEventEnded(uint256 eventId) public view returns (bool) {
-        return eventEndedStatus[eventId];   
-    }
-
-    function isEventStarted(uint256 eventId) public view returns (bool) {
-        return eventStartedStatus[eventId];
-    }
-
-    function isEventCancelled(uint256 eventId) public view returns (bool) {
-        return eventCancelledStatus[eventId];
-    }
-
 }

@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 import "./utils/AdminStorage.sol";
 import "./access/Ownable.sol";
 import "./interface/IEvents.sol";
-import "./interface/IEventCall.sol";
+import "./interface/IManageEvent.sol";
 import "./interface/IConversion.sol";
 
 contract AdminFunctions is Ownable, AdminStorage {
@@ -37,10 +37,16 @@ contract AdminFunctions is Ownable, AdminStorage {
     ///@param status status of the address(true or false)
     event Erc20TokenUpdated(address indexed tokenAddress, bool status, string name, string symbol, uint256 decimal);
 
+    event Erc721TokenUpdated(address indexed tokenAddress, bool status, uint256 freePassStatus,
+    string name, string symbol, uint256 decimal);
+
+    event Erc20TokenUpdatedEvent(uint256 indexed eventTokenId, address indexed tokenAddress, bool status,
+    string name, string symbol, uint256 decimal);
+
     ///@param tokenAddress erc-721 token address
     ///@param status status of the address(true or false)
     ///@param freePassStatus 1 for free pass else 0
-    event Erc721TokenUpdated(uint256 indexed eventTokenId, address indexed tokenAddress, bool status, uint256 freePassStatus,
+    event Erc721TokenUpdatedEvent(uint256 indexed eventTokenId, address indexed tokenAddress, bool status, uint256 freePassStatus,
     string name, string symbol, uint256 decimal);
     
     ///@param percentage deviationPercentage
@@ -73,7 +79,7 @@ contract AdminFunctions is Ownable, AdminStorage {
         emit DeviationPercentageUpdated(_deviationPercentage);
     }
 
-    ///@notice Add supported Erc-20 tokens for the payment
+    ///@notice Add supported Erc-20 tokens for the payment at master level
     ///@dev Only admin can call
     ///@dev -  Update the status of paymentToken
     ///@param tokenAddress erc-20 token Address
@@ -90,6 +96,40 @@ contract AdminFunctions is Ownable, AdminStorage {
     
     }
 
+    ///@notice Add supported Erc-721 tokens for the payment at master level
+    function whitelistErc721TokenAddress(address tokenAddress, bool status, uint256 freePassStatus) external onlyOwner{
+        erc721TokenAddress[tokenAddress] = status;
+        tokenFreePassStatus[tokenAddress] = freePassStatus;
+         (string memory name, 
+         string memory symbol, 
+         uint256 decimal) = getTokenDetails(tokenAddress, "ERC721");
+        emit Erc721TokenUpdated(tokenAddress, status, freePassStatus, name, symbol, decimal);
+
+    }
+
+    ///@notice Add supported Erc-20 tokens for the payment at master level
+    ///@dev Only admin can call
+    ///@dev -  Update the status of paymentToken
+    ///@param tokenAddress erc-20 token Address
+    ///@param status status of the address(true or false)
+    function whitelistErc20TokenAddressEvent(uint256 eventTokenId, address tokenAddress, bool status)
+        external
+    {
+         require(IEvents(eventContract)._exists(eventTokenId), "AdminFunctions:TokenId does not exist");
+         require(erc20TokenAddress[tokenAddress] == false, "AdminFunctions:Token is already whitelisted");
+         (, , address eventOrganiser,
+         , , ) =  IEvents(eventContract).getEventDetails(eventTokenId);
+         require(msg.sender == eventOrganiser, "AdminFunctions:Invalid Caller");
+         
+         erc20TokenAddressEvent[eventTokenId][tokenAddress] = status;
+         (string memory name, 
+         string memory symbol, 
+         uint256 decimal) = getTokenDetails(tokenAddress, "ERC20");
+         emit Erc20TokenUpdatedEvent(eventTokenId, tokenAddress, status, name, symbol, decimal);
+    
+    }
+
+
     ///@notice Add supported Erc-721 tokens for the payment
     ///@dev Only admin can call
     ///@dev -  Update the status of paymentToken
@@ -98,18 +138,18 @@ contract AdminFunctions is Ownable, AdminStorage {
     ///@param status status of the address(true or false)
     ///@param freePassStatus 1 for free pass else 0
     
-
-    function whitelistErc721TokenAddress(uint256 eventTokenId, address tokenAddress, bool status, uint256 freePassStatus) external {
+    function whitelistErc721TokenAddressEvent(uint256 eventTokenId, address tokenAddress, bool status, uint256 freePassStatus) external {
         require(IEvents(eventContract)._exists(eventTokenId), "AdminFunctions:TokenId does not exist");
+        require(erc721TokenAddress[tokenAddress] == false, "AdminFunctions:Token is already whitelisted");
         (, , address eventOrganiser,
         , , ) =  IEvents(eventContract).getEventDetails(eventTokenId);
-        require(msg.sender == eventOrganiser || msg.sender ==  owner(), "AdminFunctions:Invalid Caller");
-        erc721TokenAddress[eventTokenId][tokenAddress] = status;
-        tokenFreePassStatus[eventTokenId][tokenAddress] = freePassStatus;
+        require(msg.sender == eventOrganiser, "AdminFunctions:Invalid Caller");
+        erc721TokenAddressEvent[eventTokenId][tokenAddress] = status;
+        tokenFreePassStatusEvent[eventTokenId][tokenAddress] = freePassStatus;
          (string memory name, 
          string memory symbol, 
          uint256 decimal) = getTokenDetails(tokenAddress, "ERC721");
-        emit Erc721TokenUpdated(eventTokenId, tokenAddress, status, freePassStatus, name, symbol, decimal);
+        emit Erc721TokenUpdatedEvent(eventTokenId, tokenAddress, status, freePassStatus, name, symbol, decimal);(eventTokenId, tokenAddress, status, freePassStatus, name, symbol, decimal);
 
     }
     
@@ -343,18 +383,33 @@ contract AdminFunctions is Ownable, AdminStorage {
         return isPublic;
     }
 
-     ///@notice Returns whitelisted status of erc721TokenAddress
-    function isErc721TokenWhitelisted(uint256 eventTokenId, address tokenAddress) public view returns (bool) {
-        return erc721TokenAddress[eventTokenId][tokenAddress];
-    }
-
-    function isErc721TokenFreePass(uint256 eventTokenId, address tokenAddress) public view returns (uint256) {
-        return tokenFreePassStatus[eventTokenId][tokenAddress];
-    }
-
-    ///@notice Returns whitelisted status of erc20TokenAddress
+    ///@notice Returns whitelisted status of erc20TokenAddress at master level
     function isErc20TokenWhitelisted(address tokenAddress) public view returns (bool) {
         return erc20TokenAddress[tokenAddress];
+    }
+
+    ///@notice Returns whitelisted status of erc721TokenAddress at master level
+    function isErc721TokenWhitelisted(address tokenAddress) public view returns (bool) {
+        return erc721TokenAddress[tokenAddress];
+    }
+
+    ///@notice Returns freepass status of erc721TokenAddress at master level
+    function isErc721TokenFreePass(address tokenAddress) public view returns (uint256) {
+        return tokenFreePassStatus[tokenAddress];
+    }
+
+    function isErc20TokenWhitelistedEvent(uint256 eventTokenId, address tokenAddress) public view returns(bool) {
+        return erc20TokenAddressEvent[eventTokenId][tokenAddress];
+
+    }
+    ///@notice Returns whitelisted status of erc721TokenAddress at event level
+    function isErc721TokenWhitelistedEvent(uint256 eventTokenId, address tokenAddress) public view returns (bool) {
+        return erc721TokenAddressEvent[eventTokenId][tokenAddress];
+    }
+
+    ///@notice Returns freepass status of erc721TokenAddress at event level
+    function isErc721TokenFreePassEvent(uint256 eventTokenId, address tokenAddress) public view returns (uint256) {
+        return tokenFreePassStatusEvent[eventTokenId][tokenAddress];
     }
 
     function isUserWhitelisted(address userAddress) public view returns (bool) {
@@ -370,15 +425,15 @@ contract AdminFunctions is Ownable, AdminStorage {
     }
 
     function isEventEnded(uint256 eventId) public view returns (bool) {
-        return IEventCall(eventCallContract).isEventEnded(eventId);
+        return IManageEvent(manageEvent).isEventEnded(eventId);
     }
 
     function isEventStarted(uint256 eventId) public view returns (bool) {
-        return IEventCall(eventCallContract).isEventStarted(eventId);
+        return IManageEvent(manageEvent).isEventStarted(eventId);
     }
 
     function isEventCancelled(uint256 eventId) public view returns (bool) {
-        return IEventCall(eventCallContract).isEventCancelled(eventId);
+        return IManageEvent(manageEvent).isEventCancelled(eventId);
     }
 
    function getBaseToken() public view returns(address) {

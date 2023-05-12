@@ -88,7 +88,7 @@ contract EventsV2 is EventAdminRole {
     }
 
     function updateEvent(uint256 tokenId, string memory description, uint256[2] memory time) external {
-        uint256 venueTokenId = IEventCall(IAdminFunctions(adminContract).getEventCallContract()).updateEventInternal(tokenId);
+        uint256 venueTokenId = IEventCall(IAdminFunctions(adminContract).getEventCallContract()).updateEventInternal(tokenId, msg.sender);
         require(
             isVenueAvailable(tokenId, venueTokenId, time[0], time[1], 1),
             "ERR_105:Events:Venue is not available"
@@ -366,7 +366,7 @@ contract EventsV2 is EventAdminRole {
 
     function claimVenueFees(uint256 venueTokenId) external {
         
-        address venueOwner = IVenue(IAdminFunctions(adminContract).getVenueContract()).claimVenueFeesInternal(venueTokenId);
+        address venueOwner = IVenue(IAdminFunctions(adminContract).getVenueContract()).claimVenueFeesInternal(venueTokenId, msg.sender);
 
         uint256[] memory eventIds = eventsInVenue[venueTokenId];
         address tokenAddress = IAdminFunctions(adminContract).getBaseToken();
@@ -384,7 +384,7 @@ contract EventsV2 is EventAdminRole {
 
     function refundVenueFees(uint256 eventTokenId) external {
         
-        (uint256 venueRentalCommissionFees, address venueOwner) = IVenue(IAdminFunctions(adminContract).getVenueContract()).refundVenueFeesInternal(eventTokenId, balance[eventTokenId]);
+        (uint256 venueRentalCommissionFees, address venueOwner) = IVenue(IAdminFunctions(adminContract).getVenueContract()).refundVenueFeesInternal(eventTokenId, balance[eventTokenId], msg.sender);
         address tokenAddress = IAdminFunctions(adminContract).getBaseToken();
         ITreasury(IAdminFunctions(adminContract).getTreasuryContract()).claimFunds(getInfo[eventTokenId].eventOrganiser,tokenAddress, balance[eventTokenId] - venueRentalCommissionFees);
         ITreasury(IAdminFunctions(adminContract).getTreasuryContract()).claimFunds(venueOwner, tokenAddress, venueRentalCommissionFees);

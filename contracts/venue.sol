@@ -109,42 +109,39 @@ contract Venue is VenueMetadata, VenueStorage {
 
     }
 
-    function claimVenueFeesInternal(uint256 venueTokenId) external view returns(address) {
+    function claimVenueFeesInternal(uint256 _venueTokenId, address _venueOwner) public view returns(address) {
         require(
-            _exists(venueTokenId),
+            _exists(_venueTokenId),
             "Venue:Venue tokenId does not exists"
         );
 
-        address venueOwner = getVenueOwner(venueTokenId);
-        //check for msg.sender
-        require(msg.sender == venueOwner, "Venue:Invalid Caller");
+        address venueOwner = getVenueOwner(_venueTokenId);
+        require(venueOwner == _venueOwner, "Venue:Invalid Caller");
         return  venueOwner;
     }
     
-    function refundVenueFeesInternal(uint256 eventTokenId, uint256 balance) external view returns(uint256, address) {
+    function refundVenueFeesInternal(uint256 eventTokenId, uint256 balance, address eventOrganiser) public view returns(uint256, address) {
         require(
             IAdminFunctions(adminContract).isEventCancelled(eventTokenId) == true,
             "ERR_109:Events:Event is not cancelled"
         );
         (
-            uint256 startTime,
-            uint256 endTime,
-            address eventOrganiser,
-            bool payNow,
-            uint256 venueTokenId,
+            uint256 _startTime,
+            uint256 _endTime,
+            address _eventOrganiser,
+            bool _payNow,
+            uint256 _venueTokenId,
 
         ) = IEvents(IAdminFunctions(adminContract).getEventContract()).getEventDetails(eventTokenId);
-        //check for msg.sender
-        
-        require(msg.sender == eventOrganiser, "ERR_103:Events:Address is not the event organiser address");
-        require(payNow == true, "ERR_110:Events:Fees not paid");
+        require(eventOrganiser == _eventOrganiser, "ERR_103:Events:Address is not the event organiser address");
+        require(_payNow == true, "ERR_110:Events:Fees not paid");
          (, , uint256 venueRentalCommissionFees) = IEvents(IAdminFunctions(adminContract).getEventContract()).calculateRent(
-            venueTokenId,
-            startTime,
-            endTime
+            _venueTokenId,
+            _startTime,
+            _endTime
         );
         require(balance > 0, "ERR_111:Events:Funds already transferred");
-        address venueOwner = getVenueOwner(venueTokenId);
+        address venueOwner = getVenueOwner(_venueTokenId);
         return (venueRentalCommissionFees, venueOwner);
 
     }

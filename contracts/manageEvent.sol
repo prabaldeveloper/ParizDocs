@@ -286,7 +286,8 @@ contract ManageEventV1 is Ownable, ManageEventStorage {
     ///@notice Called by event organiser to mark the event status as completed
     ///@param eventTokenId event token id
     function complete(uint256 eventTokenId) external {
-        IEventCall(IAdminFunctions(adminContract).getEventCallContract()).completeInternal(eventTokenId);
+        IEventCall(IAdminFunctions(adminContract).getEventCallContract()).completeInternal(eventTokenId, msg.sender);
+        eventCompletedStatus[eventTokenId] = true;
         emit EventCompleted(eventTokenId);
     }
 
@@ -318,15 +319,16 @@ contract ManageEventV1 is Ownable, ManageEventStorage {
     function end(
         uint256 eventTokenId
         ) external {
-        IEventCall(IAdminFunctions(adminContract).getEventCallContract()).endInternal(eventTokenId);
+        IEventCall(IAdminFunctions(adminContract).getEventCallContract()).endInternal(eventTokenId, msg.sender);
+        eventEndedStatus[eventTokenId] = true;
         emit EventEnded(eventTokenId);
     }
 
      ///@notice Start the event
     ///@param eventTokenId event Token Id
     function startEvent(uint256 eventTokenId) external {
-        IEventCall(IAdminFunctions(adminContract).getEventCallContract()).startEventInternal(eventTokenId);
-        
+        IEventCall(IAdminFunctions(adminContract).getEventCallContract()).startEventInternal(eventTokenId, msg.sender);
+        eventStartedStatus[eventTokenId] = true;
         emit EventStarted(eventTokenId);
 
     }
@@ -334,14 +336,18 @@ contract ManageEventV1 is Ownable, ManageEventStorage {
     ///@notice Cancel the event
     ///@param eventTokenId event Token Id
     function cancelEvent(uint256 eventTokenId) external {
-        IEventCall(IAdminFunctions(adminContract).getEventCallContract()).cancelEventInternal(eventTokenId);
-        
+        IEventCall(IAdminFunctions(adminContract).getEventCallContract()).cancelEventInternal(eventTokenId, msg.sender);
+        require(
+            eventCancelledStatus[eventTokenId] == false,
+            "ERR_138:ManageEvent:Event is cancelled"
+        );
+        eventCancelledStatus[eventTokenId] = true;
         emit EventCancelled(eventTokenId);
     }
 
     function claimTicketFees(uint256 eventTokenId, address[] memory tokenAddress) external {
         address eventOrganiser = ITicketController(IAdminFunctions(adminContract).getTicketControllerContract())
-            .claimTicketFeesInternal(eventTokenId);
+            .claimTicketFeesInternal(eventTokenId, msg.sender);
         for(uint256 i = 0; i< tokenAddress.length; i++) {
             if((ITicketMaster(IAdminFunctions(adminContract).getTicketMasterContract()).isERC721TokenAddress(tokenAddress[i])) == true) {
                 uint256[] memory ticketIds = ITicketMaster(IAdminFunctions(adminContract).getTicketMasterContract()).getTicketIds(tokenAddress[i]);
@@ -389,6 +395,18 @@ contract ManageEventV1 is Ownable, ManageEventStorage {
                  }
             }
         }
+    }
+
+    function isEventEnded(uint256 eventId) public view returns (bool) {
+        return eventEndedStatus[eventId];   
+    }
+
+    function isEventStarted(uint256 eventId) public view returns (bool) {
+        return eventStartedStatus[eventId];
+    }
+
+    function isEventCancelled(uint256 eventId) public view returns (bool) {
+        return eventCancelledStatus[eventId];
     }
 
     function isAgendaTimeAvailable(

@@ -3,16 +3,24 @@
 pragma solidity ^0.8.0;
 
 contract AdminStorage {
-    //mapping for getting supported erc20TokenAddress
+    //mapping for getting supported erc20TokenAddress at master level
     mapping(address => bool) public erc20TokenAddress;
 
-    //mapping for getting supported erc721TokenAddress
-    mapping(uint256 => mapping(address => bool)) public erc721TokenAddress;
+    //mapping for getting supported erc721TokenAddress at master level
+    mapping(address => bool) public erc721TokenAddress;
+
+    //mapping for getting supported erc20TokenAddress at event level
+    mapping(uint256 => mapping(address => bool)) public erc20TokenAddressEvent;
+
+    //mapping for getting supported erc721TokenAddress at event level
+    mapping(uint256 => mapping(address => bool)) public erc721TokenAddressEvent;
 
     //mapping for whiteListed address
     mapping(address => bool) public whiteListedAddress;
 
-    mapping(uint256 => mapping(address => uint256)) public tokenFreePassStatus;
+    mapping(address => uint256) public tokenFreePassStatus;
+
+    mapping(uint256 => mapping(address => uint256)) public tokenFreePassStatusEvent;
 
     // Deviation Percentage
     uint256 internal deviationPercentage;

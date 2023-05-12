@@ -4,17 +4,6 @@ pragma solidity ^0.8.0;
 
 contract EventCallStorage {
 
-    //mapping for event start status
-    mapping(uint256 => bool) public eventStartedStatus;
-
-    mapping(uint256 => bool) public eventEndedStatus;
-
-    //mapping for event cancel status
-    mapping(uint256 => bool) public eventCancelledStatus;
-
-    //mapping for event completed status
-    mapping(uint256 => bool) public eventCompletedStatus;
-
     address public adminContract;
 
     //

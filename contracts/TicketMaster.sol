@@ -98,7 +98,6 @@ contract TicketMasterV1 is Ticket, TicketMasterStorage {
         string[] memory tokenType,
         uint256[] memory ticketTime
     ) external payable {
-
         for(uint i = 0 ; i < userAddress.length; i++) {
             uint256 actualPrice =  ITicketController(IAdminFunctions(adminContract).getTicketControllerContract())
                 .buyTicketInternal(buyTicketId[i], ticketTime[i]);
@@ -140,23 +139,43 @@ contract TicketMasterV1 is Ticket, TicketMasterStorage {
         uint256 buyTicketId,
         string memory tokenType
     ) internal {
-        uint256 ticketCommissionFee = ITicketController(IAdminFunctions(adminContract).getTicketControllerContract())
-            .checkTicketFeesInternal(feeAmount, actualPrice, tokenAddress, buyTicketId, tokenType);
-
         if (keccak256(abi.encodePacked((tokenType))) == keccak256(abi.encodePacked(("ERC20")))) {
             if (tokenAddress != address(0)) {
+                uint256 ticketCommissionFee = ITicketController(IAdminFunctions(adminContract).getTicketControllerContract())
+                .checkTicketFeesInternal(feeAmount, actualPrice, tokenAddress, buyTicketId, tokenType, msg.sender);
                 ticketFeesBalance[buyTicketId][tokenAddress] += (feeAmount -
                     ticketCommissionFee);
                 userTicketBalance[buyTicketId][ticketId] = feeAmount - ticketCommissionFee;
             } else {
-
+                uint256 ticketCommissionFee = ITicketController(IAdminFunctions(adminContract).getTicketControllerContract())
+                    .checkTicketFeesInternal(msg.value, actualPrice, tokenAddress, buyTicketId, tokenType, msg.sender);
+                 (bool successOwner, ) = IAdminFunctions(adminContract).getTreasuryContract().call{
+                    value: msg.value - ticketCommissionFee
+                }("");
+                 require(
+                    successOwner,
+                    "ERR_123:TicketMaster:Transfer to treasury contract failed"
+                );
+                 (bool successAdminTreasury, ) = IAdminFunctions(adminContract).getAdminTreasuryContract().call{
+                    value: ticketCommissionFee
+                }("");
+                require(
+                    successAdminTreasury,
+                    "ERR_123:TicketMaster:Transfer to  admin treasury contract failed"
+                );
                 ticketFeesBalance[buyTicketId][tokenAddress] += (msg.value -
                     ticketCommissionFee);
                 userTicketBalance[buyTicketId][ticketId] = msg.value - ticketCommissionFee;
             }
         }
         else {
-            if(IAdminFunctions(adminContract).isErc721TokenFreePass(buyTicketId, tokenAddress) == 0)  {
+            //check for erc721
+            //returning ticketCommissionFee
+            ITicketController(IAdminFunctions(adminContract).getTicketControllerContract())
+                .checkTicketFeesInternal(feeAmount, actualPrice, tokenAddress, buyTicketId, tokenType, msg.sender);
+
+            if(IAdminFunctions(adminContract).isErc721TokenFreePass(tokenAddress) == 0 ||
+             IAdminFunctions(adminContract).isErc721TokenFreePassEvent(buyTicketId, tokenAddress) == 0 ) {
                 IERC721Upgradeable(tokenAddress).transferFrom(msg.sender, IAdminFunctions(adminContract).getTreasuryContract(), feeAmount);
                 userTicketBalance[buyTicketId][ticketId] = feeAmount;
                 nftTicketIds[tokenAddress].push(ticketId);

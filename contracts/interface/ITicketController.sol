@@ -12,11 +12,13 @@ interface ITicketController {
         uint256 actualPrice,
         address tokenAddress,
         uint256 buyTicketId,
-        string memory tokenType
+        string memory tokenType,
+        address userAddress
     ) external returns(uint256);
 
     function claimTicketFeesInternal(
-        uint256 eventTokenId
+        uint256 eventTokenId,
+        address eventOrganiser
     ) external view returns(address);
 
     function refundTicketFeesInternal(uint256 eventTokenId) external view;
