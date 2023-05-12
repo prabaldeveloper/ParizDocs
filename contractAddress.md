@@ -243,8 +243,20 @@ maximum contract size - 24576 bytes(24 KiB)
 
 New contracts for testing
 
-conversion proxy 0xc5b9C6F3F350dBba6DF40f9309eC60adb5C6b98c
+Venue proxy 0x2f96423D99deBEcad907dFb825A81d333878CfAD
+Conversion proxy 0xc5b9C6F3F350dBba6DF40f9309eC60adb5C6b98c
 Admin proxy 0x5DF40949F4063132E7C181A41C1e0edd3D99A7E5
+TicketMaster contract 0xf7910bF47A4789B9100c1Fa43db4be703E3E1187
+Manage Event proxy 0xE94679A8d229F0e77Caf4B422A3894f3A691C30D
+Treasury proxy 0xaFb4dF4bcc8034Ee39971965c00B5fD3963374f7
 Admin Treasury proxy 0xa8B0F6f54Bc8510714eec8f7F09Dd8fcB4C79934   
+VerifySignature 0x4D733335eA2Ee9CD6906aD247FCcF1BB9BE7dDff
 Event contract 0xb0abe1623c73ee874b94083A349a7C1d00A8B573
-ticketMaster contract 0xf7910bF47A4789B9100c1Fa43db4be703E3E1187
+Event Call contract 0x99A63222b1CbBD01d273757182b93AaC3FBcc20c
+Ticket Controller contract 0x6DAF41F02903170e5C67c98719cA79f424814152
+
+
+
+change in eventCall, manageEvent, eventContract
+
+change in eventContract, venueContract,manageEventContract, ticketMasterContract, ticketControllerContract
