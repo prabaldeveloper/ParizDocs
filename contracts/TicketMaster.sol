@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.0;
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-//import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./Ticket.sol";
 import "./interface/IAdminFunctions.sol";
 import "./interface/IEvents.sol";
@@ -143,6 +143,16 @@ contract TicketMasterV1 is Ticket, TicketMasterStorage {
             if (tokenAddress != address(0)) {
                 uint256 ticketCommissionFee = ITicketController(IAdminFunctions(adminContract).getTicketControllerContract())
                 .checkTicketFeesInternal(feeAmount, actualPrice, tokenAddress, buyTicketId, tokenType, msg.sender);
+                 IERC20(tokenAddress).transferFrom(
+                    msg.sender,
+                    IAdminFunctions(adminContract).getTreasuryContract(),
+                    feeAmount - ticketCommissionFee
+                );
+                IERC20(tokenAddress).transferFrom(
+                    msg.sender,
+                    IAdminFunctions(adminContract).getAdminTreasuryContract(),
+                    ticketCommissionFee
+                );
                 ticketFeesBalance[buyTicketId][tokenAddress] += (feeAmount -
                     ticketCommissionFee);
                 userTicketBalance[buyTicketId][ticketId] = feeAmount - ticketCommissionFee;

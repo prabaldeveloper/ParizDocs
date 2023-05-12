@@ -61,7 +61,7 @@ contract TicketController is Ownable, TicketControllerStorage {
         uint256 buyTicketId,
         string memory tokenType,
         address userAddress
-    ) public returns(uint256) {
+    ) public view returns(uint256) {
          if (keccak256(abi.encodePacked((tokenType))) == keccak256(abi.encodePacked(("ERC20")))) {
             require(
                 IAdminFunctions(adminContract).isErc20TokenWhitelisted(tokenAddress) == true ||
@@ -75,16 +75,16 @@ contract TicketController is Ownable, TicketControllerStorage {
                 IAdminFunctions(adminContract).checkDeviation(feeAmount, convertedActualPrice);
                 uint256 ticketCommissionFee = (feeAmount *
                     IAdminFunctions(adminContract).getTicketCommissionPercent()) / 100;
-                 IERC20(tokenAddress).transferFrom(
-                    userAddress,
-                    IAdminFunctions(adminContract).getTreasuryContract(),
-                    feeAmount - ticketCommissionFee
-                );
-                IERC20(tokenAddress).transferFrom(
-                    userAddress,
-                    IAdminFunctions(adminContract).getAdminTreasuryContract(),
-                    ticketCommissionFee
-                );
+                //  IERC20(tokenAddress).transferFrom(
+                //     userAddress,
+                //     IAdminFunctions(adminContract).getTreasuryContract(),
+                //     feeAmount - ticketCommissionFee
+                // );
+                // IERC20(tokenAddress).transferFrom(
+                //     userAddress,
+                //     IAdminFunctions(adminContract).getAdminTreasuryContract(),
+                //     ticketCommissionFee
+                // );
                 return ticketCommissionFee;
             }  else {
                 IAdminFunctions(adminContract).checkDeviation(feeAmount, convertedActualPrice);
