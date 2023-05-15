@@ -102,16 +102,34 @@ contract AdminFunctions is Ownable, AdminStorage {
     }
 
      function whitelistToken(uint256 eventTokenId, address[] memory tokenAddress,
-        //string[] memory tokenType,
+        string[] memory tokenType,
+        uint256[] memory freePassStatus
+    ) public {
+        bool[] memory status;
+        for(uint i = 0 ; i < tokenAddress.length; i++) {
+            status[i] = true;
+        }
+        whitelistTokenInternal(eventTokenId, tokenAddress, status, tokenType, freePassStatus);
+    }
+
+    function updateWhitelistToken(uint256 eventTokenId, address[] memory tokenAddress, bool[] memory status,
+        string[] memory tokenType,
+        uint256[] memory freePassStatus
+    ) public {
+        whitelistTokenInternal(eventTokenId, tokenAddress, status, tokenType, freePassStatus);
+    }
+
+    function whitelistTokenInternal(uint256 eventTokenId, address[] memory tokenAddress, bool[] memory status,
+        string[] memory tokenType,
         uint256[] memory freePassStatus
     ) public {
         for(uint256 i = 0; i < tokenAddress.length; i++) {
-             if (!isERC721(tokenAddress[i])) {
-            //if(keccak256(abi.encodePacked((tokenType[i]))) == keccak256(abi.encodePacked(("ERC20")))) {
-                whitelistErc20TokenAddressEvent(eventTokenId, tokenAddress[i], true);
+            //  if (!isERC721(tokenAddress[i])) {
+            if(keccak256(abi.encodePacked((tokenType[i]))) == keccak256(abi.encodePacked(("ERC20")))) {
+                whitelistErc20TokenAddressEvent(eventTokenId, tokenAddress[i], status[i]);
             }
             else {
-                whitelistErc721TokenAddressEvent(eventTokenId, tokenAddress[i], true, freePassStatus[i]);
+                whitelistErc721TokenAddressEvent(eventTokenId, tokenAddress[i], status[i], freePassStatus[i]);
             }
         }
     }
