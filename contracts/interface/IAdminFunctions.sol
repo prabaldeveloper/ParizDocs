@@ -31,4 +31,12 @@ interface IAdminFunctions {
     function isErc20TokenWhitelistedEvent(uint256 eventTokenId, address tokenAddress) external view returns(bool);
     function isErc721TokenWhitelistedEvent(uint256 eventTokenId, address tokenAddress) external view returns (bool);
     function isErc721TokenFreePassEvent(uint256 eventTokenId, address tokenAddress) external view returns (uint256);
+    function whitelistTokens(uint256 eventTokenId, address[] memory tokenAddress,
+        bool[] memory status,
+        //string[] memory tokenType,
+        uint256[] memory freePassStatus
+    ) external ;
+      function whitelistToken(uint256 eventTokenId, address[] memory tokenAddress,
+
+        uint256[] memory freePassStatus) external ;
 }

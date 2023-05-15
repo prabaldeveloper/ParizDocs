@@ -4,6 +4,7 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/IERC721MetadataUpgradeable.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "./utils/AdminStorage.sol";
 import "./access/Ownable.sol";
 import "./interface/IEvents.sol";
@@ -14,6 +15,8 @@ contract AdminFunctions is Ownable, AdminStorage {
 
     using AddressUpgradeable for address;
     using AddressUpgradeable for address payable;
+
+    bytes4 public constant IID_IERC721 = type(IERC721).interfaceId;
 
     ///@param venueContract venueContract address
     event VenueContractUpdated(address venueContract);
@@ -35,20 +38,11 @@ contract AdminFunctions is Ownable, AdminStorage {
 
     ///@param tokenAddress erc-20 token Address
     ///@param status status of the address(true or false)
-    event Erc20TokenUpdated(address indexed tokenAddress, bool status, string name, string symbol, uint256 decimal);
+    event Erc20TokenUpdated(uint256 indexed eventTokenId, address indexed tokenAddress, bool status, string name, string symbol, uint256 decimal);
 
-    event Erc721TokenUpdated(address indexed tokenAddress, bool status, uint256 freePassStatus,
+    event Erc721TokenUpdated(uint256 indexed eventTokenId,address indexed tokenAddress, bool status, uint256 freePassStatus,
     string name, string symbol, uint256 decimal);
 
-    event Erc20TokenUpdatedEvent(uint256 indexed eventTokenId, address indexed tokenAddress, bool status,
-    string name, string symbol, uint256 decimal);
-
-    ///@param tokenAddress erc-721 token address
-    ///@param status status of the address(true or false)
-    ///@param freePassStatus 1 for free pass else 0
-    event Erc721TokenUpdatedEvent(uint256 indexed eventTokenId, address indexed tokenAddress, bool status, uint256 freePassStatus,
-    string name, string symbol, uint256 decimal);
-    
     ///@param percentage deviationPercentage
     event DeviationPercentageUpdated(uint256 percentage);
 
@@ -92,7 +86,7 @@ contract AdminFunctions is Ownable, AdminStorage {
          (string memory name, 
          string memory symbol, 
          uint256 decimal) = getTokenDetails(tokenAddress, "ERC20");
-         emit Erc20TokenUpdated(tokenAddress, status, name, symbol, decimal);
+         emit Erc20TokenUpdated(0, tokenAddress, status, name, symbol, decimal);
     
     }
 
@@ -103,8 +97,39 @@ contract AdminFunctions is Ownable, AdminStorage {
          (string memory name, 
          string memory symbol, 
          uint256 decimal) = getTokenDetails(tokenAddress, "ERC721");
-        emit Erc721TokenUpdated(tokenAddress, status, freePassStatus, name, symbol, decimal);
+        emit Erc721TokenUpdated(0, tokenAddress, status, freePassStatus, name, symbol, decimal);
 
+    }
+
+     function whitelistToken(uint256 eventTokenId, address[] memory tokenAddress,
+        //string[] memory tokenType,
+        uint256[] memory freePassStatus
+    ) public {
+        for(uint256 i = 0; i < tokenAddress.length; i++) {
+             if (!isERC721(tokenAddress[i])) {
+            //if(keccak256(abi.encodePacked((tokenType[i]))) == keccak256(abi.encodePacked(("ERC20")))) {
+                whitelistErc20TokenAddressEvent(eventTokenId, tokenAddress[i], true);
+            }
+            else {
+                whitelistErc721TokenAddressEvent(eventTokenId, tokenAddress[i], true, freePassStatus[i]);
+            }
+        }
+    }
+
+    function whitelistTokens(uint256 eventTokenId, address[] memory tokenAddress,
+        bool[] memory status,
+        //string[] memory tokenType,
+        uint256[] memory freePassStatus
+    ) public {
+        for(uint256 i = 0; i < tokenAddress.length; i++) {
+             if (isERC721(tokenAddress[i])) {
+            //if(keccak256(abi.encodePacked((tokenType[i]))) == keccak256(abi.encodePacked(("ERC20")))) {
+                whitelistErc20TokenAddressEvent(eventTokenId, tokenAddress[i], status[i]);
+            }
+            else {
+                whitelistErc721TokenAddressEvent(eventTokenId, tokenAddress[i], status[i], freePassStatus[i]);
+            }
+        }
     }
 
     ///@notice Add supported Erc-20 tokens for the payment at master level
@@ -113,22 +138,19 @@ contract AdminFunctions is Ownable, AdminStorage {
     ///@param tokenAddress erc-20 token Address
     ///@param status status of the address(true or false)
     function whitelistErc20TokenAddressEvent(uint256 eventTokenId, address tokenAddress, bool status)
-        external
+        internal
     {
          require(IEvents(eventContract)._exists(eventTokenId), "AdminFunctions:TokenId does not exist");
          require(erc20TokenAddress[tokenAddress] == false, "AdminFunctions:Token is already whitelisted");
-         (, , address eventOrganiser,
-         , , ) =  IEvents(eventContract).getEventDetails(eventTokenId);
-         require(msg.sender == eventOrganiser, "AdminFunctions:Invalid Caller");
-         
+        //  (, , address eventOrganiser,
+        //  , , ) =  IEvents(eventContract).getEventDetails(eventTokenId);
+         //require(msg.sender == eventOrganiser, "AdminFunctions:Invalid Caller"); 
          erc20TokenAddressEvent[eventTokenId][tokenAddress] = status;
          (string memory name, 
          string memory symbol, 
          uint256 decimal) = getTokenDetails(tokenAddress, "ERC20");
-         emit Erc20TokenUpdatedEvent(eventTokenId, tokenAddress, status, name, symbol, decimal);
-    
+         emit Erc20TokenUpdated(eventTokenId, tokenAddress, status, name, symbol, decimal);
     }
-
 
     ///@notice Add supported Erc-721 tokens for the payment
     ///@dev Only admin can call
@@ -138,18 +160,18 @@ contract AdminFunctions is Ownable, AdminStorage {
     ///@param status status of the address(true or false)
     ///@param freePassStatus 1 for free pass else 0
     
-    function whitelistErc721TokenAddressEvent(uint256 eventTokenId, address tokenAddress, bool status, uint256 freePassStatus) external {
+    function whitelistErc721TokenAddressEvent(uint256 eventTokenId, address tokenAddress, bool status, uint256 freePassStatus) internal {
         require(IEvents(eventContract)._exists(eventTokenId), "AdminFunctions:TokenId does not exist");
         require(erc721TokenAddress[tokenAddress] == false, "AdminFunctions:Token is already whitelisted");
-        (, , address eventOrganiser,
-        , , ) =  IEvents(eventContract).getEventDetails(eventTokenId);
-        require(msg.sender == eventOrganiser, "AdminFunctions:Invalid Caller");
+        // (, , address eventOrganiser,
+        // , , ) =  IEvents(eventContract).getEventDetails(eventTokenId);
+        // require(msg.sender == eventOrganiser, "AdminFunctions:Invalid Caller");
         erc721TokenAddressEvent[eventTokenId][tokenAddress] = status;
         tokenFreePassStatusEvent[eventTokenId][tokenAddress] = freePassStatus;
          (string memory name, 
          string memory symbol, 
          uint256 decimal) = getTokenDetails(tokenAddress, "ERC721");
-        emit Erc721TokenUpdatedEvent(eventTokenId, tokenAddress, status, freePassStatus, name, symbol, decimal);(eventTokenId, tokenAddress, status, freePassStatus, name, symbol, decimal);
+        emit Erc721TokenUpdated(eventTokenId, tokenAddress, status, freePassStatus, name, symbol, decimal);(eventTokenId, tokenAddress, status, freePassStatus, name, symbol, decimal);
 
     }
     
@@ -483,6 +505,11 @@ contract AdminFunctions is Ownable, AdminStorage {
          uint256 decimal) = getTokenDetails(_baseTokenAddress, "ERC20");
 
         emit BaseTokenUpdated(baseTokenAddress, name, symbol, decimal);
+    }
+
+    // Check whether contract address is ERC721
+    function isERC721(address nftAddress) public view returns (bool) {
+        return IERC721(nftAddress).supportsInterface(IID_IERC721);
     }
 
     uint256[49] private ______gap;
