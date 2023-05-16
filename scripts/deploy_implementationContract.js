@@ -3,7 +3,7 @@ async function main() {
     const accounts = await ethers.provider.listAccounts();
     console.log("Accounts", accounts[0]);
 
-    const eventCall = await hre.ethers.getContractFactory("TicketMasterV1");
+    const eventCall = await hre.ethers.getContractFactory("AdminFunctions");
     const eventCallContract = await eventCall.deploy();
     
     //const eventCallContract = await eventCall.attach("0x1d967fa86A191A710af564dF7fa05D9Ee0E86616");
