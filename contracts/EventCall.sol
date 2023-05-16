@@ -2,6 +2,7 @@
 
 import "./interface/IAdminFunctions.sol";
 import "./interface/IVerifySignature.sol";
+import "./interface/IVenue.sol";
 import "./interface/IEvents.sol";
 import "./access/Ownable.sol";
 import "./utils/EventCallStorage.sol";
@@ -145,5 +146,59 @@ contract EventCall is Ownable, EventCallStorage {
             "ERR_104:Events:Event is started"
         );       
         return _venueTokenId;
+    }
+
+    function calculateRentInternal(uint256 venueTokenId, uint256 noOfBlocks) public view returns (uint256 _estimatedCost, uint256 _platformFees, uint256 _venueRentalCommissionFees) {
+        uint256 rentalFees = IVenue(IAdminFunctions(adminContract).getVenueContract()).getRentalFeesPerBlock(
+            venueTokenId
+        ) * noOfBlocks;
+        uint256 platformFees = (rentalFees * IAdminFunctions(adminContract).getPlatformFeePercent()) / 100;
+        uint256 venueRentalCommission = IAdminFunctions(adminContract).getVenueRentalCommission();
+        uint256 venueRentalCommissionFee = (rentalFees *
+            venueRentalCommission) / 100;
+        uint256 estimatedCost = rentalFees + platformFees;
+        return (estimatedCost, platformFees, venueRentalCommissionFee);
+       
+    }
+
+    function isVeneAvailableInternal(uint256 eventTokenId, uint256 startTime, uint256 endTime, uint256[] memory bookedEvents) public view 
+    returns(bool) {
+        uint256 currentTime = block.timestamp;
+        for (uint256 i = 0; i < bookedEvents.length; i++) {
+            if (bookedEvents[i] == eventTokenId || IAdminFunctions(adminContract).isEventCancelled(bookedEvents[i]) == true) continue;
+            else {
+            (
+                uint256 _startTime,
+                uint256 _endTime, , , ,   
+            ) = IEvents(IAdminFunctions(adminContract).getEventContract()).getEventDetails(bookedEvents[i]);
+                // uint256 bookedStartTime = getInfo[bookedEvents[i]].startTime;
+                // uint256 bookedEndTime = getInfo[bookedEvents[i]].endTime;
+                uint256 bookedStartTime = _startTime;
+                uint256 bookedEndTime = _endTime;
+                // skip for passed event
+                if (currentTime >= bookedEndTime) continue;
+                if (
+                    currentTime >= bookedStartTime &&
+                    currentTime <= bookedEndTime
+                ) {
+                    //check for ongoing event
+                    if (startTime >= bookedEndTime) {
+                        continue;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    //check for future event
+                    if (
+                        endTime <= bookedStartTime || startTime >= bookedEndTime
+                    ) {
+                        continue;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 }

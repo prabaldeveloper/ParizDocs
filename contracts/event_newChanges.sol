@@ -270,14 +270,15 @@ contract EventsV2 is EventAdminRole {
         )
     {
         uint256 noOfBlocks = (eventEndTime - eventStartTime) / blockTime;
-        uint256 rentalFees = IVenue(IAdminFunctions(adminContract).getVenueContract()).getRentalFeesPerBlock(
-            venueTokenId
-        ) * noOfBlocks;
-        uint256 platformFees = (rentalFees * IAdminFunctions(adminContract).getPlatformFeePercent()) / 100;
-        uint256 venueRentalCommission = IAdminFunctions(adminContract).getVenueRentalCommission();
-        uint256 venueRentalCommissionFee = (rentalFees *
-            venueRentalCommission) / 100;
-        uint256 estimatedCost = rentalFees + platformFees;
+        (uint256 estimatedCost, uint256 platformFees, uint256 venueRentalCommissionFee) = IEventCall(IAdminFunctions(adminContract).getEventCallContract()).calculateRentInternal(venueTokenId, noOfBlocks);
+        // uint256 rentalFees = IVenue(IAdminFunctions(adminContract).getVenueContract()).getRentalFeesPerBlock(
+        //     venueTokenId
+        // ) * noOfBlocks;
+        // uint256 platformFees = (rentalFees * IAdminFunctions(adminContract).getPlatformFeePercent()) / 100;
+        // uint256 venueRentalCommission = IAdminFunctions(adminContract).getVenueRentalCommission();
+        // uint256 venueRentalCommissionFee = (rentalFees *
+        //     venueRentalCommission) / 100;
+        // uint256 estimatedCost = rentalFees + platformFees;
         return (estimatedCost, platformFees, venueRentalCommissionFee);
     }
 
@@ -333,36 +334,42 @@ contract EventsV2 is EventAdminRole {
         uint256 timeType
     ) internal isValidTime(startTime, endTime) returns (bool _isAvailable) {
         uint256[] memory bookedEvents = eventsInVenue[venueTokenId];
-        uint256 currentTime = block.timestamp;
-        for (uint256 i = 0; i < bookedEvents.length; i++) {
-            if (bookedEvents[i] == eventTokenId || IAdminFunctions(adminContract).isEventCancelled(bookedEvents[i]) == true) continue;
-            else {
-                uint256 bookedStartTime = getInfo[bookedEvents[i]].startTime;
-                uint256 bookedEndTime = getInfo[bookedEvents[i]].endTime;
-                // skip for passed event
-                if (currentTime >= bookedEndTime) continue;
-                if (
-                    currentTime >= bookedStartTime &&
-                    currentTime <= bookedEndTime
-                ) {
-                    //check for ongoing event
-                    if (startTime >= bookedEndTime) {
-                        continue;
-                    } else {
-                        return false;
-                    }
-                } else {
-                    //check for future event
-                    if (
-                        endTime <= bookedStartTime || startTime >= bookedEndTime
-                    ) {
-                        continue;
-                    } else {
-                        return false;
-                    }
-                }
-            }
-        }
+        // uint256 currentTime = block.timestamp;
+        bool result = IEventCall(IAdminFunctions(adminContract).getEventCallContract()).isVeneAvailableInternal(
+            eventTokenId, startTime, endTime, bookedEvents
+        );
+        // for (uint256 i = 0; i < bookedEvents.length; i++) {
+        //     if (bookedEvents[i] == eventTokenId || IAdminFunctions(adminContract).isEventCancelled(bookedEvents[i]) == true) continue;
+        //     else {
+        //         uint256 bookedStartTime = getInfo[bookedEvents[i]].startTime;
+        //         uint256 bookedEndTime = getInfo[bookedEvents[i]].endTime;
+        //         // skip for passed event
+        //         if (currentTime >= bookedEndTime) continue;
+        //         if (
+        //             currentTime >= bookedStartTime &&
+        //             currentTime <= bookedEndTime
+        //         ) {
+        //             //check for ongoing event
+        //             if (startTime >= bookedEndTime) {
+        //                 continue;
+        //             } else {
+        //                 return false;
+        //             }
+        //         } else {
+        //             //check for future event
+        //             if (
+        //                 endTime <= bookedStartTime || startTime >= bookedEndTime
+        //             ) {
+        //                 continue;
+        //             } else {
+        //                 return false;
+        //             }
+        //         }
+        //     }
+        // }
+        if(result == false)
+        return false;
+
         if (timeType == 0) eventsInVenue[venueTokenId].push(eventTokenId);
         return true;
     }
