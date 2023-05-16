@@ -255,8 +255,26 @@ Event contract 0xb0abe1623c73ee874b94083A349a7C1d00A8B573
 Event Call contract 0x99A63222b1CbBD01d273757182b93AaC3FBcc20c
 Ticket Controller contract 0x6DAF41F02903170e5C67c98719cA79f424814152
 
+------------------------------------------------------------------
 
+Venue proxy 0x2f96423D99deBEcad907dFb825A81d333878CfAD
+Conversion proxy 0xc5b9C6F3F350dBba6DF40f9309eC60adb5C6b98c
+Admin proxy 0x7da6C8597D23331A52bF174C5D24BE66db7DC353
+TicketMaster contract 0xcc30503cAfA93b80298FfC032dD32CB1E5A92941
+Manage Event proxy 0x59C03f2dc36ca9B2B843453667060fb97cC4E82D
+Treasury proxy 0xaFb4dF4bcc8034Ee39971965c00B5fD3963374f7
+Admin Treasury proxy 0xa8B0F6f54Bc8510714eec8f7F09Dd8fcB4C79934   
+VerifySignature 0x4D733335eA2Ee9CD6906aD247FCcF1BB9BE7dDff
+Event contract 0x25b65770D1e976Db9BAEc9D9240F24F171A849Df
+Event Call contract 0x06366d099A3dc53E819Afce21de48BCE5D45EF1b
+Ticket Controller contract 0xf3aff08FCAa5440C4628565aec234D7E0421e2d8
 
-change in eventCall, manageEvent, eventContract
+-------------------------------------------------------------------------
 
-change in eventContract, venueContract,manageEventContract, ticketMasterContract, ticketControllerContract
+Venue proxy 0x2f96423D99deBEcad907dFb825A81d333878CfAD
+Conversion proxy 0xc5b9C6F3F350dBba6DF40f9309eC60adb5C6b98c
+Admin proxy 0x5b41e018d38024C0B006F535D50defFa5eEb7654
+
+Treasury proxy 0xaFb4dF4bcc8034Ee39971965c00B5fD3963374f7
+Admin Treasury proxy 0xa8B0F6f54Bc8510714eec8f7F09Dd8fcB4C79934   
+VerifySignature 0x4D733335eA2Ee9CD6906aD247FCcF1BB9BE7dDff
