@@ -257,6 +257,15 @@ Ticket Controller contract 0x6DAF41F02903170e5C67c98719cA79f424814152
 
 
 
-change in eventCall, manageEvent, eventContract
-
-change in eventContract, venueContract,manageEventContract, ticketMasterContract, ticketControllerContract
+New contracts for testing
+Venue proxy 0x2f96423D99deBEcad907dFb825A81d333878CfAD
+Conversion proxy 0xc5b9C6F3F350dBba6DF40f9309eC60adb5C6b98c
+Admin proxy 0x2C7583602Fe34B6F7a18Abf4a9099a1E58a96AC9
+ticketMaster contract 0xD037144cDf6beCdB96857497f11E7DDbd2070eEd
+Manage Event proxy 0x69dF06AD0de5C79A4EC4a119D360f0914DccD4C7
+Treasury proxy 0xaFb4dF4bcc8034Ee39971965c00B5fD3963374f7
+Admin Treasury proxy 0xa8B0F6f54Bc8510714eec8f7F09Dd8fcB4C79934   
+VerifySignature 0x4D733335eA2Ee9CD6906aD247FCcF1BB9BE7dDff
+Event contract 0x882Eb072fC810ad69D32839F0D5CD6cFb32CAAbc
+Event Call contract 0xbe130468dc757F0F343C72f238D6C7795d85EcB1
+Ticket Controller contract 0xbd4c4c5144995757A923Cd5E76093579b18BA910

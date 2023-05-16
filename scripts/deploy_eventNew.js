@@ -12,7 +12,7 @@ async function main() {
     // const nfttoken = "0x8E3DB4bf0Cbfed015F56643b6030bDB2aA45A06F"
     const manageContract = "0x7a73121a159B34Afe1E8f717E3B5Af8d7cd91598";
     //const eventProxy = "0x71c2592C6424E1822F35841b40F0FE9dbFcEcF64";
-    const adminContract = "0x5DF40949F4063132E7C181A41C1e0edd3D99A7E5";
+    const adminContract = "0x2C7583602Fe34B6F7a18Abf4a9099a1E58a96AC9";
     // const nfttoken = "0x9D6A70e2e1003d0bfc95129D658d1eBa5f08B481";
     //const eventContract = "0xb0abe1623c73ee874b94083A349a7C1d00A8B573";
 
@@ -42,7 +42,7 @@ async function main() {
     // await new Promise(res => setTimeout(res, 6000));
     const eventContract = await hre.ethers.getContractFactory("EventsV2");
     //const eventProxy = await upgrades.deployProxy(eventContract, { initializer: 'initialize' })
-    const eventProxy = await eventContract.attach("0xb0abe1623c73ee874b94083A349a7C1d00A8B573");
+    const eventProxy = await eventContract.attach("0x882Eb072fC810ad69D32839F0D5CD6cFb32CAAbc");
     
     // // const eventProxy = await eventContract.deploy();
     // await eventProxy.deployed();
@@ -53,7 +53,7 @@ async function main() {
 
     // await eventProxy.featured(5, true);
 
-    // await eventProxy.updateAdminContract(adminContract);
+    //await eventProxy.updateAdminContract(adminContract);
     // const EventsV1 = await ethers.getContractFactory("EventsV1")
 
     // const EventsV1Proxy = await EventsV1.deploy();
@@ -76,8 +76,8 @@ async function main() {
     // await treasuryProxy.grantAdmin(manageContract);
     // await manageEventContract.updateAdminContract(adminContract);
 
-    const Token = await ethers.getContractFactory("Token");
-    const TokenProxy = await Token.attach(Trace);
+    // const Token = await ethers.getContractFactory("Token");
+    // const TokenProxy = await Token.attach(Trace);
     // //const TokenProxy = await Token.deploy();
     //console.log(TokenProxy.address);
 
@@ -108,9 +108,9 @@ async function main() {
     
     // console.log("done 1");
 
-    // await eventProxy.add(["Event", "Test Category", "Test Event"], [endTime + 1200, endTime + 10000],
-    //     "QmaNfjaSNCYMHUuwzdvDdKBqnmh9ujpeZgNvcr5Du35ZZJ", 1, fee[0], "1500000000000000000", true, true);
-    // console.log("done 2");
+    await eventProxy.add(["Event", "Test Category", "Test Event"], [endTime + 1200, endTime + 10000],
+        "QmaNfjaSNCYMHUuwzdvDdKBqnmh9ujpeZgNvcr5Du35ZZJ", 1, 0, "1500000000000000000", true, false);
+    console.log("done 2");
 
     // await eventProxy.payEvent(2,fee[0]);
     // let ticketPrice = await conversionProxy.convertFee("0x0000000000000000000000000000000000000000", "20000000000000");

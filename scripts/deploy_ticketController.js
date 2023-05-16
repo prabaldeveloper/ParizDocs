@@ -3,7 +3,7 @@ async function main() {
     const accounts = await ethers.provider.listAccounts();
     console.log("Accounts", accounts[0]);
     
-    const adminContract = "0x5DF40949F4063132E7C181A41C1e0edd3D99A7E5";
+    const adminContract = "0x2C7583602Fe34B6F7a18Abf4a9099a1E58a96AC9";
 
     const ticketController = await hre.ethers.getContractFactory("TicketController");
     const ticketControllerContract = await upgrades.deployProxy(ticketController,  { initializer: 'initialize'});

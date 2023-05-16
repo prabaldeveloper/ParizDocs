@@ -101,56 +101,13 @@ contract AdminFunctions is Ownable, AdminStorage {
 
     }
 
-     function whitelistToken(uint256 eventTokenId, address[] memory tokenAddress,
-        string[] memory tokenType,
-        uint256[] memory freePassStatus
-    ) public {
-        require(msg.sender == eventContract, "Invalid caller");
-        bool[] memory status;
-        for(uint i = 0 ; i < tokenAddress.length; i++) {
-            status[i] = true;
-        }
-        if(tokenAddress[0] == address(0)) {
-            return ;
-        }
-        whitelistTokenInternal(eventTokenId, tokenAddress, status, tokenType, freePassStatus);
-    }
-
-    function updateWhitelistToken(uint256 eventTokenId, address[] memory tokenAddress, bool[] memory status,
-        string[] memory tokenType,
-        uint256[] memory freePassStatus
-    ) public {
-        require(msg.sender == eventContract, "Invalid caller");
-        if(tokenAddress[0] == address(0)) { 
-            return ;
-        }
-        else {
-            whitelistTokenInternal(eventTokenId, tokenAddress, status, tokenType, freePassStatus);
-        }
-    }
-
-    function whitelistTokenInternal(uint256 eventTokenId, address[] memory tokenAddress, bool[] memory status,
-        string[] memory tokenType,
-        uint256[] memory freePassStatus
-    ) internal {
-        for(uint256 i = 0; i < tokenAddress.length; i++) {
-            //  if (!isERC721(tokenAddress[i])) {
-            if(keccak256(abi.encodePacked((tokenType[i]))) == keccak256(abi.encodePacked(("ERC20")))) {
-                whitelistErc20TokenAddressEvent(eventTokenId, tokenAddress[i], status[i]);
-            }
-            else {
-                whitelistErc721TokenAddressEvent(eventTokenId, tokenAddress[i], status[i], freePassStatus[i]);
-            }
-        }
-    }
-
     ///@notice Add supported Erc-20 tokens for the payment at master level
     ///@dev Only admin can call
     ///@dev -  Update the status of paymentToken
     ///@param tokenAddress erc-20 token Address
     ///@param status status of the address(true or false)
     function whitelistErc20TokenAddressEvent(uint256 eventTokenId, address tokenAddress, bool status)
-        internal
+        external onlyOwner
     {
          require(IEvents(eventContract)._exists(eventTokenId), "AdminFunctions:TokenId does not exist");
          require(erc20TokenAddress[tokenAddress] == false, "AdminFunctions:Token is already whitelisted");
@@ -172,7 +129,7 @@ contract AdminFunctions is Ownable, AdminStorage {
     ///@param status status of the address(true or false)
     ///@param freePassStatus 1 for free pass else 0
     
-    function whitelistErc721TokenAddressEvent(uint256 eventTokenId, address tokenAddress, bool status, uint256 freePassStatus) internal {
+    function whitelistErc721TokenAddressEvent(uint256 eventTokenId, address tokenAddress, bool status, uint256 freePassStatus) external onlyOwner {
         require(IEvents(eventContract)._exists(eventTokenId), "AdminFunctions:TokenId does not exist");
         require(erc721TokenAddress[tokenAddress] == false, "AdminFunctions:Token is already whitelisted");
         // (, , address eventOrganiser,
