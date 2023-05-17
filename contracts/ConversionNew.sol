@@ -116,28 +116,28 @@ contract Conversion is Initializable, Ownable {
             if (pairedWith == Trace) {
                 _price = getSwapFromTrace(targetToken);
             } else {
-                _price = getSwapPrice(targetToken, pairedWith); 
+                _price = getSwapPriceFromUsd(targetToken); 
             }
             return _price;
         }
     }
-
-    /**s
+    //Trace - USDC
+    /**
      * @notice To convert Trace to equivalent amount of token.
      */
     function convertFee(
         address targetToken,
         uint256 fee
     ) public view returns (uint256) {
-        uint256 baseTokenPrice = getBaseTokenInUSD();
-        uint256 targetTokenPrice = getTargetTokenInUSD(targetToken);
+        uint256 baseTokenPrice = getBaseTokenInUSD(); // 1TRACE = 2992193.677269201 USDC
+        uint256 targetTokenPrice = getTargetTokenInUSD(targetToken); //  1dai = 2992193.677269201 USDC
         uint256 decimal = 18;
         if (targetToken != address(0)) {
             decimal = IERC20Metadata(targetToken).decimals();
         }
         uint256 totalFee;
         if (decimal == 18) {
-            uint256 baseTokenIn1USD = (baseTokenPrice * 10 ** decimal) /
+            uint256 baseTokenIn1USD = (baseTokenPrice * 10 ** decimal) /   //1Trace = (2992193.677269201/2992193.677269201) dai
                 targetTokenPrice;
             totalFee = (fee * baseTokenIn1USD) / 10 ** decimal;
         }
@@ -149,6 +149,8 @@ contract Conversion is Initializable, Ownable {
         return totalFee;
     }
 
+    // reserve0 is usdc
+    //reserve1 is trace
     function getSwapPrice(
         address tokenA,
         address tokenB
@@ -156,7 +158,7 @@ contract Conversion is Initializable, Ownable {
         (uint256 reserves0, uint256 reserves1, ) = IQuickswapPair(
             factory.getPair(tokenA, tokenB)
         ).getReserves(); 
-        uint256 price = (reserves0 * 10 ** 20) / reserves1;
+        uint256 price = (reserves0 * 10 ** 20) / reserves1; //1 Trace = 2992193.677269201 USDC(should be divided by 8)
         return price;
     }
 
@@ -165,8 +167,40 @@ contract Conversion is Initializable, Ownable {
         (uint256 reserves0, uint256 reserves1, ) = IQuickswapPair(
             factory.getPair(tokenA, Trace)
         ).getReserves();
+        address token0 = IQuickswapPair(
+            factory.getPair(tokenA, Trace)
+        ).token0();
         // get value of token in Trace - reserves0 or reserves1
+        uint256 price;
+        if(token0 == Trace) {
+             price = (reserves0) / reserves1; // 1 Trace = 10 dai
+        }
+        else {
+            price = (reserves1) / reserves0;
+        }
+        uint256 usdTokenPrice = getSwapPrice(USD, Trace); // 1 Trace = 2992193.677269201 USDC
+        
         // Convert the value to USD
+        uint256 toUSD = (usdTokenPrice/price);
+        return toUSD;
+    }
+
+    function getSwapPriceFromUsd(address tokenA) public view returns(uint256) {
+        (uint256 reserves0, uint256 reserves1, ) = IQuickswapPair(
+            factory.getPair(tokenA, USD)
+        ).getReserves();
+        address token0 = IQuickswapPair(
+            factory.getPair(tokenA, USD)
+        ).token0();
+        // get value of token in usd - reserves0 or reserves1
+        uint256 price;
+        if(token0 == USD) {
+             price = (reserves0) / reserves1; // 1 dai = 10 USD
+        }
+        else {
+            price = (reserves1) / reserves0;
+        }
+        return price;
     }
 
     function addToken(address token0, address _priceFeed) public onlyOwner {
