@@ -31,6 +31,7 @@ interface IAdminFunctions {
     function isErc20TokenWhitelistedEvent(uint256 eventTokenId, address tokenAddress) external view returns(bool);
     function isErc721TokenWhitelistedEvent(uint256 eventTokenId, address tokenAddress) external view returns (bool);
     function isErc721TokenFreePassEvent(uint256 eventTokenId, address tokenAddress) external view returns (uint256);
+    function isERC721(address nftAddress) external view returns (bool);
     function updateWhitelistToken(uint256 eventTokenId, address[] memory tokenAddress,
         bool[] memory status,
         string[] memory tokenType,
