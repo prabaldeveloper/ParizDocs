@@ -114,9 +114,9 @@ contract Conversion is Initializable, Ownable {
             return _price;
         } else if (pair != address(0)) { //Quickswap
             if (pairedWith == Trace) {
-                _price = getSwapFromTrace(targetToken);
+                _price = getSwapFromTrace(targetToken); // Should return price in 8 decimals
             } else {
-                _price = getSwapPriceFromUsd(targetToken); 
+                _price = getSwapFromUSD(targetToken); // Should return price in 8 decimals
             }
             return _price;
         }
@@ -185,7 +185,7 @@ contract Conversion is Initializable, Ownable {
         return toUSD;
     }
 
-    function getSwapPriceFromUsd(address tokenA) public view returns(uint256) {
+    function getSwapFromUSD(address tokenA) public view returns(uint256) {
         (uint256 reserves0, uint256 reserves1, ) = IQuickswapPair(
             factory.getPair(tokenA, USD)
         ).getReserves();
@@ -195,7 +195,7 @@ contract Conversion is Initializable, Ownable {
         // get value of token in usd - reserves0 or reserves1
         uint256 price;
         if(token0 == USD) {
-             price = (reserves0) / reserves1; // 1 dai = 10 USD
+            price = (reserves0) / reserves1; // 1 dai = 10 USD
         }
         else {
             price = (reserves1) / reserves0;
