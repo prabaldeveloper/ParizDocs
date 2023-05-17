@@ -57,7 +57,7 @@ contract EventCall is Ownable, EventCallStorage {
     function checkTokenCompatibility(
         address[] memory tokenAddress,
         string[] memory tokenType
-    ) public view returns (bool) {
+    ) public view {
         for (uint i = 0; i < tokenAddress.length; i++) {
             if (
                 keccak256(abi.encodePacked((tokenType[i]))) ==
