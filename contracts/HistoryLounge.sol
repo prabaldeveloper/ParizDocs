@@ -28,14 +28,16 @@ contract HistoryLounge is Ownable {
     }
 
     function addData(
-        string memory userAddress,
-        string memory loungeId,
-        string memory data
+        string[] memory userAddress,
+        string[] memory loungeId,
+        string[] memory data
     ) public {
         require(msg.sender == signerAddress, "Invalid Caller");
-        loungeIdToData[loungeId].push(data);
-        userData[userAddress].push(data);
-        emit DataAdded(userAddress, loungeId, data);
+        for(uint256 i = 0 ; i < userAddress.length; i++) { 
+            loungeIdToData[loungeId[i]].push(data[i]);
+            userData[userAddress[i]].push(data[i]);
+            emit DataAdded(userAddress[i], loungeId[i], data[i]);
+        }
     }
 
     function getLoungeData(string memory loungeId) public view returns(string[] memory) {

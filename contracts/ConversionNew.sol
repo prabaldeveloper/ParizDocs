@@ -172,16 +172,25 @@ contract Conversion is Initializable, Ownable {
         ).token0();
         // get value of token in Trace - reserves0 or reserves1
         uint256 price;
+        uint256 decimals;
+        if(tokenA!= address(0)) {
+            decimals = IERC20Metadata(tokenA).decimals();
+        }
         if(token0 == Trace) {
-             price = (reserves0) / reserves1; // 1 Trace = 10 dai
+             price = (reserves0 * 10 ** decimals) / (reserves1 * 10 **18); // 1 Trace = 10 dai             
+             //1 decimal
         }
         else {
-            price = (reserves1) / reserves0;
+            price = (reserves1 * 10 ** decimals) / (reserves0  * 10 ** 18); 
         }
         uint256 usdTokenPrice = getSwapPrice(USD, Trace); // 1 Trace = 2992193.677269201 USDC
-        
+        //8decimal
+
         // Convert the value to USD
-        uint256 toUSD = (usdTokenPrice/price);
+        uint256 toUSD = usdTokenPrice;
+        if(price != 0) {
+            toUSD = (usdTokenPrice/price);
+        }
         return toUSD;
     }
 
@@ -194,11 +203,16 @@ contract Conversion is Initializable, Ownable {
         ).token0();
         // get value of token in usd - reserves0 or reserves1
         uint256 price;
+        uint256 decimals;
+        if(tokenA != address(0)) {
+            decimals = IERC20Metadata(tokenA).decimals();
+        }
         if(token0 == USD) {
-            price = (reserves0) / reserves1; // 1 dai = 10 USD
+            price = (reserves0 * 10 ** decimals * 10 ** 8) / (reserves1 * 10 ** 6); // 1 dai = 10 USD
+
         }
         else {
-            price = (reserves1) / reserves0;
+            price = (reserves1 * 10 ** decimals * 10 ** 8) / (reserves0 * 10 ** 6);
         }
         return price;
     }

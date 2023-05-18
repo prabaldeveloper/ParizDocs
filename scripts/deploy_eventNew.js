@@ -110,9 +110,9 @@ async function main() {
     
     // console.log("done 1");
 
-    await eventProxy.add(["Event", "Test Category", "Test Event"], [endTime + 1200, endTime + 10000],
-        "QmaNfjaSNCYMHUuwzdvDdKBqnmh9ujpeZgNvcr5Du35ZZJ", 1, 0, "1500000000000000000", true, false);
-    console.log("done 2");
+    // await eventProxy.add(["Event", "Test Category", "Test Event"], [endTime + 1200, endTime + 10000],
+    //     "QmaNfjaSNCYMHUuwzdvDdKBqnmh9ujpeZgNvcr5Du35ZZJ", 1, 0, "1500000000000000000", true, false);
+    // console.log("done 2");
 
     // await eventProxy.payEvent(2,fee[0]);
     // let ticketPrice = await conversionProxy.convertFee("0x0000000000000000000000000000000000000000", "20000000000000");
