@@ -20,12 +20,12 @@ contract VenueStorage {
 
     mapping(uint256 => bool) public isActive;
 
-    address public adminContract;
-
     //
     // This empty reserved space is put in place to allow future versions to add new
     // variables without shifting down storage in the inheritance chain.
     // See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
     //
     uint256[998] private ______gap;
+
+    address public adminContract;
 }

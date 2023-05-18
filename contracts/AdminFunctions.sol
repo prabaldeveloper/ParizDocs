@@ -7,8 +7,8 @@ import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "./utils/AdminStorage.sol";
 import "./access/Ownable.sol";
-import "./interface/IEvents.sol";
 import "./interface/IManageEvent.sol";
+import "./interface/IEvents.sol";
 import "./interface/IConversion.sol";
 
 contract AdminFunctions is Ownable, AdminStorage {
@@ -92,8 +92,8 @@ contract AdminFunctions is Ownable, AdminStorage {
 
     ///@notice Add supported Erc-721 tokens for the payment at master level
     function whitelistErc721TokenAddress(address tokenAddress, bool status, uint256 freePassStatus) external onlyOwner{
-        erc721TokenAddress[tokenAddress] = status;
-        tokenFreePassStatus[tokenAddress] = freePassStatus;
+        erc721TokenAddressMaster[tokenAddress] = status;
+        tokenFreePassStatusMaster[tokenAddress] = freePassStatus;
          (string memory name, 
          string memory symbol, 
          uint256 decimal) = getTokenDetails(tokenAddress, "ERC721");
@@ -131,12 +131,12 @@ contract AdminFunctions is Ownable, AdminStorage {
     
     function whitelistErc721TokenAddressEvent(uint256 eventTokenId, address tokenAddress, bool status, uint256 freePassStatus) external onlyOwner {
         require(IEvents(eventContract)._exists(eventTokenId), "AdminFunctions:TokenId does not exist");
-        require(erc721TokenAddress[tokenAddress] == false, "AdminFunctions:Token is already whitelisted");
+        require(erc721TokenAddressMaster[tokenAddress] == false, "AdminFunctions:Token is already whitelisted");
         // (, , address eventOrganiser,
         // , , ) =  IEvents(eventContract).getEventDetails(eventTokenId);
         // require(msg.sender == eventOrganiser, "AdminFunctions:Invalid Caller");
-        erc721TokenAddressEvent[eventTokenId][tokenAddress] = status;
-        tokenFreePassStatusEvent[eventTokenId][tokenAddress] = freePassStatus;
+        erc721TokenAddress[eventTokenId][tokenAddress] = status;
+        tokenFreePassStatus[eventTokenId][tokenAddress] = freePassStatus;
          (string memory name, 
          string memory symbol, 
          uint256 decimal) = getTokenDetails(tokenAddress, "ERC721");
@@ -381,12 +381,12 @@ contract AdminFunctions is Ownable, AdminStorage {
 
     ///@notice Returns whitelisted status of erc721TokenAddress at master level
     function isErc721TokenWhitelisted(address tokenAddress) public view returns (bool) {
-        return erc721TokenAddress[tokenAddress];
+        return erc721TokenAddressMaster[tokenAddress];
     }
 
     ///@notice Returns freepass status of erc721TokenAddress at master level
     function isErc721TokenFreePass(address tokenAddress) public view returns (uint256) {
-        return tokenFreePassStatus[tokenAddress];
+        return tokenFreePassStatusMaster[tokenAddress];
     }
 
     function isErc20TokenWhitelistedEvent(uint256 eventTokenId, address tokenAddress) public view returns(bool) {
@@ -395,12 +395,12 @@ contract AdminFunctions is Ownable, AdminStorage {
     }
     ///@notice Returns whitelisted status of erc721TokenAddress at event level
     function isErc721TokenWhitelistedEvent(uint256 eventTokenId, address tokenAddress) public view returns (bool) {
-        return erc721TokenAddressEvent[eventTokenId][tokenAddress];
+        return erc721TokenAddress[eventTokenId][tokenAddress];
     }
 
     ///@notice Returns freepass status of erc721TokenAddress at event level
     function isErc721TokenFreePassEvent(uint256 eventTokenId, address tokenAddress) public view returns (uint256) {
-        return tokenFreePassStatusEvent[eventTokenId][tokenAddress];
+        return tokenFreePassStatus[eventTokenId][tokenAddress];
     }
 
     function isUserWhitelisted(address userAddress) public view returns (bool) {
