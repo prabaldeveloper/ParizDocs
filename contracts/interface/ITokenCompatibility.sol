@@ -10,4 +10,9 @@ interface ITokenCompatibility {
     function getSwapPair(
         address _tokenAddress
     ) external view returns (address, address);
+
+    function checkCompatibility(
+        address _tokenAddress,
+        string memory _symbol
+    ) external view returns (bool);
 }

@@ -5,15 +5,9 @@ import "./interface/IAdminFunctions.sol";
 import "./interface/IVerifySignature.sol";
 import "./interface/IVenue.sol";
 import "./interface/IEvents.sol";
+import "./interface/ITokenCompatibility.sol";
 import "./access/Ownable.sol";
 import "./utils/EventCallStorage.sol";
-
-interface ITokenCompatibility {
-    function checkCompatibility(
-        address _tokenAddress,
-        string memory _symbol
-    ) external view returns (bool);
-}
 
 pragma solidity ^0.8.0;
 
