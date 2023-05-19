@@ -1,8 +1,8 @@
 {
   "manifestVersion": "3.2",
   "admin": {
-    "address": "0xf48E3b97C7a04848D65786C5F7eE814D232D2e7c",
-    "txHash": "0xb3e31f64d389a831cb16281ca9baea715667cd10ffa8daf29c800f4910e52e05"
+    "address": "0x23B77B211B8796707010E7A55137D8DbA14e0dF1",
+    "txHash": "0x505ebe77c7057956abf720b94efb69d2353181ebe4f426b8db47207d686b7007"
   },
   "proxies": [
     {
@@ -193,6 +193,11 @@
     {
       "address": "0x3b7a9c6106b9093A716dFed2072b12f364E2B65E",
       "txHash": "0x56a51c323f118f3e60ba68a587bf2bc5ef436bdc300f72287710a8470e854759",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x752797B235986BDBcce3F42D9Fe3ac813cec614C",
+      "txHash": "0x4cc8d678902254d69b82db332575c08115c0295e53335f17cdfbaa4bc1ec33ea",
       "kind": "transparent"
     }
   ],
@@ -5424,6 +5429,112 @@
           "t_uint8": {
             "label": "uint8",
             "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "4bd24565fe673f4f2e2feb3ec1f9eac7d89f1172a57e5e10b15706d837d6a949": {
+      "address": "0x5e3dc584C8EC649b078Aee9D3Fd74bB6268b713D",
+      "txHash": "0xfd5b9b02c31e917df77a159ac023b10df5eda45e06f61e8e9a1b4cc12d9bcea2",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "Ownable",
+            "src": "contracts\\access\\Ownable.sol:22"
+          },
+          {
+            "label": "router",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_contract(IQuickswapRouter)8412",
+            "contract": "TokenCompatibility",
+            "src": "contracts\\TokenCompatibility.sol:19"
+          },
+          {
+            "label": "factory",
+            "offset": 0,
+            "slot": "53",
+            "type": "t_contract(IQuickswapFactory)8376",
+            "contract": "TokenCompatibility",
+            "src": "contracts\\TokenCompatibility.sol:20"
+          },
+          {
+            "label": "priceFeedAddress",
+            "offset": 0,
+            "slot": "54",
+            "type": "t_mapping(t_string_memory_ptr,t_address)",
+            "contract": "TokenCompatibility",
+            "src": "contracts\\TokenCompatibility.sol:24"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IQuickswapFactory)8376": {
+            "label": "contract IQuickswapFactory",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IQuickswapRouter)8412": {
+            "label": "contract IQuickswapRouter",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_string_memory_ptr,t_address)": {
+            "label": "mapping(string => address)",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          },
+          "t_string_storage": {
+            "label": "string"
           }
         }
       }

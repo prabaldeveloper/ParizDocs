@@ -2,25 +2,19 @@
 
 pragma solidity ^0.8.0;
 
+// import "./AdminStorageV1.sol";
 contract AdminStorage {
     //mapping for getting supported erc20TokenAddress at master level
     mapping(address => bool) public erc20TokenAddress;
 
-    //mapping for getting supported erc721TokenAddress at master level
-    mapping(address => bool) public erc721TokenAddress;
-
-    //mapping for getting supported erc20TokenAddress at event level
-    mapping(uint256 => mapping(address => bool)) public erc20TokenAddressEvent;
-
     //mapping for getting supported erc721TokenAddress at event level
-    mapping(uint256 => mapping(address => bool)) public erc721TokenAddressEvent;
-
+    mapping(uint256 => mapping(address => bool)) public erc721TokenAddress;
+   
     //mapping for whiteListed address
     mapping(address => bool) public whiteListedAddress;
 
-    mapping(address => uint256) public tokenFreePassStatus;
-
-    mapping(uint256 => mapping(address => uint256)) public tokenFreePassStatusEvent;
+    //status at event level
+    mapping(uint256 => mapping(address => uint256)) public tokenFreePassStatus;
 
     // Deviation Percentage
     uint256 internal deviationPercentage;
@@ -42,12 +36,6 @@ contract AdminStorage {
 
     //event Contract
     address internal eventContract;
-
-    //event Call Contract
-    address internal eventCallContract;
-
-    //Ticket Controller Contract
-    address internal ticketControllerContract;
 
     //signature Contract
     address internal signatureContract;
@@ -77,6 +65,25 @@ contract AdminStorage {
     // variables without shifting down storage in the inheritance chain.
     // See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps
     //
-    uint256[999] private ______gap;
+    uint256[997] private ______gap;
+
+
+    //event Call Contract
+    address internal eventCallContract;
+
+    //Ticket Controller Contract
+    address internal ticketControllerContract;
+
+    //mapping for getting supported erc721TokenAddress at master level
+    mapping(address => bool) public erc721TokenAddressMaster;
+
+    //mapping for getting supported erc20TokenAddress at event level
+    mapping(uint256 => mapping(address => bool)) public erc20TokenAddressEvent;
+
+    //status at master level
+    mapping(address => uint256) public tokenFreePassStatusMaster;
+
+
+
 
 }

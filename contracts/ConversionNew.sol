@@ -9,16 +9,8 @@ import "../contracts/interface/IQuickswapFactory.sol";
 import "../contracts/interface/IQuickswapPair.sol";
 import "../contracts/interface/IQuickswapRouter.sol";
 import "../contracts/interface/IAggregatorV3Interface.sol";
+import "../contracts/interface/ITokenCompatibility.sol";
 
-interface ITokenCompatibility {
-    function getPriceFeedAddress(
-        string memory symbol
-    ) external view returns (address);
-
-    function getSwapPair(
-        address _tokenAddress
-    ) external view returns (address, address);
-}
 
 contract Conversion is Initializable, Ownable {
     address internal Trace;
@@ -51,12 +43,14 @@ contract Conversion is Initializable, Ownable {
     function adminUpdate(
         address _Trace,
         IQuickswapRouter _router,
-        IQuickswapFactory _factory,
-        address _tokenCompatibility
+        IQuickswapFactory _factory 
     ) public onlyOwner {
         Trace = _Trace;
         router = _router;
         factory = _factory;
+    }
+
+    function addTokenCompatibilityContract(address _tokenCompatibility) public onlyOwner{
         tokenCompatibility = _tokenCompatibility;
     }
 
@@ -137,11 +131,16 @@ contract Conversion is Initializable, Ownable {
         }
         uint256 totalFee;
         if (decimal == 18) {
-            uint256 baseTokenIn1USD = (baseTokenPrice * 10 ** decimal) /   //1Trace = (2992193.677269201/2992193.677269201) dai
+            uint256 baseTokenIn1USD = (baseTokenPrice * 10 ** decimal) / 
                 targetTokenPrice;
             totalFee = (fee * baseTokenIn1USD) / 10 ** decimal;
         }
         if (decimal == 6) {
+            uint256 baseTokenIn1USD = (baseTokenPrice * 10 ** decimal) /
+                targetTokenPrice;
+            totalFee = (fee * baseTokenIn1USD) / 10 ** 18;
+        }
+        if(decimal == 8) {
             uint256 baseTokenIn1USD = (baseTokenPrice * 10 ** decimal) /
                 targetTokenPrice;
             totalFee = (fee * baseTokenIn1USD) / 10 ** 18;

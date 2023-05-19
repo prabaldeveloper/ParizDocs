@@ -439,6 +439,21 @@
       "address": "0xE4f83D8f83ab2B00fB726A431f51e3568428dF6f",
       "txHash": "0xd2f9263b80d28f94a432968fb54c50f70f4a92266f5a6f57030284e967c572ac",
       "kind": "transparent"
+    },
+    {
+      "address": "0xf30245429Bc7fCDf4ae4f35723Ec85CFc1cCbB29",
+      "txHash": "0xb80e72c8d11373c5ec8bd90c8d1ea6a4d92eb36342a33e669ef54d0e768010af",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xBFF162E357AD05d01F57dC33558FB306ac2899D7",
+      "txHash": "0x899769e09a4f8af6dce013bf48237d125f39ad95131fd780ab428c55c37a93ea",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xCfe3FB78359FA72bA1da6b824971E7eD4B1D0FAE",
+      "txHash": "0x4d81ded9cc1c21a5d8a74a4534313ea8b447e9d6340ba27d05b7916baa89d6f7",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -21768,6 +21783,469 @@
           },
           "t_string_storage": {
             "label": "string"
+          }
+        }
+      }
+    },
+    "4bd24565fe673f4f2e2feb3ec1f9eac7d89f1172a57e5e10b15706d837d6a949": {
+      "address": "0xb5286F80070F95726d7b527C935418a0481C5aa1",
+      "txHash": "0x5204a73cafc51f9f1dfb8f4a372c21283141a201da91711a6ce23632146e9877",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "Ownable",
+            "src": "contracts\\access\\Ownable.sol:22"
+          },
+          {
+            "label": "router",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_contract(IQuickswapRouter)8412",
+            "contract": "TokenCompatibility",
+            "src": "contracts\\TokenCompatibility.sol:19"
+          },
+          {
+            "label": "factory",
+            "offset": 0,
+            "slot": "53",
+            "type": "t_contract(IQuickswapFactory)8376",
+            "contract": "TokenCompatibility",
+            "src": "contracts\\TokenCompatibility.sol:20"
+          },
+          {
+            "label": "priceFeedAddress",
+            "offset": 0,
+            "slot": "54",
+            "type": "t_mapping(t_string_memory_ptr,t_address)",
+            "contract": "TokenCompatibility",
+            "src": "contracts\\TokenCompatibility.sol:24"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IQuickswapFactory)8376": {
+            "label": "contract IQuickswapFactory",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IQuickswapRouter)8412": {
+            "label": "contract IQuickswapRouter",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_string_memory_ptr,t_address)": {
+            "label": "mapping(string => address)",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          },
+          "t_string_storage": {
+            "label": "string"
+          }
+        }
+      }
+    },
+    "03a70812ee4a1070f749edc1cf4b9424d231510e13a85ce108393a19472b7508": {
+      "address": "0x04bcAbf333f68436E2679c769865b16D1705235d",
+      "txHash": "0xe5d0f69dbab0b050d8809883f1d9eb3b71c3ef43321ffe1a44d694ffc762216a",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "Ownable",
+            "src": "contracts\\access\\Ownable.sol:22"
+          },
+          {
+            "label": "Trace",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_address",
+            "contract": "Conversion",
+            "src": "contracts\\ConversionNew.sol:16"
+          },
+          {
+            "label": "tokenCompatibility",
+            "offset": 0,
+            "slot": "53",
+            "type": "t_address",
+            "contract": "Conversion",
+            "src": "contracts\\ConversionNew.sol:19"
+          },
+          {
+            "label": "router",
+            "offset": 0,
+            "slot": "54",
+            "type": "t_contract(IQuickswapRouter)8412",
+            "contract": "Conversion",
+            "src": "contracts\\ConversionNew.sol:21"
+          },
+          {
+            "label": "factory",
+            "offset": 0,
+            "slot": "55",
+            "type": "t_contract(IQuickswapFactory)8376",
+            "contract": "Conversion",
+            "src": "contracts\\ConversionNew.sol:22"
+          },
+          {
+            "label": "priceFeed",
+            "offset": 0,
+            "slot": "56",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_address))",
+            "contract": "Conversion",
+            "src": "contracts\\ConversionNew.sol:24"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IQuickswapFactory)8376": {
+            "label": "contract IQuickswapFactory",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IQuickswapRouter)8412": {
+            "label": "contract IQuickswapRouter",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_address)": {
+            "label": "mapping(address => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_address))": {
+            "label": "mapping(address => mapping(address => address))",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "b75192b18356744daf3aaa56e23593e47b7cecd2c97a6c49d5eec6cae9dd6e73": {
+      "address": "0x657C7dd33b471dFE3676CC0c4B6112536875B273",
+      "txHash": "0x971a5f4705f2690a04dbb777c6348070cb20b2dd2bb9b2050b937b33166d8eaf",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "Ownable",
+            "src": "contracts\\access\\Ownable.sol:22"
+          },
+          {
+            "label": "Trace",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_address",
+            "contract": "Conversion",
+            "src": "contracts\\ConversionNew.sol:16"
+          },
+          {
+            "label": "tokenCompatibility",
+            "offset": 0,
+            "slot": "53",
+            "type": "t_address",
+            "contract": "Conversion",
+            "src": "contracts\\ConversionNew.sol:19"
+          },
+          {
+            "label": "router",
+            "offset": 0,
+            "slot": "54",
+            "type": "t_contract(IQuickswapRouter)1652",
+            "contract": "Conversion",
+            "src": "contracts\\ConversionNew.sol:21"
+          },
+          {
+            "label": "factory",
+            "offset": 0,
+            "slot": "55",
+            "type": "t_contract(IQuickswapFactory)1616",
+            "contract": "Conversion",
+            "src": "contracts\\ConversionNew.sol:22"
+          },
+          {
+            "label": "priceFeed",
+            "offset": 0,
+            "slot": "56",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_address))",
+            "contract": "Conversion",
+            "src": "contracts\\ConversionNew.sol:24"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IQuickswapFactory)1616": {
+            "label": "contract IQuickswapFactory",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IQuickswapRouter)1652": {
+            "label": "contract IQuickswapRouter",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_address)": {
+            "label": "mapping(address => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_address))": {
+            "label": "mapping(address => mapping(address => address))",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "b39c31bc464bd91dce1b5a8c4daa733d5ffc4702a77d7713577f28b193fdb4e3": {
+      "address": "0x858b2AA724465417C885561A30fB9C6080228aD6",
+      "txHash": "0xedffde313336928a8afce0077842cf2dce482977b7c23a63f02629aa65f40a0a",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "Ownable",
+            "src": "contracts\\access\\Ownable.sol:22"
+          },
+          {
+            "label": "Trace",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_address",
+            "contract": "Conversion",
+            "src": "contracts\\ConversionNew.sol:16"
+          },
+          {
+            "label": "tokenCompatibility",
+            "offset": 0,
+            "slot": "53",
+            "type": "t_address",
+            "contract": "Conversion",
+            "src": "contracts\\ConversionNew.sol:19"
+          },
+          {
+            "label": "router",
+            "offset": 0,
+            "slot": "54",
+            "type": "t_contract(IQuickswapRouter)1679",
+            "contract": "Conversion",
+            "src": "contracts\\ConversionNew.sol:21"
+          },
+          {
+            "label": "factory",
+            "offset": 0,
+            "slot": "55",
+            "type": "t_contract(IQuickswapFactory)1643",
+            "contract": "Conversion",
+            "src": "contracts\\ConversionNew.sol:22"
+          },
+          {
+            "label": "priceFeed",
+            "offset": 0,
+            "slot": "56",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_address))",
+            "contract": "Conversion",
+            "src": "contracts\\ConversionNew.sol:24"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IQuickswapFactory)1643": {
+            "label": "contract IQuickswapFactory",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IQuickswapRouter)1679": {
+            "label": "contract IQuickswapRouter",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_address)": {
+            "label": "mapping(address => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_address))": {
+            "label": "mapping(address => mapping(address => address))",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
           }
         }
       }

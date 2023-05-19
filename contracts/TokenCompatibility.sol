@@ -80,6 +80,8 @@ contract TokenCompatibility is Ownable {
 
         if(isChainlinkRegistered || isPoolexists)
             return true;
+        else 
+            return false;
     }
 
     // Check whether contract address is ERC721
