@@ -124,7 +124,7 @@ contract Conversion is Initializable, Ownable {
         uint256 fee
     ) public view returns (uint256) {
         uint256 baseTokenPrice = getBaseTokenInUSD(); // 1TRACE = 2992193.677269201 USDC
-        uint256 targetTokenPrice = getTargetTokenInUSD(targetToken); //  1dai = 2992193.677269201 USDC
+        uint256 targetTokenPrice = getTargetTokenInUSD(targetToken); //  1Test8 = 2992193.677269201 USDC
         uint256 decimal = 18;
         if (targetToken != address(0)) {
             decimal = IERC20Metadata(targetToken).decimals();
@@ -172,24 +172,44 @@ contract Conversion is Initializable, Ownable {
         // get value of token in Trace - reserves0 or reserves1
         uint256 price;
         uint256 decimals;
+        uint256 usdTokenPrice = getSwapPrice(USD, Trace);   // 1TRACE = 2992193.677269201 USDC
+        uint256 toUSD = usdTokenPrice;
         if(tokenA!= address(0)) {
             decimals = IERC20Metadata(tokenA).decimals();
         }
         if(token0 == Trace) {
-             price = (reserves0 * 10 ** decimals) / (reserves1 * 10 **18); // 1 Trace = 10 dai             
-             //1 decimal
+            if(decimals == 18) {
+                price = (reserves1 * 10 ** 36) / (reserves0 * 10 ** 18); // 1TRACE = 10 Test8
+                // Convert the value to USD
+                if(price != 0) {
+                    toUSD = (usdTokenPrice * 10 ** 18 / price); //1Test8 = 13 usdc
+                }
+            }
+            else if(decimals == 8 || decimals == 6) {
+                price = (reserves1 * 10 ** 18 ) / (reserves0 * 10 ** decimals); // 1 Trace = 10 dai    00.225         
+                if(price != 0) {
+                    toUSD = (usdTokenPrice/price);
+                }
+            }
         }
         else {
-            price = (reserves1 * 10 ** decimals) / (reserves0  * 10 ** 18); 
+            if(decimals == 18) {
+                price = (reserves0 * 10 ** 36) / (reserves1  * 10 ** 18); 
+                // Convert the value to USD
+                if(price != 0) {
+                    toUSD = (usdTokenPrice * 10 ** 18 / price);
+                }
+            }
+            else if(decimals == 8 || decimals == 6) {
+                 price = (reserves0 * 10 ** 18 ) / (reserves1 * 10 ** decimals); // 1 Trace = 10 dai    00.225         
+                 if(price != 0) {
+                    toUSD = (usdTokenPrice/price);
+                }
+            }
         }
-        uint256 usdTokenPrice = getSwapPrice(USD, Trace); // 1 Trace = 2992193.677269201 USDC
+         // 1 Trace = 2992193.677269201 USDC
         //8decimal
-
-        // Convert the value to USD
-        uint256 toUSD = usdTokenPrice;
-        if(price != 0) {
-            toUSD = (usdTokenPrice/price);
-        }
+        
         return toUSD;
     }
 
