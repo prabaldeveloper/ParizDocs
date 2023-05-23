@@ -2,7 +2,7 @@ const { ethers } = require("hardhat")
 async function main() {
     const accounts = await ethers.provider.listAccounts();
     console.log("Accounts", accounts[0]);
-    const adminContract = "0x5DF40949F4063132E7C181A41C1e0edd3D99A7E5";
+    const adminContract = "0x0C4FF6a699e14504C976d5a25Ce56cD62aF32D12";
     const venue = await ethers.getContractFactory("Venue");
     const venueContract = await upgrades.deployProxy(venue, { initializer: 'initialize' })
     //const venueContract = await venue.deploy();

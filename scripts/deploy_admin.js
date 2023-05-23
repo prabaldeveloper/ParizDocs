@@ -14,37 +14,37 @@ async function main() {
     const Trace = "0xD028C2a5156069c7eFaeA40acCA7d9Da6f219A5f";
     const USDT = "";
 
-    const venueAddress = "0x2f96423D99deBEcad907dFb825A81d333878CfAD"
-    const conversionAddress = "0xc5b9C6F3F350dBba6DF40f9309eC60adb5C6b98c"
-    const ticketMasterAddress = "0xcc30503cAfA93b80298FfC032dD32CB1E5A92941"
+    const venueAddress = "0xF130d5eA1c7b1eb36061dEF9d1AF7Bc211280b43"
+    const conversionAddress = "0xE57e76f1113126EC278AC699e1B57eedD9fE7f30"
+    const ticketMasterAddress = "0xa04E8Ac2c8f873c4baECE9500526B30d3A56A351"
     const treasuryProxy = "0xaFb4dF4bcc8034Ee39971965c00B5fD3963374f7"
     const adminTreasuryProxy = "0xa8B0F6f54Bc8510714eec8f7F09Dd8fcB4C79934"
-    const manageEventContract = "0x59C03f2dc36ca9B2B843453667060fb97cC4E82D"
+    const manageEventContract = "0xD4388Fa66c2Be74a28B4Eb3f757B6067d2Ca6CE9"
     const signContract ="0x4D733335eA2Ee9CD6906aD247FCcF1BB9BE7dDff"
-    const eventContract = "0x25b65770D1e976Db9BAEc9D9240F24F171A849Df"
-    const eventCallContract = "0x06366d099A3dc53E819Afce21de48BCE5D45EF1b";
-    const ticketControllerContract = "0xf3aff08FCAa5440C4628565aec234D7E0421e2d8";
+    const eventContract = "0xf0421A5CE166DEA75A0Eef770a56fc7a989932ce"
+    const eventCallContract = "0x21277fFE24A413828273aec9785903EDE902E74A";
+    const ticketControllerContract = "0x395CC3B4E0fDCC104aC4Cde02Fea4874a5960429";
 
     //// ************ DEPLOY ADMIN **************/////
 
     const admin = await ethers.getContractFactory("AdminFunctions");
     //const adminContract = await upgrades.deployProxy(admin, { initializer: 'initialize' })
     //const adminContract = await admin.deploy();
-    const adminContract = admin.attach("0x5b41e018d38024C0B006F535D50defFa5eEb7654");
+    const adminContract = admin.attach("0x0C4FF6a699e14504C976d5a25Ce56cD62aF32D12");
     // await new Promise(res => setTimeout(res, 2000));
     await adminContract.deployed();
     console.log("Admin proxy", adminContract.address);
 
     // await adminContract.updateDeviation(5);
 
-    // // // // await new Promise(res => setTimeout(res, 3000));
+    // // // await new Promise(res => setTimeout(res, 3000));
     // await adminContract.whitelistErc20TokenAddress(MATIC, true);
 
     // await adminContract.whitelistErc20TokenAddress(Trace, true);
     
     // await adminContract.whitelistErc20TokenAddress(USDC, true);
 
-    // await adminContract.whitelistErc20TokenAddress(USDT, true);
+    // // await adminContract.whitelistErc20TokenAddress(USDT, true);
 
     // await adminContract.updateBaseToken(Trace);
 
@@ -62,8 +62,8 @@ async function main() {
     // await adminContract.whitelistErc721TokenAddress(1, "0x60f969Dd2c310C65E13bB9c9FEC75dc4F9144576", true, 1);;
 
     // await adminContract.updateEventStatus(true);
-    // // // await new Promise(res => setTimeout(res, 2000));
-    // // await new Promise(res => setTimeout(res, 3000));
+    // // // // await new Promise(res => setTimeout(res, 2000));
+    // // // await new Promise(res => setTimeout(res, 3000));
 
     // await adminContract.updatePlatformFee(5);
 
@@ -71,33 +71,33 @@ async function main() {
 
     // await new Promise(res => setTimeout(res, 2000));
     // await adminContract.updateVenueRentalCommission(10);
-    // // await new Promise(res => setTimeout(res, 3000));
+    // await new Promise(res => setTimeout(res, 3000));
     // await adminContract.updateTicketCommission(10);
     // // // await new Promise(res => setTimeout(res, 3000));
     // await adminContract.updateSignerAddress("0x8B0dE5873A816661B95a98C5Fc81fB6ae68Ae034");
 
 
     // await new Promise(res => setTimeout(res, 2000));
-    // await adminContract.updateConversionContract(conversionAddress);
+    await adminContract.updateConversionContract(conversionAddress);
 
     await adminContract.updateEventContract(eventContract);
 
     // // await new Promise(res => setTimeout(res, 2000));
-    // await adminContract.updateVenueContract(venueAddress);
+    await adminContract.updateVenueContract(venueAddress);
 
-    // // // // await new Promise(res => setTimeout(res, 1000));
+    // // // // // await new Promise(res => setTimeout(res, 1000));
 
-    // await adminContract.updateSignatureContract(signContract);
-
-    // // // // // // await new Promise(res => setTimeout(res, 1000));
-    
-
-    // await new Promise(res => setTimeout(res, 5000));
-
-    // // // // // // // // await new Promise(res => setTimeout(res, 1000));
-    // await adminContract.updateWhitelist([accounts[0]], [true]);
+    await adminContract.updateSignatureContract(signContract);
 
     // // // // // // // await new Promise(res => setTimeout(res, 1000));
+    
+
+    // // await new Promise(res => setTimeout(res, 5000));
+
+    // // // // // // // // // await new Promise(res => setTimeout(res, 1000));
+    // // await adminContract.updateWhitelist([accounts[0]], [true]);
+
+    // // // // // // // // await new Promise(res => setTimeout(res, 1000));
     await adminContract.updateTicketMasterContract(ticketMasterAddress);
     // // // await new Promise(res => setTimeout(res, 5000));
 

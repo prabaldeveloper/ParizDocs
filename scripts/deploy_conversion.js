@@ -24,34 +24,34 @@ async function main() {
     const router = "0x8954AfA98594b838bda56FE4C12a09D7739D179b"
     const factory = "0x5757371414417b8c6caad45baef941abc7d3ab32"
 
-    const tokenCompatibilityContract = "0xf30245429Bc7fCDf4ae4f35723Ec85CFc1cCbB29";
+    const tokenCompatibilityContract = "0x3dfba822644bD55c8275Dfe42b2b69646182dB24";
 
     //// ************ DEPLOY CONVERSION **************/////
 
     const Conversion = await ethers.getContractFactory("Conversion");
-    //const conversion = await upgrades.deployProxy(Conversion, { initializer: 'initialize' })
-    const conversion = await Conversion.attach("0xCfe3FB78359FA72bA1da6b824971E7eD4B1D0FAE");
+    const conversion = await upgrades.deployProxy(Conversion, { initializer: 'initialize' })
+    //const conversion = await Conversion.attach("0xCfe3FB78359FA72bA1da6b824971E7eD4B1D0FAE");
     // await new Promise(res => setTimeout(res, 5000));
     console.log("conversion proxy", conversion.address);
 
     //// ************ ADD PRICE FEED ADDRESS **************/////
 
     // await new Promise(res => setTimeout(res, 5000));
-    // await conversion.addToken(MATIC, PRICE_MATIC_USD);
-
-    // // await new Promise(res => setTimeout(res, 5000));
-    // await conversion.addToken(USDC, PRICE_USDC_USD);
-
-    // // await new Promise(res => setTimeout(res, 5000));
-    // await conversion.addToken(USDT, PRICE_USDT_USD);
+    await conversion.addToken(MATIC, PRICE_MATIC_USD);
 
     // await new Promise(res => setTimeout(res, 5000));
-    // await conversion.addToken(Trace, router);
+    await conversion.addToken(USDC, PRICE_USDC_USD);
 
-    // // await new Promise(res => setTimeout(res, 5000));
-    // await conversion.adminUpdate(Trace, router, factory);
+    // await new Promise(res => setTimeout(res, 5000));
+    await conversion.addToken(USDT, PRICE_USDT_USD);
 
-    // await conversion.addTokenCompatibilityContract(tokenCompatibilityContract);
+    await new Promise(res => setTimeout(res, 5000));
+    await conversion.addToken(Trace, router);
+
+    await new Promise(res => setTimeout(res, 5000));
+    await conversion.adminUpdate(Trace, router, factory);
+
+    await conversion.addTokenCompatibilityContract(tokenCompatibilityContract);
     // await new Promise(res => setTimeout(res, 5000));
 
     // await conversion.getERC20Details(MATIC);
@@ -103,13 +103,13 @@ async function main() {
 
     // console.log("From Trace to Btc", await conversion.convertFee(BTC, "1000000000000000000"));
 
-    console.log("From Trace to 8 decimal token", await conversion.convertFee(Test8, "1000000000000000000"));
+    // console.log("From Trace to 8 decimal token", await conversion.convertFee(Test8, "1000000000000000000"));
     
-    console.log("From Trace to 18 decimal token", await conversion.convertFee(Test18, "1000000000000000000"));
+    // console.log("From Trace to 18 decimal token", await conversion.convertFee(Test18, "1000000000000000000"));
 
-    console.log("From Trace to 18 decimal token paired with usdc", await conversion.convertFee(Testusdc18, "1000000000000000000"));
+    // console.log("From Trace to 18 decimal token paired with usdc", await conversion.convertFee(Testusdc18, "1000000000000000000"));
 
-    console.log("From Trace to 8 decimal token paired with usdc", await conversion.convertFee(Testusdc8, "1000000000000000000"));
+    // console.log("From Trace to 8 decimal token paired with usdc", await conversion.convertFee(Testusdc8, "1000000000000000000"));
 
 }
 

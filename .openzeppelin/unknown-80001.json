@@ -28206,6 +28206,97 @@
           }
         }
       }
+    },
+    "8b5785f71287e7ba6c8435046b95b66ad746e58a9392e51b0c55ac470cbda1ac": {
+      "address": "0x90037a4B4Ae7a4F00eB804d365bceBb329348C39",
+      "txHash": "0xaac20fa4b4b056147f3fbf20809114184c5857556d3b3a3a3e9967006cdba792",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "Ownable",
+            "src": "contracts\\access\\Ownable.sol:22"
+          },
+          {
+            "label": "adminContract",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_address",
+            "contract": "EventCallStorage",
+            "src": "contracts\\utils\\EventCallStorage.sol:7"
+          },
+          {
+            "label": "tokenCompatibility",
+            "offset": 0,
+            "slot": "53",
+            "type": "t_address",
+            "contract": "EventCallStorage",
+            "src": "contracts\\utils\\EventCallStorage.sol:9"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "54",
+            "type": "t_array(t_uint256)999_storage",
+            "contract": "EventCallStorage",
+            "src": "contracts\\utils\\EventCallStorage.sol:16"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)999_storage": {
+            "label": "uint256[999]",
+            "numberOfBytes": "31968"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
     }
   }
 }

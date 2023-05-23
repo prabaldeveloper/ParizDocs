@@ -58,11 +58,11 @@ contract EventCall is Ownable, EventCallStorage {
                 keccak256(abi.encodePacked(("ERC721")))
             ) {
                 require(
-                    IAdminFunctions(adminContract).isERC721(tokenAddress[i]) !=
+                    IAdminFunctions(adminContract).isERC721(tokenAddress[i]) ==
                         true,
                     "Invalid token Type ERC721"
                 );
-                return true;
+                //return true;
             }
             if (
                 keccak256(abi.encodePacked((tokenType[i]))) ==
@@ -75,9 +75,29 @@ contract EventCall is Ownable, EventCallStorage {
                     ) == true,
                     "Invalid token Type ERC20"
                 );
-                return true;
+                //return true;
             }
         }
+        return true;
+    }
+
+    function checkCompatibility(address[] memory tokenAddress) public view returns(bool) {
+        for(uint256 i = 0 ; i <  tokenAddress.length; i++) {
+            bool value = ITokenCompatibility(tokenCompatibility)
+                .checkCompatibility(
+                    tokenAddress[i],
+                    IERC20Metadata(tokenAddress[i]).symbol()
+                );
+                if(value == false) {
+                    return false;
+                } 
+        }
+        return true;
+    }
+
+    // Check whether contract address is ERC721
+    function isERC721(address nftAddress) public view returns (bool) {
+        return (ITokenCompatibility(tokenCompatibility).isERC721(nftAddress));
     }
 
     ///@notice Called by event organiser to mark the event status as completed

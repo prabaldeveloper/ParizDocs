@@ -4,17 +4,17 @@ async function main() {
     console.log("Accounts", accounts[0]);
     const MATIC = "0x0000000000000000000000000000000000000000";
     //mumbai
-    const adminContract = "0x7da6C8597D23331A52bF174C5D24BE66db7DC353";
+    const adminContract = "0x0C4FF6a699e14504C976d5a25Ce56cD62aF32D12";
     
     const manageEvent = await ethers.getContractFactory("ManageEventV1");
-    //const manageEventContract = await upgrades.deployProxy(manageEvent,{initializer: 'initialize'});
+    const manageEventContract = await upgrades.deployProxy(manageEvent,{initializer: 'initialize'});
     //const manageEventContract = await manageEvent.deploy();
-    const manageEventContract = await manageEvent.attach("0x59C03f2dc36ca9B2B843453667060fb97cC4E82D");
+    //const manageEventContract = await manageEvent.attach("0x59C03f2dc36ca9B2B843453667060fb97cC4E82D");
     //await manageEventContract.deployed();
     // await new Promise(res => setTimeout(res, 1000));
     console.log("Manage Event proxy", manageEventContract.address);
 
-    //await manageEventContract.updateAdminContract(adminContract);
+    await manageEventContract.updateAdminContract(adminContract);
     // await new Promise(res => setTimeout(res, 1000));
 
     // await manageEventContract.deleteAgenda(1,1)
@@ -23,13 +23,13 @@ async function main() {
     // const eventProxy = await eventContract.attach(eventAddress);
 
     // AddAgenda
-    await manageEventContract.addAgenda(1, 1683892220, 1683892820, "Meeting", ["Prabal"], [accounts[0]], 2);
-    await new Promise(res => setTimeout(res, 12000));
+    // await manageEventContract.addAgenda(1, 1683892220, 1683892820, "Meeting", ["Prabal"], [accounts[0]], 2);
+    // await new Promise(res => setTimeout(res, 12000));
     
-    console.log("here");
+    // console.log("here");
 
-    await manageEventContract.updateAgenda(1,0,1683892220, 1683892800, "Meeting", ["Prabal"], [accounts[0]], 2);
-    // await manageEventContract.addAgenda(3, 1661962535, 1661962635, "Meeting", ["Prabal"], [accounts[0]], 2);
+    // await manageEventContract.updateAgenda(1,0,1683892220, 1683892800, "Meeting", ["Prabal"], [accounts[0]], 2);
+    // // await manageEventContract.addAgenda(3, 1661962535, 1661962635, "Meeting", ["Prabal"], [accounts[0]], 2);
     // console.log("1");
     //await manageEventContract.addAgenda(3, 1661962505, 1661962935, "Meeting", ["Prabal"], [accounts[0]], 2)
     // console.log("2");
@@ -39,8 +39,8 @@ async function main() {
     // console.log("3");
     await new Promise(res => setTimeout(res, 12000));
 
-    await manageEventContract.startEvent(1);
-    console.log("Event started");
+    // await manageEventContract.startEvent(1);
+    // console.log("Event started");
 
     // //Cancel Event
     // await manageEventContract.cancelEvent(2);

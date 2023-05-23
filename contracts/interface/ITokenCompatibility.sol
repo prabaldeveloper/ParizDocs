@@ -15,4 +15,6 @@ interface ITokenCompatibility {
         address _tokenAddress,
         string memory _symbol
     ) external view returns (bool);
+
+    function isERC721(address nftAddress) external view returns (bool);
 }

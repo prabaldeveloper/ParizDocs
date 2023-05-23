@@ -9,7 +9,7 @@ async function main() {
 
     const tokenCompatibility = await ethers.getContractFactory("TokenCompatibility");
     //const tokenCompatibilityContract = await upgrades.deployProxy(tokenCompatibility, { initializer: 'initialize' });
-    const tokenCompatibilityContract = tokenCompatibility.attach("0xf30245429Bc7fCDf4ae4f35723Ec85CFc1cCbB29")
+    const tokenCompatibilityContract = tokenCompatibility.attach("0x3dfba822644bD55c8275Dfe42b2b69646182dB24")
     await new Promise(res => setTimeout(res, 2000));
     //await tokenCompatibilityContract.deployed();
     console.log("TokenCompatibility Contract", tokenCompatibilityContract.address);
@@ -21,7 +21,7 @@ async function main() {
     // //await new Promise(res => setTimeout(res, 2000));
 
     // await tokenCompatibilityContract.addPriceFeedAddress("ETH","0x0715A7794a1dc8e42615F059dD6e406A6594651A");
-    // //await new Promise(res => setTimeout(res, 2000));
+    //await new Promise(res => setTimeout(res, 2000));
 
     // await tokenCompatibilityContract.addPriceFeedAddress("EUR","0x7d7356bF6Ee5CDeC22B216581E48eCC700D0497A");
     // await new Promise(res => setTimeout(res, 2000));
@@ -46,23 +46,23 @@ async function main() {
 
     //await tokenCompatibilityContract.adminUpdate(router, factory);
 
-    console.log("Read Functions");
+    // console.log("Read Functions");
 
-    console.log("BTC", await tokenCompatibilityContract.getPriceFeedAddress("BTC"));
+    // console.log("BTC", await tokenCompatibilityContract.getPriceFeedAddress("BTC"));
 
-    console.log("DAI", await tokenCompatibilityContract.getPriceFeedAddress("DAI"));
+    // console.log("DAI", await tokenCompatibilityContract.getPriceFeedAddress("DAI"));
 
-    console.log("ETH", await tokenCompatibilityContract.getPriceFeedAddress("ETH"));
+    // console.log("ETH", await tokenCompatibilityContract.getPriceFeedAddress("ETH"));
 
-    //check compatibility
-    console.log(await tokenCompatibilityContract.checkCompatibility("0x2a87119C747BFDC2C724837b873919e83655f68f", "BTC"));
+    // //check compatibility
+    console.log(await tokenCompatibilityContract.checkCompatibility("0xAB36a4c46D93F385082C40BE85fE1458480a02d7", "BTC"));
 
-    // 8 decimal token
+    // // 8 decimal token
     console.log(await tokenCompatibilityContract.checkCompatibility("0x4b020734168D4e23f12fba8250Aa957Cb16eFb8A", "Test8"));
 
-    console.log(await tokenCompatibilityContract.checkCompatibility("0xBDa3c5ec872Ec75D09957d8a6A8F6df4F8C1D435", "Test18"));
+    // console.log(await tokenCompatibilityContract.checkCompatibility("0xBDa3c5ec872Ec75D09957d8a6A8F6df4F8C1D435", "Test18"));
 
-    console.log(await tokenCompatibilityContract.isERC721("0x2a87119C747BFDC2C724837b873919e83655f68f"));
+    // console.log(await tokenCompatibilityContract.isERC721("0x2a87119C747BFDC2C724837b873919e83655f68f"));
 
 
 }
