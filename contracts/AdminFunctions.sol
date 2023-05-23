@@ -106,14 +106,15 @@ contract AdminFunctions is Ownable, AdminStorage {
         uint256[] memory freePassStatus
     ) public {
         require(msg.sender == eventContract, "Invalid caller");
-        bool[] memory status;
-        for(uint i = 0 ; i < tokenAddress.length; i++) {
+        uint size = tokenAddress.length;
+        bool[] memory status = new bool[](size);
+        
+        for(uint256 i = 0 ; i < tokenAddress.length; i++) {
             status[i] = true;
         }
-        if(tokenAddress[0] == address(0)) {
-            return ;
+        if(tokenAddress[0] != address(0)) {
+            whitelistTokenInternal(eventTokenId, tokenAddress, status, tokenType, freePassStatus);
         }
-        whitelistTokenInternal(eventTokenId, tokenAddress, status, tokenType, freePassStatus);
     }
 
     function updateWhitelistToken(uint256 eventTokenId, address[] memory tokenAddress, bool[] memory status,

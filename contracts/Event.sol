@@ -264,15 +264,16 @@ contract EventsV2 is EventAdminRole {
             isVenueAvailable(_tokenId, venueTokenId, time[0], time[1], 0),
             "ERR_105:Events:Venue is not available"
         );
-        IEventCall(IAdminFunctions(adminContract).getEventCallContract())
-            .checkTokenCompatibility(tokenAddress, tokenType);
-
-        IAdminFunctions(adminContract).whitelistToken(
-            _tokenId,
-            tokenAddress,
-            tokenType,
-            freePassStatus
-        );
+        if(tokenAddress[0] != address(0)) {
+            IEventCall(IAdminFunctions(adminContract).getEventCallContract())
+                .checkTokenCompatibility(tokenAddress, tokenType);
+            IAdminFunctions(adminContract).whitelistToken(
+                _tokenId,
+                tokenAddress,
+                tokenType,
+                freePassStatus
+            );
+        }
         if (payNow == true) {
             checkVenueFees(
                 venueTokenId,

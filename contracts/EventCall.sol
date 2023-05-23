@@ -51,7 +51,7 @@ contract EventCall is Ownable, EventCallStorage {
     function checkTokenCompatibility(
         address[] memory tokenAddress,
         string[] memory tokenType
-    ) public view {
+    ) public view returns(bool) {
         for (uint i = 0; i < tokenAddress.length; i++) {
             if (
                 keccak256(abi.encodePacked((tokenType[i]))) ==
@@ -62,6 +62,7 @@ contract EventCall is Ownable, EventCallStorage {
                         true,
                     "Invalid token Type ERC721"
                 );
+                return true;
             }
             if (
                 keccak256(abi.encodePacked((tokenType[i]))) ==
@@ -71,9 +72,10 @@ contract EventCall is Ownable, EventCallStorage {
                     ITokenCompatibility(tokenCompatibility).checkCompatibility(
                         tokenAddress[i],
                         IERC20Metadata(tokenAddress[i]).symbol()
-                    ) != true,
+                    ) == true,
                     "Invalid token Type ERC20"
                 );
+                return true;
             }
         }
     }
