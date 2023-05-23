@@ -187,7 +187,7 @@ contract Venue is VenueMetadata, VenueStorage {
         return getInfo[tokenId].owner;
     }
 
-      function editVenueVersion(uint256 _eventTokenId, string memory _venueVersion) external {
+      function updateVenueVersion(uint256 _eventTokenId, string memory _venueVersion) external {
          (
             ,
             uint256 endTime,
