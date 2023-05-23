@@ -14,8 +14,6 @@ pragma solidity ^0.8.0;
 contract EventCall is Ownable, EventCallStorage {
     using AddressUpgradeable for address;
 
-    event VenueVersionUpdated(uint256 eventTokenId, uint256 venueTokenId, string venueVersion);
-
     function initialize() public initializer {
         Ownable.ownable_init();
     }
@@ -327,22 +325,5 @@ contract EventCall is Ownable, EventCallStorage {
             }
         }
         return true;
-    }
-
-    function editVenueVersion(uint256 _eventTokenId, string memory _venueVersion) external {
-         (
-            ,
-            uint256 endTime,
-            address eventOrganiser, ,
-            uint256 venueTokenId,
-
-        ) = IEvents(IAdminFunctions(adminContract).getEventContract())
-            .getEventDetails(_eventTokenId);
-        require(endTime > block.timestamp, "ERR_112:Events:Event ended");
-        require(msg.sender == eventOrganiser, "ERR_108:Events:Invalid Caller");
-        venueVersion[_eventTokenId] = _venueVersion;
-
-        emit VenueVersionUpdated(_eventTokenId, venueTokenId, _venueVersion);
-
     }
 }

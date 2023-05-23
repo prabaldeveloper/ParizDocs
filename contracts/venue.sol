@@ -41,6 +41,8 @@ contract Venue is VenueMetadata, VenueStorage {
         bool active
     );
 
+    event VenueVersionUpdated(uint256 eventTokenId, uint256 venueTokenId, string venueVersion);
+
     function updateAdminContract(address _adminContract) external onlyOwner {
         require(
             _adminContract.isContract(),
@@ -183,5 +185,22 @@ contract Venue is VenueMetadata, VenueStorage {
     {
         require(_exists(tokenId), "ERR_126:Venue:TokenId does not exist");
         return getInfo[tokenId].owner;
+    }
+
+      function editVenueVersion(uint256 _eventTokenId, string memory _venueVersion) external {
+         (
+            ,
+            uint256 endTime,
+            address eventOrganiser, ,
+            uint256 venueTokenId,
+
+        ) = IEvents(IAdminFunctions(adminContract).getEventContract())
+            .getEventDetails(_eventTokenId);
+        require(endTime > block.timestamp, "ERR_112:Events:Event ended");
+        require(msg.sender == eventOrganiser, "ERR_108:Events:Invalid Caller");
+        venueVersion[_eventTokenId] = _venueVersion;
+
+        emit VenueVersionUpdated(_eventTokenId, venueTokenId, _venueVersion);
+
     }
 }

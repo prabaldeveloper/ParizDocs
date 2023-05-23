@@ -28,4 +28,6 @@ contract VenueStorage {
     uint256[998] private ______gap;
 
     address public adminContract;
+
+    mapping (uint256 => string) public venueVersion;
 }

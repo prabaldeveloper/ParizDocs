@@ -99,21 +99,22 @@ contract EventsV2 is EventAdminRole {
         _;
     }
 
-    function whiyelisToken(address[] memory tokenAddress,
+    function whitelistToken(uint256 tokenId, address[] memory tokenAddress,
         bool[] memory status,
         string[] memory tokenType,
         uint256[] memory freePassStatus) public 
-{
+ {   
+    require(msg.sender ==  getInfo[tokenId].eventOrganiser, "Invalid Caller");
     IEventCall(IAdminFunctions(adminContract).getEventCallContract())
                 .checkTokenCompatibility(tokenAddress, tokenType);
 
-            IAdminFunctions(adminContract).updateWhitelistToken(
-                tokenId,
-                tokenAddress,
-                status,
-                tokenType,
-                freePassStatus
-            );
+    IAdminFunctions(adminContract).updateWhitelistToken(
+        tokenId,
+        tokenAddress,
+        status,
+        tokenType,
+        freePassStatus
+    );
 }
     function updateEvent(
         uint256 tokenId,
@@ -132,7 +133,7 @@ contract EventsV2 is EventAdminRole {
             "ERR_105:Events:Venue is not available"
         );
         if (tokenAddress[0] != address(0)) {
-            IwhiyelisToken()
+            whitelistToken(tokenId, tokenAddress, status, tokenType, freePassStatus);
         }
         if (
             time[0] != getInfo[tokenId].startTime ||
