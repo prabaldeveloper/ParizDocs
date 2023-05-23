@@ -183,7 +183,6 @@ contract TicketMasterV1 is Ticket, TicketMasterStorage {
             //returning ticketCommissionFee
             ITicketController(IAdminFunctions(adminContract).getTicketControllerContract())
                 .checkTicketFeesInternal(feeAmount, actualPrice, tokenAddress, buyTicketId, tokenType, msg.sender);
-
             if(IAdminFunctions(adminContract).isErc721TokenFreePass(tokenAddress) == 0 &&
              IAdminFunctions(adminContract).isErc721TokenFreePassEvent(buyTicketId, tokenAddress) == 0 ) {
                 IERC721Upgradeable(tokenAddress).transferFrom(msg.sender, IAdminFunctions(adminContract).getTreasuryContract(), feeAmount);

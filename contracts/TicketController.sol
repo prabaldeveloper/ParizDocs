@@ -7,8 +7,6 @@ import "./interface/IEvents.sol";
 import "./access/Ownable.sol";
 import "./utils/TicketControllerStorage.sol";
 
-//search - check for
-
 pragma solidity ^0.8.0;
 
 
