@@ -99,6 +99,22 @@ contract EventsV2 is EventAdminRole {
         _;
     }
 
+    function whiyelisToken(address[] memory tokenAddress,
+        bool[] memory status,
+        string[] memory tokenType,
+        uint256[] memory freePassStatus) public 
+{
+    IEventCall(IAdminFunctions(adminContract).getEventCallContract())
+                .checkTokenCompatibility(tokenAddress, tokenType);
+
+            IAdminFunctions(adminContract).updateWhitelistToken(
+                tokenId,
+                tokenAddress,
+                status,
+                tokenType,
+                freePassStatus
+            );
+}
     function updateEvent(
         uint256 tokenId,
         string memory description,
@@ -115,16 +131,9 @@ contract EventsV2 is EventAdminRole {
             isVenueAvailable(tokenId, venueTokenId, time[0], time[1], 1),
             "ERR_105:Events:Venue is not available"
         );
-        IEventCall(IAdminFunctions(adminContract).getEventCallContract())
-            .checkTokenCompatibility(tokenAddress, tokenType);
-
-        IAdminFunctions(adminContract).updateWhitelistToken(
-            tokenId,
-            tokenAddress,
-            status,
-            tokenType,
-            freePassStatus
-        );
+        if (tokenAddress[0] != address(0)) {
+            IwhiyelisToken()
+        }
         if (
             time[0] != getInfo[tokenId].startTime ||
             time[1] != getInfo[tokenId].endTime
