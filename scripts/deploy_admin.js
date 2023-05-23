@@ -117,9 +117,9 @@ async function main() {
 
     // await adminContract.whitelistErc721TokenAddress(118, "0x60f969Dd2c310C65E13bB9c9FEC75dc4F9144576", true, 1);
 
-    await adminContract.whitelistErc721TokenAddressEvent(365,"0x8e3db4bf0cbfed015f56643b6030bdb2aa45a06f", true, 0);
+    await adminContract.whitelistErc721TokenAddressEvent(369,"0x8e3db4bf0cbfed015f56643b6030bdb2aa45a06f", true, 0);
     
-    await adminContract.whitelistErc721TokenAddressEvent(364,"0x11c3a46087b34870C23452E5A62326E324ec1360", true, 1);
+    await adminContract.whitelistErc721TokenAddressEvent(369,"0x11c3a46087b34870C23452E5A62326E324ec1360", true, 1);
 
 }
 
