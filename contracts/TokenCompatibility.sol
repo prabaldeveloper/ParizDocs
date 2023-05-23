@@ -14,7 +14,7 @@ contract TokenCompatibility is Ownable {
 
     address constant Trace = 0xD028C2a5156069c7eFaeA40acCA7d9Da6f219A5f; //BaseToken
     address constant USDC = 0xb0040280A0C97F20C92c09513b8C6e6Ff9Aa86DC; //Testnet
-    address constant USDT = 0xb0040280A0C97F20C92c09513b8C6e6Ff9Aa86DC; //Testnet
+    address constant USDT = 0xF2fE21E854c838C66579f62Ba0a60CA84367cd8F; //Testnet
 
     IQuickswapRouter router;
     IQuickswapFactory factory;

@@ -3,19 +3,19 @@ async function main() {
     const accounts = await ethers.provider.listAccounts();
     console.log("Accounts", accounts[0]);
     
-    const adminContract = "0x0C4FF6a699e14504C976d5a25Ce56cD62aF32D12";
-    const tokenCompatibility = "0x3dfba822644bD55c8275Dfe42b2b69646182dB24";
+    const adminContract = "0xcE0A81Ae0e9353d7716d346d50D1BC9A63662530";
+    const tokenCompatibility = "0xadfC90401FB4c56D68AeF5Eb8a55E610BCD3b580";
 
     const eventCall = await hre.ethers.getContractFactory("EventCall");
-    //const eventCallContract = await upgrades.deployProxy(eventCall,  { initializer: 'initialize'});
+    const eventCallContract = await upgrades.deployProxy(eventCall,  { initializer: 'initialize'});
     
-    const eventCallContract = await eventCall.attach("0x21277fFE24A413828273aec9785903EDE902E74A");
+    //const eventCallContract = await eventCall.attach("0x21277fFE24A413828273aec9785903EDE902E74A");
 
 //    await eventCallContract.deployed();
 
     console.log("Event Call contract", eventCallContract.address);
 
-    //await eventCallContract.updateAdminContract(adminContract);
+    await eventCallContract.updateAdminContract(adminContract);
 
     await eventCallContract.updateTokenCompatibility(tokenCompatibility);
 

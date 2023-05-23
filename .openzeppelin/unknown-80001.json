@@ -504,6 +504,16 @@
       "address": "0x21277fFE24A413828273aec9785903EDE902E74A",
       "txHash": "0xcf10ce139237518342bee175a42764089b0dd1bfd3d85fe5deee4b6086b3a023",
       "kind": "transparent"
+    },
+    {
+      "address": "0xadfC90401FB4c56D68AeF5Eb8a55E610BCD3b580",
+      "txHash": "0x5a6f599ea2feea5d4dd59db483fed5505addf4a84bdc16bf7283446cdd8277da",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xC3Ae7f7D7684a14A70Db9f41115AB66Ee3b15229",
+      "txHash": "0xac482347e9b98635c1abf660eb562a9b4a4598898dc6f622ff748b3b8d3fbed4",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -21879,7 +21889,7 @@
             "label": "router",
             "offset": 0,
             "slot": "52",
-            "type": "t_contract(IQuickswapRouter)8412",
+            "type": "t_contract(IQuickswapRouter)1192",
             "contract": "TokenCompatibility",
             "src": "contracts\\TokenCompatibility.sol:19"
           },
@@ -21887,7 +21897,7 @@
             "label": "factory",
             "offset": 0,
             "slot": "53",
-            "type": "t_contract(IQuickswapFactory)8376",
+            "type": "t_contract(IQuickswapFactory)1156",
             "contract": "TokenCompatibility",
             "src": "contracts\\TokenCompatibility.sol:20"
           },
@@ -21913,11 +21923,11 @@
             "label": "bool",
             "numberOfBytes": "1"
           },
-          "t_contract(IQuickswapFactory)8376": {
+          "t_contract(IQuickswapFactory)1156": {
             "label": "contract IQuickswapFactory",
             "numberOfBytes": "20"
           },
-          "t_contract(IQuickswapRouter)8412": {
+          "t_contract(IQuickswapRouter)1192": {
             "label": "contract IQuickswapRouter",
             "numberOfBytes": "20"
           },
@@ -28294,6 +28304,112 @@
           "t_uint8": {
             "label": "uint8",
             "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "3a6d09cda56ba037fdf6084550de7b87b8d3668b431e356987ff86f32b5668bb": {
+      "address": "0x058e4FF8382Df85A495100fB97a84e94699303ce",
+      "txHash": "0x7d7e8803121d1db53cdf67ea4baccf19847319a5a0a5a73153edd32f826efade",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "Ownable",
+            "src": "contracts\\access\\Ownable.sol:22"
+          },
+          {
+            "label": "router",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_contract(IQuickswapRouter)1192",
+            "contract": "TokenCompatibility",
+            "src": "contracts\\TokenCompatibility.sol:19"
+          },
+          {
+            "label": "factory",
+            "offset": 0,
+            "slot": "53",
+            "type": "t_contract(IQuickswapFactory)1156",
+            "contract": "TokenCompatibility",
+            "src": "contracts\\TokenCompatibility.sol:20"
+          },
+          {
+            "label": "priceFeedAddress",
+            "offset": 0,
+            "slot": "54",
+            "type": "t_mapping(t_string_memory_ptr,t_address)",
+            "contract": "TokenCompatibility",
+            "src": "contracts\\TokenCompatibility.sol:24"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(IQuickswapFactory)1156": {
+            "label": "contract IQuickswapFactory",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IQuickswapRouter)1192": {
+            "label": "contract IQuickswapRouter",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_string_memory_ptr,t_address)": {
+            "label": "mapping(string => address)",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          },
+          "t_string_storage": {
+            "label": "string"
           }
         }
       }

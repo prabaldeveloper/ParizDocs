@@ -121,6 +121,10 @@ VerifySignature = 0x162E0dc3Ef6334AC08099448D653f2155e8Fbdef
 VerifySignature = 0x4D733335eA2Ee9CD6906aD247FCcF1BB9BE7dDff(in use)
 EventContract = 0xc8677C605080Ab0aa7d47C890fe36f6DD7d834f3
 
+new contracts
+TokenCompatibility Contract 0xadfC90401FB4c56D68AeF5Eb8a55E610BCD3b580
+Event Call contract 0xC3Ae7f7D7684a14A70Db9f41115AB66Ee3b15229
+
 
 Testing contract for free pass
 Venue = 0x2a87119C747BFDC2C724837b873919e83655f68f
