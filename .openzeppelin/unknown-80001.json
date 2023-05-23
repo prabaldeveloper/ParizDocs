@@ -22231,7 +22231,7 @@
             "label": "getInfo",
             "offset": 0,
             "slot": "1156",
-            "type": "t_mapping(t_uint256,t_struct(Details)2402_storage)",
+            "type": "t_mapping(t_uint256,t_struct(Details)12765_storage)",
             "contract": "VenueStorage",
             "src": "contracts\\utils\\VenueStorage.sol:19"
           },
@@ -22325,7 +22325,7 @@
             "label": "mapping(uint256 => string)",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_uint256,t_struct(Details)2402_storage)": {
+          "t_mapping(t_uint256,t_struct(Details)12765_storage)": {
             "label": "mapping(uint256 => struct VenueStorage.Details)",
             "numberOfBytes": "32"
           },
@@ -22337,7 +22337,7 @@
             "label": "string",
             "numberOfBytes": "32"
           },
-          "t_struct(Details)2402_storage": {
+          "t_struct(Details)12765_storage": {
             "label": "struct VenueStorage.Details",
             "members": [
               {
@@ -22662,6 +22662,339 @@
               }
             ],
             "numberOfBytes": "224"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "390c746db52f1282c6072aea2c4e7856e5063c52961b3ba8c1ed11525c3f1000": {
+      "address": "0xc7Aa7bD9a7B65300227095A9265F967336362181",
+      "txHash": "0x193ae9da5b2096f9a6359f1380e5727e1e1d5321526576876dcd3dc6316e0615",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "Ownable",
+            "src": "contracts\\access\\Ownable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\introspection\\ERC165Upgradeable.sol:41"
+          },
+          {
+            "label": "_name",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_string_storage",
+            "contract": "VenueERC721",
+            "src": "contracts\\utils\\VenueERC721.sol:28"
+          },
+          {
+            "label": "_symbol",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_string_storage",
+            "contract": "VenueERC721",
+            "src": "contracts\\utils\\VenueERC721.sol:31"
+          },
+          {
+            "label": "_owners",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "VenueERC721",
+            "src": "contracts\\utils\\VenueERC721.sol:34"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "105",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "VenueERC721",
+            "src": "contracts\\utils\\VenueERC721.sol:37"
+          },
+          {
+            "label": "_tokenApprovals",
+            "offset": 0,
+            "slot": "106",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "VenueERC721",
+            "src": "contracts\\utils\\VenueERC721.sol:40"
+          },
+          {
+            "label": "_tokenURIs",
+            "offset": 0,
+            "slot": "107",
+            "type": "t_mapping(t_uint256,t_string_storage)",
+            "contract": "VenueERC721",
+            "src": "contracts\\utils\\VenueERC721.sol:43"
+          },
+          {
+            "label": "_baseURI",
+            "offset": 0,
+            "slot": "108",
+            "type": "t_string_storage",
+            "contract": "VenueERC721",
+            "src": "contracts\\utils\\VenueERC721.sol:46"
+          },
+          {
+            "label": "_operatorApprovals",
+            "offset": 0,
+            "slot": "109",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "VenueERC721",
+            "src": "contracts\\utils\\VenueERC721.sol:49"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "110",
+            "type": "t_array(t_uint256)44_storage",
+            "contract": "VenueERC721",
+            "src": "contracts\\utils\\VenueERC721.sol:584"
+          },
+          {
+            "label": "nextTokenId",
+            "offset": 0,
+            "slot": "154",
+            "type": "t_uint256",
+            "contract": "VenueMetadata",
+            "src": "contracts\\utils\\VenueMetadata.sol:12"
+          },
+          {
+            "label": "tokenIdToCreator",
+            "offset": 0,
+            "slot": "155",
+            "type": "t_mapping(t_uint256,t_address_payable)",
+            "contract": "VenueMetadata",
+            "src": "contracts\\utils\\VenueMetadata.sol:14"
+          },
+          {
+            "label": "creatorToIPFSHashToMinted",
+            "offset": 0,
+            "slot": "156",
+            "type": "t_mapping(t_address,t_mapping(t_string_memory_ptr,t_bool))",
+            "contract": "VenueMetadata",
+            "src": "contracts\\utils\\VenueMetadata.sol:26"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "157",
+            "type": "t_array(t_uint256)999_storage",
+            "contract": "VenueMetadata",
+            "src": "contracts\\utils\\VenueMetadata.sol:135"
+          },
+          {
+            "label": "getInfo",
+            "offset": 0,
+            "slot": "1156",
+            "type": "t_mapping(t_uint256,t_struct(Details)2871_storage)",
+            "contract": "VenueStorage",
+            "src": "contracts\\utils\\VenueStorage.sol:19"
+          },
+          {
+            "label": "isActive",
+            "offset": 0,
+            "slot": "1157",
+            "type": "t_mapping(t_uint256,t_bool)",
+            "contract": "VenueStorage",
+            "src": "contracts\\utils\\VenueStorage.sol:21"
+          },
+          {
+            "label": "______gap",
+            "offset": 0,
+            "slot": "1158",
+            "type": "t_array(t_uint256)998_storage",
+            "contract": "VenueStorage",
+            "src": "contracts\\utils\\VenueStorage.sol:28"
+          },
+          {
+            "label": "adminContract",
+            "offset": 0,
+            "slot": "2156",
+            "type": "t_address",
+            "contract": "VenueStorage",
+            "src": "contracts\\utils\\VenueStorage.sol:30"
+          },
+          {
+            "label": "venueVersion",
+            "offset": 0,
+            "slot": "2157",
+            "type": "t_mapping(t_uint256,t_string_storage)",
+            "contract": "VenueStorage",
+            "src": "contracts\\utils\\VenueStorage.sol:32"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_address_payable": {
+            "label": "address payable",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)44_storage": {
+            "label": "uint256[44]",
+            "numberOfBytes": "1408"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)998_storage": {
+            "label": "uint256[998]",
+            "numberOfBytes": "31936"
+          },
+          "t_array(t_uint256)999_storage": {
+            "label": "uint256[999]",
+            "numberOfBytes": "31968"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_string_memory_ptr,t_bool))": {
+            "label": "mapping(address => mapping(string => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_string_memory_ptr,t_bool)": {
+            "label": "mapping(string => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address_payable)": {
+            "label": "mapping(uint256 => address payable)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_bool)": {
+            "label": "mapping(uint256 => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_string_storage)": {
+            "label": "mapping(uint256 => string)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Details)2871_storage)": {
+            "label": "mapping(uint256 => struct VenueStorage.Details)",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Details)2871_storage": {
+            "label": "struct VenueStorage.Details",
+            "members": [
+              {
+                "label": "name",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "location",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "category",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "tokenId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "owner",
+                "type": "t_address_payable",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "totalCapacity",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "rentPerBlock",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "tokenCID",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "7"
+              }
+            ],
+            "numberOfBytes": "256"
           },
           "t_uint256": {
             "label": "uint256",
