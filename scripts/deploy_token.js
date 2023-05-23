@@ -6,7 +6,7 @@ async function main() {
     const accounts = await ethers.provider.listAccounts();
     console.log("Accounts", accounts[0]);
     const Token = await ethers.getContractFactory("Token721");
-    const TokenProxy = Token.attach("0xa7DaEDa2b350D8a7e8185aF13dA143127A19ffb4");
+    const TokenProxy = Token.attach("0x8E3DB4bf0Cbfed015F56643b6030bDB2aA45A06F");
     // const TokenProxy = await Token.deploy();
     // await TokenProxy.deployed();
     console.log("Token Address", TokenProxy.address);
@@ -108,21 +108,51 @@ async function main() {
 
     // await TokenProxy.mint("0xdC4A5fC7A3C2dd304F7B44a7954fD4E5cB64c076",80);
 
-    await TokenProxy.mint("0x75dc8E7515be89D43cf31C2E50e6abc4478f57F9",81);
+    // await TokenProxy.mint("0x75dc8E7515be89D43cf31C2E50e6abc4478f57F9",81);
 
-    await TokenProxy.mint("0x75dc8E7515be89D43cf31C2E50e6abc4478f57F9",82);
+    // await TokenProxy.mint("0x75dc8E7515be89D43cf31C2E50e6abc4478f57F9",82);
 
-    await TokenProxy.mint("0x75dc8E7515be89D43cf31C2E50e6abc4478f57F9",83);
+    // await TokenProxy.mint("0x75dc8E7515be89D43cf31C2E50e6abc4478f57F9",83);
 
-    await TokenProxy.mint("0x75dc8E7515be89D43cf31C2E50e6abc4478f57F9",84);
+    // await TokenProxy.mint("0x75dc8E7515be89D43cf31C2E50e6abc4478f57F9",84);
 
-    await TokenProxy.mint("0x274DC0B318b3918d01b94d84bEAD5e1452Aaf521",85);
+    // await TokenProxy.mint("0x274DC0B318b3918d01b94d84bEAD5e1452Aaf521",85);
 
-    await TokenProxy.mint("0x274DC0B318b3918d01b94d84bEAD5e1452Aaf521",86);
+    // await TokenProxy.mint("0x274DC0B318b3918d01b94d84bEAD5e1452Aaf521",86);
 
-    await TokenProxy.mint("0x274DC0B318b3918d01b94d84bEAD5e1452Aaf521",87);
+    // await TokenProxy.mint("0x274DC0B318b3918d01b94d84bEAD5e1452Aaf521",87);
 
-    await TokenProxy.mint("0x274DC0B318b3918d01b94d84bEAD5e1452Aaf521",88);
+    // await TokenProxy.mint("0x274DC0B318b3918d01b94d84bEAD5e1452Aaf521",88);
+
+    // await TokenProxy.mint("0x5966da6E4F91aF45a2d45f422A7A6681387Dd19c",41);
+    // await TokenProxy.mint("0x5966da6E4F91aF45a2d45f422A7A6681387Dd19c",42);
+    // await TokenProxy.mint("0x5966da6E4F91aF45a2d45f422A7A6681387Dd19c",43);
+    // await TokenProxy.mint("0x5966da6E4F91aF45a2d45f422A7A6681387Dd19c",44);
+
+    // await TokenProxy.mint("0x5966da6E4F91aF45a2d45f422A7A6681387Dd19c",45);
+    // await TokenProxy.mint("0x5966da6E4F91aF45a2d45f422A7A6681387Dd19c",46);
+    // await TokenProxy.mint("0x5966da6E4F91aF45a2d45f422A7A6681387Dd19c",47);
+    // await TokenProxy.mint("0x5966da6E4F91aF45a2d45f422A7A6681387Dd19c",48);
+
+    // await TokenProxy.mint("0x5966da6E4F91aF45a2d45f422A7A6681387Dd19c",49);
+
+
+    
+    await TokenProxy.mint("0x5966da6E4F91aF45a2d45f422A7A6681387Dd19c",97);
+
+    await TokenProxy.mint("0x5966da6E4F91aF45a2d45f422A7A6681387Dd19c",98);
+
+    await TokenProxy.mint("0x5966da6E4F91aF45a2d45f422A7A6681387Dd19c",99);
+
+    await TokenProxy.mint("0x5966da6E4F91aF45a2d45f422A7A6681387Dd19c",100);
+
+    await TokenProxy.mint("0x5966da6E4F91aF45a2d45f422A7A6681387Dd19c",101);
+
+    await TokenProxy.mint("0x5966da6E4F91aF45a2d45f422A7A6681387Dd19c",102);
+
+    await TokenProxy.mint("0x5966da6E4F91aF45a2d45f422A7A6681387Dd19c",103);
+
+    
 
 
 
