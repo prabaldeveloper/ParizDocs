@@ -5,10 +5,10 @@ async function main() {
 
     const history = await hre.ethers.getContractFactory("History");
     //const historyContract = await history.deploy();
-    const historyContract = await upgrades.deployProxy(history, {initializer: 'initialize'});
-    //const historyContract = await history.attach("0xf724C4a94E9217FDBf4162264A5Cc760bDC1C4E5");
+    //const historyContract = await upgrades.deployProxy(history, {initializer: 'initialize'});
+    const historyContract = await history.attach("0xd11b6e79f41E9f8b619458Ad6a07a555068044d3");
     // await new Promise(res => setTimeout(res, 1000));
-    await historyContract.deployed();
+    //await historyContract.deployed();
     console.log("History Contract", historyContract.address);
 
     //await historyContract.addSigner("0x3B2091278d903435232e8E0F3F364A4e9b9F670C"); // for testnet
