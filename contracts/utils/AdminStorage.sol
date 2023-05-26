@@ -83,6 +83,9 @@ contract AdminStorage {
     //status at master level
     mapping(address => uint256) public tokenFreePassStatusMaster;
 
+    mapping(address => uint256) public tokenGatingMaster;
+
+    mapping(uint256 => mapping(address => uint256)) public tokenGatingEvent;
 
 
 

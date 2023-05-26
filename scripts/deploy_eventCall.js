@@ -3,13 +3,13 @@ async function main() {
     const accounts = await ethers.provider.listAccounts();
     console.log("Accounts", accounts[0]);
     
-    const adminContract = "0xcE0A81Ae0e9353d7716d346d50D1BC9A63662530";
+    const adminContract = "0xCC5b4E9F9Bd81390F93268991c44F923836fd927";
     const tokenCompatibility = "0xadfC90401FB4c56D68AeF5Eb8a55E610BCD3b580";
 
     const eventCall = await hre.ethers.getContractFactory("EventCall");
-    const eventCallContract = await upgrades.deployProxy(eventCall,  { initializer: 'initialize'});
+    //const eventCallContract = await upgrades.deployProxy(eventCall,  { initializer: 'initialize'});
     
-    //const eventCallContract = await eventCall.attach("0x21277fFE24A413828273aec9785903EDE902E74A");
+    const eventCallContract = await eventCall.attach("0x21277fFE24A413828273aec9785903EDE902E74A");
 
 //    await eventCallContract.deployed();
 
@@ -17,9 +17,9 @@ async function main() {
 
     await eventCallContract.updateAdminContract(adminContract);
 
-    await eventCallContract.updateTokenCompatibility(tokenCompatibility);
+    //await eventCallContract.updateTokenCompatibility(tokenCompatibility);
 
-    console.log(await eventCallContract.checkTokenCompatibility(["0x1C2252aeeD50e0c9B64bDfF2735Ee3C932F5C408", "0x1C2252aeeD50e0c9B64bDfF2735Ee3C932F5C408"],["ERC20","ERC20"]));
+ //   console.log(await eventCallContract.checkTokenCompatibility(["0x1C2252aeeD50e0c9B64bDfF2735Ee3C932F5C408"],["ERC20"]));
 }
 
 main()

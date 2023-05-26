@@ -38,7 +38,7 @@ contract AdminFunctions is Ownable, AdminStorage {
 
     ///@param tokenAddress erc-20 token Address
     ///@param status status of the address(true or false)
-    event Erc20TokenUpdated(uint256 indexed eventTokenId, address indexed tokenAddress, bool status, string name, string symbol, uint256 decimal);
+    event Erc20TokenUpdated(uint256 indexed eventTokenId, address indexed tokenAddress, bool status, string name, string symbol, uint256 decimal, uint256 minAmountRequired);
 
     event Erc721TokenUpdated(uint256 indexed eventTokenId,address indexed tokenAddress, bool status, uint256 freePassStatus,
     string name, string symbol, uint256 decimal);
@@ -78,15 +78,17 @@ contract AdminFunctions is Ownable, AdminStorage {
     ///@dev -  Update the status of paymentToken
     ///@param tokenAddress erc-20 token Address
     ///@param status status of the address(true or false)
-    function whitelistErc20TokenAddress(address tokenAddress, bool status)
+    ///@param minAmountRequired pass zero if no token gating required
+    function whitelistErc20TokenAddress(address tokenAddress, bool status, uint256 minAmountRequired)
         external
         onlyOwner
     {
          erc20TokenAddress[tokenAddress] = status;
+         tokenGatingMaster[tokenAddress] = minAmountRequired;
          (string memory name, 
          string memory symbol, 
          uint256 decimal) = getTokenDetails(tokenAddress, "ERC20");
-         emit Erc20TokenUpdated(0, tokenAddress, status, name, symbol, decimal);
+         emit Erc20TokenUpdated(0, tokenAddress, status, name, symbol, decimal, minAmountRequired);
     
     }
 
@@ -137,7 +139,7 @@ contract AdminFunctions is Ownable, AdminStorage {
         for(uint256 i = 0; i < tokenAddress.length; i++) {
             //  if (!isERC721(tokenAddress[i])) {
             if(keccak256(abi.encodePacked((tokenType[i]))) == keccak256(abi.encodePacked(("ERC20")))) {
-                whitelistErc20TokenAddressEvent(eventTokenId, tokenAddress[i], status[i]);
+                whitelistErc20TokenAddressEvent(eventTokenId, tokenAddress[i], status[i], freePassStatus[i]);
             }
             else {
                 whitelistErc721TokenAddressEvent(eventTokenId, tokenAddress[i], status[i], freePassStatus[i]);
@@ -150,7 +152,7 @@ contract AdminFunctions is Ownable, AdminStorage {
     ///@dev -  Update the status of paymentToken
     ///@param tokenAddress erc-20 token Address
     ///@param status status of the address(true or false)
-    function whitelistErc20TokenAddressEvent(uint256 eventTokenId, address tokenAddress, bool status)
+    function whitelistErc20TokenAddressEvent(uint256 eventTokenId, address tokenAddress, bool status, uint256 minAmountRequired)
         internal
     {
          require(IEvents(eventContract)._exists(eventTokenId), "AdminFunctions:TokenId does not exist");
@@ -159,10 +161,11 @@ contract AdminFunctions is Ownable, AdminStorage {
         //  , , ) =  IEvents(eventContract).getEventDetails(eventTokenId);
          //require(msg.sender == eventOrganiser, "AdminFunctions:Invalid Caller"); 
          erc20TokenAddressEvent[eventTokenId][tokenAddress] = status;
+         tokenGatingEvent[eventTokenId][tokenAddress] = minAmountRequired;
          (string memory name, 
          string memory symbol, 
          uint256 decimal) = getTokenDetails(tokenAddress, "ERC20");
-         emit Erc20TokenUpdated(eventTokenId, tokenAddress, status, name, symbol, decimal);
+         emit Erc20TokenUpdated(eventTokenId, tokenAddress, status, name, symbol, decimal, minAmountRequired);
     }
 
     ///@notice Add supported Erc-721 tokens for the payment
@@ -523,6 +526,16 @@ contract AdminFunctions is Ownable, AdminStorage {
     // Check whether contract address is ERC721
     function isERC721(address nftAddress) public view returns (bool) {
         return IERC721(nftAddress).supportsInterface(IID_IERC721);
+    }
+
+    //tokenGating at master level
+    function getTokenGatingMaster(address tokenAddress) public view returns(uint256) {
+        return tokenGatingMaster[tokenAddress];
+    }
+
+    //tokenGating at event level
+    function getTokenGatingEvent(uint256 eventTokenId, address tokenAddress) public view returns(uint256) {
+        return tokenGatingEvent[eventTokenId][tokenAddress];
     }
 
     uint256[49] private ______gap;

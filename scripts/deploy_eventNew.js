@@ -5,6 +5,7 @@ async function main() {
     const MATIC = "0x0000000000000000000000000000000000000000";
     const USDC = "0xb0040280A0C97F20C92c09513b8C6e6Ff9Aa86DC";
     const Trace = "0xD028C2a5156069c7eFaeA40acCA7d9Da6f219A5f";
+    const Test18 = "0xBDa3c5ec872Ec75D09957d8a6A8F6df4F8C1D435";//(tokenGating)
     // Mumbai
     // const venueAddress = "0xf35BF6FD49C77905759E842464bb47b0A12cF3E7"
     // const conversionAddress = "0xccb93Ceb1f9A1b29341f638e4755D54D339646BA"
@@ -12,7 +13,7 @@ async function main() {
     // const nfttoken = "0x8E3DB4bf0Cbfed015F56643b6030bDB2aA45A06F"
     const manageContract = "0x7a73121a159B34Afe1E8f717E3B5Af8d7cd91598";
     //const eventProxy = "0x71c2592C6424E1822F35841b40F0FE9dbFcEcF64";
-    const adminContract = "0x0C4FF6a699e14504C976d5a25Ce56cD62aF32D12";
+    const adminContract = "0xCC5b4E9F9Bd81390F93268991c44F923836fd927";
     // const nfttoken = "0x9D6A70e2e1003d0bfc95129D658d1eBa5f08B481";
     //const eventContract = "0xb0abe1623c73ee874b94083A349a7C1d00A8B573";
     
@@ -53,7 +54,7 @@ async function main() {
 
     // await eventProxy.featured(5, true);
 
-    // await eventProxy.updateAdminContract(adminContract);
+//    await eventProxy.updateAdminContract(adminContract);
     // const EventsV1 = await ethers.getContractFactory("EventsV1")
 
     // const EventsV1Proxy = await EventsV1.deploy();
@@ -110,9 +111,13 @@ async function main() {
     
     // console.log("done 1");
 
-    // await eventProxy.add(["Event", "Test Category", "Test Event"], [endTime + 10000, endTime + 12000],
-    //     "QmaNfjaSNCYMHUuwzdvDdKBqnmh9ujpeZgNvcr5Du35ZZJ", 1, 0, "1500000000000000000", true, false,["0x0000000000000000000000000000000000000000"], ["ERC20"],["0"]);
+    // await eventProxy.add(["Event", "Test Category", "Test Event"], [endTime + 1000, endTime + 1200],
+    //     "QmRToa8JyWoxvZ1vDM6psY8hZVfu1if8jqLA2QrfbXdxBz", 1, 0, "1500000000000000000", true, false,["0x0000000000000000000000000000000000000000"], ["ERC20"],["0"]);
     // console.log("done 2");
+
+    // await eventProxy.add(["EventToken", "Test Category", "Test Token Gating Event"], [endTime + 10000, endTime + 12000],
+    // "y73iah6mna3efxqi6azsyzdyxbqxce7ctorozkq7pbyr3k5wheyq", 1, 0, "1500000000000000000", true, false,["0xBDa3c5ec872Ec75D09957d8a6A8F6df4F8C1D435"], ["ERC20"],["954577000000000000000001"]);
+    // console.log("done 3");
 
     // await eventProxy.payEvent(2,fee[0]);
     // let ticketPrice = await conversionProxy.convertFee("0x0000000000000000000000000000000000000000", "20000000000000");
@@ -142,8 +147,8 @@ async function main() {
     // await ticketMaster.buyTicket(1, Erc721_1 , "1", "ERC721");
     // console.log("Ticket Bought");
 
-    await new Promise(res => setTimeout(res, 10000));
-    await eventProxy.updateEvent(1, "hello",[startTime + 10, endTime - 20], ["0x9088732B7AB6Ab8c2132494160E006A74690f5f1", "0xBDa3c5ec872Ec75D09957d8a6A8F6df4F8C1D435"],["true","true"],["ERC20","ERC20"], ["0","0"]);
+    // await new Promise(res => setTimeout(res, 10000));
+    // await eventProxy.updateEvent(1, "hello",[startTime + 10, endTime - 20], ["0x9088732B7AB6Ab8c2132494160E006A74690f5f1", "0xBDa3c5ec872Ec75D09957d8a6A8F6df4F8C1D435"],["true","true"],["ERC20","ERC20"], ["0","0"]);
     // console.log("Time Updated");
     // const manageEvent = await ethers.getContractFactory("ManageEvent");
     // const manageEventContract = await manageEvent.attach(manageContract);
@@ -219,6 +224,8 @@ async function main() {
     // // await ticketMaster.join(1, ticketId);
     // // console.log("join");
     // // await new Promise(res => setTimeout(res, 51000));
+
+    await eventProxy.whitelistToken(5, ["0xBDa3c5ec872Ec75D09957d8a6A8F6df4F8C1D435"],["true"], ["ERC20"],["954577000000"])
 
 }
 

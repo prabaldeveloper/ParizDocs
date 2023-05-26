@@ -2,11 +2,11 @@ const { ethers } = require("hardhat")
 async function main() {
     const accounts = await ethers.provider.listAccounts();
     console.log("Accounts", accounts[0]);
-    const adminContract = "0x0C4FF6a699e14504C976d5a25Ce56cD62aF32D12";
+    const adminContract = "0xCC5b4E9F9Bd81390F93268991c44F923836fd927";
     const venue = await ethers.getContractFactory("Venue");
-    const venueContract = await upgrades.deployProxy(venue, { initializer: 'initialize' })
+    //const venueContract = await upgrades.deployProxy(venue, { initializer: 'initialize' })
     //const venueContract = await venue.deploy();
-    // const venueContract = venue.attach("0x09020bC6935186Dbb437b9451e863B97F8B8EcE4");
+    const venueContract = venue.attach("0xF130d5eA1c7b1eb36061dEF9d1AF7Bc211280b43");
     // await venueContract.deployed();
     // await new Promise(res => setTimeout(res, 5000));
 
@@ -16,8 +16,8 @@ async function main() {
 
     // await new Promise(res => setTimeout(res, 1000));
     //await venueContract.updateVenueFees(1, "100000000000000");
-    await venueContract.add("PARIZ GENESIS PLAZA 1", "1,1,1", "EVENT", 10000, "100000000000000", "Qmas98PywDFmqjxaCq6vp4s4zmv3vT2Wxw5BSymM7VJicZ", "0xdC4A5fC7A3C2dd304F7B44a7954fD4E5cB64c076");
-    await new Promise(res => setTimeout(res, 1000));
+    // await venueContract.add("PARIZ GENESIS PLAZA 1", "1,1,1", "EVENT", 10000, "100000000000000", "Qmas98PywDFmqjxaCq6vp4s4zmv3vT2Wxw5BSymM7VJicZ", "0xdC4A5fC7A3C2dd304F7B44a7954fD4E5cB64c076");
+    // await new Promise(res => setTimeout(res, 1000));
 
     // await venueContract.add("Pariz Fashion Gallery", "12,093", "Concert", 20, "10000000000000", "QmZnwDAg98s3Qq8aYd1Xoz1hJu3dYa8J76JeUHs6M5fnqM");
     // // await new Promise(res => setTimeout(res, 1000));

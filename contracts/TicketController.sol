@@ -66,29 +66,35 @@ contract TicketController is Ownable, TicketControllerStorage {
                 IAdminFunctions(adminContract).isErc20TokenWhitelistedEvent(buyTicketId, tokenAddress) == true ,
                 "ERR_122:TicketMaster: PaymentToken Not Supported"
             );
-            uint256 convertedActualPrice = IAdminFunctions(adminContract)
-                    .convertFee(tokenAddress, actualPrice);
+            if(IAdminFunctions(adminContract).getTokenGatingMaster(tokenAddress) == 0 &&
+              IAdminFunctions(adminContract).getTokenGatingEvent(buyTicketId, tokenAddress) == 0) {
+                uint256 convertedActualPrice = IAdminFunctions(adminContract)
+                        .convertFee(tokenAddress, actualPrice);
 
-            if (tokenAddress != address(0)) {
-                IAdminFunctions(adminContract).checkDeviation(feeAmount, convertedActualPrice);
-                uint256 ticketCommissionFee = (feeAmount *
-                    IAdminFunctions(adminContract).getTicketCommissionPercent()) / 100;
-                //  IERC20(tokenAddress).transferFrom(
-                //     userAddress,
-                //     IAdminFunctions(adminContract).getTreasuryContract(),
-                //     feeAmount - ticketCommissionFee
-                // );
-                // IERC20(tokenAddress).transferFrom(
-                //     userAddress,
-                //     IAdminFunctions(adminContract).getAdminTreasuryContract(),
-                //     ticketCommissionFee
-                // );
-                return ticketCommissionFee;
-            }  else {
-                IAdminFunctions(adminContract).checkDeviation(feeAmount, convertedActualPrice);
-                uint256 ticketCommissionFee = (feeAmount *
-                    IAdminFunctions(adminContract).getTicketCommissionPercent()) / 100;
-                return ticketCommissionFee;
+                if (tokenAddress != address(0)) {
+                    IAdminFunctions(adminContract).checkDeviation(feeAmount, convertedActualPrice);
+                    uint256 ticketCommissionFee = (feeAmount *
+                        IAdminFunctions(adminContract).getTicketCommissionPercent()) / 100;
+                    //  IERC20(tokenAddress).transferFrom(
+                    //     userAddress,
+                    //     IAdminFunctions(adminContract).getTreasuryContract(),
+                    //     feeAmount - ticketCommissionFee
+                    // );
+                    // IERC20(tokenAddress).transferFrom(
+                    //     userAddress,
+                    //     IAdminFunctions(adminContract).getAdminTreasuryContract(),
+                    //     ticketCommissionFee
+                    // );
+                    return ticketCommissionFee;
+                }  else {
+                    IAdminFunctions(adminContract).checkDeviation(feeAmount, convertedActualPrice);
+                    uint256 ticketCommissionFee = (feeAmount *
+                        IAdminFunctions(adminContract).getTicketCommissionPercent()) / 100;
+                    return ticketCommissionFee;
+                }
+            }
+            else {
+                return 0;
             }
          }
          else {

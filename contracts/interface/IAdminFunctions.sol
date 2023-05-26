@@ -37,6 +37,8 @@ interface IAdminFunctions {
         string[] memory tokenType,
         uint256[] memory freePassStatus
     ) external ;
-      function whitelistToken(uint256 eventTokenId, address[] memory tokenAddress, string[] memory tokenType,
-        uint256[] memory freePassStatus) external ;
+    function whitelistToken(uint256 eventTokenId, address[] memory tokenAddress, string[] memory tokenType,
+      uint256[] memory freePassStatus) external ;
+    function getTokenGatingMaster(address tokenAddress) external view returns(uint256);
+    function getTokenGatingEvent(uint256 eventTokenId, address tokenAddress) external view returns(uint256);
 }

@@ -143,19 +143,31 @@ contract TicketMasterV1 is Ticket, TicketMasterStorage {
             if (tokenAddress != address(0)) {
                 uint256 ticketCommissionFee = ITicketController(IAdminFunctions(adminContract).getTicketControllerContract())
                 .checkTicketFeesInternal(feeAmount, actualPrice, tokenAddress, buyTicketId, tokenType, msg.sender);
-                 IERC20(tokenAddress).transferFrom(
-                    msg.sender,
-                    IAdminFunctions(adminContract).getTreasuryContract(),
-                    feeAmount - ticketCommissionFee
-                );
-                IERC20(tokenAddress).transferFrom(
-                    msg.sender,
-                    IAdminFunctions(adminContract).getAdminTreasuryContract(),
-                    ticketCommissionFee
-                );
-                ticketFeesBalance[buyTicketId][tokenAddress] += (feeAmount -
-                    ticketCommissionFee);
-                userTicketBalance[buyTicketId][ticketId] = feeAmount - ticketCommissionFee;
+                if(IAdminFunctions(adminContract).getTokenGatingMaster(tokenAddress) == 0 && 
+                  IAdminFunctions(adminContract).getTokenGatingEvent(buyTicketId, tokenAddress) == 0) {
+                    IERC20(tokenAddress).transferFrom(
+                        msg.sender,
+                        IAdminFunctions(adminContract).getTreasuryContract(),
+                        feeAmount - ticketCommissionFee
+                    );
+                    IERC20(tokenAddress).transferFrom(
+                        msg.sender,
+                        IAdminFunctions(adminContract).getAdminTreasuryContract(),
+                        ticketCommissionFee
+                    );
+                    ticketFeesBalance[buyTicketId][tokenAddress] += (feeAmount -
+                        ticketCommissionFee);
+                    userTicketBalance[buyTicketId][ticketId] = feeAmount - ticketCommissionFee;
+                }
+                else {
+                    //minimum balance check
+                    uint256 minAmountRequiredMaster = IAdminFunctions(adminContract).getTokenGatingMaster(tokenAddress);
+                    uint256 minAmountRequiredEvent = IAdminFunctions(adminContract).getTokenGatingEvent(buyTicketId, tokenAddress);
+                    uint256 minAmountRequired = (minAmountRequiredMaster > minAmountRequiredEvent ? minAmountRequiredMaster: minAmountRequiredEvent);
+                    require(IERC20(tokenAddress).balanceOf(msg.sender) >= minAmountRequired, "TicketMaster: Insufficient balance");
+
+                }
+            
             } else {
                 uint256 ticketCommissionFee = ITicketController(IAdminFunctions(adminContract).getTicketControllerContract())
                     .checkTicketFeesInternal(msg.value, actualPrice, tokenAddress, buyTicketId, tokenType, msg.sender);
