@@ -9,6 +9,9 @@ import "@openzeppelin/contracts-upgradeable/utils/StringsUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol";
 import "../access/Ownable.sol";
 
+interface IVenue {
+    function updateVenueOwner(uint256 venueTokenId, address payable owner) external;
+}
 /**
  * @dev Implementation of https://eips.ethereum.org/EIPS/eip-721[ERC721] Non-Fungible Token Standard, including
  * the Metadata extension, but not including the Enumerable extension, which is available separately as
@@ -456,6 +459,10 @@ contract VenueERC721 is
         _balances[from] -= 1;
         _balances[to] += 1;
         _owners[tokenId] = to;
+
+        //Transferring the ownership to "to" address
+        IVenue(address(this)).updateVenueOwner(tokenId, payable(to));
+
 
         emit Transfer(from, to, tokenId);
 

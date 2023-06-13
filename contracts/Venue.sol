@@ -43,6 +43,11 @@ contract Venue is VenueMetadata, VenueStorage {
 
     event VenueVersionUpdated(uint256 eventTokenId, uint256 venueTokenId, string venueVersion);
 
+    event VenueOwnerUpdated(
+        uint256 indexed tokenId,
+        address owner
+    );
+
     function updateAdminContract(address _adminContract) external onlyOwner {
         require(
             _adminContract.isContract(),
@@ -125,7 +130,7 @@ contract Venue is VenueMetadata, VenueStorage {
     function refundVenueFeesInternal(uint256 eventTokenId, uint256 balance, address eventOrganiser) public view returns(uint256, address) {
         require(
             IAdminFunctions(adminContract).isEventCancelled(eventTokenId) == true,
-            "ERR_109:Events:Event is not cancelled"
+            "ERR_109:Venue:Event is not cancelled"
         );
         (
             uint256 _startTime,
@@ -135,14 +140,14 @@ contract Venue is VenueMetadata, VenueStorage {
             uint256 _venueTokenId,
 
         ) = IEvents(IAdminFunctions(adminContract).getEventContract()).getEventDetails(eventTokenId);
-        require(eventOrganiser == _eventOrganiser, "ERR_103:Events:Address is not the event organiser address");
-        require(_payNow == true, "ERR_110:Events:Fees not paid");
+        require(eventOrganiser == _eventOrganiser, "ERR_103:Venue:Address is not the event organiser address");
+        require(_payNow == true, "ERR_110:Venue:Fees not paid");
          (, , uint256 venueRentalCommissionFees) = IEvents(IAdminFunctions(adminContract).getEventContract()).calculateRent(
             _venueTokenId,
             _startTime,
             _endTime
         );
-        require(balance > 0, "ERR_111:Events:Funds already transferred");
+        require(balance > 0, "ERR_111:Venue:Funds already transferred");
         address venueOwner = getVenueOwner(_venueTokenId);
         return (venueRentalCommissionFees, venueOwner);
 
@@ -187,20 +192,28 @@ contract Venue is VenueMetadata, VenueStorage {
         return getInfo[tokenId].owner;
     }
 
-      function updateVenueVersion(uint256 _eventTokenId, string memory _venueVersion) external {
+    function updateVenueVersion(uint256 _eventTokenId, string memory _venueVersion) external {
          (
+            uint256 startTime,
             ,
-            uint256 endTime,
             address eventOrganiser, ,
             uint256 venueTokenId,
 
         ) = IEvents(IAdminFunctions(adminContract).getEventContract())
             .getEventDetails(_eventTokenId);
-        require(endTime > block.timestamp, "ERR_112:Events:Event ended");
-        require(msg.sender == eventOrganiser, "ERR_108:Events:Invalid Caller");
+        require(startTime >= block.timestamp, "ERR_112:Venue:Event started");
+        require(msg.sender == eventOrganiser, "ERR_108:Venue:Invalid Caller");
         venueVersion[_eventTokenId] = _venueVersion;
 
         emit VenueVersionUpdated(_eventTokenId, venueTokenId, _venueVersion);
+
+    }
+
+    function updateVenueOwner(uint256 venueTokenId, address payable owner) external {
+        require(msg.sender == address(this), "Venue: Invalid Caller");
+        getInfo[venueTokenId].owner = owner;
+
+        emit VenueOwnerUpdated(venueTokenId, owner);
 
     }
 }
