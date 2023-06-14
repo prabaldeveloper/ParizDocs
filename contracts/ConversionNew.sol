@@ -16,8 +16,6 @@ contract Conversion is Initializable, Ownable {
     address internal Trace;
     address constant USD = 0xb0040280A0C97F20C92c09513b8C6e6Ff9Aa86DC; //testnet
 
-    address public tokenCompatibility;
-
     IQuickswapRouter router;
     IQuickswapFactory factory;
 
@@ -35,6 +33,8 @@ contract Conversion is Initializable, Ownable {
         string name,
         string symbol
     );
+
+    address public tokenCompatibility;
 
     function initialize() public initializer {
         Ownable.ownable_init();

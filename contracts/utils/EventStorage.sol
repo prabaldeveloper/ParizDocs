@@ -51,8 +51,6 @@ contract EventStorage {
 
     address public adminContract;
 
-    address public tokenCompatibility;
-
     //
     // This empty reserved space is put in place to allow future versions to add new
     // variables without shifting down storage in the inheritance chain.
