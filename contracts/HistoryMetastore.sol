@@ -33,17 +33,8 @@ contract HistoryMetastore is Ownable {
     ) public {
         require(msg.sender == signerAddress, "Invalid Caller");
         for(uint256 i = 0 ; i < userAddress.length; i++) {
-            metastoreIdToData[metastoreId[i]].push(data[i]);
-            userData[userAddress[i]].push(data[i]);
             emit DataAdded(userAddress[i], metastoreId[i], data[i]);
         }
     }
 
-    function getMetastoreData(string memory metastoreId) public view returns(string[] memory) {
-        return metastoreIdToData[metastoreId];
-    }
-
-    function getUserData(string memory userAddress) public view returns(string[] memory) {
-        return userData[userAddress];
-    }
 }
