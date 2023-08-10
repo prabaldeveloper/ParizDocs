@@ -25,12 +25,18 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 const MAINNET_RPC_URL = "https://polygon-rpc.com/"
 const MAINNET_PRIVATE_KEY = process.env.MAINNET_PRIVATE_KEY;
 
-const MUMBAI_RPC_URL = "https://matic-mumbai.chainstacklabs.com";
+const MUMBAI_RPC_URL = "https://polygon-mumbai.g.alchemy.com/v2/gdNaCO6rM5ROYvDEwzlwerVWVrLYG0bK";
 //const MUMBAI_RPC_URL = "https://rpc-mumbai.maticvigil.com/";
 const MUMBAI_PRIVATE_KEY = process.env.MUMBAI_PRIVATE_KEY;
 
 const ROPSTEN_RPC_URL = "https://ropsten.infura.io/v3/9fe1548079c34c6ca0cd0a99d316a91d";
 const ROPSTEN_PRIVATE_KEY = process.env.MUMBAI_PRIVATE_KEY;
+
+const BINANCE_TESTNET_RPC_URL = "https://data-seed-prebsc-1-s3.binance.org:8545/";
+const BINANCE_PRIVATE_KEY = process.env.BINANCE_PRIVATE_KEY;
+
+const BINANCE_MAINNET_RPC_URL = "https://bsc-dataseed1.binance.org/";
+// const BINANCE_PRIVATE_KEY = "c6b74823351e2c55022376bd63c1c037c179479ef4667342ab1c225b09237fa0";
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
@@ -72,6 +78,16 @@ module.exports = {
       // },
       saveDeployments: true,
     },
+    bscTestnet: {
+      url: BINANCE_TESTNET_RPC_URL,
+      accounts: [BINANCE_PRIVATE_KEY],
+      saveDeployments: true,
+    },
+    bscMainnet: {
+      url: BINANCE_MAINNET_RPC_URL,
+      accounts: [BINANCE_PRIVATE_KEY],
+      saveDeployments: true,
+    }
   },
   etherscan: {
       apiKey: "F3HN9IGWSZ5NYWEJBEM4Q214H2Q1BESN67"

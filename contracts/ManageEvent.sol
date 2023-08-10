@@ -13,7 +13,7 @@ import "./utils/ManageEventStorage.sol";
 
 ///@notice Event owner can start event or can cancel event
 
-contract ManageEventV1 is Ownable, ManageEventStorage {
+contract ManageEventV2 is Ownable, ManageEventStorage {
     using AddressUpgradeable for address;
 
     ///@param eventTokenId event Token Id
@@ -279,12 +279,12 @@ contract ManageEventV1 is Ownable, ManageEventStorage {
         require(
             block.timestamp >=
                 getAgendaInfo[eventTokenId][agendaId].agendaStartTime,
-            "ManageEvent: Session not started"
+            "ManageEvent:Session not started"
         );
         require(
             block.timestamp <
                 getAgendaInfo[eventTokenId][agendaId].agendaEndTime,
-            "ManageEvent: Session ended"
+            "ManageEvent:Session ended"
         );
         emit AgendaStarted(eventTokenId, agendaId);
     }

@@ -34,17 +34,7 @@ contract History is Ownable {
     ) public {
         require(msg.sender == signerAddress, "Invalid Caller");
         for(uint256 i = 0 ; i < userAddress.length; i++) {
-            eventTokenIdToData[eventTokenId[i]].push(data[i]);
-            userData[userAddress[i]].push(data[i]);
             emit DataAdded(userAddress[i], eventTokenId[i], data[i]);
         }
-    }
-
-    function getEventData(uint256 eventTokenId) public view returns(string[] memory) {
-        return eventTokenIdToData[eventTokenId];
-    }
-
-    function getUserData(address userAddress) public view returns(string[] memory) {
-        return userData[userAddress];
     }
 }

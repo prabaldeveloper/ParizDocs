@@ -4,15 +4,16 @@ async function main() {
     console.log("Accounts", accounts[0]);
 
     const history = await hre.ethers.getContractFactory("HistoryMetastore");
-    //const historyContract = await upgrades.deployProxy(history, {initializer: 'initialize'});
-    const historyContract = await history.deploy();
-    //const historyContract = await history.attach("0xbC8cce756D8072ef4eE6e657666174363C39Ddf7");
+    const historyContract = await upgrades.deployProxy(history, {initializer: 'initialize'});
+    //const historyContract = await history.deploy();
+    //const historyContract = await history.attach("0x17e01E0590D49D2ca5668710B027E36cb9B8f58b");
     await historyContract.deployed();
     console.log("History Contract", historyContract.address);
 
     // await new Promise(res => setTimeout(res, 1000));
-    // await historyContract.addSigner('0x9E652304575EB70482Dc0850cB7e69c1b23b2A9c');
-    //await historyContract.addData(accounts[0], 1, "Hello");
+    await historyContract.updateFirstSignerAddress('0xe4C5092a03a383c6D0CcDCB39A7406BcfB4947aE');
+    //await historyContract.updateSecondSignerAddress("0x8824F894701Dc63e3531b2e1c80CdcbD75D3D5C0");
+    //await historyContract.addData([accounts[0]], ["metastoreId"], ["Test Data"]);
 }
 
 main()
@@ -26,3 +27,10 @@ main()
 
 
     //https://polygonscan.com/address/0x311e070B4aC4dc99F1f983eD74Aee7667F91d47C#code
+
+    //bscTestnet
+    //History Metastore 0x17e01E0590D49D2ca5668710B027E36cb9B8f58b
+    
+
+    //mainnet
+    //0xe8625254b22b24E871CD7bcAd229e9A8a174159B

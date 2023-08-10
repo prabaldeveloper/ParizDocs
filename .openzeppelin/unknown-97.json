@@ -1,0 +1,373 @@
+{
+  "manifestVersion": "3.2",
+  "admin": {
+    "address": "0x34995Cd3B217755c1283CC27CDfD701f84c6e41F",
+    "txHash": "0x8e6810339f6a820f6a10ea9f6dfc52804068073de7105e0d37455dddab7dc261"
+  },
+  "proxies": [
+    {
+      "address": "0x17e01E0590D49D2ca5668710B027E36cb9B8f58b",
+      "txHash": "0x4915e7cc31ee9cd03a637a7e6d974845870511cefbbccd28c4b0061440ab0441",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x7f1d22c021f76cEA7aabCC1D7FF83c22b4e99e5d",
+      "txHash": "0x902ab9ded81a858201afdac611a59d51acc7d60df9fc945d198b1cc3f1e18475",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x583aD3F90a7d1F541780f0f5Adf8E3DE5739E8A2",
+      "txHash": "0x49a657da55c2bc0dcba7b2dc80d0905f9919ef7bc2feb018d53c3ff112a9b7bb",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x1C2856da62a175b457f1691546311c68152dA6FC",
+      "txHash": "0x923b4b7ef5358c77b86c798fe920fdc2371fcd3d80ae5e03af1c3be4e271a8c1",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xda073631A13e2A820f1c183c16e4f5a3742c9358",
+      "txHash": "0x1c7dba845194577868760a7787077ab8c97b5044d40874486d91870f89ea1ca8",
+      "kind": "transparent"
+    }
+  ],
+  "impls": {
+    "0ec9fbcce533d73101abcd978b543a2c9814b37520c2809f1b6a15bac230b904": {
+      "address": "0xE6dbB4ca9320009AA3D2da45f297F6dED66DD3fd",
+      "txHash": "0x103cabf3dfa6193eeae28294e1b55b930965f2f2d10952c447cc0ebb18a6326e",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "Ownable",
+            "src": "contracts\\access\\Ownable.sol:22"
+          },
+          {
+            "label": "signerAddress",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_address",
+            "contract": "HistoryMetastore",
+            "src": "contracts\\HistoryMetastore.sol:9"
+          },
+          {
+            "label": "metastoreIdToData",
+            "offset": 0,
+            "slot": "53",
+            "type": "t_mapping(t_string_memory_ptr,t_array(t_string_storage)dyn_storage)",
+            "contract": "HistoryMetastore",
+            "src": "contracts\\HistoryMetastore.sol:17"
+          },
+          {
+            "label": "userData",
+            "offset": 0,
+            "slot": "54",
+            "type": "t_mapping(t_string_memory_ptr,t_array(t_string_storage)dyn_storage)",
+            "contract": "HistoryMetastore",
+            "src": "contracts\\HistoryMetastore.sol:18"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_string_storage)dyn_storage": {
+            "label": "string[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_string_memory_ptr,t_array(t_string_storage)dyn_storage)": {
+            "label": "mapping(string => string[])",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "62648f9a666b9627d64ac673c469be0768b772f239c71a8031c62a225656f308": {
+      "address": "0x9d9F31B600C139e3f8b6FadcC80120acE9881D12",
+      "txHash": "0x7f4f16703ccda1c57266c0f47d86c109a152763d87aa77bb0b49e0aa28cc913f",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "Ownable",
+            "src": "contracts\\access\\Ownable.sol:22"
+          },
+          {
+            "label": "signerAddress",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_address",
+            "contract": "HistoryLounge",
+            "src": "contracts\\HistoryLounge.sol:9"
+          },
+          {
+            "label": "metastoreIdToData",
+            "offset": 0,
+            "slot": "53",
+            "type": "t_mapping(t_string_memory_ptr,t_array(t_string_storage)dyn_storage)",
+            "contract": "HistoryLounge",
+            "src": "contracts\\HistoryLounge.sol:17"
+          },
+          {
+            "label": "userData",
+            "offset": 0,
+            "slot": "54",
+            "type": "t_mapping(t_string_memory_ptr,t_array(t_string_storage)dyn_storage)",
+            "contract": "HistoryLounge",
+            "src": "contracts\\HistoryLounge.sol:18"
+          },
+          {
+            "label": "secondSignerAddress",
+            "offset": 0,
+            "slot": "55",
+            "type": "t_address",
+            "contract": "HistoryLounge",
+            "src": "contracts\\HistoryLounge.sol:20"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_string_storage)dyn_storage": {
+            "label": "string[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_string_memory_ptr,t_array(t_string_storage)dyn_storage)": {
+            "label": "mapping(string => string[])",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "4d91e8db3b31369566da9956e25addaccad12ff6a808b075782580afc2c0c91c": {
+      "address": "0x7BC2a74B135A23A4fAD7F7595111b1A734d62Ae5",
+      "txHash": "0x1070b00e376a66c5213ccffed2ebc7d869dd32ff2d9f7d0a734e4e090bc894a7",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "Ownable",
+            "src": "contracts\\access\\Ownable.sol:22"
+          },
+          {
+            "label": "signerAddress",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_address",
+            "contract": "HistoryMetastore",
+            "src": "contracts\\HistoryMetastore.sol:9"
+          },
+          {
+            "label": "metastoreIdToData",
+            "offset": 0,
+            "slot": "53",
+            "type": "t_mapping(t_string_memory_ptr,t_array(t_string_storage)dyn_storage)",
+            "contract": "HistoryMetastore",
+            "src": "contracts\\HistoryMetastore.sol:17"
+          },
+          {
+            "label": "userData",
+            "offset": 0,
+            "slot": "54",
+            "type": "t_mapping(t_string_memory_ptr,t_array(t_string_storage)dyn_storage)",
+            "contract": "HistoryMetastore",
+            "src": "contracts\\HistoryMetastore.sol:18"
+          },
+          {
+            "label": "secondSignerAddress",
+            "offset": 0,
+            "slot": "55",
+            "type": "t_address",
+            "contract": "HistoryMetastore",
+            "src": "contracts\\HistoryMetastore.sol:20"
+          },
+          {
+            "label": "signerAddressStatus",
+            "offset": 0,
+            "slot": "56",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "HistoryMetastore",
+            "src": "contracts\\HistoryMetastore.sol:22"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_string_storage)dyn_storage": {
+            "label": "string[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_string_memory_ptr,t_array(t_string_storage)dyn_storage)": {
+            "label": "mapping(string => string[])",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    }
+  }
+}
