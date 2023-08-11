@@ -9,6 +9,16 @@
       "address": "0xe8625254b22b24E871CD7bcAd229e9A8a174159B",
       "txHash": "0xf5afc045f1e3f50da5e366966b08208733b2969543b97b62893dd89950879331",
       "kind": "transparent"
+    },
+    {
+      "address": "0x9AF0e7261256250FE46230ecb754429de9DFBB8E",
+      "txHash": "0x3a71daa57dfbbd0f1ce250bbf1e63f9feb81bad4b11015a095a4838f5c9dde00",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x5f650c9C3DB1bf81C93C3097e8b5d2D42987F441",
+      "txHash": "0x3a0798675ddfd24f01a961c2fb45af060c2bb8b3979af9cf342abf9ef35e5889",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -99,6 +109,129 @@
           "t_bool": {
             "label": "bool",
             "numberOfBytes": "1"
+          },
+          "t_mapping(t_string_memory_ptr,t_array(t_string_storage)dyn_storage)": {
+            "label": "mapping(string => string[])",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "4d91e8db3b31369566da9956e25addaccad12ff6a808b075782580afc2c0c91c": {
+      "address": "0x5Ee0441C6cdf1e166e438615Afb8401c96c5E5c0",
+      "txHash": "0x10d10970163860a39403135f94edbea8a403a105ae53f8c838a53a884ca981a9",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "Ownable",
+            "src": "contracts\\access\\Ownable.sol:22"
+          },
+          {
+            "label": "signerAddress",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_address",
+            "contract": "HistoryMetastore",
+            "src": "contracts\\HistoryMetastore.sol:9"
+          },
+          {
+            "label": "metastoreIdToData",
+            "offset": 0,
+            "slot": "53",
+            "type": "t_mapping(t_string_memory_ptr,t_array(t_string_storage)dyn_storage)",
+            "contract": "HistoryMetastore",
+            "src": "contracts\\HistoryMetastore.sol:17"
+          },
+          {
+            "label": "userData",
+            "offset": 0,
+            "slot": "54",
+            "type": "t_mapping(t_string_memory_ptr,t_array(t_string_storage)dyn_storage)",
+            "contract": "HistoryMetastore",
+            "src": "contracts\\HistoryMetastore.sol:18"
+          },
+          {
+            "label": "secondSignerAddress",
+            "offset": 0,
+            "slot": "55",
+            "type": "t_address",
+            "contract": "HistoryMetastore",
+            "src": "contracts\\HistoryMetastore.sol:20"
+          },
+          {
+            "label": "signerAddressStatus",
+            "offset": 0,
+            "slot": "56",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "HistoryMetastore",
+            "src": "contracts\\HistoryMetastore.sol:22"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_string_storage)dyn_storage": {
+            "label": "string[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
           },
           "t_mapping(t_string_memory_ptr,t_array(t_string_storage)dyn_storage)": {
             "label": "mapping(string => string[])",

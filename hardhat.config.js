@@ -36,7 +36,7 @@ const BINANCE_TESTNET_RPC_URL = "https://data-seed-prebsc-1-s3.binance.org:8545/
 const BINANCE_PRIVATE_KEY = process.env.BINANCE_PRIVATE_KEY;
 
 const BINANCE_MAINNET_RPC_URL = "https://bsc-dataseed1.binance.org/";
-// const BINANCE_PRIVATE_KEY = "c6b74823351e2c55022376bd63c1c037c179479ef4667342ab1c225b09237fa0";
+const BINANCE_MAINNET_KEY = process.env.BINANCE_MAINNET_KEY;
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
@@ -85,12 +85,17 @@ module.exports = {
     },
     bscMainnet: {
       url: BINANCE_MAINNET_RPC_URL,
-      accounts: [BINANCE_PRIVATE_KEY],
+      accounts: [BINANCE_MAINNET_KEY],
       saveDeployments: true,
     }
   },
+  // etherscan: {
+  //     apiKey: "F3HN9IGWSZ5NYWEJBEM4Q214H2Q1BESN67"
+  // },
   etherscan: {
-      apiKey: "F3HN9IGWSZ5NYWEJBEM4Q214H2Q1BESN67"
+    apiKey: {
+      bsc: "Y89KJAXM7SKZ3KPF54B6KQP3DDR7FP6CFD"
+    }
   },
   solidity: {
     // version:  "0.7.6",
